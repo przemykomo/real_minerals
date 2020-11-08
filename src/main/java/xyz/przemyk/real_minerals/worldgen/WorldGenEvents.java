@@ -21,7 +21,15 @@ public class WorldGenEvents {
         Biome.Category category = event.getCategory();
         if (category != Biome.Category.NETHER && category != Biome.Category.THEEND) {
             List<Supplier<ConfiguredFeature<?, ?>>> features = event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES);
+
+            //TODO: change rarity and height of ore generation
             features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.COPPER_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.LEAD_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.MAGNESIUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.NICKEL_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.PLATINUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.SILVER_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.TIN_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
         }
     }
 }
