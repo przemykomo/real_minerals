@@ -9,19 +9,22 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.GenericEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import xyz.przemyk.real_minerals.machines.CrusherBlock;
-import xyz.przemyk.real_minerals.machines.CrusherContainer;
-import xyz.przemyk.real_minerals.machines.CrusherTileEntity;
+import xyz.przemyk.real_minerals.machines.crusher.*;
 
 @SuppressWarnings("unused")
 @Mod(RealMinerals.MODID)
@@ -34,10 +37,20 @@ public class RealMinerals {
 
     public RealMinerals() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
         BLOCKS.register(eventBus);
         ITEMS.register(eventBus);
         TILE_ENTITIES.register(eventBus);
         CONTAINERS.register(eventBus);
+
+        eventBus.addGenericListener(IRecipeSerializer.class, this::registerRecipeSerializers);
+    }
+
+    public static final IRecipeType<CrusherRecipe> CRUSHER_RECIPE_TYPE = new CrusherRecipeType();
+
+    private void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(CRUSHER_RECIPE_TYPE.toString()), CRUSHER_RECIPE_TYPE);
+        event.getRegistry().register(CrusherRecipe.SERIALIZER);
     }
 
     public static final ItemGroup ITEM_GROUP = new ItemGroup(MODID) {

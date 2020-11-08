@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines;
+package xyz.przemyk.real_minerals.machines.crusher;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -6,11 +6,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.BlastingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -34,6 +32,8 @@ import java.util.stream.Collectors;
 
 public class CrusherTileEntity extends TileEntity implements INamedContainerProvider, ITickableTileEntity {
 
+    public static final int CRUSHING_TIME_TOTAL= 100;
+
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -54,7 +54,6 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
 
     private int burnTime;
     private int crushTime;
-    private int crushTimeTotal;
 
     public final IIntArray crusherData = new IIntArray() {
         public int get(int index) {
@@ -63,8 +62,6 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
                     return burnTime;
                 case 1:
                     return crushTime;
-                case 2:
-                    return crushTimeTotal;
                 default:
                     return 0;
             }
@@ -78,14 +75,12 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
                 case 1:
                     crushTime = value;
                     break;
-                case 2:
-                    crushTimeTotal = value;
             }
 
         }
 
         public int size() {
-            return 3;
+            return 2;
         }
     };
 
@@ -123,7 +118,7 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
             ItemStack fuelStack = itemHandler.getStackInSlot(1);
             ItemStack inputStack = itemHandler.getStackInSlot(0);
             if (isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
-                BlastingRecipe recipe = getRecipe(inputStack);
+                CrusherRecipe recipe = getRecipe(inputStack);
                 if (canCrush(recipe)) {
                     if (!isBurning()) {
                         burnTime = ForgeHooks.getBurnTime(fuelStack);
@@ -137,9 +132,8 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
                         }
                     } else {
                         ++crushTime;
-                        if (crushTime >= crushTimeTotal) {
+                        if (crushTime >= CRUSHING_TIME_TOTAL) {
                             crushTime = 0;
-                            crushTimeTotal = recipe.getCookTime();
                             crush(recipe);
                             dirty = true;
                         }
@@ -148,7 +142,7 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
                     crushTime = 0;
                 }
             } else if (!isBurning() && crushTime > 0) {
-                crushTime = MathHelper.clamp(crushTime - 2, 0, crushTimeTotal);
+                crushTime = MathHelper.clamp(crushTime - 2, 0, CRUSHING_TIME_TOTAL);
             }
 
             //todo: if changed burning state, then set blockstate
@@ -159,7 +153,7 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
         }
     }
 
-    private boolean canCrush(@Nullable BlastingRecipe recipe) {
+    private boolean canCrush(@Nullable CrusherRecipe recipe) {
         if (!itemHandler.getStackInSlot(0).isEmpty() && recipe != null) {
             ItemStack outputStack = recipe.getRecipeOutput();
             if (outputStack.isEmpty()) {
@@ -177,7 +171,7 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
         return false;
     }
 
-    private void crush(BlastingRecipe recipe) {
+    private void crush(CrusherRecipe recipe) {
         ItemStack input = itemHandler.getStackInSlot(0);
         ItemStack recipeOutput = recipe.getRecipeOutput();
         ItemStack currentOutput = itemHandler.getStackInSlot(2);
@@ -193,21 +187,22 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
 
     @SuppressWarnings("ConstantConditions")
     @Nullable
-    private BlastingRecipe getRecipe(ItemStack input){
+    private CrusherRecipe getRecipe(ItemStack input){
         if (input == null){
             return null;
         }
-        Set<IRecipe<?>> recipes = findRecipeByType(IRecipeType.BLASTING, this.world);
-        for (IRecipe<?> recipe : recipes){
-            if (recipe.getIngredients().get(0).test(input)) {
-                return (BlastingRecipe) recipe;
+        Set<CrusherRecipe> recipes = findRecipeByType(RealMinerals.CRUSHER_RECIPE_TYPE, this.world);
+        for (CrusherRecipe recipe : recipes){
+            if (recipe.isValidInput(input)) {
+                return recipe;
             }
         }
         return null;
     }
 
-    public static Set<IRecipe<?>> findRecipeByType(IRecipeType<?> typeIn, World world) {
-        return world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet());
+    @SuppressWarnings("unchecked") //TODO: is this safe?
+    public static<T extends IRecipe<?>> Set<T> findRecipeByType(IRecipeType<T> typeIn, World world) {
+        return ((Set<T>) world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()));
     }
 
     private boolean isBurning() {
@@ -219,7 +214,6 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         burnTime = nbt.getInt("BurnTime");
         crushTime = nbt.getInt("CrushTime");
-        crushTimeTotal = nbt.getInt("CrushTimeTotal");
         super.read(state, nbt);
     }
 
@@ -228,7 +222,6 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
         compound.put("inv", itemHandler.serializeNBT());
         compound.putInt("BurnTime", burnTime);
         compound.putInt("CrushTime", crushTime);
-        compound.putInt("CrushTimeTotal", crushTimeTotal);
         return super.write(compound);
     }
 

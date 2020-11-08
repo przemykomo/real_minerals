@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines;
+package xyz.przemyk.real_minerals.machines.crusher;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -24,7 +24,7 @@ public class CrusherScreen extends ContainerScreen<CrusherContainer> {
         renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "deprecation"})
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -40,8 +40,7 @@ public class CrusherScreen extends ContainerScreen<CrusherContainer> {
         }
 
         int crushTime = crusherData.get(1);
-        int maxCrushTime = crusherData.get(2);
-        int l =  maxCrushTime!= 0 && crushTime != 0 ? crushTime * 24 / maxCrushTime : 0;
+        int l =  crushTime != 0 ? crushTime * 24 / CrusherTileEntity.CRUSHING_TIME_TOTAL : 0;
         this.blit(matrixStack, i + 79, j + 34, 176, 14, l + 1, 16);
     }
 }

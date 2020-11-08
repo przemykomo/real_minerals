@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines;
+package xyz.przemyk.real_minerals.machines.crusher;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -14,6 +14,8 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.machines.MachineFuelSlot;
+import xyz.przemyk.real_minerals.machines.MachineOutputSlot;
 
 public class CrusherContainer extends Container {
 
@@ -104,7 +106,7 @@ public class CrusherContainer extends Container {
     }
 
     @SuppressWarnings("ConstantConditions")
-    protected boolean hasRecipe(ItemStack stack) {//TODO: change recipe type
-        return tileEntity.getWorld().getRecipeManager().getRecipe(IRecipeType.BLASTING, new Inventory(stack), tileEntity.getWorld()).isPresent();
+    protected boolean hasRecipe(ItemStack stack) {
+        return tileEntity.getWorld().getRecipeManager().getRecipe(RealMinerals.CRUSHER_RECIPE_TYPE, new Inventory(stack), tileEntity.getWorld()).isPresent();
     }
 }
