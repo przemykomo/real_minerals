@@ -17,6 +17,9 @@ public class BlockModels extends BlockModelProvider {
     @Override
     protected void registerModels() {
         for (BlockRegistryObject blockRegistryObject : RealMinerals.BLOCKS.allBlocks) {
+            if (blockRegistryObject == RealMinerals.CRUSHER_BLOCK) {
+                continue;
+            }
             String path = blockRegistryObject.BLOCK.get().getRegistryName().getPath();
             getBuilder(path)
                     .parent(new ModelFile.UncheckedModelFile("block/cube_all"))

@@ -19,6 +19,9 @@ public class ItemModels extends ItemModelProvider {
     @Override
     protected void registerModels() {
         for (BlockRegistryObject blockRegistryObject : RealMinerals.BLOCKS.allBlocks) {
+            if (blockRegistryObject == RealMinerals.CRUSHER_BLOCK) {
+                continue;
+            }
             String path = blockRegistryObject.ITEM.get().getRegistryName().getPath();
             getBuilder(path)
                     .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
