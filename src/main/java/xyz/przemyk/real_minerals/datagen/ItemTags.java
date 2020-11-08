@@ -16,10 +16,12 @@ public class ItemTags extends ItemTagsProvider {
         super(dataGenerator, blockTagProvider, modId, existingFileHelper);
     }
 
+    public static final Tags.IOptionalNamedTag<Item> ORES_COPPER = tag("ores/copper");
+
     @Override
     protected void registerTags() {
         copy(BlockTags.STORAGE_COPPER, tag("storage_blocks/copper"));
-        copy(BlockTags.ORES_COPPER, tag("ores/copper"));
+        copy(BlockTags.ORES_COPPER, ORES_COPPER);
         getOrCreateBuilder(tag("ingots/copper")).add(RealMinerals.COPPER_INGOT.get());
         getOrCreateBuilder(tag("muggets/copper")).add(RealMinerals.COPPER_NUGGET.get());
         getOrCreateBuilder(tag("dusts/copper")).add(RealMinerals.COPPER_DUST.get());

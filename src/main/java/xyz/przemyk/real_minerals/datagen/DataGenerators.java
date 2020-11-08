@@ -21,5 +21,6 @@ public class DataGenerators {
         BlockTags blockTags = new BlockTags(generator, RealMinerals.MODID, existingFileHelper);
         generator.addProvider(blockTags);
         generator.addProvider(new ItemTags(generator, blockTags, RealMinerals.MODID, existingFileHelper));
+        generator.addProvider(new Recipes(generator));
     }
 }

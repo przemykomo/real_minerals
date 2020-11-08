@@ -127,3 +127,4 @@ b78796340455c09f783f00203cd2f6d931ebfc61 data/real_minerals/loot_tables/blocks/p
 103096c24d3ced8e679db215f2e6a085c0777050 data/real_minerals/loot_tables/blocks/silver_ore.json
 bf9e75110ed14e01187ea858d26a7a797b42c60c data/real_minerals/loot_tables/blocks/tin_block.json
 20d0d1a412d7745e2d723aece78d2df6fd19a4ae data/real_minerals/loot_tables/blocks/tin_ore.json
+9d5c03484c93db717212ce2f232cfb641011b295 data/real_minerals/recipes/recipes/copper_dust_from_ore.json

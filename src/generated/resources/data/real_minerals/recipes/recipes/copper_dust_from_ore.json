@@ -1,0 +1,10 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ores/copper"
+  },
+  "output": {
+    "item": "real_minerals:copper_dust",
+    "count": 2
+  }
+}
