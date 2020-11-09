@@ -1,0 +1,10 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ores/aluminum"
+  },
+  "output": {
+    "item": "real_minerals:aluminum_dust",
+    "count": 2
+  }
+}

@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_lead_ore": {
+    "has_lead_dust": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_lead_ore",
+      "has_lead_dust",
       "has_the_recipe"
     ]
   ]

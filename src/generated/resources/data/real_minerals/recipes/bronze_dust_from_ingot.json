@@ -1,0 +1,9 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ingots/bronze"
+  },
+  "output": {
+    "item": "real_minerals:bronze_dust"
+  }
+}

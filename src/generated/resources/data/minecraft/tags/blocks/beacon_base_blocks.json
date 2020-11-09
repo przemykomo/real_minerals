@@ -7,6 +7,10 @@
     "real_minerals:nickel_block",
     "real_minerals:platinum_block",
     "real_minerals:silver_block",
-    "real_minerals:tin_block"
+    "real_minerals:tin_block",
+    "real_minerals:aluminum_block",
+    "real_minerals:zinc_block",
+    "real_minerals:brass_block",
+    "real_minerals:bronze_block"
   ]
 }

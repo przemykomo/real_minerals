@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_platinum_ore": {
+    "has_platinum_dust": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_platinum_ore",
+      "has_platinum_dust",
       "has_the_recipe"
     ]
   ]

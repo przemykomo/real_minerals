@@ -60,6 +60,27 @@ public class ItemTags extends ItemTagsProvider {
     public static final Tags.IOptionalNamedTag<Item> NUGGETS_TIN = tag("nuggets/tin");
     public static final Tags.IOptionalNamedTag<Item> DUSTS_TIN = tag("dusts/tin");
 
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_ALUMINUM = tag("storage_blocks/aluminum");
+    public static final Tags.IOptionalNamedTag<Item> ORES_ALUMINUM = tag("ores/aluminum");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_ALUMINUM = tag("ingots/aluminum");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_ALUMINUM = tag("nuggets/aluminum");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_ALUMINUM = tag("dusts/aluminum");
+
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_ZINC = tag("storage_blocks/zinc");
+    public static final Tags.IOptionalNamedTag<Item> ORES_ZINC = tag("ores/zinc");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_ZINC = tag("ingots/zinc");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_ZINC = tag("nuggets/zinc");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_ZINC = tag("dusts/zinc");
+
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_BRASS = tag("storage_blocks/brass");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_BRASS = tag("ingots/brass");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_BRASS = tag("nuggets/brass");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_BRASS = tag("dusts/brass");
+
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_BRONZE = tag("storage_blocks/bronze");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_BRONZE = tag("ingots/bronze");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_BRONZE = tag("nuggets/bronze");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_BRONZE = tag("dusts/bronze");
 
     @Override
     protected void registerTags() {
@@ -104,6 +125,28 @@ public class ItemTags extends ItemTagsProvider {
         getOrCreateBuilder(INGOTS_TIN).add(RealMinerals.TIN_INGOT.get());
         getOrCreateBuilder(NUGGETS_TIN).add(RealMinerals.TIN_NUGGET.get());
         getOrCreateBuilder(DUSTS_TIN).add(RealMinerals.TIN_DUST.get());
+
+        copy(BlockTags.STORAGE_ALUMINUM, STORAGE_ALUMINUM);
+        copy(BlockTags.ORES_ALUMINUM, ORES_ALUMINUM);
+        getOrCreateBuilder(INGOTS_ALUMINUM).add(RealMinerals.ALUMINUM_INGOT.get());
+        getOrCreateBuilder(NUGGETS_ALUMINUM).add(RealMinerals.ALUMINUM_NUGGET.get());
+        getOrCreateBuilder(DUSTS_ALUMINUM).add(RealMinerals.ALUMINUM_DUST.get());
+
+        copy(BlockTags.STORAGE_ZINC, STORAGE_ZINC);
+        copy(BlockTags.ORES_ZINC, ORES_ZINC);
+        getOrCreateBuilder(INGOTS_ZINC).add(RealMinerals.ZINC_INGOT.get());
+        getOrCreateBuilder(NUGGETS_ZINC).add(RealMinerals.ZINC_NUGGET.get());
+        getOrCreateBuilder(DUSTS_ZINC).add(RealMinerals.ZINC_DUST.get());
+
+        copy(BlockTags.STORAGE_BRASS, STORAGE_BRASS);
+        getOrCreateBuilder(INGOTS_BRASS).add(RealMinerals.BRASS_INGOT.get());
+        getOrCreateBuilder(NUGGETS_BRASS).add(RealMinerals.BRASS_NUGGET.get());
+        getOrCreateBuilder(DUSTS_BRASS).add(RealMinerals.BRASS_DUST.get());
+
+        copy(BlockTags.STORAGE_BRONZE, STORAGE_BRONZE);
+        getOrCreateBuilder(INGOTS_BRONZE).add(RealMinerals.BRONZE_INGOT.get());
+        getOrCreateBuilder(NUGGETS_BRONZE).add(RealMinerals.BRONZE_NUGGET.get());
+        getOrCreateBuilder(DUSTS_BRONZE).add(RealMinerals.BRONZE_DUST.get());
 
     }
 

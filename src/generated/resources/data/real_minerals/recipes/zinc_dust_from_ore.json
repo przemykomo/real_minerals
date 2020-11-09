@@ -1,0 +1,10 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ores/zinc"
+  },
+  "output": {
+    "item": "real_minerals:zinc_dust",
+    "count": 2
+  }
+}

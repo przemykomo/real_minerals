@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_magnesium_ore": {
+    "has_magnesium_dust": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_magnesium_ore",
+      "has_magnesium_dust",
       "has_the_recipe"
     ]
   ]

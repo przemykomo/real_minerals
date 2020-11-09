@@ -30,6 +30,8 @@ public class WorldGenEvents {
             features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.PLATINUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
             features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.SILVER_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
             features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.TIN_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.ALUMINUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.ZINC_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
         }
     }
 }

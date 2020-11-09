@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "real_minerals:brass_nugget_from_ingot"
+    ]
+  },
+  "criteria": {
+    "has_brass_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/brass"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "real_minerals:brass_nugget_from_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_brass_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "tag": "forge:dusts/bronze"
+  },
+  "result": "real_minerals:bronze_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}
