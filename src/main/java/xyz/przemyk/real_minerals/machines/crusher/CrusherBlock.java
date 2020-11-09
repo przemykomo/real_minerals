@@ -5,6 +5,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.IContainerProvider;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -35,7 +38,9 @@ public class CrusherBlock extends Block {
         if (!worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity instanceof CrusherTileEntity) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (CrusherTileEntity) tileEntity, tileEntity.getPos());
+                IContainerProvider containerProvider = CrusherContainer.getServerContainerProvider((CrusherTileEntity) tileEntity, pos);
+                INamedContainerProvider namedContainerProvider = new SimpleNamedContainerProvider(containerProvider, CrusherContainer.TITLE);
+                NetworkHooks.openGui((ServerPlayerEntity) player, namedContainerProvider);
             }
             return ActionResultType.CONSUME;
         }

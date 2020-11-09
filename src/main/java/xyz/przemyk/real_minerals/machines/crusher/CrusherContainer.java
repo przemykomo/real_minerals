@@ -1,17 +1,22 @@
 package xyz.przemyk.real_minerals.machines.crusher;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.IContainerProvider;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.IntArray;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.machines.MachineFuelSlot;
@@ -19,22 +24,30 @@ import xyz.przemyk.real_minerals.machines.MachineOutputSlot;
 
 public class CrusherContainer extends Container {
 
-    public final CrusherTileEntity tileEntity;
-    public final PlayerEntity playerEntity;
+    public static final TranslationTextComponent TITLE = new TranslationTextComponent(RealMinerals.MODID + ".name.crusher");
+
+    private final IWorldPosCallable usabilityTest;
+    private final World world;
+    public final IIntArray crusherData;
 
     @SuppressWarnings("ConstantConditions")
-    public CrusherContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(RealMinerals.CRUSHER_CONTAINER.get(), windowId);
-        tileEntity = (CrusherTileEntity) world.getTileEntity(pos);
-        this.playerEntity = player;
+    public static CrusherContainer getClientContainer(int id, PlayerInventory playerInventory) {
+        return new CrusherContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(3), new IntArray(2), Minecraft.getInstance().player);
+    }
 
-        if (tileEntity != null) {
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(itemHandler -> {
-                addSlot(new SlotItemHandler(itemHandler, 0, 56, 17));
-                addSlot(new MachineFuelSlot(itemHandler, 1, 56, 53));
-                addSlot(new MachineOutputSlot(itemHandler, 2, 116, 35, playerEntity));
-            });
-        }
+    public static IContainerProvider getServerContainerProvider(CrusherTileEntity te, BlockPos activationPos) {
+        return (id, playerInventory, serverPlayer) -> new CrusherContainer(id, playerInventory, activationPos, te.itemHandler, new CrusherSyncData(te), serverPlayer);
+    }
+
+    public CrusherContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray crusherData, PlayerEntity playerEntity) {
+        super(RealMinerals.CRUSHER_CONTAINER.get(), windowId);
+        usabilityTest = IWorldPosCallable.of(playerEntity.world, pos);
+        world = playerEntity.world;
+        this.crusherData = crusherData;
+
+        addSlot(new SlotItemHandler(itemHandler, 0, 56, 17));
+        addSlot(new MachineFuelSlot(itemHandler, 1, 56, 53));
+        addSlot(new MachineOutputSlot(itemHandler, 2, 116, 35, playerEntity));
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
@@ -46,13 +59,12 @@ public class CrusherContainer extends Container {
             this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
         }
 
-        trackIntArray(tileEntity.crusherData);
+        trackIntArray(crusherData);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, RealMinerals.CRUSHER_BLOCK.BLOCK.get());
+        return isWithinUsableDistance(usabilityTest, playerIn, RealMinerals.CRUSHER_BLOCK.BLOCK.get());
     }
 
     //TODO
@@ -105,8 +117,7 @@ public class CrusherContainer extends Container {
         return itemstack;
     }
 
-    @SuppressWarnings("ConstantConditions")
     protected boolean hasRecipe(ItemStack stack) {
-        return tileEntity.getWorld().getRecipeManager().getRecipe(RealMinerals.CRUSHER_RECIPE_TYPE, new Inventory(stack), tileEntity.getWorld()).isPresent();
+        return CrusherTileEntity.getRecipe(stack, world) != null;
     }
 }

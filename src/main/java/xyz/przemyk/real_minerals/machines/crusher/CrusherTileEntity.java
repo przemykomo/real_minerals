@@ -1,21 +1,13 @@
 package xyz.przemyk.real_minerals.machines.crusher;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
@@ -30,11 +22,11 @@ import javax.annotation.Nullable;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class CrusherTileEntity extends TileEntity implements INamedContainerProvider, ITickableTileEntity {
+public class CrusherTileEntity extends TileEntity implements ITickableTileEntity {
 
-    public static final int CRUSHING_TIME_TOTAL= 100;
+    public static final int CRUSHING_TIME_TOTAL = 100;
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+    public final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
             markDirty();
@@ -52,37 +44,8 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
 
     private final LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
 
-    private int burnTime;
-    private int crushTime;
-
-    public final IIntArray crusherData = new IIntArray() {
-        public int get(int index) {
-            switch(index) {
-                case 0:
-                    return burnTime;
-                case 1:
-                    return crushTime;
-                default:
-                    return 0;
-            }
-        }
-
-        public void set(int index, int value) {
-            switch(index) {
-                case 0:
-                    burnTime = value;
-                    break;
-                case 1:
-                    crushTime = value;
-                    break;
-            }
-
-        }
-
-        public int size() {
-            return 2;
-        }
-    };
+    public int burnTime;
+    public int crushTime;
 
     public CrusherTileEntity() {
         super(RealMinerals.CRUSHER_TILE_ENTITY_TYPE.get());
@@ -92,17 +55,6 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
     public void remove() {
         super.remove();
         itemHandlerLazyOptional.invalidate();
-    }
-
-    @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(RealMinerals.MODID + ".name.crusher");
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Override
-    public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new CrusherContainer(i, world, pos, playerInventory, playerEntity);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -118,7 +70,7 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
             ItemStack fuelStack = itemHandler.getStackInSlot(1);
             ItemStack inputStack = itemHandler.getStackInSlot(0);
             if (isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
-                CrusherRecipe recipe = getRecipe(inputStack);
+                CrusherRecipe recipe = getCachedRecipe(inputStack);
                 if (canCrush(recipe)) {
                     if (!isBurning()) {
                         burnTime = ForgeHooks.getBurnTime(fuelStack);
@@ -185,13 +137,25 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
         input.shrink(1);
     }
 
+    private CrusherRecipe cachedRecipe = null;
+
     @SuppressWarnings("ConstantConditions")
     @Nullable
-    private CrusherRecipe getRecipe(ItemStack input){
+    private CrusherRecipe getCachedRecipe(ItemStack input){
         if (input == null){
             return null;
         }
-        Set<CrusherRecipe> recipes = findRecipeByType(RealMinerals.CRUSHER_RECIPE_TYPE, this.world);
+
+        if (cachedRecipe != null && cachedRecipe.isValidInput(input)) {
+            return cachedRecipe;
+        }
+
+        cachedRecipe = getRecipe(input, world);
+        return cachedRecipe;
+    }
+
+    public static CrusherRecipe getRecipe(ItemStack input, World world) {
+        Set<CrusherRecipe> recipes = getAllCrushingRecipes(world);
         for (CrusherRecipe recipe : recipes){
             if (recipe.isValidInput(input)) {
                 return recipe;
@@ -200,9 +164,9 @@ public class CrusherTileEntity extends TileEntity implements INamedContainerProv
         return null;
     }
 
-    @SuppressWarnings("unchecked") //TODO: is this safe?
-    public static<T extends IRecipe<?>> Set<T> findRecipeByType(IRecipeType<T> typeIn, World world) {
-        return ((Set<T>) world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()));
+    @SuppressWarnings("unchecked") //I cannot cast it directly to Set<CrusherRecipe> but generics somehow work
+    public static<T extends IRecipe<?>> Set<T> getAllCrushingRecipes(World world) {
+        return ((Set<T>) world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == RealMinerals.CRUSHER_RECIPE_TYPE).collect(Collectors.toSet()));
     }
 
     private boolean isBurning() {

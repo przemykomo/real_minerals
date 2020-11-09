@@ -32,7 +32,7 @@ public class CrusherScreen extends ContainerScreen<CrusherContainer> {
         int i = this.guiLeft;
         int j = this.guiTop;
         this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
-        IIntArray crusherData = container.tileEntity.crusherData;
+        IIntArray crusherData = container.crusherData;
         int burnTime = crusherData.get(0);
         if (burnTime > 0) {
             int k = burnTime * 13 / 200;
