@@ -1,0 +1,9 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ingots/magnesium"
+  },
+  "output": {
+    "item": "real_minerals:magnesium_dust"
+  }
+}

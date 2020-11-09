@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "real_minerals:magnesium_ingot_from_block"
+    ]
+  },
+  "criteria": {
+    "has_magnesium_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:storage_blocks/magnesium"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "real_minerals:magnesium_ingot_from_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_magnesium_block",
+      "has_the_recipe"
+    ]
+  ]
+}

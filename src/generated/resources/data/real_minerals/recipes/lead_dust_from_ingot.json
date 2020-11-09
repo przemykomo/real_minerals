@@ -1,0 +1,9 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ingots/lead"
+  },
+  "output": {
+    "item": "real_minerals:lead_dust"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ores/tin"
+  },
+  "output": {
+    "item": "real_minerals:tin_dust",
+    "count": 2
+  }
+}

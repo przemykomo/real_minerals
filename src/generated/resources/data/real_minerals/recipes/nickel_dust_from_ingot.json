@@ -1,0 +1,9 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ingots/nickel"
+  },
+  "output": {
+    "item": "real_minerals:nickel_dust"
+  }
+}

@@ -34,7 +34,7 @@ public class CrusherRecipeBuilder {
     }
 
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
-        consumer.accept(new ResultRecipe(new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath()), serializer, input, output, count));
+        consumer.accept(new ResultRecipe(id, serializer, input, output, count));
     }
 
     public static class ResultRecipe implements IFinishedRecipe {

@@ -1,0 +1,9 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ingots/tin"
+  },
+  "output": {
+    "item": "real_minerals:tin_dust"
+  }
+}

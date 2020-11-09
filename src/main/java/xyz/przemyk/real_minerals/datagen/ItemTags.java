@@ -2,6 +2,7 @@ package xyz.przemyk.real_minerals.datagen;
 
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -10,57 +11,100 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class ItemTags extends ItemTagsProvider {
     public ItemTags(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockTagProvider, modId, existingFileHelper);
     }
 
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_COPPER = tag("storage_blocks/copper");
     public static final Tags.IOptionalNamedTag<Item> ORES_COPPER = tag("ores/copper");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_COPPER = tag("ingots/copper");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_COPPER = tag("nuggets/copper");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_COPPER = tag("dusts/copper");
+
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_LEAD = tag("storage_blocks/lead");
+    public static final Tags.IOptionalNamedTag<Item> ORES_LEAD = tag("ores/lead");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_LEAD = tag("ingots/lead");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_LEAD = tag("nuggets/lead");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_LEAD = tag("dusts/lead");
+
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_MAGNESIUM = tag("storage_blocks/magnesium");
+    public static final Tags.IOptionalNamedTag<Item> ORES_MAGNESIUM = tag("ores/magnesium");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_MAGNESIUM = tag("ingots/magnesium");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_MAGNESIUM = tag("nuggets/magnesium");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_MAGNESIUM = tag("dusts/magnesium");
+
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_NICKEL = tag("storage_blocks/nickel");
+    public static final Tags.IOptionalNamedTag<Item> ORES_NICKEL = tag("ores/nickel");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_NICKEL = tag("ingots/nickel");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_NICKEL = tag("nuggets/nickel");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_NICKEL = tag("dusts/nickel");
+
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_PLATINUM = tag("storage_blocks/platinum");
+    public static final Tags.IOptionalNamedTag<Item> ORES_PLATINUM = tag("ores/platinum");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_PLATINUM = tag("ingots/platinum");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_PLATINUM = tag("nuggets/platinum");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_PLATINUM = tag("dusts/platinum");
+
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_SILVER = tag("storage_blocks/silver");
+    public static final Tags.IOptionalNamedTag<Item> ORES_SILVER = tag("ores/silver");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_SILVER = tag("ingots/silver");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_SILVER = tag("nuggets/silver");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_SILVER = tag("dusts/silver");
+
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_TIN = tag("storage_blocks/tin");
+    public static final Tags.IOptionalNamedTag<Item> ORES_TIN = tag("ores/tin");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_TIN = tag("ingots/tin");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_TIN = tag("nuggets/tin");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_TIN = tag("dusts/tin");
+
 
     @Override
     protected void registerTags() {
-        copy(BlockTags.STORAGE_COPPER, tag("storage_blocks/copper"));
+        copy(BlockTags.STORAGE_COPPER, STORAGE_COPPER);
         copy(BlockTags.ORES_COPPER, ORES_COPPER);
-        getOrCreateBuilder(tag("ingots/copper")).add(RealMinerals.COPPER_INGOT.get());
-        getOrCreateBuilder(tag("muggets/copper")).add(RealMinerals.COPPER_NUGGET.get());
-        getOrCreateBuilder(tag("dusts/copper")).add(RealMinerals.COPPER_DUST.get());
+        getOrCreateBuilder(INGOTS_COPPER).add(RealMinerals.COPPER_INGOT.get());
+        getOrCreateBuilder(NUGGETS_COPPER).add(RealMinerals.COPPER_NUGGET.get());
+        getOrCreateBuilder(DUSTS_COPPER).add(RealMinerals.COPPER_DUST.get());
 
-        copy(BlockTags.STORAGE_LEAD, tag("storage_blocks/lead"));
-        copy(BlockTags.ORES_LEAD, tag("ores/lead"));
-        getOrCreateBuilder(tag("ingots/lead")).add(RealMinerals.LEAD_INGOT.get());
-        getOrCreateBuilder(tag("muggets/lead")).add(RealMinerals.LEAD_NUGGET.get());
-        getOrCreateBuilder(tag("dusts/lead")).add(RealMinerals.LEAD_DUST.get());
+        copy(BlockTags.STORAGE_LEAD, STORAGE_LEAD);
+        copy(BlockTags.ORES_LEAD, ORES_LEAD);
+        getOrCreateBuilder(INGOTS_LEAD).add(RealMinerals.LEAD_INGOT.get());
+        getOrCreateBuilder(NUGGETS_LEAD).add(RealMinerals.LEAD_NUGGET.get());
+        getOrCreateBuilder(DUSTS_LEAD).add(RealMinerals.LEAD_DUST.get());
 
-        copy(BlockTags.STORAGE_MAGNESIUM, tag("storage_blocks/magnesium"));
-        copy(BlockTags.ORES_MAGNESIUM, tag("ores/magnesium"));
-        getOrCreateBuilder(tag("ingots/magnesium")).add(RealMinerals.MAGNESIUM_INGOT.get());
-        getOrCreateBuilder(tag("muggets/magnesium")).add(RealMinerals.MAGNESIUM_NUGGET.get());
-        getOrCreateBuilder(tag("dusts/magnesium")).add(RealMinerals.MAGNESIUM_DUST.get());
+        copy(BlockTags.STORAGE_MAGNESIUM, STORAGE_MAGNESIUM);
+        copy(BlockTags.ORES_MAGNESIUM, ORES_MAGNESIUM);
+        getOrCreateBuilder(INGOTS_MAGNESIUM).add(RealMinerals.MAGNESIUM_INGOT.get());
+        getOrCreateBuilder(NUGGETS_MAGNESIUM).add(RealMinerals.MAGNESIUM_NUGGET.get());
+        getOrCreateBuilder(DUSTS_MAGNESIUM).add(RealMinerals.MAGNESIUM_DUST.get());
 
-        copy(BlockTags.STORAGE_NICKEL, tag("storage_blocks/nickel"));
-        copy(BlockTags.ORES_NICKEL, tag("ores/nickel"));
-        getOrCreateBuilder(tag("ingots/nickel")).add(RealMinerals.NICKEL_INGOT.get());
-        getOrCreateBuilder(tag("muggets/nickel")).add(RealMinerals.NICKEL_NUGGET.get());
-        getOrCreateBuilder(tag("dusts/nickel")).add(RealMinerals.NICKEL_DUST.get());
+        copy(BlockTags.STORAGE_NICKEL, STORAGE_NICKEL);
+        copy(BlockTags.ORES_NICKEL, ORES_NICKEL);
+        getOrCreateBuilder(INGOTS_NICKEL).add(RealMinerals.NICKEL_INGOT.get());
+        getOrCreateBuilder(NUGGETS_NICKEL).add(RealMinerals.NICKEL_NUGGET.get());
+        getOrCreateBuilder(DUSTS_NICKEL).add(RealMinerals.NICKEL_DUST.get());
 
-        copy(BlockTags.STORAGE_PLATINUM, tag("storage_blocks/platinum"));
-        copy(BlockTags.ORES_PLATINUM, tag("ores/platinum"));
-        getOrCreateBuilder(tag("ingots/platinum")).add(RealMinerals.PLATINUM_INGOT.get());
-        getOrCreateBuilder(tag("muggets/platinum")).add(RealMinerals.PLATINUM_NUGGET.get());
-        getOrCreateBuilder(tag("dusts/platinum")).add(RealMinerals.PLATINUM_DUST.get());
+        copy(BlockTags.STORAGE_PLATINUM, STORAGE_PLATINUM);
+        copy(BlockTags.ORES_PLATINUM, ORES_PLATINUM);
+        getOrCreateBuilder(INGOTS_PLATINUM).add(RealMinerals.PLATINUM_INGOT.get());
+        getOrCreateBuilder(NUGGETS_PLATINUM).add(RealMinerals.PLATINUM_NUGGET.get());
+        getOrCreateBuilder(DUSTS_PLATINUM).add(RealMinerals.PLATINUM_DUST.get());
 
-        copy(BlockTags.STORAGE_SILVER, tag("storage_blocks/silver"));
-        copy(BlockTags.ORES_SILVER, tag("ores/silver"));
-        getOrCreateBuilder(tag("ingots/silver")).add(RealMinerals.SILVER_INGOT.get());
-        getOrCreateBuilder(tag("muggets/silver")).add(RealMinerals.SILVER_NUGGET.get());
-        getOrCreateBuilder(tag("dusts/silver")).add(RealMinerals.SILVER_DUST.get());
+        copy(BlockTags.STORAGE_SILVER, STORAGE_SILVER);
+        copy(BlockTags.ORES_SILVER, ORES_SILVER);
+        getOrCreateBuilder(INGOTS_SILVER).add(RealMinerals.SILVER_INGOT.get());
+        getOrCreateBuilder(NUGGETS_SILVER).add(RealMinerals.SILVER_NUGGET.get());
+        getOrCreateBuilder(DUSTS_SILVER).add(RealMinerals.SILVER_DUST.get());
 
-        copy(BlockTags.STORAGE_TIN, tag("storage_blocks/tin"));
-        copy(BlockTags.ORES_TIN, tag("ores/tin"));
-        getOrCreateBuilder(tag("ingots/tin")).add(RealMinerals.TIN_INGOT.get());
-        getOrCreateBuilder(tag("muggets/tin")).add(RealMinerals.TIN_NUGGET.get());
-        getOrCreateBuilder(tag("dusts/tin")).add(RealMinerals.TIN_DUST.get());
+        copy(BlockTags.STORAGE_TIN, STORAGE_TIN);
+        copy(BlockTags.ORES_TIN, ORES_TIN);
+        getOrCreateBuilder(INGOTS_TIN).add(RealMinerals.TIN_INGOT.get());
+        getOrCreateBuilder(NUGGETS_TIN).add(RealMinerals.TIN_NUGGET.get());
+        getOrCreateBuilder(DUSTS_TIN).add(RealMinerals.TIN_DUST.get());
+
     }
 
     private static Tags.IOptionalNamedTag<Item> tag(String name) {

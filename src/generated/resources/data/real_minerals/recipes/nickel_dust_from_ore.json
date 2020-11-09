@@ -1,0 +1,10 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ores/nickel"
+  },
+  "output": {
+    "item": "real_minerals:nickel_dust",
+    "count": 2
+  }
+}

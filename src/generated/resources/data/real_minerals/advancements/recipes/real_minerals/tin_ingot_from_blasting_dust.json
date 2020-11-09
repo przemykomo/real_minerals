@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "real_minerals:tin_ingot_from_blasting_dust"
+    ]
+  },
+  "criteria": {
+    "has_tin_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/tin"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "real_minerals:tin_ingot_from_blasting_dust"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_tin_ore",
+      "has_the_recipe"
+    ]
+  ]
+}
