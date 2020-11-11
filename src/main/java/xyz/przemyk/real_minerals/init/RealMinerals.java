@@ -9,22 +9,29 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.GenericEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import xyz.przemyk.real_minerals.machines.MachineRecipe;
+import xyz.przemyk.real_minerals.machines.alloy_furnace.*;
 import xyz.przemyk.real_minerals.machines.crusher.*;
+
+import javax.annotation.Nullable;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 @Mod(RealMinerals.MODID)
@@ -47,10 +54,28 @@ public class RealMinerals {
     }
 
     public static final IRecipeType<CrusherRecipe> CRUSHER_RECIPE_TYPE = new CrusherRecipeType();
+    public static final IRecipeType<AlloyRecipe> ALLOY_RECIPE_TYPE = new AlloyRecipeType();
 
     private void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(CRUSHER_RECIPE_TYPE.toString()), CRUSHER_RECIPE_TYPE);
-        event.getRegistry().register(CrusherRecipe.SERIALIZER);
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(ALLOY_RECIPE_TYPE.toString()), ALLOY_RECIPE_TYPE);
+        event.getRegistry().registerAll(CrusherRecipe.SERIALIZER, AlloyRecipe.SERIALIZER);
+    }
+
+    @Nullable
+    public static MachineRecipe getRecipe(NonNullList<ItemStack> input, World world, IRecipeType<?> recipeType) {
+        Set<MachineRecipe> recipes = getAllRecipes(world, recipeType);
+        for (MachineRecipe recipe : recipes){
+            if (recipe.isValidInput(input)) {
+                return recipe;
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static<T extends IRecipe<?>> Set<T> getAllRecipes(World world, IRecipeType<?> recipeType) {
+        return ((Set<T>) world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == recipeType).collect(Collectors.toSet()));
     }
 
     public static final ItemGroup ITEM_GROUP = new ItemGroup(MODID) {
@@ -64,6 +89,11 @@ public class RealMinerals {
     @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<TileEntityType<CrusherTileEntity>> CRUSHER_TILE_ENTITY_TYPE = TILE_ENTITIES.register("crusher", () -> TileEntityType.Builder.create(CrusherTileEntity::new, CRUSHER_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<CrusherContainer>> CRUSHER_CONTAINER = CONTAINERS.register("crusher", () -> new ContainerType<>(CrusherContainer::getClientContainer));
+
+    public static final BlockRegistryObject ALLOY_FURNACE_BLOCK = BLOCKS.register("alloy_furnace", () -> new AlloyFurnaceBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
+    @SuppressWarnings("ConstantConditions")
+    public static final RegistryObject<TileEntityType<AlloyFurnaceTileEntity>> ALLOY_FURNACE_TILE_ENTITY_TYPE = TILE_ENTITIES.register("alloy_furnace", () -> TileEntityType.Builder.create(AlloyFurnaceTileEntity::new, ALLOY_FURNACE_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<ContainerType<AlloyFurnaceContainer>> ALLOY_FURNACE_CONTAINER = CONTAINERS.register("alloy_furnace", () -> new ContainerType<>(AlloyFurnaceContainer::getClientContainer));
 
     public static final BlockRegistryObject  COPPER_BLOCK = BLOCKS.register("copper_block", () -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.ADOBE).harvestTool(ToolType.PICKAXE).harvestLevel(0).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)), ITEM_GROUP);
     public static final RegistryObject<Item> COPPER_DUST = ITEMS.register("copper_dust", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
@@ -128,5 +158,4 @@ public class RealMinerals {
     public static final RegistryObject<Item> BRONZE_DUST = ITEMS.register(  "bronze_dust", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
     public static final RegistryObject<Item> BRONZE_INGOT = ITEMS.register( "bronze_ingot", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
     public static final RegistryObject<Item> BRONZE_NUGGET = ITEMS.register("bronze_nugget", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
-
 }

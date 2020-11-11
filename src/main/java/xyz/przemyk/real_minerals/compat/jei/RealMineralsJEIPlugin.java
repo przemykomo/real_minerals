@@ -34,7 +34,7 @@ public class RealMineralsJEIPlugin implements IModPlugin {
     @SuppressWarnings("ConstantConditions")
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        registration.addRecipes(CrusherTileEntity.getAllCrushingRecipes(Minecraft.getInstance().world), CRUSHER_CATEGORY_ID);
+        registration.addRecipes(RealMinerals.getAllRecipes(Minecraft.getInstance().world, RealMinerals.CRUSHER_RECIPE_TYPE), CRUSHER_CATEGORY_ID);
     }
 
     @Override

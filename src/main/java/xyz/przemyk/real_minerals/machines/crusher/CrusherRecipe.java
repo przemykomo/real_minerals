@@ -2,69 +2,32 @@ package xyz.przemyk.real_minerals.machines.crusher;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.machines.MachineRecipe;
 
 import javax.annotation.Nullable;
 
-public class CrusherRecipe implements IRecipe<IInventory> {
+public class CrusherRecipe extends MachineRecipe {
 
     public static final Serializer SERIALIZER = new Serializer();
 
-    private final Ingredient input;
-    private final ItemStack output;
-    private final ResourceLocation id;
-
     public CrusherRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
-        this.id = id;
-        this.input = input;
-        this.output = output;
-    }
-
-    @Override
-    public String toString() {
-        return "CrusherRecipe{" +
-                "input=" + input +
-                ", output=" + output +
-                ", id=" + id +
-                '}';
-    }
-
-    // ignored method, use isValidInput
-    @Deprecated
-    @Override
-    public boolean matches(IInventory inv, World worldIn) {
-        return isValidInput(inv.getStackInSlot(0));
-    }
-
-    // ignored method, use getRecipeOutput
-    @Deprecated
-    @Override
-    public ItemStack getCraftingResult(IInventory inv) {
-        return output.copy();
+        super(output, id, NonNullList.withSize(1, input));
     }
 
     @Override
     public boolean canFit(int width, int height) {
         return true;
-    }
-
-    @Override
-    public ItemStack getRecipeOutput() {
-        return output;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
     }
 
     @Override
@@ -82,8 +45,9 @@ public class CrusherRecipe implements IRecipe<IInventory> {
         return new ItemStack(RealMinerals.CRUSHER_BLOCK.ITEM.get());
     }
 
-    public boolean isValidInput(ItemStack input) {
-        return this.input.test(input);
+    public boolean isValidInput(NonNullList<ItemStack> inputList) {
+        ItemStack input = inputList.get(0);
+        return ingredients.get(0).test(input);
     }
 
     private static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CrusherRecipe> {
@@ -110,15 +74,8 @@ public class CrusherRecipe implements IRecipe<IInventory> {
 
         @Override
         public void write(PacketBuffer buffer, CrusherRecipe recipe) {
-            recipe.input.write(buffer);
+            recipe.ingredients.get(0).write(buffer);
             buffer.writeItemStack(recipe.output);
         }
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.create();
-        list.add(input);
-        return list;
     }
 }
