@@ -1,24 +1,24 @@
 {
-    "type": "real_minerals:alloy",
-    "ingredients": [
-        {
-            "tag": "forge:ingots/copper"
-        },
-        {
-            "tag": "forge:ingots/copper"
-        },
-        {
-            "tag": "forge:ingots/copper"
-        },
-        {
-            "tag": "forge:ingots/copper"
-        },
-        {
-            "tag": "forge:ingots/tin"
-        }
-    ],
-    "result": {
-        "item": "real_minerals:bronze_ingot",
-        "count": 5
+  "type": "real_minerals:alloy",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/copper"
+    },
+    {
+      "tag": "forge:ingots/copper"
+    },
+    {
+      "tag": "forge:ingots/copper"
+    },
+    {
+      "tag": "forge:ingots/copper"
+    },
+    {
+      "tag": "forge:ingots/tin"
     }
+  ],
+  "result": {
+    "item": "real_minerals:bronze_ingot",
+    "count": 5
+  }
 }

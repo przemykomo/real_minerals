@@ -14,6 +14,11 @@ public class Recipes extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+        registerBaseRecipes(consumer);
+        registerAlloyRecipes(consumer);
+    }
+
+    private void registerBaseRecipes(Consumer<IFinishedRecipe> consumer) {
         CrusherRecipeBuilder.crushingRecipe(Ingredient.fromTag(ItemTags.ORES_COPPER), RealMinerals.COPPER_DUST.get(), 2).build(consumer, new ResourceLocation(RealMinerals.MODID, "copper_dust_from_ore"));
         CrusherRecipeBuilder.crushingRecipe(Ingredient.fromTag(ItemTags.INGOTS_COPPER), RealMinerals.COPPER_DUST.get()).build(consumer, new ResourceLocation(RealMinerals.MODID, "copper_dust_from_ingot"));
         CookingRecipeBuilder.blastingRecipe(Ingredient.fromTag(ItemTags.ORES_COPPER), RealMinerals.COPPER_INGOT.get(), 0.7F, 100).addCriterion("has_copper_ore", hasItem(ItemTags.ORES_COPPER)).build(consumer,   new ResourceLocation(RealMinerals.MODID, "copper_ingot_from_blasting_ore"));
@@ -129,5 +134,9 @@ public class Recipes extends RecipeProvider {
         ShapelessRecipeBuilder.shapelessRecipe(RealMinerals.BRONZE_INGOT.get(), 9).addIngredient(ItemTags.STORAGE_BRONZE).addCriterion("has_bronze_block", hasItem(ItemTags.STORAGE_BRONZE)).build(consumer, new ResourceLocation(RealMinerals.MODID, "bronze_ingot_from_block"));
         ShapelessRecipeBuilder.shapelessRecipe(RealMinerals.BRONZE_NUGGET.get(), 9).addIngredient(ItemTags.INGOTS_BRONZE).addCriterion("has_bronze_ingot", hasItem(ItemTags.INGOTS_BRONZE)).build(consumer, new ResourceLocation(RealMinerals.MODID, "bronze_nugget_from_ingot"));
 
+    }
+
+    private void registerAlloyRecipes(Consumer<IFinishedRecipe> consumer) {
+        AlloyRecipeBuilder.alloyRecipe(RealMinerals.BRONZE_INGOT.get(), 5).addIngredient(Ingredient.fromTag(ItemTags.INGOTS_COPPER), 4).addIngredient(Ingredient.fromTag(ItemTags.INGOTS_TIN)).build(consumer);
     }
 }

@@ -19,7 +19,7 @@ public class ItemModels extends ItemModelProvider {
     @Override
     protected void registerModels() {
         for (BlockRegistryObject blockRegistryObject : RealMinerals.BLOCKS.allBlocks) {
-            if (blockRegistryObject == RealMinerals.CRUSHER_BLOCK) {
+            if (blockRegistryObject == RealMinerals.CRUSHER_BLOCK || blockRegistryObject == RealMinerals.ALLOY_FURNACE_BLOCK) {
                 continue;
             }
             String path = blockRegistryObject.ITEM.get().getRegistryName().getPath();
