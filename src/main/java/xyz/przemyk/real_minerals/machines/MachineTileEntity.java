@@ -27,6 +27,7 @@ public abstract class MachineTileEntity extends TileEntity implements ITickableT
     public final MachineItemStackHandler itemHandler;
     public int burnTime;
     public int workingTime;
+    public int burnTimeTotal;
 
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional;
     private final IRecipeType<?> recipeType;
@@ -97,11 +98,12 @@ public abstract class MachineTileEntity extends TileEntity implements ITickableT
         if (!world.isRemote()) {
             ItemStack fuelStack = itemHandler.getFuelStack();
             NonNullList<ItemStack> inputStacks = itemHandler.getInputStacks();
-            if (isBurning() || !fuelStack.isEmpty() && !itemHandler.areInputsEmpty()) {
+            if ((isBurning() || !fuelStack.isEmpty()) && !itemHandler.areInputsEmpty()) {
                 MachineRecipe recipe = getCachedRecipe(inputStacks);
                 if (itemHandler.canProcess(recipe)) {
                     if (!isBurning()) {
                         burnTime = ForgeHooks.getBurnTime(fuelStack);
+                        burnTimeTotal = burnTime;
                         if (isBurning()) {
                             dirty = true;
                             if (fuelStack.hasContainerItem()) {

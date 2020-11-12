@@ -1,7 +1,6 @@
 package xyz.przemyk.real_minerals.compat.jei;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -18,15 +17,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
-import xyz.przemyk.real_minerals.machines.crusher.CrusherRecipe;
+import xyz.przemyk.real_minerals.machines.alloy_furnace.AlloyRecipe;
 
-import static xyz.przemyk.real_minerals.compat.jei.RealMineralsJEIPlugin.RECIPE_GUI_VANILLA;
+import static xyz.przemyk.real_minerals.compat.jei.RealMineralsJEIPlugin.RECIPE_GUI_MOD;
 
-public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
-
-    protected static final int inputSlot = 0;
-    protected static final int outputSlot = 2;
-
+public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
     protected final IDrawableStatic staticFlame;
     protected final IDrawableAnimated animatedFlame;
 
@@ -35,23 +30,23 @@ public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
     private final String localizedName;
     private final IDrawableAnimated arrow;
 
-    public CrusherRecipeCategory(IGuiHelper guiHelper) {
-        staticFlame = guiHelper.createDrawable(RECIPE_GUI_VANILLA, 82, 114, 14, 14);
+    public AlloyRecipeCategory(IGuiHelper guiHelper) {
+        staticFlame = guiHelper.createDrawable(RECIPE_GUI_MOD, 119, 0, 14, 14);
         animatedFlame = guiHelper.createAnimatedDrawable(staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);
-        background = guiHelper.createDrawable(RECIPE_GUI_VANILLA, 0, 114, 82, 54);
-        icon = guiHelper.createDrawableIngredient(new ItemStack(RealMinerals.CRUSHER_BLOCK.ITEM.get()));
-        localizedName = I18n.format("gui." + RealMinerals.MODID + ".category.crushing");
-        arrow = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 82, 128, 24, 17).buildAnimated(100, IDrawableAnimated.StartDirection.LEFT, false);
+        background = guiHelper.createDrawable(RECIPE_GUI_MOD, 0, 0, 119, 54);
+        icon = guiHelper.createDrawableIngredient(new ItemStack(RealMinerals.ALLOY_FURNACE_BLOCK.ITEM.get()));
+        localizedName = I18n.format("gui." + RealMinerals.MODID + ".category.alloying");
+        arrow = guiHelper.drawableBuilder(RECIPE_GUI_MOD, 119, 14, 24, 17).buildAnimated(100, IDrawableAnimated.StartDirection.LEFT, false);
     }
 
     @Override
     public ResourceLocation getUid() {
-        return RealMineralsJEIPlugin.CRUSHER_CATEGORY_ID;
+        return RealMineralsJEIPlugin.ALLOY_CATEGORY_ID;
     }
 
     @Override
-    public Class<? extends CrusherRecipe> getRecipeClass() {
-        return CrusherRecipe.class;
+    public Class<? extends AlloyRecipe> getRecipeClass() {
+        return AlloyRecipe.class;
     }
 
     @Override
@@ -70,22 +65,28 @@ public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
     }
 
     @Override
-    public void setIngredients(CrusherRecipe recipe, IIngredients ingredients) {
+    public void setIngredients(AlloyRecipe recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(recipe.getIngredients());
         ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
     }
 
     @Override
-    public void draw(CrusherRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-        animatedFlame.draw(matrixStack, 1, 20);
-        arrow.draw(matrixStack, 24, 18);
+    public void draw(AlloyRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+        animatedFlame.draw(matrixStack, 20, 22);
+        arrow.draw(matrixStack, 61, 19);
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, CrusherRecipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, AlloyRecipe recipe, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-        guiItemStacks.init(inputSlot, true, 0, 0);
-        guiItemStacks.init(outputSlot, false, 60, 18);
+
+        guiItemStacks.init(0, true, 0, 0);
+        guiItemStacks.init(1, true, 19, 0);
+        guiItemStacks.init(2, true, 38, 0);
+        guiItemStacks.init(3, true, 0, 18);
+        guiItemStacks.init(4, true, 38, 18);
+
+        guiItemStacks.init(6, false, 97, 18);
         guiItemStacks.set(ingredients);
     }
 }

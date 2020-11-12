@@ -24,25 +24,25 @@ public class AlloyFurnaceContainer extends Container {
     public static final TranslationTextComponent TITLE = new TranslationTextComponent(RealMinerals.MODID + ".name.alloy_furnace");
 
     private final IWorldPosCallable usabilityTest;
-    public final IIntArray alloyFurnaceData;
+    public final IIntArray machineData;
 
     @SuppressWarnings("ConstantConditions")
     public static AlloyFurnaceContainer getClientContainer(int id, PlayerInventory playerInventory) {
-        return new AlloyFurnaceContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(7), new IntArray(3), Minecraft.getInstance().player);
+        return new AlloyFurnaceContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(7), new IntArray(4), Minecraft.getInstance().player);
     }
 
-    public AlloyFurnaceContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray crusherData, PlayerEntity playerEntity) {
+    public AlloyFurnaceContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
         super(RealMinerals.ALLOY_FURNACE_CONTAINER.get(), windowId);
         usabilityTest = IWorldPosCallable.of(playerEntity.world, pos);
-        this.alloyFurnaceData = crusherData;
+        this.machineData = machineData;
 
-        addSlot(new SlotItemHandler(itemHandler, 0, 38, 17));
-        addSlot(new SlotItemHandler(itemHandler, 1, 56, 17));
-        addSlot(new SlotItemHandler(itemHandler, 2, 74, 17));
-        addSlot(new SlotItemHandler(itemHandler, 3, 38, 35));
-        addSlot(new SlotItemHandler(itemHandler, 4, 74, 35));
+        addSlot(new SlotItemHandler(itemHandler, 0, 19, 16));
+        addSlot(new SlotItemHandler(itemHandler, 1, 38, 16));
+        addSlot(new SlotItemHandler(itemHandler, 2, 57, 16));
+        addSlot(new SlotItemHandler(itemHandler, 3, 19, 35));
+        addSlot(new SlotItemHandler(itemHandler, 4, 57, 35));
 
-        addSlot(new MachineFuelSlot(itemHandler, 5, 56, 53));
+        addSlot(new MachineFuelSlot(itemHandler, 5, 38, 53));
         addSlot(new MachineOutputSlot(itemHandler, 6, 116, 35, playerEntity));
 
         for(int i = 0; i < 3; ++i) {
@@ -55,7 +55,7 @@ public class AlloyFurnaceContainer extends Container {
             this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
         }
 
-        trackIntArray(crusherData);
+        trackIntArray(machineData);
     }
 
     @Override

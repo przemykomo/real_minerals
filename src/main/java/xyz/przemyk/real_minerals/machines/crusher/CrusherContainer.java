@@ -24,17 +24,17 @@ public class CrusherContainer extends Container {
     public static final TranslationTextComponent TITLE = new TranslationTextComponent(RealMinerals.MODID + ".name.crusher");
 
     private final IWorldPosCallable usabilityTest;
-    public final IIntArray crusherData;
+    public final IIntArray machineData;
 
     @SuppressWarnings("ConstantConditions")
     public static CrusherContainer getClientContainer(int id, PlayerInventory playerInventory) {
-        return new CrusherContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(3), new IntArray(3), Minecraft.getInstance().player);
+        return new CrusherContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(3), new IntArray(4), Minecraft.getInstance().player);
     }
 
-    protected CrusherContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray crusherData, PlayerEntity playerEntity) {
+    protected CrusherContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
         super(RealMinerals.CRUSHER_CONTAINER.get(), windowId);
         usabilityTest = IWorldPosCallable.of(playerEntity.world, pos);
-        this.crusherData = crusherData;
+        this.machineData = machineData;
 
         addSlot(new SlotItemHandler(itemHandler, 0, 56, 17));
         addSlot(new MachineFuelSlot(itemHandler, 1, 56, 53));
@@ -50,7 +50,7 @@ public class CrusherContainer extends Container {
             this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
         }
 
-        trackIntArray(crusherData);
+        trackIntArray(machineData);
     }
 
     @Override

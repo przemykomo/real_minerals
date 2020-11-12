@@ -32,15 +32,23 @@ public class AlloyFurnaceScreen extends ContainerScreen<AlloyFurnaceContainer> {
         int i = this.guiLeft;
         int j = this.guiTop;
         this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
-        IIntArray alloyFurnaceData = container.alloyFurnaceData;
-        int burnTime = alloyFurnaceData.get(0);
-        if (burnTime > 0) {
-            int k = burnTime * 13 / 200;
-            this.blit(matrixStack, i + 56, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
+        IIntArray alloyFurnaceData = container.machineData;
+        if (alloyFurnaceData.get(0) > 0) {
+            int k = getBurnLeftScaled();
+            this.blit(matrixStack, i + 38, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
         }
 
         int crushTime = alloyFurnaceData.get(1);
         int l =  crushTime != 0 ? crushTime * 24 / alloyFurnaceData.get(2) : 0;
         this.blit(matrixStack, i + 79, j + 34, 176, 14, l + 1, 16);
+    }
+
+    private int getBurnLeftScaled() {
+        int burnTimeTotal = container.machineData.get(3);
+        if (burnTimeTotal == 0) {
+            burnTimeTotal = 200;
+        }
+
+        return container.machineData.get(0) * 13 / burnTimeTotal;
     }
 }

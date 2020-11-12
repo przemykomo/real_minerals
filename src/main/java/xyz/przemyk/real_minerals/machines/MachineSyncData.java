@@ -17,6 +17,8 @@ public class MachineSyncData implements IIntArray {
                 return machine.workingTime;
             case 2:
                 return machine.getWorkingTimeTotal();
+            case 3:
+                return machine.burnTimeTotal;
             default:
                 return 0;
         }
@@ -31,11 +33,14 @@ public class MachineSyncData implements IIntArray {
                 machine.workingTime = value;
                 break;
             // you should never try to set workingTimeTotal
+            case 3:
+                machine.burnTimeTotal = value;
+                break;
         }
 
     }
 
     public int size() {
-        return 3;
+        return 4;
     }
 }

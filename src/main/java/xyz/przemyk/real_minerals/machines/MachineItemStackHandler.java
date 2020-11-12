@@ -56,7 +56,7 @@ public class MachineItemStackHandler extends ItemStackHandler {
     }
 
     public boolean canProcess(@Nullable MachineRecipe recipe) {
-        if (!getStackInSlot(0).isEmpty() && recipe != null) {
+        if (recipe != null) {
             ItemStack outputStack = recipe.getRecipeOutput();
             if (outputStack.isEmpty()) {
                 return false;
