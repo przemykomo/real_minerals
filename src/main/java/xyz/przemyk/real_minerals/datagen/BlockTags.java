@@ -16,6 +16,8 @@ public class BlockTags extends BlockTagsProvider {
         super(generatorIn, modId, existingFileHelper);
     }
 
+    ////////////////////////////////////////////////////////////////// METALS WITH STONE ORES
+
     public static final Tags.IOptionalNamedTag<Block> STORAGE_COPPER = tag("storage_blocks/copper");
     public static final Tags.IOptionalNamedTag<Block> ORES_COPPER = tag("ores/copper");
 
@@ -43,12 +45,30 @@ public class BlockTags extends BlockTagsProvider {
     public static final Tags.IOptionalNamedTag<Block> STORAGE_ZINC = tag("storage_blocks/zinc");
     public static final Tags.IOptionalNamedTag<Block> ORES_ZINC = tag("ores/zinc");
 
+    ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
+
+    public static final Tags.IOptionalNamedTag<Block> GRAVEL_ORES_GOLD = tag("gravel_ores/gold");
+
+    public static final Tags.IOptionalNamedTag<Block> STORAGE_RUTHENIUM = tag("storage_blocks/ruthenium");
+    public static final Tags.IOptionalNamedTag<Block> GRAVEL_ORES_RUTHENIUM = tag("gravel_ores/ruthenium");
+
+    public static final Tags.IOptionalNamedTag<Block> STORAGE_ZIRCONIUM = tag("storage_blocks/zirconium");
+    public static final Tags.IOptionalNamedTag<Block> GRAVEL_ORES_ZIRCONIUM = tag("gravel_ores/zirconium");
+
+    public static final Tags.IOptionalNamedTag<Block> STORAGE_IRIDIUM = tag("storage_blocks/iridium");
+    public static final Tags.IOptionalNamedTag<Block> GRAVEL_ORES_IRIDIUM = tag("gravel_ores/iridium");
+
+    ////////////////////////////////////////////////////////////////// ALLOYS
+
     public static final Tags.IOptionalNamedTag<Block> STORAGE_BRASS = tag("storage_blocks/brass");
 
     public static final Tags.IOptionalNamedTag<Block> STORAGE_BRONZE = tag("storage_blocks/bronze");
 
     @Override
     protected void registerTags() {
+
+        ////////////////////////////////////////////////////////////////// METALS WITH STONE ORES
+
         getOrCreateBuilder(STORAGE_COPPER).add(Registering.COPPER_BLOCK.BLOCK.get());
         getOrCreateBuilder(ORES_COPPER).add(Registering.COPPER_ORE.BLOCK.get());
 
@@ -76,6 +96,21 @@ public class BlockTags extends BlockTagsProvider {
         getOrCreateBuilder(STORAGE_ZINC).add(Registering.ZINC_BLOCK.BLOCK.get());
         getOrCreateBuilder(ORES_ZINC).add(Registering.ZINC_ORE.BLOCK.get());
 
+        ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
+
+        getOrCreateBuilder(GRAVEL_ORES_GOLD).add(Registering.GOLD_GRAVEL_ORE.BLOCK.get());
+
+        getOrCreateBuilder(STORAGE_RUTHENIUM).add(Registering.RUTHENIUM_BLOCK.BLOCK.get());
+        getOrCreateBuilder(GRAVEL_ORES_RUTHENIUM).add(Registering.RUTHENIUM_GRAVEL_ORE.BLOCK.get());
+
+        getOrCreateBuilder(STORAGE_ZIRCONIUM).add(Registering.ZIRCONIUM_BLOCK.BLOCK.get());
+        getOrCreateBuilder(GRAVEL_ORES_ZIRCONIUM).add(Registering.ZIRCONIUM_GRAVEL_ORE.BLOCK.get());
+
+        getOrCreateBuilder(STORAGE_IRIDIUM).add(Registering.IRIDIUM_BLOCK.BLOCK.get());
+        getOrCreateBuilder(GRAVEL_ORES_IRIDIUM).add(Registering.IRIDIUM_GRAVEL_ORE.BLOCK.get());
+
+        ////////////////////////////////////////////////////////////////// ALLOYS
+
         getOrCreateBuilder(STORAGE_BRASS).add(Registering.BRASS_BLOCK.BLOCK.get());
 
         getOrCreateBuilder(STORAGE_BRONZE).add(Registering.BRONZE_BLOCK.BLOCK.get());
@@ -85,7 +120,9 @@ public class BlockTags extends BlockTagsProvider {
                 Registering.NICKEL_BLOCK.BLOCK.get(), Registering.PLATINUM_BLOCK.BLOCK.get(),
                 Registering.SILVER_BLOCK.BLOCK.get(), Registering.TIN_BLOCK.BLOCK.get(),
                 Registering.ALUMINUM_BLOCK.BLOCK.get(), Registering.ZINC_BLOCK.BLOCK.get(),
-                Registering.BRASS_BLOCK.BLOCK.get(), Registering.BRONZE_BLOCK.BLOCK.get()
+                Registering.BRASS_BLOCK.BLOCK.get(), Registering.BRONZE_BLOCK.BLOCK.get(),
+                Registering.RUTHENIUM_BLOCK.BLOCK.get(), Registering.ZIRCONIUM_BLOCK.BLOCK.get(),
+                Registering.IRIDIUM_BLOCK.BLOCK.get()
         );
     }
 

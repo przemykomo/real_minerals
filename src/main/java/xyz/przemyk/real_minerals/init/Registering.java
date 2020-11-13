@@ -2,6 +2,7 @@ package xyz.przemyk.real_minerals.init;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.GravelBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -106,6 +107,28 @@ public class Registering {
     public static final RegistryObject<Item> ZINC_INGOT = ITEMS.register( "zinc_ingot", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
     public static final RegistryObject<Item> ZINC_NUGGET = ITEMS.register("zinc_nugget", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
     public static final BlockRegistryObject  ZINC_ORE = BLOCKS.register(  "zinc_ore", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(3.0F, 3.0F)), ITEM_GROUP);
+
+    ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
+
+    public static final BlockRegistryObject  GOLD_GRAVEL_ORE = BLOCKS.register(  "gold_gravel_ore", () -> new GravelBlock(AbstractBlock.Properties.create(Material.SAND, MaterialColor.STONE).hardnessAndResistance(0.6F).sound(SoundType.GROUND).harvestTool(ToolType.SHOVEL)), ITEM_GROUP);
+
+    public static final BlockRegistryObject  RUTHENIUM_BLOCK = BLOCKS.register("ruthenium_block", () -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.YELLOW).harvestTool(ToolType.PICKAXE).harvestLevel(0).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<Item> RUTHENIUM_DUST = ITEMS.register(  "ruthenium_dust", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final RegistryObject<Item> RUTHENIUM_INGOT = ITEMS.register( "ruthenium_ingot", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final RegistryObject<Item> RUTHENIUM_NUGGET = ITEMS.register("ruthenium_nugget", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final BlockRegistryObject  RUTHENIUM_GRAVEL_ORE = BLOCKS.register(  "ruthenium_gravel_ore", () -> new GravelBlock(AbstractBlock.Properties.create(Material.SAND, MaterialColor.STONE).hardnessAndResistance(0.6F).sound(SoundType.GROUND).harvestTool(ToolType.SHOVEL)), ITEM_GROUP);
+
+    public static final BlockRegistryObject  ZIRCONIUM_BLOCK = BLOCKS.register("zirconium_block", () -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.YELLOW).harvestTool(ToolType.PICKAXE).harvestLevel(0).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<Item> ZIRCONIUM_DUST = ITEMS.register(  "zirconium_dust", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final RegistryObject<Item> ZIRCONIUM_INGOT = ITEMS.register( "zirconium_ingot", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final RegistryObject<Item> ZIRCONIUM_NUGGET = ITEMS.register("zirconium_nugget", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final BlockRegistryObject  ZIRCONIUM_GRAVEL_ORE = BLOCKS.register(  "zirconium_gravel_ore", () -> new GravelBlock(AbstractBlock.Properties.create(Material.SAND, MaterialColor.STONE).hardnessAndResistance(0.6F).sound(SoundType.GROUND).harvestTool(ToolType.SHOVEL)), ITEM_GROUP);
+
+    public static final BlockRegistryObject  IRIDIUM_BLOCK = BLOCKS.register("iridium_block", () -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.YELLOW).harvestTool(ToolType.PICKAXE).harvestLevel(0).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<Item> IRIDIUM_DUST = ITEMS.register(  "iridium_dust", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final RegistryObject<Item> IRIDIUM_INGOT = ITEMS.register( "iridium_ingot", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final RegistryObject<Item> IRIDIUM_NUGGET = ITEMS.register("iridium_nugget", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final BlockRegistryObject  IRIDIUM_GRAVEL_ORE = BLOCKS.register(  "iridium_gravel_ore", () -> new GravelBlock(AbstractBlock.Properties.create(Material.SAND, MaterialColor.STONE).hardnessAndResistance(0.6F).sound(SoundType.GROUND).harvestTool(ToolType.SHOVEL)), ITEM_GROUP);
 
     ////////////////////////////////////////////////////////////////// ALLOYS
 

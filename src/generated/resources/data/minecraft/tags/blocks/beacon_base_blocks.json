@@ -11,6 +11,9 @@
     "real_minerals:aluminum_block",
     "real_minerals:zinc_block",
     "real_minerals:brass_block",
-    "real_minerals:bronze_block"
+    "real_minerals:bronze_block",
+    "real_minerals:ruthenium_block",
+    "real_minerals:zirconium_block",
+    "real_minerals:iridium_block"
   ]
 }
