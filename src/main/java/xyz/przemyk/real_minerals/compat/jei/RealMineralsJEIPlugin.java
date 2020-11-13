@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.alloy_furnace.AlloyFurnaceContainer;
 import xyz.przemyk.real_minerals.machines.alloy_furnace.AlloyFurnaceScreen;
 import xyz.przemyk.real_minerals.machines.crusher.CrusherContainer;
@@ -59,8 +60,8 @@ public class RealMineralsJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(RealMinerals.CRUSHER_BLOCK.ITEM.get()), CRUSHER_CATEGORY_ID, VanillaRecipeCategoryUid.FUEL);
-        registration.addRecipeCatalyst(new ItemStack(RealMinerals.ALLOY_FURNACE_BLOCK.ITEM.get()), ALLOY_CATEGORY_ID, VanillaRecipeCategoryUid.FUEL);
+        registration.addRecipeCatalyst(new ItemStack(Registering.CRUSHER_BLOCK.ITEM.get()), CRUSHER_CATEGORY_ID, VanillaRecipeCategoryUid.FUEL);
+        registration.addRecipeCatalyst(new ItemStack(Registering.ALLOY_FURNACE_BLOCK.ITEM.get()), ALLOY_CATEGORY_ID, VanillaRecipeCategoryUid.FUEL);
     }
 
     @Override

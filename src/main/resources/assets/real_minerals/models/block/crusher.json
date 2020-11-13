@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/orientable_with_bottom",
+    "textures": {
+        "top": "real_minerals:block/crusher_top",
+        "front": "real_minerals:block/crusher_front",
+        "side": "real_minerals:block/crusher_side",
+        "bottom": "real_minerals:block/machine_bottom"
+    }
+}

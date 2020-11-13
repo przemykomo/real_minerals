@@ -8,6 +8,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.machines.MachineBlock;
 
 public class ItemModels extends ItemModelProvider {
 
@@ -18,8 +20,8 @@ public class ItemModels extends ItemModelProvider {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void registerModels() {
-        for (BlockRegistryObject blockRegistryObject : RealMinerals.BLOCKS.allBlocks) {
-            if (blockRegistryObject == RealMinerals.CRUSHER_BLOCK || blockRegistryObject == RealMinerals.ALLOY_FURNACE_BLOCK) {
+        for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
+            if (blockRegistryObject.BLOCK.get() instanceof MachineBlock) {
                 continue;
             }
             String path = blockRegistryObject.ITEM.get().getRegistryName().getPath();
@@ -27,7 +29,7 @@ public class ItemModels extends ItemModelProvider {
                     .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
         }
 
-        for (RegistryObject<Item> itemRegistryObject : RealMinerals.ITEMS.allItems) {
+        for (RegistryObject<Item> itemRegistryObject : Registering.ITEMS.allItems) {
             String path = itemRegistryObject.get().getRegistryName().getPath();
             getBuilder(path)
                     .parent(new ModelFile.UncheckedModelFile("item/generated"))

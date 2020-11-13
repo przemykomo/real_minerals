@@ -13,7 +13,7 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
-        ScreenManager.registerFactory(RealMinerals.CRUSHER_CONTAINER.get(), CrusherScreen::new);
-        ScreenManager.registerFactory(RealMinerals.ALLOY_FURNACE_CONTAINER.get(), AlloyFurnaceScreen::new);
+        ScreenManager.registerFactory(Registering.CRUSHER_CONTAINER.get(), CrusherScreen::new);
+        ScreenManager.registerFactory(Registering.ALLOY_FURNACE_CONTAINER.get(), AlloyFurnaceScreen::new);
     }
 }

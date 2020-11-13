@@ -9,6 +9,7 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 
 import java.util.List;
@@ -23,15 +24,17 @@ public class WorldGenEvents {
             List<Supplier<ConfiguredFeature<?, ?>>> features = event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES);
 
             //TODO: change rarity and height of ore generation
-            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.COPPER_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
-            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.LEAD_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
-            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.MAGNESIUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
-            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.NICKEL_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
-            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.PLATINUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
-            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.SILVER_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
-            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.TIN_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
-            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.ALUMINUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
-            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, RealMinerals.ZINC_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.COPPER_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.LEAD_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.MAGNESIUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.NICKEL_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.PLATINUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.SILVER_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.TIN_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.ALUMINUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.ZINC_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+
+            //TODO: gravel ores
         }
     }
 }

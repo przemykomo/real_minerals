@@ -6,6 +6,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 
 import javax.annotation.Nullable;
@@ -48,43 +49,43 @@ public class BlockTags extends BlockTagsProvider {
 
     @Override
     protected void registerTags() {
-        getOrCreateBuilder(STORAGE_COPPER).add(RealMinerals.COPPER_BLOCK.BLOCK.get());
-        getOrCreateBuilder(ORES_COPPER).add(RealMinerals.COPPER_ORE.BLOCK.get());
+        getOrCreateBuilder(STORAGE_COPPER).add(Registering.COPPER_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_COPPER).add(Registering.COPPER_ORE.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_LEAD).add(RealMinerals.LEAD_BLOCK.BLOCK.get());
-        getOrCreateBuilder(ORES_LEAD).add(RealMinerals.LEAD_ORE.BLOCK.get());
+        getOrCreateBuilder(STORAGE_LEAD).add(Registering.LEAD_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_LEAD).add(Registering.LEAD_ORE.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_MAGNESIUM).add(RealMinerals.MAGNESIUM_BLOCK.BLOCK.get());
-        getOrCreateBuilder(ORES_MAGNESIUM).add(RealMinerals.MAGNESIUM_ORE.BLOCK.get());
+        getOrCreateBuilder(STORAGE_MAGNESIUM).add(Registering.MAGNESIUM_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_MAGNESIUM).add(Registering.MAGNESIUM_ORE.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_NICKEL).add(RealMinerals.NICKEL_BLOCK.BLOCK.get());
-        getOrCreateBuilder(ORES_NICKEL).add(RealMinerals.NICKEL_ORE.BLOCK.get());
+        getOrCreateBuilder(STORAGE_NICKEL).add(Registering.NICKEL_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_NICKEL).add(Registering.NICKEL_ORE.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_PLATINUM).add(RealMinerals.PLATINUM_BLOCK.BLOCK.get());
-        getOrCreateBuilder(ORES_PLATINUM).add(RealMinerals.PLATINUM_ORE.BLOCK.get());
+        getOrCreateBuilder(STORAGE_PLATINUM).add(Registering.PLATINUM_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_PLATINUM).add(Registering.PLATINUM_ORE.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_SILVER).add(RealMinerals.SILVER_BLOCK.BLOCK.get());
-        getOrCreateBuilder(ORES_SILVER).add(RealMinerals.SILVER_ORE.BLOCK.get());
+        getOrCreateBuilder(STORAGE_SILVER).add(Registering.SILVER_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_SILVER).add(Registering.SILVER_ORE.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_TIN).add(RealMinerals.TIN_BLOCK.BLOCK.get());
-        getOrCreateBuilder(ORES_TIN).add(RealMinerals.TIN_ORE.BLOCK.get());
+        getOrCreateBuilder(STORAGE_TIN).add(Registering.TIN_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_TIN).add(Registering.TIN_ORE.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_ALUMINUM).add(RealMinerals.ALUMINUM_BLOCK.BLOCK.get());
-        getOrCreateBuilder(ORES_ALUMINUM).add(RealMinerals.ALUMINUM_ORE.BLOCK.get());
+        getOrCreateBuilder(STORAGE_ALUMINUM).add(Registering.ALUMINUM_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_ALUMINUM).add(Registering.ALUMINUM_ORE.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_ZINC).add(RealMinerals.ZINC_BLOCK.BLOCK.get());
-        getOrCreateBuilder(ORES_ZINC).add(RealMinerals.ZINC_ORE.BLOCK.get());
+        getOrCreateBuilder(STORAGE_ZINC).add(Registering.ZINC_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_ZINC).add(Registering.ZINC_ORE.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_BRASS).add(RealMinerals.BRASS_BLOCK.BLOCK.get());
+        getOrCreateBuilder(STORAGE_BRASS).add(Registering.BRASS_BLOCK.BLOCK.get());
 
-        getOrCreateBuilder(STORAGE_BRONZE).add(RealMinerals.BRONZE_BLOCK.BLOCK.get());
+        getOrCreateBuilder(STORAGE_BRONZE).add(Registering.BRONZE_BLOCK.BLOCK.get());
 
-        getOrCreateBuilder(net.minecraft.tags.BlockTags.BEACON_BASE_BLOCKS).add(RealMinerals.COPPER_BLOCK.BLOCK.get(),
-                RealMinerals.LEAD_BLOCK.BLOCK.get(), RealMinerals.MAGNESIUM_BLOCK.BLOCK.get(),
-                RealMinerals.NICKEL_BLOCK.BLOCK.get(), RealMinerals.PLATINUM_BLOCK.BLOCK.get(),
-                RealMinerals.SILVER_BLOCK.BLOCK.get(), RealMinerals.TIN_BLOCK.BLOCK.get(),
-                RealMinerals.ALUMINUM_BLOCK.BLOCK.get(), RealMinerals.ZINC_BLOCK.BLOCK.get(),
-                RealMinerals.BRASS_BLOCK.BLOCK.get(), RealMinerals.BRONZE_BLOCK.BLOCK.get()
+        getOrCreateBuilder(net.minecraft.tags.BlockTags.BEACON_BASE_BLOCKS).add(Registering.COPPER_BLOCK.BLOCK.get(),
+                Registering.LEAD_BLOCK.BLOCK.get(), Registering.MAGNESIUM_BLOCK.BLOCK.get(),
+                Registering.NICKEL_BLOCK.BLOCK.get(), Registering.PLATINUM_BLOCK.BLOCK.get(),
+                Registering.SILVER_BLOCK.BLOCK.get(), Registering.TIN_BLOCK.BLOCK.get(),
+                Registering.ALUMINUM_BLOCK.BLOCK.get(), Registering.ZINC_BLOCK.BLOCK.get(),
+                Registering.BRASS_BLOCK.BLOCK.get(), Registering.BRONZE_BLOCK.BLOCK.get()
         );
     }
 

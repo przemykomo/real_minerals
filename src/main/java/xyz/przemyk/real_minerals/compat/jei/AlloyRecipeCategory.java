@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.alloy_furnace.AlloyRecipe;
 
 import static xyz.przemyk.real_minerals.compat.jei.RealMineralsJEIPlugin.RECIPE_GUI_MOD;
@@ -34,7 +35,7 @@ public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
         staticFlame = guiHelper.createDrawable(RECIPE_GUI_MOD, 119, 0, 14, 14);
         animatedFlame = guiHelper.createAnimatedDrawable(staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);
         background = guiHelper.createDrawable(RECIPE_GUI_MOD, 0, 0, 119, 54);
-        icon = guiHelper.createDrawableIngredient(new ItemStack(RealMinerals.ALLOY_FURNACE_BLOCK.ITEM.get()));
+        icon = guiHelper.createDrawableIngredient(new ItemStack(Registering.ALLOY_FURNACE_BLOCK.ITEM.get()));
         localizedName = I18n.format("gui." + RealMinerals.MODID + ".category.alloying");
         arrow = guiHelper.drawableBuilder(RECIPE_GUI_MOD, 119, 14, 24, 17).buildAnimated(100, IDrawableAnimated.StartDirection.LEFT, false);
     }

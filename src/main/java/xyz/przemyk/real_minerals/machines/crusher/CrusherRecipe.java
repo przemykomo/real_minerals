@@ -13,6 +13,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.MachineRecipe;
 
 import javax.annotation.Nullable;
@@ -42,7 +43,7 @@ public class CrusherRecipe extends MachineRecipe {
 
     @Override
     public ItemStack getIcon() {
-        return new ItemStack(RealMinerals.CRUSHER_BLOCK.ITEM.get());
+        return new ItemStack(Registering.CRUSHER_BLOCK.ITEM.get());
     }
 
     public boolean isValidInput(NonNullList<ItemStack> inputList) {

@@ -8,6 +8,8 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.machines.MachineBlock;
 
 public class BlockStates extends BlockStateProvider {
 
@@ -18,7 +20,10 @@ public class BlockStates extends BlockStateProvider {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void registerStatesAndModels() {
-        for (BlockRegistryObject blockRegistryObject : RealMinerals.BLOCKS.allBlocks) {
+        for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
+            if (blockRegistryObject.BLOCK.get() instanceof MachineBlock) {
+                continue;
+            }
             Block block = blockRegistryObject.BLOCK.get();
             getVariantBuilder(block)
                     .forAllStates(blockState -> ConfiguredModel.builder()

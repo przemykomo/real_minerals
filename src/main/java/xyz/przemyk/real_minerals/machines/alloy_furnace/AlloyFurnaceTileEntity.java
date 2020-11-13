@@ -5,6 +5,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.util.math.BlockPos;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.MachineItemStackHandler;
 import xyz.przemyk.real_minerals.machines.MachineSyncData;
 import xyz.przemyk.real_minerals.machines.MachineTileEntity;
@@ -17,7 +18,7 @@ public class AlloyFurnaceTileEntity extends MachineTileEntity {
     }
 
     public AlloyFurnaceTileEntity() {
-        super(RealMinerals.ALLOY_FURNACE_TILE_ENTITY_TYPE.get(), new MachineItemStackHandler(5), RealMinerals.ALLOY_RECIPE_TYPE);
+        super(Registering.ALLOY_FURNACE_TILE_ENTITY_TYPE.get(), new MachineItemStackHandler(5), RealMinerals.ALLOY_RECIPE_TYPE);
     }
 
     @Override

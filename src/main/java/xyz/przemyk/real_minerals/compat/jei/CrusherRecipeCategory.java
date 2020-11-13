@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.crusher.CrusherRecipe;
 
 import static xyz.przemyk.real_minerals.compat.jei.RealMineralsJEIPlugin.RECIPE_GUI_VANILLA;
@@ -39,7 +40,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
         staticFlame = guiHelper.createDrawable(RECIPE_GUI_VANILLA, 82, 114, 14, 14);
         animatedFlame = guiHelper.createAnimatedDrawable(staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);
         background = guiHelper.createDrawable(RECIPE_GUI_VANILLA, 0, 114, 82, 54);
-        icon = guiHelper.createDrawableIngredient(new ItemStack(RealMinerals.CRUSHER_BLOCK.ITEM.get()));
+        icon = guiHelper.createDrawableIngredient(new ItemStack(Registering.CRUSHER_BLOCK.ITEM.get()));
         localizedName = I18n.format("gui." + RealMinerals.MODID + ".category.crushing");
         arrow = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 82, 128, 24, 17).buildAnimated(100, IDrawableAnimated.StartDirection.LEFT, false);
     }

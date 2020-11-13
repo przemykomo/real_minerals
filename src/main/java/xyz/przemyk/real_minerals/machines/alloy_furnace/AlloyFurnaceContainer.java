@@ -16,6 +16,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.MachineFuelSlot;
 import xyz.przemyk.real_minerals.machines.MachineOutputSlot;
 
@@ -32,7 +33,7 @@ public class AlloyFurnaceContainer extends Container {
     }
 
     public AlloyFurnaceContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
-        super(RealMinerals.ALLOY_FURNACE_CONTAINER.get(), windowId);
+        super(Registering.ALLOY_FURNACE_CONTAINER.get(), windowId);
         usabilityTest = IWorldPosCallable.of(playerEntity.world, pos);
         this.machineData = machineData;
 
@@ -60,7 +61,7 @@ public class AlloyFurnaceContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(usabilityTest, playerIn, RealMinerals.ALLOY_FURNACE_BLOCK.BLOCK.get());
+        return isWithinUsableDistance(usabilityTest, playerIn, Registering.ALLOY_FURNACE_BLOCK.BLOCK.get());
     }
 
     //TODO

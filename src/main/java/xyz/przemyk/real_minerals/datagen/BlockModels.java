@@ -6,6 +6,8 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.machines.MachineBlock;
 
 public class BlockModels extends BlockModelProvider {
 
@@ -16,8 +18,8 @@ public class BlockModels extends BlockModelProvider {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void registerModels() {
-        for (BlockRegistryObject blockRegistryObject : RealMinerals.BLOCKS.allBlocks) {
-            if (blockRegistryObject == RealMinerals.CRUSHER_BLOCK || blockRegistryObject == RealMinerals.ALLOY_FURNACE_BLOCK) {
+        for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
+            if (blockRegistryObject.BLOCK.get() instanceof MachineBlock) {
                 continue;
             }
             String path = blockRegistryObject.BLOCK.get().getRegistryName().getPath();

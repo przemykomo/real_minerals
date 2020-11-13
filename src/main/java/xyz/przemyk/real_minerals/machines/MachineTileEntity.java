@@ -1,5 +1,6 @@
 package xyz.przemyk.real_minerals.machines;
 
+import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -91,14 +92,16 @@ public abstract class MachineTileEntity extends TileEntity implements ITickableT
     @Override
     public void tick() {
         boolean dirty = false;
-        if (isBurning()) {
+        boolean wasBurning = isBurning();
+        if (wasBurning) {
             --burnTime;
         }
 
         if (!world.isRemote()) {
             ItemStack fuelStack = itemHandler.getFuelStack();
             NonNullList<ItemStack> inputStacks = itemHandler.getInputStacks();
-            if ((isBurning() || !fuelStack.isEmpty()) && !itemHandler.areInputsEmpty()) {
+            boolean areInputsEmpty = itemHandler.areInputsEmpty();
+            if ((isBurning() || !fuelStack.isEmpty()) && !areInputsEmpty) {
                 MachineRecipe recipe = getCachedRecipe(inputStacks);
                 if (itemHandler.canProcess(recipe)) {
                     if (!isBurning()) {
@@ -127,7 +130,14 @@ public abstract class MachineTileEntity extends TileEntity implements ITickableT
                 workingTime = MathHelper.clamp(workingTime - 2, 0, getWorkingTimeTotal());
             }
 
-            //todo: if changed burning state, then set blockstate
+            if (areInputsEmpty) {
+                workingTime = 0;
+            }
+
+            if (wasBurning != isBurning()) {
+                dirty = true;
+                world.setBlockState(this.pos, world.getBlockState(this.pos).with(AbstractFurnaceBlock.LIT, this.isBurning()), 3);
+            }
         }
 
         if (dirty) {

@@ -16,6 +16,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.MachineFuelSlot;
 import xyz.przemyk.real_minerals.machines.MachineOutputSlot;
 
@@ -32,7 +33,7 @@ public class CrusherContainer extends Container {
     }
 
     protected CrusherContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
-        super(RealMinerals.CRUSHER_CONTAINER.get(), windowId);
+        super(Registering.CRUSHER_CONTAINER.get(), windowId);
         usabilityTest = IWorldPosCallable.of(playerEntity.world, pos);
         this.machineData = machineData;
 
@@ -55,7 +56,7 @@ public class CrusherContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(usabilityTest, playerIn, RealMinerals.CRUSHER_BLOCK.BLOCK.get());
+        return isWithinUsableDistance(usabilityTest, playerIn, Registering.CRUSHER_BLOCK.BLOCK.get());
     }
 
     //TODO
