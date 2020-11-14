@@ -74,7 +74,7 @@ public class Registering {
     public static final RegistryObject<ContainerType<BatteryContainer>> BATTERY_CONTAINER = CONTAINERS.register("battery", () -> new ContainerType<>(BatteryContainer::getClientContainer));
 
     public static final BlockRegistryObject ELECTRIC_FURNACE_BLOCK = BLOCKS.register("electric_furnace", () -> new ElectricFurnaceBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
-    public static final RegistryObject<TileEntityType<ElectricFurnaceTileEntity>> ELECTRIC_FURNACE_TILE_ENTITY_TYPE = TILE_ENTITIES.register("electric_furnace", () -> TileEntityType.Builder.create(ElectricFurnaceTileEntity::new, BATTERY_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<TileEntityType<ElectricFurnaceTileEntity>> ELECTRIC_FURNACE_TILE_ENTITY_TYPE = TILE_ENTITIES.register("electric_furnace", () -> TileEntityType.Builder.create(ElectricFurnaceTileEntity::new, ELECTRIC_FURNACE_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<ElectricFurnaceContainer>> ELECTRIC_FURNACE_CONTAINER = CONTAINERS.register("electric_furnace", () -> new ContainerType<>(ElectricFurnaceContainer::getClientContainer));
 
     ////////////////////////////////////////////////////////////////// METALS WITH STONE ORES

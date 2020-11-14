@@ -125,12 +125,14 @@ public class ElectricFurnaceTileEntity extends ElectricMachineTileEntity {
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
+        workingTime = nbt.getInt("WorkingTime");
         super.read(state, nbt);
     }
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("inv", itemHandler.serializeNBT());
+        compound.putInt("WorkingTime", workingTime);
         return super.write(compound);
     }
 
