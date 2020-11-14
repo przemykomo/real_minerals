@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.crusher;
+package xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -9,11 +9,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 
-public class CrusherScreen extends ContainerScreen<CrusherContainer> {
+public class AlloyFurnaceScreen extends ContainerScreen<AlloyFurnaceContainer> {
 
-    private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/crusher.png");
+    private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/alloy_furnace.png");
 
-    public CrusherScreen(CrusherContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public AlloyFurnaceScreen(AlloyFurnaceContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
     }
 
@@ -32,14 +32,14 @@ public class CrusherScreen extends ContainerScreen<CrusherContainer> {
         int i = this.guiLeft;
         int j = this.guiTop;
         this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
-        IIntArray crusherData = container.machineData;
-        if (crusherData.get(0) > 0) {
+        IIntArray alloyFurnaceData = container.machineData;
+        if (alloyFurnaceData.get(0) > 0) {
             int k = getBurnLeftScaled();
-            this.blit(matrixStack, i + 56, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
+            this.blit(matrixStack, i + 38, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
         }
 
-        int crushTime = crusherData.get(1);
-        int l =  crushTime != 0 ? crushTime * 24 / crusherData.get(2) : 0;
+        int crushTime = alloyFurnaceData.get(1);
+        int l =  crushTime != 0 ? crushTime * 24 / alloyFurnaceData.get(2) : 0;
         this.blit(matrixStack, i + 79, j + 34, 176, 14, l + 1, 16);
     }
 

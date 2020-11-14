@@ -12,11 +12,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.machines.alloy_furnace.AlloyFurnaceContainer;
-import xyz.przemyk.real_minerals.machines.alloy_furnace.AlloyFurnaceScreen;
-import xyz.przemyk.real_minerals.machines.crusher.CrusherContainer;
-import xyz.przemyk.real_minerals.machines.crusher.CrusherScreen;
-import xyz.przemyk.real_minerals.machines.crusher.CrusherTileEntity;
+import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceContainer;
+import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceScreen;
+import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherContainer;
+import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherScreen;
 
 @JeiPlugin
 public class RealMineralsJEIPlugin implements IModPlugin {

@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.alloy_furnace;
+package xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace;
 
 import net.minecraft.item.crafting.IRecipeType;
 import xyz.przemyk.real_minerals.init.RealMinerals;

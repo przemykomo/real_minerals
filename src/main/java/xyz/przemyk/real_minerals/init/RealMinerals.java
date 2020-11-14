@@ -13,11 +13,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import xyz.przemyk.real_minerals.machines.MachineRecipe;
-import xyz.przemyk.real_minerals.machines.alloy_furnace.AlloyRecipe;
-import xyz.przemyk.real_minerals.machines.alloy_furnace.AlloyRecipeType;
-import xyz.przemyk.real_minerals.machines.crusher.CrusherRecipe;
-import xyz.przemyk.real_minerals.machines.crusher.CrusherRecipeType;
+import xyz.przemyk.real_minerals.machines.not_electric.MachineRecipe;
+import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyRecipe;
+import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyRecipeType;
+import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherRecipe;
+import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherRecipeType;
 
 import javax.annotation.Nullable;
 import java.util.Set;

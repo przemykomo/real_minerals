@@ -1,13 +1,11 @@
-package xyz.przemyk.real_minerals.machines.alloy_furnace;
+package xyz.przemyk.real_minerals.machines.not_electric.crusher;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -17,51 +15,26 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.machines.MachineFuelSlot;
-import xyz.przemyk.real_minerals.machines.MachineOutputSlot;
+import xyz.przemyk.real_minerals.machines.BaseMachineContainer;
+import xyz.przemyk.real_minerals.machines.not_electric.MachineFuelSlot;
+import xyz.przemyk.real_minerals.machines.not_electric.MachineOutputSlot;
 
-public class AlloyFurnaceContainer extends Container {
+public class CrusherContainer extends BaseMachineContainer {
 
-    public static final TranslationTextComponent TITLE = new TranslationTextComponent(RealMinerals.MODID + ".name.alloy_furnace");
+    public static final TranslationTextComponent TITLE = new TranslationTextComponent(RealMinerals.MODID + ".name.crusher");
 
-    private final IWorldPosCallable usabilityTest;
-    public final IIntArray machineData;
-
-    @SuppressWarnings("ConstantConditions")
-    public static AlloyFurnaceContainer getClientContainer(int id, PlayerInventory playerInventory) {
-        return new AlloyFurnaceContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(7), new IntArray(4), Minecraft.getInstance().player);
+    public static CrusherContainer getClientContainer(int id, PlayerInventory playerInventory) {
+        return new CrusherContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(3), new IntArray(4), Minecraft.getInstance().player);
     }
 
-    public AlloyFurnaceContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
-        super(Registering.ALLOY_FURNACE_CONTAINER.get(), windowId);
-        usabilityTest = IWorldPosCallable.of(playerEntity.world, pos);
-        this.machineData = machineData;
+    protected CrusherContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
+        super(Registering.CRUSHER_CONTAINER.get(), windowId, Registering.CRUSHER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
 
-        addSlot(new SlotItemHandler(itemHandler, 0, 19, 16));
-        addSlot(new SlotItemHandler(itemHandler, 1, 38, 16));
-        addSlot(new SlotItemHandler(itemHandler, 2, 57, 16));
-        addSlot(new SlotItemHandler(itemHandler, 3, 19, 35));
-        addSlot(new SlotItemHandler(itemHandler, 4, 57, 35));
+        addSlot(new SlotItemHandler(itemHandler, 0, 56, 17));
+        addSlot(new MachineFuelSlot(itemHandler, 1, 56, 53));
+        addSlot(new MachineOutputSlot(itemHandler, 2, 116, 35, playerEntity));
 
-        addSlot(new MachineFuelSlot(itemHandler, 5, 38, 53));
-        addSlot(new MachineOutputSlot(itemHandler, 6, 116, 35, playerEntity));
-
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-            }
-        }
-
-        for(int k = 0; k < 9; ++k) {
-            this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
-        }
-
-        trackIntArray(machineData);
-    }
-
-    @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(usabilityTest, playerIn, Registering.ALLOY_FURNACE_BLOCK.BLOCK.get());
+        addPlayerSlots(playerInventory);
     }
 
     //TODO
@@ -115,7 +88,7 @@ public class AlloyFurnaceContainer extends Container {
     }
 
     protected boolean hasRecipe(@SuppressWarnings("unused") ItemStack stack) { //TODO
-//        return AlloyFurnaceTileEntity.getRecipe(stack, world) != null;
+//        return CrusherTileEntity.getRecipe(stack, world) != null;
         return true;
     }
 }

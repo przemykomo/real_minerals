@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.alloy_furnace;
+package xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
@@ -12,11 +12,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import xyz.przemyk.real_minerals.machines.MachineBlock;
+import xyz.przemyk.real_minerals.machines.BaseMachineBlock;
 
 import java.util.Random;
 
-public class AlloyFurnaceBlock extends MachineBlock {
+public class AlloyFurnaceBlock extends BaseMachineBlock {
 
     public AlloyFurnaceBlock(AbstractBlock.Properties properties) {
         super(properties);

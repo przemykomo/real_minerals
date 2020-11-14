@@ -21,9 +21,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 
-public abstract class MachineBlock extends Block {
+public abstract class BaseMachineBlock extends Block {
 
-    public MachineBlock(Properties properties) {
+    public BaseMachineBlock(Properties properties) {
         super(properties);
         setDefaultState(this.stateContainer.getBaseState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.LIT, Boolean.FALSE));
     }
@@ -53,9 +53,8 @@ public abstract class MachineBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof MachineTileEntity) {
-                INamedContainerProvider containerProvider = ((MachineTileEntity) tileEntity).getServerContainerProvider(pos);
-                NetworkHooks.openGui((ServerPlayerEntity) player, containerProvider);
+            if (tileEntity instanceof INamedContainerProvider) {
+                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity);
             }
             return ActionResultType.CONSUME;
         }

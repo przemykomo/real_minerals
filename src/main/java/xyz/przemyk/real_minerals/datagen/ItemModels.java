@@ -7,9 +7,8 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
-import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.machines.MachineBlock;
+import xyz.przemyk.real_minerals.machines.BaseMachineBlock;
 
 public class ItemModels extends ItemModelProvider {
 
@@ -21,7 +20,7 @@ public class ItemModels extends ItemModelProvider {
     @Override
     protected void registerModels() {
         for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
-            if (blockRegistryObject.BLOCK.get() instanceof MachineBlock) {
+            if (blockRegistryObject.BLOCK.get() instanceof BaseMachineBlock) {
                 continue;
             }
             String path = blockRegistryObject.ITEM.get().getRegistryName().getPath();

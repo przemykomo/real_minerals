@@ -1,11 +1,11 @@
-package xyz.przemyk.real_minerals.machines;
+package xyz.przemyk.real_minerals.machines.electric.generator;
 
 import net.minecraft.util.IIntArray;
 
-public class MachineSyncData implements IIntArray {
-    private final MachineTileEntity machine;
+public class GeneratorSyncData implements IIntArray {
+    private final BurningGeneratorTileEntity machine;
 
-    public MachineSyncData(MachineTileEntity crusher) {
+    public GeneratorSyncData(BurningGeneratorTileEntity crusher) {
         this.machine = crusher;
     }
 
@@ -14,11 +14,9 @@ public class MachineSyncData implements IIntArray {
             case 0:
                 return machine.burnTime;
             case 1:
-                return machine.workingTime;
-            case 2:
-                return machine.getWorkingTimeTotal();
-            case 3:
                 return machine.burnTimeTotal;
+            case 2:
+                return machine.energyStorage.getEnergyStored();
             default:
                 return 0;
         }
@@ -30,17 +28,15 @@ public class MachineSyncData implements IIntArray {
                 machine.burnTime = value;
                 break;
             case 1:
-                machine.workingTime = value;
-                break;
-            // you should never try to set workingTimeTotal
-            case 3:
                 machine.burnTimeTotal = value;
                 break;
+            case 2:
+                machine.energyStorage.setEnergy(value);
         }
 
     }
 
     public int size() {
-        return 4;
+        return 3;
     }
 }

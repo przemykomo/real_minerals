@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines;
+package xyz.przemyk.real_minerals.machines.not_electric;
 
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
@@ -23,7 +23,7 @@ import xyz.przemyk.real_minerals.init.RealMinerals;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class MachineTileEntity extends TileEntity implements ITickableTileEntity {
+public abstract class MachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
     public final MachineItemStackHandler itemHandler;
     public int burnTime;
@@ -146,6 +146,4 @@ public abstract class MachineTileEntity extends TileEntity implements ITickableT
     }
 
     public abstract int getWorkingTimeTotal();
-
-    public abstract INamedContainerProvider getServerContainerProvider(BlockPos activationPos);
 }

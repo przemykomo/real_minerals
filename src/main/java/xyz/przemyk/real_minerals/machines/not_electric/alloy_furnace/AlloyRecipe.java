@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.alloy_furnace;
+package xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.przemyk.real_minerals.init.RealMinerals;
-import xyz.przemyk.real_minerals.machines.MachineRecipe;
+import xyz.przemyk.real_minerals.machines.not_electric.MachineRecipe;
 
 import javax.annotation.Nullable;
 

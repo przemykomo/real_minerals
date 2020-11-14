@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.crusher;
+package xyz.przemyk.real_minerals.machines.not_electric.crusher;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -13,12 +13,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import xyz.przemyk.real_minerals.machines.MachineBlock;
-import xyz.przemyk.real_minerals.machines.MachineTileEntity;
+import xyz.przemyk.real_minerals.machines.BaseMachineBlock;
 
 import java.util.Random;
 
-public class CrusherBlock extends MachineBlock {
+public class CrusherBlock extends BaseMachineBlock {
 
     public CrusherBlock(Properties properties) {
         super(properties);

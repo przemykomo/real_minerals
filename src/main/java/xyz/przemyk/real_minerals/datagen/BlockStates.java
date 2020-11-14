@@ -7,9 +7,8 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
-import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.machines.MachineBlock;
+import xyz.przemyk.real_minerals.machines.BaseMachineBlock;
 
 public class BlockStates extends BlockStateProvider {
 
@@ -21,7 +20,7 @@ public class BlockStates extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
-            if (blockRegistryObject.BLOCK.get() instanceof MachineBlock) {
+            if (blockRegistryObject.BLOCK.get() instanceof BaseMachineBlock) {
                 continue;
             }
             Block block = blockRegistryObject.BLOCK.get();

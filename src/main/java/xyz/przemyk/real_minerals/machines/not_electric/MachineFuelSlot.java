@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines;
+package xyz.przemyk.real_minerals.machines.not_electric;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
