@@ -4,7 +4,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -33,23 +32,13 @@ public class BurningGeneratorTileEntity extends ElectricMachineTileEntity {
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
 
     public BurningGeneratorTileEntity() {
-        super(Registering.BURNING_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10000, 0, 80));
+        super(Registering.BURNING_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 80));
     }
 
     @Override
     public void remove() {
         super.remove();
         itemHandlerLazyOptional.invalidate();
-    }
-
-    @Override
-    public ITextComponent getDisplayName() {
-        return BurningGeneratorContainer.TITLE;
-    }
-
-    @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
-        return new BurningGeneratorContainer(id, playerInventory, getPos(), itemHandler, new GeneratorSyncData(this), serverPlayer);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -104,7 +93,16 @@ public class BurningGeneratorTileEntity extends ElectricMachineTileEntity {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return itemHandlerLazyOptional.cast();
         }
-
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return BurningGeneratorContainer.TITLE;
+    }
+
+    @Override
+    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
+        return new BurningGeneratorContainer(id, playerInventory, getPos(), itemHandler, new GeneratorSyncData(this), serverPlayer);
     }
 }

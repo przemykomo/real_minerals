@@ -18,10 +18,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryBlock;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryContainer;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryTileEntity;
+import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceBlock;
+import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceContainer;
+import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceTileEntity;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorBlock;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorContainer;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorTileEntity;
-import xyz.przemyk.real_minerals.machines.electric.generator.GeneratorSyncData;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceBlock;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceContainer;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceTileEntity;
@@ -29,8 +31,10 @@ import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherBlock;
 import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherContainer;
 import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherTileEntity;
 
-import static xyz.przemyk.real_minerals.init.RealMinerals.*;
+import static xyz.przemyk.real_minerals.init.RealMinerals.ITEM_GROUP;
+import static xyz.przemyk.real_minerals.init.RealMinerals.MODID;
 
+@SuppressWarnings("ConstantConditions")
 public class Registering {
 
     private Registering() {}
@@ -52,26 +56,26 @@ public class Registering {
     /////////////////////////////////////// NOT ELECTRIC MACHINES
 
     public static final BlockRegistryObject CRUSHER_BLOCK = BLOCKS.register("crusher", () -> new CrusherBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
-    @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<TileEntityType<CrusherTileEntity>> CRUSHER_TILE_ENTITY_TYPE = TILE_ENTITIES.register("crusher", () -> TileEntityType.Builder.create(CrusherTileEntity::new, CRUSHER_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<CrusherContainer>> CRUSHER_CONTAINER = CONTAINERS.register("crusher", () -> new ContainerType<>(CrusherContainer::getClientContainer));
 
     public static final BlockRegistryObject ALLOY_FURNACE_BLOCK = BLOCKS.register("alloy_furnace", () -> new AlloyFurnaceBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
-    @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<TileEntityType<AlloyFurnaceTileEntity>> ALLOY_FURNACE_TILE_ENTITY_TYPE = TILE_ENTITIES.register("alloy_furnace", () -> TileEntityType.Builder.create(AlloyFurnaceTileEntity::new, ALLOY_FURNACE_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<AlloyFurnaceContainer>> ALLOY_FURNACE_CONTAINER = CONTAINERS.register("alloy_furnace", () -> new ContainerType<>(AlloyFurnaceContainer::getClientContainer));
 
     /////////////////////////////////////// ELECTRIC MACHINES
 
     public static final BlockRegistryObject BURNING_GENERATOR_BLOCK = BLOCKS.register("burning_generator", () -> new BurningGeneratorBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
-    @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<TileEntityType<BurningGeneratorTileEntity>> BURNING_GENERATOR_TILE_ENTITY_TYPE = TILE_ENTITIES.register("burning_generator", () -> TileEntityType.Builder.create(BurningGeneratorTileEntity::new, BURNING_GENERATOR_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<BurningGeneratorContainer>> BURNING_GENERATOR_CONTAINER = CONTAINERS.register("burning_generator", () -> new ContainerType<>(BurningGeneratorContainer::getClientContainer));
 
     public static final BlockRegistryObject BATTERY_BLOCK = BLOCKS.register("battery", () -> new BatteryBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
-    @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<TileEntityType<BatteryTileEntity>> BATTERY_TILE_ENTITY_TYPE = TILE_ENTITIES.register("battery", () -> TileEntityType.Builder.create(BatteryTileEntity::new, BATTERY_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<BatteryContainer>> BATTERY_CONTAINER = CONTAINERS.register("battery", () -> new ContainerType<>(BatteryContainer::getClientContainer));
+
+    public static final BlockRegistryObject ELECTRIC_FURNACE_BLOCK = BLOCKS.register("electric_furnace", () -> new ElectricFurnaceBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<TileEntityType<ElectricFurnaceTileEntity>> ELECTRIC_FURNACE_TILE_ENTITY_TYPE = TILE_ENTITIES.register("electric_furnace", () -> TileEntityType.Builder.create(ElectricFurnaceTileEntity::new, BATTERY_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<ContainerType<ElectricFurnaceContainer>> ELECTRIC_FURNACE_CONTAINER = CONTAINERS.register("electric_furnace", () -> new ContainerType<>(ElectricFurnaceContainer::getClientContainer));
 
     ////////////////////////////////////////////////////////////////// METALS WITH STONE ORES
 
