@@ -136,6 +136,7 @@ public class Registering {
     ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
     public static final BlockRegistryObject  GOLD_GRAVEL_ORE = BLOCKS.register(  "gold_gravel_ore", () -> new GravelBlock(AbstractBlock.Properties.create(Material.SAND, MaterialColor.STONE).hardnessAndResistance(0.6F).sound(SoundType.GROUND).harvestTool(ToolType.SHOVEL)), ITEM_GROUP);
+    public static final BlockRegistryObject  PLATINUM_GRAVEL_ORE = BLOCKS.register(  "platinum_gravel_ore", () -> new GravelBlock(AbstractBlock.Properties.create(Material.SAND, MaterialColor.STONE).hardnessAndResistance(0.6F).sound(SoundType.GROUND).harvestTool(ToolType.SHOVEL)), ITEM_GROUP);
 
     public static final BlockRegistryObject  RUTHENIUM_BLOCK = BLOCKS.register("ruthenium_block", () -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.YELLOW).harvestTool(ToolType.PICKAXE).harvestLevel(0).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)), ITEM_GROUP);
     public static final RegistryObject<Item> RUTHENIUM_DUST = ITEMS.register(  "ruthenium_dust", () -> new Item(new Item.Properties().group(ITEM_GROUP)));

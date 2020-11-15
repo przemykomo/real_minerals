@@ -76,6 +76,7 @@ public class ItemTags extends ItemTagsProvider {
     ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
     public static final Tags.IOptionalNamedTag<Item> GRAVEL_ORES_GOLD = tag("gravel_ores/gold");
+    public static final Tags.IOptionalNamedTag<Item> GRAVEL_ORES_PLATINUM = tag("gravel_ores/platinum");
 
     public static final Tags.IOptionalNamedTag<Item> STORAGE_RUTHENIUM = tag("storage_blocks/ruthenium");
     public static final Tags.IOptionalNamedTag<Item> GRAVEL_ORES_RUTHENIUM = tag("gravel_ores/ruthenium");
@@ -169,6 +170,7 @@ public class ItemTags extends ItemTagsProvider {
         ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
         copy(BlockTags.GRAVEL_ORES_GOLD, GRAVEL_ORES_GOLD);
+        copy(BlockTags.GRAVEL_ORES_PLATINUM, GRAVEL_ORES_PLATINUM);
 
         copy(BlockTags.STORAGE_RUTHENIUM, STORAGE_RUTHENIUM);
         copy(BlockTags.GRAVEL_ORES_RUTHENIUM, GRAVEL_ORES_RUTHENIUM);

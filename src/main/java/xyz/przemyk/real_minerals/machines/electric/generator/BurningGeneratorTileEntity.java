@@ -7,6 +7,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
@@ -104,5 +105,44 @@ public class BurningGeneratorTileEntity extends ElectricMachineTileEntity {
     @Override
     public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
         return new BurningGeneratorContainer(id, playerInventory, getPos(), itemHandler, new GeneratorSyncData(this), serverPlayer);
+    }
+
+    private static class GeneratorSyncData implements IIntArray {
+        private final BurningGeneratorTileEntity machine;
+
+        public GeneratorSyncData(BurningGeneratorTileEntity crusher) {
+            this.machine = crusher;
+        }
+
+        public int get(int index) {
+            switch(index) {
+                case 0:
+                    return machine.burnTime;
+                case 1:
+                    return machine.burnTimeTotal;
+                case 2:
+                    return machine.energyStorage.getEnergyStored();
+                default:
+                    return 0;
+            }
+        }
+
+        public void set(int index, int value) {
+            switch(index) {
+                case 0:
+                    machine.burnTime = value;
+                    break;
+                case 1:
+                    machine.burnTimeTotal = value;
+                    break;
+                case 2:
+                    machine.energyStorage.setEnergy(value);
+            }
+
+        }
+
+        public int size() {
+            return 3;
+        }
     }
 }

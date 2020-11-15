@@ -11,7 +11,6 @@ import net.minecraft.util.text.ITextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.not_electric.MachineItemStackHandler;
-import xyz.przemyk.real_minerals.machines.not_electric.MachineSyncData;
 import xyz.przemyk.real_minerals.machines.not_electric.MachineTileEntity;
 
 import javax.annotation.Nullable;

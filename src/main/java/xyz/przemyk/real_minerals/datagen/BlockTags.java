@@ -48,6 +48,7 @@ public class BlockTags extends BlockTagsProvider {
     ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
     public static final Tags.IOptionalNamedTag<Block> GRAVEL_ORES_GOLD = tag("gravel_ores/gold");
+    public static final Tags.IOptionalNamedTag<Block> GRAVEL_ORES_PLATINUM = tag("gravel_ores/platinum");
 
     public static final Tags.IOptionalNamedTag<Block> STORAGE_RUTHENIUM = tag("storage_blocks/ruthenium");
     public static final Tags.IOptionalNamedTag<Block> GRAVEL_ORES_RUTHENIUM = tag("gravel_ores/ruthenium");
@@ -99,6 +100,7 @@ public class BlockTags extends BlockTagsProvider {
         ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
         getOrCreateBuilder(GRAVEL_ORES_GOLD).add(Registering.GOLD_GRAVEL_ORE.BLOCK.get());
+        getOrCreateBuilder(GRAVEL_ORES_PLATINUM).add(Registering.PLATINUM_GRAVEL_ORE.BLOCK.get());
 
         getOrCreateBuilder(STORAGE_RUTHENIUM).add(Registering.RUTHENIUM_BLOCK.BLOCK.get());
         getOrCreateBuilder(GRAVEL_ORES_RUTHENIUM).add(Registering.RUTHENIUM_GRAVEL_ORE.BLOCK.get());
