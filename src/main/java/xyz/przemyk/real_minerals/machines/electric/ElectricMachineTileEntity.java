@@ -35,7 +35,6 @@ public abstract class ElectricMachineTileEntity extends TileEntity implements IT
     @SuppressWarnings("ConstantConditions")
     @Override
     public void tick() {
-        //TODO: send energy to nearby tile entities
         if (!world.isRemote()) {
             energyStorage.trySendToNeighbors(world, pos);
         }
