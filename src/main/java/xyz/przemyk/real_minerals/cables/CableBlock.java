@@ -108,12 +108,12 @@ public class CableBlock extends Block {
                 CableNetworksWorldData cableNetworksWorldData = CableNetworksWorldData.get((ServerWorld) worldIn);
                 if (connectedCables.size() > 0) {
                     Set<String> networkIDs = new HashSet<>();
-                    connectedCables.forEach(connectedCable -> networkIDs.add(connectedCable.networkID));
+                    connectedCables.forEach(connectedCable -> networkIDs.add(connectedCable.getNetworkID()));
                     if (networkIDs.size() == 1) {
                         @SuppressWarnings("OptionalGetWithoutIsPresent")
                         CableNetwork cableNetwork = cableNetworksWorldData.getNetworks().get(networkIDs.stream().findFirst().get());
                         cableNetwork.addCable(cableTileEntity);
-                        cableTileEntity.networkID = cableNetwork.getID();
+                        cableTileEntity.setNetworkID(cableNetwork.getID());
                     } else {
                         // merge smaller networks to largest one
                         ArrayList<CableNetwork> connectedNetworks = new ArrayList<>();
@@ -133,18 +133,18 @@ public class CableBlock extends Block {
                         }
 
                         largestNetwork.addCable(cableTileEntity);
-                        cableTileEntity.networkID = largestNetwork.getID();
+                        cableTileEntity.setNetworkID(largestNetwork.getID());
                     }
                 } else {
                     CableNetwork cableNetwork = cableNetworksWorldData.createNetwork();
                     cableNetwork.addCable(cableTileEntity);
-                    cableTileEntity.networkID = cableNetwork.getID();
+                    cableTileEntity.setNetworkID(cableNetwork.getID());
                 }
             }
         }
     }
 
-    private static BooleanProperty getPropertyFromDirection(Direction direction) {
+    public static BooleanProperty getPropertyFromDirection(Direction direction) {
         switch (direction){
             case UP:
                 return UP;
@@ -159,5 +159,17 @@ public class CableBlock extends Block {
             default:
                 return NORTH;
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!worldIn.isRemote() && newState.getBlock() != state.getBlock()) {
+            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if (tileEntity instanceof CableTileEntity) {
+                CableNetworksWorldData.get((ServerWorld) worldIn).getNetworks().get(((CableTileEntity) tileEntity).getNetworkID()).removeCable(pos, (ServerWorld) worldIn, state);
+            }
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 }

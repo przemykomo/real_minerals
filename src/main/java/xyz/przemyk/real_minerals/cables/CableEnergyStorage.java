@@ -9,11 +9,14 @@ import net.minecraftforge.energy.EnergyStorage;
 
 public class CableEnergyStorage extends EnergyStorage {
     public static final int CAPACITY = 500; //TODO
+    private final CableNetwork cableNetwork;
 
-    public CableEnergyStorage() {
+    public CableEnergyStorage(CableNetwork cableNetwork) {
         super(CAPACITY);
+        this.cableNetwork = cableNetwork;
     }
 
+    // used only to deserialize so doesn't mark world data dirty
     public void setEnergy(int energy) {
         this.energy = energy;
     }
@@ -40,5 +43,23 @@ public class CableEnergyStorage extends EnergyStorage {
                 }
             });
         }
+    }
+
+    @Override
+    public int extractEnergy(int maxExtract, boolean simulate) {
+        int extracted = super.extractEnergy(maxExtract, simulate);
+        if (!simulate && extracted > 0) {
+            cableNetwork.worldData.markDirty();
+        }
+        return extracted;
+    }
+
+    @Override
+    public int receiveEnergy(int maxReceive, boolean simulate) {
+        int received = super.receiveEnergy(maxReceive, simulate);
+        if (!simulate && received > 0) {
+            cableNetwork.worldData.markDirty();
+        }
+        return received;
     }
 }

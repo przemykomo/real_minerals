@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 @SuppressWarnings("ConstantConditions")
 public class CableTileEntity extends TileEntity {
 
-    public String networkID;
+    private String networkID;
 
     public CableTileEntity() {
         super(Registering.CABLE_TILE_ENTITY_TYPE.get());
@@ -25,6 +25,15 @@ public class CableTileEntity extends TileEntity {
 
     public CableTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
+    }
+
+    public String getNetworkID() {
+        return networkID;
+    }
+
+    public void setNetworkID(String networkID) {
+        this.networkID = networkID;
+        this.cachedEnergyStorage = LazyOptional.empty();
     }
 
     @Override

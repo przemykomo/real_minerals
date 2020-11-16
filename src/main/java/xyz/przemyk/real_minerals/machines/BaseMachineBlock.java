@@ -79,7 +79,6 @@ public abstract class BaseMachineBlock extends Block {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        System.out.println(context.toString());
         return this.getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
 }

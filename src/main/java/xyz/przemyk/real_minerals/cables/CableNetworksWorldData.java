@@ -3,7 +3,6 @@ package xyz.przemyk.real_minerals.cables;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
@@ -18,17 +17,14 @@ public class CableNetworksWorldData extends WorldSavedData {
     public static final String NAME = RealMinerals.MODID + "_cable_networks";
 
     private final Map<String, CableNetwork> networks;
-    private final World world;
 
     public Map<String, CableNetwork> getNetworks() {
-//        markDirty(); //TODO: mark dirty only on change
         return networks;
     }
 
-    public CableNetworksWorldData(World world) {
+    public CableNetworksWorldData() {
         super(NAME);
         this.networks = new HashMap<>();
-        this.world = world;
     }
 
     @Override
@@ -36,7 +32,7 @@ public class CableNetworksWorldData extends WorldSavedData {
         ListNBT networksListNBT = nbt.getList("networks", Constants.NBT.TAG_COMPOUND);
         for (INBT networkNBT : networksListNBT) {
             CompoundNBT networkCompound = (CompoundNBT) networkNBT;
-            CableNetwork network = new CableNetwork();
+            CableNetwork network = new CableNetwork(this);
             network.deserializeNBT(networkCompound);
             networks.put(network.getID(), network);
         }
@@ -45,22 +41,20 @@ public class CableNetworksWorldData extends WorldSavedData {
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         ListNBT networksListNBT = new ListNBT();
-        networks.values().forEach(cableNetwork -> {
-            networksListNBT.add(cableNetwork.serializeNBT());
-        });
+        networks.values().forEach(cableNetwork -> networksListNBT.add(cableNetwork.serializeNBT()));
         compound.put("networks", networksListNBT);
         return compound;
     }
 
     public static CableNetworksWorldData get(ServerWorld world) {
-        return world.getSavedData().getOrCreate(() -> new CableNetworksWorldData(world), NAME);
+        return world.getSavedData().getOrCreate(CableNetworksWorldData::new, NAME);
     }
 
     public CableNetwork createNetwork() {
         String id = StringUtils.randomString(new Random(), 8);
-        CableNetwork cableNetwork = new CableNetwork(id);
+        CableNetwork cableNetwork = new CableNetwork(id, this);
         networks.put(id, cableNetwork);
-//        markDirty();
+        markDirty();
         return cableNetwork;
     }
 }
