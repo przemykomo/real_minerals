@@ -41,6 +41,7 @@ public class WorldGenEvents {
             features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.TIN_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
             features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.ALUMINUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
             features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.ZINC_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+            features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, Registering.MAGNESIUM_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
 
             //gravel ores
             features.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(GRAVEL, Registering.GOLD_GRAVEL_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));

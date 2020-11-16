@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/magnetite"
+    }
+  },
+  "result": {
+    "item": "real_minerals:magnetite_block"
+  }
+}

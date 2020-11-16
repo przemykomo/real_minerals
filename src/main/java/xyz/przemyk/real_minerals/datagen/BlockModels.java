@@ -18,7 +18,7 @@ public class BlockModels extends BlockModelProvider {
     @Override
     protected void registerModels() {
         for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
-            if (blockRegistryObject.BLOCK.get() instanceof BaseMachineBlock) {
+            if (blockRegistryObject.BLOCK.get().hasTileEntity(blockRegistryObject.BLOCK.get().getDefaultState())) {
                 continue;
             }
             String path = blockRegistryObject.BLOCK.get().getRegistryName().getPath();

@@ -1,6 +1,8 @@
 package xyz.przemyk.real_minerals.datagen;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import xyz.przemyk.real_minerals.init.Registering;
@@ -120,6 +122,18 @@ public class Recipes extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(Registering.ZINC_BLOCK.ITEM.get()).key('#', ItemTags.INGOTS_ZINC).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_zinc_ingot", hasItem(ItemTags.INGOTS_ZINC)).build(consumer, new ResourceLocation(MODID, "zinc_block_from_ingots"));
         ShapelessRecipeBuilder.shapelessRecipe(Registering.ZINC_INGOT.get(), 9).addIngredient(ItemTags.STORAGE_ZINC).addCriterion("has_zinc_block", hasItem(ItemTags.STORAGE_ZINC)).build(consumer, new ResourceLocation(MODID, "zinc_ingot_from_block"));
         ShapelessRecipeBuilder.shapelessRecipe(Registering.ZINC_NUGGET.get(), 9).addIngredient(ItemTags.INGOTS_ZINC).addCriterion("has_zinc_ingot", hasItem(ItemTags.INGOTS_ZINC)).build(consumer, new ResourceLocation(MODID, "zinc_nugget_from_ingot"));
+
+        CrusherRecipeBuilder.crushingRecipe(Ingredient.fromTag(ItemTags.ORES_MAGNETITE), Registering.MAGNETITE_DUST.get(), 2).build(consumer, new ResourceLocation(MODID, "magnetite_dust_from_ore"));
+        CrusherRecipeBuilder.crushingRecipe(Ingredient.fromTag(ItemTags.INGOTS_MAGNETITE), Registering.MAGNETITE_DUST.get()).build(consumer, new ResourceLocation(MODID, "magnetite_dust_from_ingot"));
+        CookingRecipeBuilder.blastingRecipe(Ingredient.fromTag(ItemTags.ORES_MAGNETITE), Registering.MAGNETITE_INGOT.get(), 0.7F, 100).addCriterion("has_magnetite_ore", hasItem(ItemTags.ORES_MAGNETITE)).build(consumer,   new ResourceLocation(MODID, "magnetite_ingot_from_blasting_ore"));
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(ItemTags.ORES_MAGNETITE), Registering.MAGNETITE_INGOT.get(), 0.7F, 200).addCriterion("has_magnetite_ore", hasItem(ItemTags.ORES_MAGNETITE)).build(consumer,   new ResourceLocation(MODID, "magnetite_ingot_from_smelting_ore"));
+        CookingRecipeBuilder.blastingRecipe(Ingredient.fromTag(ItemTags.DUSTS_MAGNETITE), Registering.MAGNETITE_INGOT.get(), 0.7F, 100).addCriterion("has_magnetite_dust", hasItem(ItemTags.DUSTS_MAGNETITE)).build(consumer, new ResourceLocation(MODID, "magnetite_ingot_from_blasting_dust"));
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(ItemTags.DUSTS_MAGNETITE), Registering.MAGNETITE_INGOT.get(), 0.7F, 200).addCriterion("has_magnetite_dust", hasItem(ItemTags.DUSTS_MAGNETITE)).build(consumer, new ResourceLocation(MODID, "magnetite_ingot_from_smelting_dust"));
+        ShapedRecipeBuilder.shapedRecipe(Registering.MAGNETITE_INGOT.get()).key('#', ItemTags.NUGGETS_MAGNETITE).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_magnetite_nugget", hasItem(ItemTags.NUGGETS_MAGNETITE)).build(consumer, new ResourceLocation(MODID, "magnetite_ingot_from_nuggets"));
+        ShapedRecipeBuilder.shapedRecipe(Registering.MAGNETITE_BLOCK.ITEM.get()).key('#', ItemTags.INGOTS_MAGNETITE).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_magnetite_ingot", hasItem(ItemTags.INGOTS_MAGNETITE)).build(consumer, new ResourceLocation(MODID, "magnetite_block_from_ingots"));
+        ShapelessRecipeBuilder.shapelessRecipe(Registering.MAGNETITE_INGOT.get(), 9).addIngredient(ItemTags.STORAGE_MAGNETITE).addCriterion("has_magnetite_block", hasItem(ItemTags.STORAGE_MAGNETITE)).build(consumer, new ResourceLocation(MODID, "magnetite_ingot_from_block"));
+        ShapelessRecipeBuilder.shapelessRecipe(Registering.MAGNETITE_NUGGET.get(), 9).addIngredient(ItemTags.INGOTS_MAGNETITE).addCriterion("has_magnetite_ingot", hasItem(ItemTags.INGOTS_MAGNETITE)).build(consumer, new ResourceLocation(MODID, "magnetite_nugget_from_ingot"));
+        ShapedRecipeBuilder.shapedRecipe(Registering.MAGNETITE_GEAR.get()).key('#', ItemTags.INGOTS_MAGNETITE).patternLine(" # ").patternLine("# #").patternLine(" # ").addCriterion("has_magnetite_ingot", hasItem(ItemTags.INGOTS_MAGNETITE)).build(consumer, new ResourceLocation(MODID, "magnetite_gear_from_ingots"));
 
         CrusherRecipeBuilder.crushingRecipe(Ingredient.fromTag(ItemTags.INGOTS_BRASS), Registering.BRASS_DUST.get()).build(consumer, new ResourceLocation(MODID, "brass_dust_from_ingot"));
         CookingRecipeBuilder.blastingRecipe(Ingredient.fromTag(ItemTags.DUSTS_BRASS), Registering.BRASS_INGOT.get(), 0.7F, 100).addCriterion("has_brass_dust", hasItem(ItemTags.DUSTS_BRASS)).build(consumer, new ResourceLocation(MODID, "brass_ingot_from_blasting_dust"));

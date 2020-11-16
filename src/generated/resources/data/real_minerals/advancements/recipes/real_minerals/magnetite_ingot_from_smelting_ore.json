@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "real_minerals:magnetite_ingot_from_smelting_ore"
+    ]
+  },
+  "criteria": {
+    "has_magnetite_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ores/magnetite"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "real_minerals:magnetite_ingot_from_smelting_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_magnetite_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -18,8 +18,6 @@ public class CableEnergyStorage extends EnergyStorage {
         this.energy = energy;
     }
 
-    //TODO: cable connector instead of connected machines
-
     public void trySendToNeighbors(IBlockReader world, BlockPos pos) {
         for (Direction side : Direction.values()) {
             if (energy <= 0) {

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "real_minerals:magnetite_ingot_from_blasting_dust"
+    ]
+  },
+  "criteria": {
+    "has_magnetite_dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/magnetite"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "real_minerals:magnetite_ingot_from_blasting_dust"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_magnetite_dust",
+      "has_the_recipe"
+    ]
+  ]
+}

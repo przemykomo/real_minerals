@@ -45,6 +45,9 @@ public class BlockTags extends BlockTagsProvider {
     public static final Tags.IOptionalNamedTag<Block> STORAGE_ZINC = tag("storage_blocks/zinc");
     public static final Tags.IOptionalNamedTag<Block> ORES_ZINC = tag("ores/zinc");
 
+    public static final Tags.IOptionalNamedTag<Block> STORAGE_MAGNETITE = tag("storage_blocks/magnetite");
+    public static final Tags.IOptionalNamedTag<Block> ORES_MAGNETITE = tag("ores/magnetite");
+
     ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
     public static final Tags.IOptionalNamedTag<Block> GRAVEL_ORES_GOLD = tag("gravel_ores/gold");
@@ -96,6 +99,9 @@ public class BlockTags extends BlockTagsProvider {
 
         getOrCreateBuilder(STORAGE_ZINC).add(Registering.ZINC_BLOCK.BLOCK.get());
         getOrCreateBuilder(ORES_ZINC).add(Registering.ZINC_ORE.BLOCK.get());
+
+        getOrCreateBuilder(STORAGE_MAGNETITE).add(Registering.MAGNETITE_BLOCK.BLOCK.get());
+        getOrCreateBuilder(ORES_MAGNETITE).add(Registering.MAGNETITE_ORE.BLOCK.get());
 
         ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 

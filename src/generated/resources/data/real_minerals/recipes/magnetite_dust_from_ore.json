@@ -1,0 +1,10 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ores/magnetite"
+  },
+  "output": {
+    "item": "real_minerals:magnetite_dust",
+    "count": 2
+  }
+}

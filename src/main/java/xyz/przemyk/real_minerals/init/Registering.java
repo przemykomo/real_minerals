@@ -145,6 +145,13 @@ public class Registering {
     public static final RegistryObject<Item> ZINC_NUGGET = ITEMS.register("zinc_nugget", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
     public static final BlockRegistryObject  ZINC_ORE = BLOCKS.register(  "zinc_ore", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(3.0F, 3.0F)), ITEM_GROUP);
 
+    public static final BlockRegistryObject  MAGNETITE_BLOCK = BLOCKS.register("magnetite_block", () -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).harvestLevel(0).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<Item> MAGNETITE_DUST = ITEMS.register(  "magnetite_dust", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final RegistryObject<Item> MAGNETITE_INGOT = ITEMS.register( "magnetite_ingot", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final RegistryObject<Item> MAGNETITE_NUGGET = ITEMS.register("magnetite_nugget", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+    public static final BlockRegistryObject  MAGNETITE_ORE = BLOCKS.register(  "magnetite_ore", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(3.0F, 3.0F)), ITEM_GROUP);
+    public static final RegistryObject<Item> MAGNETITE_GEAR = ITEMS.register( "magnetite_gear", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+
     ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
     public static final BlockRegistryObject  GOLD_GRAVEL_ORE = BLOCKS.register(  "gold_gravel_ore", () -> new GravelBlock(AbstractBlock.Properties.create(Material.SAND, MaterialColor.STONE).hardnessAndResistance(0.6F).sound(SoundType.GROUND).harvestTool(ToolType.SHOVEL)), ITEM_GROUP);

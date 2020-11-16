@@ -73,6 +73,13 @@ public class ItemTags extends ItemTagsProvider {
     public static final Tags.IOptionalNamedTag<Item> NUGGETS_ZINC = tag("nuggets/zinc");
     public static final Tags.IOptionalNamedTag<Item> DUSTS_ZINC = tag("dusts/zinc");
 
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_MAGNETITE = tag("storage_blocks/magnetite");
+    public static final Tags.IOptionalNamedTag<Item> ORES_MAGNETITE = tag("ores/magnetite");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_MAGNETITE = tag("ingots/magnetite");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_MAGNETITE = tag("nuggets/magnetite");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_MAGNETITE = tag("dusts/magnetite");
+    public static final Tags.IOptionalNamedTag<Item> GEAR_MAGNETITE = tag("gear/magnetite");
+
     ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
     public static final Tags.IOptionalNamedTag<Item> GRAVEL_ORES_GOLD = tag("gravel_ores/gold");
@@ -166,6 +173,13 @@ public class ItemTags extends ItemTagsProvider {
         getOrCreateBuilder(INGOTS_ZINC).add(Registering.ZINC_INGOT.get());
         getOrCreateBuilder(NUGGETS_ZINC).add(Registering.ZINC_NUGGET.get());
         getOrCreateBuilder(DUSTS_ZINC).add(Registering.ZINC_DUST.get());
+
+        copy(BlockTags.STORAGE_MAGNETITE, STORAGE_MAGNETITE);
+        copy(BlockTags.ORES_MAGNETITE, ORES_MAGNETITE);
+        getOrCreateBuilder(INGOTS_MAGNETITE).add(Registering.MAGNETITE_INGOT.get());
+        getOrCreateBuilder(NUGGETS_MAGNETITE).add(Registering.MAGNETITE_NUGGET.get());
+        getOrCreateBuilder(DUSTS_MAGNETITE).add(Registering.MAGNETITE_DUST.get());
+        getOrCreateBuilder(GEAR_MAGNETITE).add(Registering.MAGNETITE_GEAR.get());
 
         ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
