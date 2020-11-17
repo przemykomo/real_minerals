@@ -15,6 +15,8 @@ import java.util.*;
 public class CableNetwork implements INBTSerializable<CompoundNBT> {
 
     private final Set<BlockPos> cables;
+    private final Set<BlockPos> connectorCables;
+    private final ServerWorld world;
     public final CableNetworksWorldData worldData;
     public CableEnergyStorage energyStorage;
 
@@ -22,20 +24,32 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
 
     private String ID;
 
-    public CableNetwork(String id, CableNetworksWorldData worldData) {
-        this(worldData);
+    public CableNetwork(String id, CableNetworksWorldData worldData, ServerWorld world) {
+        this(worldData, world);
         this.ID = id;
     }
 
-    public CableNetwork(CableNetworksWorldData worldData) {
+    public CableNetwork(CableNetworksWorldData worldData, ServerWorld world) {
         this.energyStorage = new CableEnergyStorage(this);
         this.energyStorageLazyOptional = LazyOptional.of(() -> energyStorage);
         this.cables = new HashSet<>();
         this.worldData = worldData;
+        this.connectorCables = new HashSet<>();
+        this.world = world;
     }
 
     public void addCable(CableTileEntity cableTileEntity) {
         cables.add(cableTileEntity.getPos());
+        worldData.markDirty();
+    }
+
+    public void addConnectorCable(CableTileEntity cableTileEntity) {
+        connectorCables.add(cableTileEntity.getPos());
+        worldData.markDirty();
+    }
+
+    public void removeConnector(CableTileEntity cableTileEntity) {
+        connectorCables.remove(cableTileEntity.getPos());
         worldData.markDirty();
     }
 
@@ -60,6 +74,12 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
                 other.cables.add(blockPos);
             }
         }
+        for (BlockPos blockPos : connectorCables) {
+            TileEntity tileEntity = world.getTileEntity(blockPos);
+            if (tileEntity instanceof CableTileEntity) {
+                other.connectorCables.add(blockPos);
+            }
+        }
     }
 
     private void remove() {
@@ -80,6 +100,17 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
         }
 
         compoundNBT.putIntArray("blocks", arrayList);
+
+        ArrayList<Integer> connectorList = new ArrayList<>();
+
+        for (BlockPos blockPos : connectorCables) {
+            connectorList.add(blockPos.getX());
+            connectorList.add(blockPos.getY());
+            connectorList.add(blockPos.getZ());
+        }
+
+        compoundNBT.putIntArray("connectors", connectorList);
+
         compoundNBT.putInt("energy", energyStorage.getEnergyStored());
         compoundNBT.putString("networkID", getID());
         return compoundNBT;
@@ -94,6 +125,13 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
             cables.add(new BlockPos(blocks[n], blocks[n + 1], blocks[n + 2]));
         }
 
+        int[] connectors = nbt.getIntArray("connectors");
+        connectorCables.clear();
+        for (int i = 0; i < connectors.length / 3; ++i) {
+            int n = i * 3;
+            connectorCables.add(new BlockPos(connectors[n], connectors[n + 1], connectors[n + 2]));
+        }
+
         energyStorage.setEnergy(nbt.getInt("energy"));
         ID = nbt.getString("networkID");
     }
@@ -104,6 +142,7 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
 
     public void removeCable(BlockPos removedPos, ServerWorld world, BlockState removedState) {
         cables.remove(removedPos);
+        connectorCables.remove(removedPos);
         if (cables.size() == 0) {
             remove();
             return;
@@ -125,7 +164,7 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
             for (BlockPos blockPos : connectedBlocks) {
                 Set<BlockPos> scannedPositions = new HashSet<>();
                 scannedPositions.add(removedPos);
-                if (!dooNotSplitNetworks(world, blockPos, scannedPositions, connectedBlocks)) {
+                if (!dooNotSplitNetworks(blockPos, scannedPositions, connectedBlocks)) {
                     scannedPositions.remove(removedPos);
                     newNetworks.add(scannedPositions);
                 }
@@ -162,13 +201,12 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
 
     /**
      * Tries to find if currentPos connects to the removed cable.
-     * @param world server world
      * @param currentPos current scanning position
      * @param scannedPositions already scanned positions, to not go back
      * @param connectedToRemovedCable blocks connected to the removed cable
      * @return should the network stay the same, without splitting?
      */
-    private boolean dooNotSplitNetworks(ServerWorld world, BlockPos currentPos, Set<BlockPos> scannedPositions, final Set<BlockPos> connectedToRemovedCable) {
+    private boolean dooNotSplitNetworks(BlockPos currentPos, Set<BlockPos> scannedPositions, final Set<BlockPos> connectedToRemovedCable) {
         Set<BlockPos> connectedBlocks = new HashSet<>();
         BlockState blockState = world.getBlockState(currentPos);
         for (Direction direction : Direction.values()) {
@@ -191,10 +229,16 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
         boolean split = true;
         for (BlockPos connectedBlock : connectedBlocks) {
             //I don't know about any way to do this without recurrence
-            if (dooNotSplitNetworks(world, connectedBlock, scannedPositions, connectedToRemovedCable)) {
+            if (dooNotSplitNetworks(connectedBlock, scannedPositions, connectedToRemovedCable)) {
                 split = false;
             }
         }
         return !split;
+    }
+
+    public void tick() {
+        for (BlockPos connector : connectorCables) {
+            energyStorage.trySendToNeighbors(world, connector);
+        }
     }
 }

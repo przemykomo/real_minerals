@@ -1,6 +1,5 @@
 package xyz.przemyk.real_minerals.cables;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -12,10 +11,8 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -62,12 +59,6 @@ public class CableBlock extends Block {
         return new CableTileEntity();
     }
 
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return getState(getDefaultState(), context.getWorld(), context.getPos());
-    }
-
     @SuppressWarnings("deprecation")
     @Override //TODO: consider only the specific face passed in?
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
@@ -75,17 +66,65 @@ public class CableBlock extends Block {
     }
 
     private BlockState getState(BlockState currentState, IWorld world, BlockPos pos) {
-        return currentState
-                .with(NORTH, hasConnection(world, pos, Direction.NORTH))
-                .with(EAST, hasConnection(world, pos, Direction.EAST))
-                .with(SOUTH, hasConnection(world, pos, Direction.SOUTH))
-                .with(WEST, hasConnection(world, pos, Direction.WEST))
-                .with(UP, hasConnection(world, pos, Direction.UP))
-                .with(DOWN, hasConnection(world, pos, Direction.DOWN));
+        boolean isConnectedToTileEntity = false;
+        for (Direction direction : Direction.values()) {
+            BooleanProperty property = getPropertyFromDirection(direction);
+            Connection connection = hasConnection(world, pos, direction);
+            switch (connection) {
+                case NONE:
+                    currentState = currentState.with(property, false);
+                    break;
+                case CABLE:
+                    currentState = currentState.with(property, true);
+                    break;
+                case MACHINE:
+                    currentState = currentState.with(property, true);
+                    isConnectedToTileEntity = true;
+                    break;
+                case TILE_ENTITY:
+                    currentState = currentState.with(property, false);
+                    isConnectedToTileEntity = true;
+                    break;
+            }
+        }
+
+        if (!world.isRemote()) {
+            TileEntity tileEntity = world.getTileEntity(pos);
+            if (tileEntity instanceof CableTileEntity) {
+                CableTileEntity cableTileEntity = (CableTileEntity) tileEntity;
+                CableNetwork cableNetwork = CableNetworksWorldData.get((ServerWorld) world).getNetworks().get(cableTileEntity.getNetworkID());
+                if (isConnectedToTileEntity) {
+                    cableNetwork.addConnectorCable(cableTileEntity);
+                } else {
+                    cableNetwork.removeConnector(cableTileEntity);
+                }
+            }
+        }
+        return currentState;
     }
 
-    protected boolean hasConnection(IWorld world, BlockPos pos, Direction direction) {
-        return world.getTileEntity(pos.offset(direction)) instanceof CableTileEntity;
+    public enum Connection {
+        NONE,
+        CABLE,
+        MACHINE,
+        TILE_ENTITY
+    }
+
+    protected Connection hasConnection(IWorld world, BlockPos pos, Direction direction) {
+        TileEntity tileEntity = world.getTileEntity(pos.offset(direction));
+        if (tileEntity == null) {
+            return Connection.NONE;
+        }
+
+        if (tileEntity instanceof CableTileEntity) {
+            return Connection.CABLE;
+        }
+
+        if (tileEntity.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).isPresent()) {
+            return Connection.MACHINE;
+        }
+
+        return Connection.TILE_ENTITY;
     }
 
     @Override
@@ -97,11 +136,9 @@ public class CableBlock extends Block {
                 ArrayList<CableTileEntity> connectedCables = new ArrayList<>();
 
                 for (Direction direction : Direction.values()) {
-                    if (state.get(getPropertyFromDirection(direction))) {
-                        TileEntity other = worldIn.getTileEntity(pos.offset(direction));
-                        if (other instanceof CableTileEntity) {
-                            connectedCables.add((CableTileEntity) other);
-                        }
+                    TileEntity other = worldIn.getTileEntity(pos.offset(direction));
+                    if (other instanceof CableTileEntity) {
+                        connectedCables.add((CableTileEntity) other);
                     }
                 }
 

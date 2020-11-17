@@ -17,8 +17,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.cables.CableBlock;
 import xyz.przemyk.real_minerals.cables.CableTileEntity;
-import xyz.przemyk.real_minerals.cables.ConnectorCableBlock;
-import xyz.przemyk.real_minerals.cables.ConnectorCableTileEntity;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryBlock;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryContainer;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryTileEntity;
@@ -85,9 +83,6 @@ public class Registering {
 
     public static final BlockRegistryObject CABLE_BLOCK = BLOCKS.register("cable", () -> new CableBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
     public static final RegistryObject<TileEntityType<CableTileEntity>> CABLE_TILE_ENTITY_TYPE = TILE_ENTITIES.register("cable", () -> TileEntityType.Builder.create(CableTileEntity::new, CABLE_BLOCK.BLOCK.get()).build(null));
-
-    public static final BlockRegistryObject CONNECTOR_CABLE_BLOCK = BLOCKS.register("connector_cable", () -> new ConnectorCableBlock(AbstractBlock.Properties.from(CABLE_BLOCK.BLOCK.get())), ITEM_GROUP);
-    public static final RegistryObject<TileEntityType<ConnectorCableTileEntity>> CONNECTOR_CABLE_TILE_ENTITY_TYPE = TILE_ENTITIES.register("connector_cable", () -> TileEntityType.Builder.create(ConnectorCableTileEntity::new, CONNECTOR_CABLE_BLOCK.BLOCK.get()).build(null));
 
     ////////////////////////////////////////////////////////////////// METALS WITH STONE ORES
 
