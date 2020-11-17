@@ -13,6 +13,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerRecipe;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerRecipeType;
 import xyz.przemyk.real_minerals.machines.not_electric.MachineRecipe;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyRecipe;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyRecipeType;
@@ -36,19 +38,23 @@ public class RealMinerals {
 
     public static final IRecipeType<CrusherRecipe> CRUSHER_RECIPE_TYPE = new CrusherRecipeType();
     public static final IRecipeType<AlloyRecipe> ALLOY_RECIPE_TYPE = new AlloyRecipeType();
+    public static final IRecipeType<MagnetizerRecipe> MAGNETIZER_RECIPE_TYPE = new MagnetizerRecipeType();
 
     private void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(CRUSHER_RECIPE_TYPE.toString()), CRUSHER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(ALLOY_RECIPE_TYPE.toString()), ALLOY_RECIPE_TYPE);
-        event.getRegistry().registerAll(CrusherRecipe.SERIALIZER, AlloyRecipe.SERIALIZER);
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MAGNETIZER_RECIPE_TYPE.toString()), MAGNETIZER_RECIPE_TYPE);
+        event.getRegistry().registerAll(CrusherRecipe.SERIALIZER, AlloyRecipe.SERIALIZER, MagnetizerRecipe.SERIALIZER);
     }
 
     @Nullable
-    public static MachineRecipe getRecipe(NonNullList<ItemStack> input, World world, IRecipeType<?> recipeType) {
-        Set<MachineRecipe> recipes = getAllRecipes(world, recipeType);
-        for (MachineRecipe recipe : recipes){
-            if (recipe.isValidInput(input)) {
-                return recipe;
+    public static<T extends MachineRecipe> T getRecipe(NonNullList<ItemStack> input, World world, IRecipeType<T> recipeType) {
+        if (input.size() > 0) {
+            Set<T> recipes = getAllRecipes(world, recipeType);
+            for (T recipe : recipes){
+                if (recipe.isValidInput(input)) {
+                    return recipe;
+                }
             }
         }
         return null;

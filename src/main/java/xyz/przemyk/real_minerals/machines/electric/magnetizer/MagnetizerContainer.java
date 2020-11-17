@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.electric.furnace;
+package xyz.przemyk.real_minerals.machines.electric.magnetizer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,16 +17,16 @@ import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.BaseMachineContainer;
 import xyz.przemyk.real_minerals.machines.not_electric.MachineOutputSlot;
 
-public class ElectricFurnaceContainer extends BaseMachineContainer {
+public class MagnetizerContainer extends BaseMachineContainer {
 
-    public static final TranslationTextComponent TITLE = new TranslationTextComponent(RealMinerals.MODID + ".name.electric_furnace");
+    public static final TranslationTextComponent TITLE = new TranslationTextComponent(RealMinerals.MODID + ".name.magnetizer");
 
-    public static ElectricFurnaceContainer getClientContainer(int id, PlayerInventory playerInventory) {
-        return new ElectricFurnaceContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(2), new IntArray(2), Minecraft.getInstance().player);
+    public static MagnetizerContainer getClientContainer(int id, PlayerInventory playerInventory) {
+        return new MagnetizerContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(2), new IntArray(2), Minecraft.getInstance().player);
     }
 
-    public ElectricFurnaceContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
-        super(Registering.ELECTRIC_FURNACE_CONTAINER.get(), windowId, Registering.ELECTRIC_FURNACE_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
+    public MagnetizerContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
+        super(Registering.MAGNETIZER_CONTAINER.get(), windowId, Registering.MAGNETIZER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
 
         addSlot(new SlotItemHandler(itemHandler, 0, 56, 35));
         addSlot(new MachineOutputSlot(itemHandler, 1, 116, 35, playerEntity));

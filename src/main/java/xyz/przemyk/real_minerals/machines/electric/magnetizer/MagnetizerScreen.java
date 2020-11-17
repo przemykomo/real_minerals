@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.electric.furnace;
+package xyz.przemyk.real_minerals.machines.electric.magnetizer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -10,11 +10,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 
-public class ElectricFurnaceScreen extends ContainerScreen<ElectricFurnaceContainer> {
+public class MagnetizerScreen extends ContainerScreen<MagnetizerContainer> {
 
-    private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/electric_furnace.png");
+    private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/magnetizer.png");
 
-    public ElectricFurnaceScreen(ElectricFurnaceContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public MagnetizerScreen(MagnetizerContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
     }
 
@@ -43,7 +43,7 @@ public class ElectricFurnaceScreen extends ContainerScreen<ElectricFurnaceContai
             this.blit(matrixStack, i + 56, j + 54 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
         }
 
-        int l = workTime != 0 ? workTime * 24 / ElectricFurnaceTileEntity.WORKING_TIME_TOTAL : 0;
+        int l = workTime != 0 ? workTime * 24 / MagnetizerTileEntity.WORKING_TIME_TOTAL : 0;
         this.blit(matrixStack, i + 79, j + 34, 176, 14, l + 1, 16);
 
         int energy = machineData.get(1);

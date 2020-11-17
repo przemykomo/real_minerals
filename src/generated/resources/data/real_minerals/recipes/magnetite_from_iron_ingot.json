@@ -1,0 +1,9 @@
+{
+  "type": "real_minerals:magnetizer",
+  "input": {
+    "tag": "forge:ingots/iron"
+  },
+  "output": {
+    "item": "real_minerals:magnetite_ingot"
+  }
+}

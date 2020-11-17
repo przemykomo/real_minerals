@@ -26,6 +26,9 @@ import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceTileEn
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorBlock;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorContainer;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorTileEntity;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerBlock;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerContainer;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerTileEntity;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceBlock;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceContainer;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceTileEntity;
@@ -78,6 +81,10 @@ public class Registering {
     public static final BlockRegistryObject ELECTRIC_FURNACE_BLOCK = BLOCKS.register("electric_furnace", () -> new ElectricFurnaceBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
     public static final RegistryObject<TileEntityType<ElectricFurnaceTileEntity>> ELECTRIC_FURNACE_TILE_ENTITY_TYPE = TILE_ENTITIES.register("electric_furnace", () -> TileEntityType.Builder.create(ElectricFurnaceTileEntity::new, ELECTRIC_FURNACE_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<ElectricFurnaceContainer>> ELECTRIC_FURNACE_CONTAINER = CONTAINERS.register("electric_furnace", () -> new ContainerType<>(ElectricFurnaceContainer::getClientContainer));
+
+    public static final BlockRegistryObject MAGNETIZER_BLOCK = BLOCKS.register("magnetizer", () -> new MagnetizerBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<TileEntityType<MagnetizerTileEntity>> MAGNETIZER_TILE_ENTITY_TYPE = TILE_ENTITIES.register("magnetizer", () -> TileEntityType.Builder.create(MagnetizerTileEntity::new, MAGNETIZER_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<ContainerType<MagnetizerContainer>> MAGNETIZER_CONTAINER = CONTAINERS.register("magnetizer", () -> new ContainerType<>(MagnetizerContainer::getClientContainer));
 
     /////////////////////////////////////// ELECTRIC CABLES
 

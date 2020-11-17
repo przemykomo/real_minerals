@@ -8,14 +8,12 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-//TODO
 public abstract class MachineRecipe implements IRecipe<IInventory> {
 
     protected final ItemStack output;
     protected final ResourceLocation id;
     protected final NonNullList<Ingredient> ingredients;
 
-    @SuppressWarnings("ConstantConditions")
     public MachineRecipe(ItemStack output, ResourceLocation id, NonNullList<Ingredient> ingredients) {
         this.output = output;
         this.id = id;

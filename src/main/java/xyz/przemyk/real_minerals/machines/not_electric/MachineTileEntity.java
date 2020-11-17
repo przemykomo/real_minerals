@@ -23,7 +23,7 @@ import xyz.przemyk.real_minerals.init.RealMinerals;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class MachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
     public final MachineItemStackHandler itemHandler;
     public int burnTime;
@@ -31,9 +31,9 @@ public abstract class MachineTileEntity extends TileEntity implements ITickableT
     public int burnTimeTotal;
 
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional;
-    private final IRecipeType<?> recipeType;
+    private final IRecipeType<T> recipeType;
 
-    public MachineTileEntity(TileEntityType<?> tileEntityTypeIn, MachineItemStackHandler itemHandler, IRecipeType<?> recipeType) {
+    public MachineTileEntity(TileEntityType<?> tileEntityTypeIn, MachineItemStackHandler itemHandler, IRecipeType<T> recipeType) {
         super(tileEntityTypeIn);
         this.itemHandler = itemHandler;
         itemHandler.setMarkDirty(this::markDirty);
@@ -49,7 +49,7 @@ public abstract class MachineTileEntity extends TileEntity implements ITickableT
 
     @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+    public <C> LazyOptional<C> getCapability(@Nonnull Capability<C> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return itemHandlerLazyOptional.cast();
         }
@@ -146,9 +146,9 @@ public abstract class MachineTileEntity extends TileEntity implements ITickableT
     }
 
     protected static class MachineSyncData implements IIntArray {
-        private final MachineTileEntity machine;
+        private final MachineTileEntity<?> machine;
 
-        public MachineSyncData(MachineTileEntity crusher) {
+        public MachineSyncData(MachineTileEntity<?> crusher) {
             this.machine = crusher;
         }
 

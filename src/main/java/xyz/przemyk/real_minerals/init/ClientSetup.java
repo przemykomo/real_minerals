@@ -8,6 +8,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryScreen;
 import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceScreen;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorScreen;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerScreen;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceScreen;
 import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherScreen;
 
@@ -21,5 +22,6 @@ public class ClientSetup {
         ScreenManager.registerFactory(Registering.BURNING_GENERATOR_CONTAINER.get(), BurningGeneratorScreen::new);
         ScreenManager.registerFactory(Registering.BATTERY_CONTAINER.get(), BatteryScreen::new);
         ScreenManager.registerFactory(Registering.ELECTRIC_FURNACE_CONTAINER.get(), ElectricFurnaceScreen::new);
+        ScreenManager.registerFactory(Registering.MAGNETIZER_CONTAINER.get(), MagnetizerScreen::new);
     }
 }

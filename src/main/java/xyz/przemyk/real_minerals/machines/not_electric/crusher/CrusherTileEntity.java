@@ -11,7 +11,7 @@ import xyz.przemyk.real_minerals.machines.not_electric.MachineTileEntity;
 
 import javax.annotation.Nullable;
 
-public class CrusherTileEntity extends MachineTileEntity {
+public class CrusherTileEntity extends MachineTileEntity<CrusherRecipe> {
 
     @Override
     public int getWorkingTimeTotal() {
