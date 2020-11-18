@@ -2,7 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "connector_cable",
+      "name": "magnetizer",
       "rolls": 1,
       "entries": [
         {
@@ -38,7 +38,7 @@
               ]
             }
           ],
-          "name": "real_minerals:connector_cable"
+          "name": "real_minerals:magnetizer"
         }
       ]
     }

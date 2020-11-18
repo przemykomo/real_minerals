@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.datagen;
+package xyz.przemyk.real_minerals.datagen.providers;
 
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
@@ -8,7 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.init.RealMinerals;
 
 import javax.annotation.Nullable;
 

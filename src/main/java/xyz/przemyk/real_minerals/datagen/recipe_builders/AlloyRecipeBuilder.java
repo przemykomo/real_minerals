@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.datagen;
+package xyz.przemyk.real_minerals.datagen.recipe_builders;
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;

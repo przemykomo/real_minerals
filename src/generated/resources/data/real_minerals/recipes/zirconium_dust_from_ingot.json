@@ -1,0 +1,9 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ingots/zirconium"
+  },
+  "output": {
+    "item": "real_minerals:zirconium_dust"
+  }
+}

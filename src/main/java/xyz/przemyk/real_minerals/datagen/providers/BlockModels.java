@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.datagen;
+package xyz.przemyk.real_minerals.datagen.providers;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.BlockModelProvider;

@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.datagen;
+package xyz.przemyk.real_minerals.datagen.recipe_builders;
 
 import com.google.gson.JsonObject;
 import net.minecraft.data.IFinishedRecipe;
@@ -7,30 +7,38 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerRecipe;
 import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherRecipe;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class CrusherRecipeBuilder {
+public class SingleInputOutputRecipeBuilder {
     private final Item output;
     private final Ingredient input;
     private final int count;
     private final IRecipeSerializer<?> serializer;
 
-    public CrusherRecipeBuilder(IRecipeSerializer<?> serializer, Ingredient input, IItemProvider resultProviderIn, int count) {
+    public SingleInputOutputRecipeBuilder(IRecipeSerializer<?> serializer, Ingredient input, IItemProvider resultProviderIn, int count) {
         this.output = resultProviderIn.asItem();
         this.input = input;
         this.count = count;
         this.serializer = serializer;
     }
 
-    public static CrusherRecipeBuilder crushingRecipe(Ingredient ingredient, IItemProvider result) {
-        return new CrusherRecipeBuilder(CrusherRecipe.SERIALIZER, ingredient, result, 1);
+    public static SingleInputOutputRecipeBuilder crushingRecipe(Ingredient ingredient, IItemProvider result) {
+        return new SingleInputOutputRecipeBuilder(CrusherRecipe.SERIALIZER, ingredient, result, 1);
     }
 
-    public static CrusherRecipeBuilder crushingRecipe(Ingredient ingredient, IItemProvider result, int count) {
-        return new CrusherRecipeBuilder(CrusherRecipe.SERIALIZER, ingredient, result, count);
+    public static SingleInputOutputRecipeBuilder crushingRecipe(Ingredient ingredient, IItemProvider result, int count) {
+        return new SingleInputOutputRecipeBuilder(CrusherRecipe.SERIALIZER, ingredient, result, count);
+    }
+    public static SingleInputOutputRecipeBuilder magnetizerRecipe(Ingredient ingredient, IItemProvider result) {
+        return new SingleInputOutputRecipeBuilder(MagnetizerRecipe.SERIALIZER, ingredient, result, 1);
+    }
+
+    public static SingleInputOutputRecipeBuilder magnetizerRecipe(Ingredient ingredient, IItemProvider result, int count) {
+        return new SingleInputOutputRecipeBuilder(MagnetizerRecipe.SERIALIZER, ingredient, result, count);
     }
 
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
