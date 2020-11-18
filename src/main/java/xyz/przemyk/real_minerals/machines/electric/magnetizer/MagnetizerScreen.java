@@ -40,11 +40,11 @@ public class MagnetizerScreen extends ContainerScreen<MagnetizerContainer> {
         IIntArray machineData = container.machineData;
         int workTime = machineData.get(0);
         if (workTime > 0) {
-            this.blit(matrixStack, i + 56, j + 54 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
-        }
+            this.blit(matrixStack, i + 57, j + 54 + 12 - 13, 176, 12 - 13, 14, 15);
 
-        int l = workTime != 0 ? workTime * 24 / MagnetizerTileEntity.WORKING_TIME_TOTAL : 0;
-        this.blit(matrixStack, i + 79, j + 34, 176, 14, l + 1, 16);
+            int l = workTime * 24 / MagnetizerTileEntity.WORKING_TIME_TOTAL;
+            this.blit(matrixStack, i + 79, j + 34, 176, 14, l + 1, 16);
+        }
 
         int energy = machineData.get(1);
         if (energy > 0) {

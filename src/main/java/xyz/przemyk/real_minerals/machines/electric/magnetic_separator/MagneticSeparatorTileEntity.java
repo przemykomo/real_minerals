@@ -48,7 +48,11 @@ public class MagneticSeparatorTileEntity extends RecipeProcessingTileEntity<Magn
                 return true;
             }
 
-            if (!currentOutput.isItemEqual(outputStack) || !currentSecondaryOutput.isItemEqual(secondaryOutputStack)) {
+            if (!currentOutput.isItemEqual(outputStack)) {
+                return false;
+            }
+
+            if (!currentSecondaryOutput.isEmpty() && !currentSecondaryOutput.isItemEqual(secondaryOutputStack)) {
                 return false;
             }
 
