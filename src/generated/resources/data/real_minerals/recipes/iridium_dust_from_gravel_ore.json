@@ -1,0 +1,13 @@
+{
+    "type": "real_minerals:magnetic_separator",
+    "input": {
+        "tag": "forge:gravel_ores/iridium"
+    },
+    "output": {
+        "item": "minecraft:gravel"
+    },
+    "secondOutput": {
+        "item": "real_minerals:iridium_dust",
+        "count": 2
+    }
+}

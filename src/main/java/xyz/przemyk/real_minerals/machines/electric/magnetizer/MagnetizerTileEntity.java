@@ -4,18 +4,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.electric.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.machines.electric.RecipeProcessingTileEntity;
-import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceContainer;
-import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceTileEntity;
-
-import javax.annotation.Nullable;
 
 public class MagnetizerTileEntity extends RecipeProcessingTileEntity<MagnetizerRecipe> {
 

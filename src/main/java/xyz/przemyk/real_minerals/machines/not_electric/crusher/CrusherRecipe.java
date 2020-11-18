@@ -23,7 +23,7 @@ public class CrusherRecipe extends MachineRecipe {
     public static final Serializer SERIALIZER = new Serializer();
 
     public CrusherRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
-        super(output, id, NonNullList.withSize(1, input));
+        super(NonNullList.withSize(1, output), id, NonNullList.withSize(1, input));
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CrusherRecipe extends MachineRecipe {
         @Override
         public void write(PacketBuffer buffer, CrusherRecipe recipe) {
             recipe.ingredients.get(0).write(buffer);
-            buffer.writeItemStack(recipe.output);
+            buffer.writeItemStack(recipe.outputs.get(0));
         }
     }
 }

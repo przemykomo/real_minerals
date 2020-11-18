@@ -26,6 +26,9 @@ import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceTileEn
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorBlock;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorContainer;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorTileEntity;
+import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorBlock;
+import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorContainer;
+import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorTileEntity;
 import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerBlock;
 import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerContainer;
 import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerTileEntity;
@@ -85,6 +88,10 @@ public class Registering {
     public static final BlockRegistryObject MAGNETIZER_BLOCK = BLOCKS.register("magnetizer", () -> new MagnetizerBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
     public static final RegistryObject<TileEntityType<MagnetizerTileEntity>> MAGNETIZER_TILE_ENTITY_TYPE = TILE_ENTITIES.register("magnetizer", () -> TileEntityType.Builder.create(MagnetizerTileEntity::new, MAGNETIZER_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<MagnetizerContainer>> MAGNETIZER_CONTAINER = CONTAINERS.register("magnetizer", () -> new ContainerType<>(MagnetizerContainer::getClientContainer));
+
+    public static final BlockRegistryObject MAGNETIC_SEPARATOR_BLOCK = BLOCKS.register("magnetic_separator", () -> new MagneticSeparatorBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<TileEntityType<MagneticSeparatorTileEntity>> MAGNETIC_SEPARATOR_TILE_ENTITY_TYPE = TILE_ENTITIES.register("magnetic_separator", () -> TileEntityType.Builder.create(MagneticSeparatorTileEntity::new, MAGNETIC_SEPARATOR_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<ContainerType<MagneticSeparatorContainer>> MAGNETIC_SEPARATOR_CONTAINER = CONTAINERS.register("magnetic_separator", () -> new ContainerType<>(MagneticSeparatorContainer::getClientContainer));
 
     /////////////////////////////////////// ELECTRIC CABLES
 

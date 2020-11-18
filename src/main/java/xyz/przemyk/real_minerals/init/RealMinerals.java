@@ -13,6 +13,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorRecipe;
+import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorRecipeType;
 import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerRecipe;
 import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerRecipeType;
 import xyz.przemyk.real_minerals.machines.not_electric.MachineRecipe;
@@ -39,12 +41,14 @@ public class RealMinerals {
     public static final IRecipeType<CrusherRecipe> CRUSHER_RECIPE_TYPE = new CrusherRecipeType();
     public static final IRecipeType<AlloyRecipe> ALLOY_RECIPE_TYPE = new AlloyRecipeType();
     public static final IRecipeType<MagnetizerRecipe> MAGNETIZER_RECIPE_TYPE = new MagnetizerRecipeType();
+    public static final IRecipeType<MagneticSeparatorRecipe> MAGNETIC_SEPARATOR_RECIPE_TYPE = new MagneticSeparatorRecipeType();
 
     private void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(CRUSHER_RECIPE_TYPE.toString()), CRUSHER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(ALLOY_RECIPE_TYPE.toString()), ALLOY_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MAGNETIZER_RECIPE_TYPE.toString()), MAGNETIZER_RECIPE_TYPE);
-        event.getRegistry().registerAll(CrusherRecipe.SERIALIZER, AlloyRecipe.SERIALIZER, MagnetizerRecipe.SERIALIZER);
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MAGNETIC_SEPARATOR_RECIPE_TYPE.toString()), MAGNETIC_SEPARATOR_RECIPE_TYPE);
+        event.getRegistry().registerAll(CrusherRecipe.SERIALIZER, AlloyRecipe.SERIALIZER, MagnetizerRecipe.SERIALIZER, MagneticSeparatorRecipe.SERIALIZER);
     }
 
     @Nullable

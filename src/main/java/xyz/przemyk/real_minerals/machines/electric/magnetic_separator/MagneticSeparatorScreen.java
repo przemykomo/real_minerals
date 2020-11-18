@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.electric.magnetizer;
+package xyz.przemyk.real_minerals.machines.electric.magnetic_separator;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -10,11 +10,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 
-public class MagnetizerScreen extends ContainerScreen<MagnetizerContainer> {
+public class MagneticSeparatorScreen extends ContainerScreen<MagneticSeparatorContainer> {
 
-    private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/magnetizer.png");
+    private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/magnetic_separator.png");
 
-    public MagnetizerScreen(MagnetizerContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public MagneticSeparatorScreen(MagneticSeparatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
     }
 
@@ -40,16 +40,16 @@ public class MagnetizerScreen extends ContainerScreen<MagnetizerContainer> {
         IIntArray machineData = container.machineData;
         int workTime = machineData.get(0);
         if (workTime > 0) {
-            this.blit(matrixStack, i + 56, j + 54 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
+            this.blit(matrixStack, i + 45, j + 46 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
         }
 
-        int l = workTime != 0 ? workTime * 24 / MagnetizerTileEntity.WORKING_TIME_TOTAL : 0;
-        this.blit(matrixStack, i + 79, j + 34, 176, 14, l + 1, 16);
+        int l = workTime != 0 ? workTime * 31 / MagneticSeparatorTileEntity.WORKING_TIME_TOTAL : 0;
+        this.blit(matrixStack, i + 66, j + 26, 176, 14, l + 1, 33);
 
         int energy = machineData.get(1);
         if (energy > 0) {
             int k = energy * 71 / 10000;
-            this.blit(matrixStack, i + 153, j + 78 - k, 176, 102 - k, 16, k + 1);
+            this.blit(matrixStack, i + 153, j + 79 - k, 176, 119 - k, 16, k + 1);
         }
     }
 }

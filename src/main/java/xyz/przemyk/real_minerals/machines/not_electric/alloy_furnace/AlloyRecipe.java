@@ -24,7 +24,7 @@ public class AlloyRecipe extends MachineRecipe {
     public static final Serializer SERIALIZER = new Serializer();
 
     public AlloyRecipe(ItemStack output, ResourceLocation id, NonNullList<Ingredient> ingredients) {
-        super(output, id, ingredients);
+        super(NonNullList.withSize(1, output), id, ingredients);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class AlloyRecipe extends MachineRecipe {
                 ingredient.write(buffer);
             }
 
-            buffer.writeItemStack(recipe.output);
+            buffer.writeItemStack(recipe.outputs.get(0));
         }
     }
 }

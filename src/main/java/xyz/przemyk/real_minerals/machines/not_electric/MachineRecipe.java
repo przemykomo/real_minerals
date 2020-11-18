@@ -10,12 +10,12 @@ import net.minecraft.world.World;
 
 public abstract class MachineRecipe implements IRecipe<IInventory> {
 
-    protected final ItemStack output;
+    protected final NonNullList<ItemStack> outputs;
     protected final ResourceLocation id;
     protected final NonNullList<Ingredient> ingredients;
 
-    public MachineRecipe(ItemStack output, ResourceLocation id, NonNullList<Ingredient> ingredients) {
-        this.output = output;
+    public MachineRecipe(NonNullList<ItemStack> outputs, ResourceLocation id, NonNullList<Ingredient> ingredients) {
+        this.outputs = outputs;
         this.id = id;
         this.ingredients = ingredients;
     }
@@ -29,7 +29,7 @@ public abstract class MachineRecipe implements IRecipe<IInventory> {
     @Deprecated // ignored method, use getRecipeOutput
     @Override
     public ItemStack getCraftingResult(IInventory inv) {
-        return output.copy();
+        return outputs.get(0).copy();
     }
 
     @Override
@@ -37,9 +37,13 @@ public abstract class MachineRecipe implements IRecipe<IInventory> {
         return ingredients;
     }
 
-    @Override
+    @Override // use getRecipeOutputs for multiple outputs
     public ItemStack getRecipeOutput() {
-        return output;
+        return outputs.get(0);
+    }
+
+    public NonNullList<ItemStack> getRecipeOutputs() {
+        return outputs;
     }
 
     @Override
