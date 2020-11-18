@@ -48,7 +48,11 @@ public class MagneticSeparatorTileEntity extends RecipeProcessingTileEntity<Magn
                 return true;
             }
 
-            return (currentOutput.getCount() + outputStack.getCount() <= currentOutput.getMaxStackSize()) && (currentSecondaryOutput.getMaxStackSize() + secondaryOutputStack.getMaxStackSize() <= currentSecondaryOutput.getMaxStackSize());
+            if (!currentOutput.isItemEqual(outputStack) || !currentSecondaryOutput.isItemEqual(secondaryOutputStack)) {
+                return false;
+            }
+
+            return (currentOutput.getCount() + outputStack.getCount() <= currentOutput.getMaxStackSize()) && (currentSecondaryOutput.getCount() + secondaryOutputStack.getCount() <= currentSecondaryOutput.getMaxStackSize());
         }
         return false;
     }

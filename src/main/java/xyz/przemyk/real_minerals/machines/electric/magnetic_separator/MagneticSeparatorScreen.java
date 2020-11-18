@@ -40,16 +40,16 @@ public class MagneticSeparatorScreen extends ContainerScreen<MagneticSeparatorCo
         IIntArray machineData = container.machineData;
         int workTime = machineData.get(0);
         if (workTime > 0) {
-            this.blit(matrixStack, i + 45, j + 46 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
-        }
+            this.blit(matrixStack, i + 46, j + 46 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
 
-        int l = workTime != 0 ? workTime * 31 / MagneticSeparatorTileEntity.WORKING_TIME_TOTAL : 0;
-        this.blit(matrixStack, i + 66, j + 26, 176, 14, l + 1, 33);
+            int l = workTime * 31 / MagneticSeparatorTileEntity.WORKING_TIME_TOTAL;
+            this.blit(matrixStack, i + 66, j + 26, 176, 14, l, 33);
+        }
 
         int energy = machineData.get(1);
         if (energy > 0) {
             int k = energy * 71 / 10000;
-            this.blit(matrixStack, i + 153, j + 79 - k, 176, 119 - k, 16, k + 1);
+            this.blit(matrixStack, i + 153, j + 78 - k, 176, 118 - k, 16, k + 1);
         }
     }
 }
