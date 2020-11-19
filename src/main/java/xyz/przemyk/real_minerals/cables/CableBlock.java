@@ -1,9 +1,10 @@
 package xyz.przemyk.real_minerals.cables;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -11,6 +12,9 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -18,9 +22,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class CableBlock extends Block {
 
@@ -30,6 +32,11 @@ public class CableBlock extends Block {
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
+
+    public static final VoxelShape CENTER_SHAPE = makeCuboidShape(5, 5, 5, 11, 11, 11);
+    private static final Map<Direction, VoxelShape> SIDE_TO_SHAPE = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.makeCuboidShape(5, 5, 0, 11, 11, 5), Direction.SOUTH, Block.makeCuboidShape(5, 5, 11, 11, 11, 16), Direction.EAST, Block.makeCuboidShape(11, 5, 5, 16, 11, 11), Direction.WEST, Block.makeCuboidShape(0, 5, 5, 5, 11, 11), Direction.UP, Block.makeCuboidShape(5, 11, 5, 11, 16, 11)));
+
+    private final Map<BlockState, VoxelShape> stateToShapeMap = new HashMap<>();
 
     public CableBlock(Properties properties) {
         super(properties);
@@ -41,12 +48,37 @@ public class CableBlock extends Block {
                 .with(UP, false)
                 .with(DOWN, false)
         );
+
+        SIDE_TO_SHAPE.put(Direction.DOWN, Block.makeCuboidShape(5, 0, 5, 11, 5, 11)); // looks like ImmutableMap.of() doesn't support so many arguments
+
+        for (BlockState blockState : getStateContainer().getValidStates()) {
+            stateToShapeMap.put(blockState, getShapeForState(blockState));
+        }
+    }
+
+    private VoxelShape getShapeForState(BlockState blockState) {
+        VoxelShape voxelShape = CENTER_SHAPE;
+
+        for (Direction direction : Direction.values()) {
+            boolean connected = blockState.get(getPropertyFromDirection(direction));
+            if (connected) {
+                voxelShape = VoxelShapes.or(voxelShape, SIDE_TO_SHAPE.get(direction));
+            }
+        }
+
+        return voxelShape;
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN);
         super.fillStateContainer(builder);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return stateToShapeMap.get(state);
     }
 
     @Override

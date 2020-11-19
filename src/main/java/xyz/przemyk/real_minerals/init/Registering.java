@@ -95,7 +95,7 @@ public class Registering {
 
     /////////////////////////////////////// ELECTRIC CABLES
 
-    public static final BlockRegistryObject CABLE_BLOCK = BLOCKS.register("cable", () -> new CableBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final BlockRegistryObject CABLE_BLOCK = BLOCKS.register("cable", () -> new CableBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL).setOpaque((p1, p2, p3) -> false)), ITEM_GROUP);
     public static final RegistryObject<TileEntityType<CableTileEntity>> CABLE_TILE_ENTITY_TYPE = TILE_ENTITIES.register("cable", () -> TileEntityType.Builder.create(CableTileEntity::new, CABLE_BLOCK.BLOCK.get()).build(null));
 
     ////////////////////////////////////////////////////////////////// METALS WITH STONE ORES
