@@ -12,6 +12,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerContainer;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerScreen;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceContainer;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceScreen;
 import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherContainer;
@@ -24,6 +26,7 @@ public class RealMineralsJEIPlugin implements IModPlugin {
 
     public static final ResourceLocation CRUSHER_CATEGORY_ID = new ResourceLocation(RealMinerals.MODID, "crushing");
     public static final ResourceLocation ALLOY_CATEGORY_ID = new ResourceLocation(RealMinerals.MODID, "alloying");
+    public static final ResourceLocation MAGNETIZER_CATEGORY_ID = new ResourceLocation(RealMinerals.MODID, "magnetizer");
 
     public RealMineralsJEIPlugin() {
 
@@ -37,7 +40,7 @@ public class RealMineralsJEIPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
-        registration.addRecipeCategories(new CrusherRecipeCategory(guiHelper), new AlloyRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new CrusherRecipeCategory(guiHelper), new AlloyRecipeCategory(guiHelper), new MagnetizerRecipeCategory(guiHelper));
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -46,6 +49,7 @@ public class RealMineralsJEIPlugin implements IModPlugin {
         World world = Minecraft.getInstance().world;
         registration.addRecipes(RealMinerals.getAllRecipes(world, RealMinerals.CRUSHER_RECIPE_TYPE), CRUSHER_CATEGORY_ID);
         registration.addRecipes(RealMinerals.getAllRecipes(world, RealMinerals.ALLOY_RECIPE_TYPE), ALLOY_CATEGORY_ID);
+        registration.addRecipes(RealMinerals.getAllRecipes(world, RealMinerals.MAGNETIZER_RECIPE_TYPE), MAGNETIZER_CATEGORY_ID);
     }
 
     @Override
@@ -55,17 +59,21 @@ public class RealMineralsJEIPlugin implements IModPlugin {
 
         registration.addRecipeTransferHandler(AlloyFurnaceContainer.class, ALLOY_CATEGORY_ID, 0, 5, 7, 36);
         registration.addRecipeTransferHandler(AlloyFurnaceContainer.class, VanillaRecipeCategoryUid.FUEL, 1, 1, 7, 36);
+
+        registration.addRecipeTransferHandler(MagnetizerContainer.class, MAGNETIZER_CATEGORY_ID, 0, 1, 2, 36);
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(Registering.CRUSHER_BLOCK.ITEM.get()), CRUSHER_CATEGORY_ID, VanillaRecipeCategoryUid.FUEL);
         registration.addRecipeCatalyst(new ItemStack(Registering.ALLOY_FURNACE_BLOCK.ITEM.get()), ALLOY_CATEGORY_ID, VanillaRecipeCategoryUid.FUEL);
+        registration.addRecipeCatalyst(new ItemStack(Registering.MAGNETIZER_BLOCK.ITEM.get()), MAGNETIZER_CATEGORY_ID);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(CrusherScreen.class, 78, 32, 28, 23, CRUSHER_CATEGORY_ID, VanillaRecipeCategoryUid.FUEL);
         registration.addRecipeClickArea(AlloyFurnaceScreen.class, 78, 32, 28, 23, ALLOY_CATEGORY_ID, VanillaRecipeCategoryUid.FUEL);
+        registration.addRecipeClickArea(MagnetizerScreen.class, 78, 32, 28, 23, MAGNETIZER_CATEGORY_ID);
     }
 }
