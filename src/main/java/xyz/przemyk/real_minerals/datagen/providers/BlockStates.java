@@ -19,7 +19,7 @@ public class BlockStates extends BlockStateProvider {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void registerStatesAndModels() {
-        for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
+        for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS_ITEMS.allBlocks) {
             if (blockRegistryObject.BLOCK.get() instanceof BaseMachineBlock) {
                 continue;
             }

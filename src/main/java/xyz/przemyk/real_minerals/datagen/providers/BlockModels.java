@@ -6,7 +6,6 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.machines.BaseMachineBlock;
 
 public class BlockModels extends BlockModelProvider {
 
@@ -17,7 +16,7 @@ public class BlockModels extends BlockModelProvider {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void registerModels() {
-        for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
+        for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS_ITEMS.allBlocks) {
             if (blockRegistryObject.BLOCK.get().hasTileEntity(blockRegistryObject.BLOCK.get().getDefaultState())) {
                 continue;
             }

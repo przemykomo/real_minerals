@@ -44,7 +44,7 @@ public class LootTables extends LootTableProvider {
 
     @SuppressWarnings("ConstantConditions")
     protected void addTables() {
-        for(BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
+        for(BlockRegistryObject blockRegistryObject : Registering.BLOCKS_ITEMS.allBlocks) {
             Block block = blockRegistryObject.BLOCK.get();
             this.lootTables.put(block, this.createStandardTable(block.getRegistryName().getPath(), block));
         }

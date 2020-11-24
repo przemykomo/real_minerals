@@ -8,7 +8,6 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.machines.BaseMachineBlock;
 
 public class ItemModels extends ItemModelProvider {
 
@@ -19,7 +18,7 @@ public class ItemModels extends ItemModelProvider {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void registerModels() {
-        for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS.allBlocks) {
+        for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS_ITEMS.allBlocks) {
             if (blockRegistryObject.BLOCK.get().hasTileEntity(blockRegistryObject.BLOCK.get().getDefaultState())) {
                 continue;
             }
