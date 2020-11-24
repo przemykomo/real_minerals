@@ -48,7 +48,7 @@ public class AlloyRecipe extends MachineRecipe {
         return RealMinerals.ALLOY_RECIPE_TYPE;
     }
 
-    private static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AlloyRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AlloyRecipe> {
 
         public Serializer() {
             setRegistryName(new ResourceLocation(RealMinerals.MODID, "alloy"));

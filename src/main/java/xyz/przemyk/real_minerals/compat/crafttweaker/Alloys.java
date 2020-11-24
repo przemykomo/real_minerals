@@ -11,39 +11,39 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 import xyz.przemyk.real_minerals.init.RealMinerals;
-import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherRecipe;
+import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyRecipe;
 
 @ZenRegister
-@ZenCodeType.Name("mods." + RealMinerals.MODID + ".Crusher")
-public class Crusher implements IRecipeManager {
+@ZenCodeType.Name("mods." + RealMinerals.MODID + ".Alloys")
+public class Alloys implements IRecipeManager {
 
-    public Crusher() {}
+    public Alloys() {}
 
     @ZenCodeType.Method
-    public ZenCrusherRecipe create(String id, IIngredient input, IItemStack output) {
-        final ZenCrusherRecipe recipe = new ZenCrusherRecipe(id, input, output);
+    public ZenAlloyRecipe create(String id, IIngredient[] inputs, IItemStack output) {
+        final ZenAlloyRecipe recipe = new ZenAlloyRecipe(id, inputs, output);
         CraftTweakerAPI.apply(new ActionAddRecipe(this, recipe.getInternal(), ""));
         return recipe;
     }
 
     @ZenCodeType.Method
-    public ZenCrusherRecipe getRecipe(String id) {
+    public ZenAlloyRecipe getRecipe(String id) {
         final IRecipe<?> recipe = getRecipes().get(ResourceLocation.tryCreate(id));
 
-        if (recipe instanceof CrusherRecipe) {
-            return new ZenCrusherRecipe((CrusherRecipe) recipe);
+        if (recipe instanceof AlloyRecipe) {
+            return new ZenAlloyRecipe((AlloyRecipe) recipe);
         }
 
-        throw new IllegalStateException("Invalid crusher recipe ID: " + id);
+        throw new IllegalStateException("Invalid alloy recipe ID: " + id);
     }
 
     @Override
     public ResourceLocation getBracketResourceLocation() {
-        return CrusherRecipe.SERIALIZER.getRegistryName();
+        return AlloyRecipe.SERIALIZER.getRegistryName();
     }
 
     @Override
     public IRecipeType<?> getRecipeType() {
-        return RealMinerals.CRUSHER_RECIPE_TYPE;
+        return RealMinerals.ALLOY_RECIPE_TYPE;
     }
 }

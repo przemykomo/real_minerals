@@ -49,7 +49,7 @@ public class MagneticSeparatorRecipe extends MachineRecipe {
         return ingredients.get(0).test(input.get(0));
     }
 
-    private static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MagneticSeparatorRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MagneticSeparatorRecipe> {
 
         public Serializer() {
             setRegistryName(new ResourceLocation(RealMinerals.MODID, "magnetic_separator"));

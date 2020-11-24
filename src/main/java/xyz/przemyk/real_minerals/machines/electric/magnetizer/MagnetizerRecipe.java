@@ -51,7 +51,7 @@ public class MagnetizerRecipe extends MachineRecipe {
         return ingredients.get(0).test(input);
     }
 
-    private static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MagnetizerRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MagnetizerRecipe> {
 
         public Serializer() {
             setRegistryName(new ResourceLocation(RealMinerals.MODID, "magnetizer"));

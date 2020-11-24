@@ -11,39 +11,39 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 import xyz.przemyk.real_minerals.init.RealMinerals;
-import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherRecipe;
+import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorRecipe;
 
 @ZenRegister
-@ZenCodeType.Name("mods." + RealMinerals.MODID + ".Crusher")
-public class Crusher implements IRecipeManager {
+@ZenCodeType.Name("mods." + RealMinerals.MODID + ".MagneticSeparator")
+public class MagneticSeparator implements IRecipeManager {
 
-    public Crusher() {}
+    public MagneticSeparator() {}
 
     @ZenCodeType.Method
-    public ZenCrusherRecipe create(String id, IIngredient input, IItemStack output) {
-        final ZenCrusherRecipe recipe = new ZenCrusherRecipe(id, input, output);
+    public ZenMagneticSeparatorRecipe create(String id, IIngredient input, IItemStack output, IItemStack secondaryOutput) {
+        final ZenMagneticSeparatorRecipe recipe = new ZenMagneticSeparatorRecipe(id, input, output, secondaryOutput);
         CraftTweakerAPI.apply(new ActionAddRecipe(this, recipe.getInternal(), ""));
         return recipe;
     }
 
     @ZenCodeType.Method
-    public ZenCrusherRecipe getRecipe(String id) {
+    public ZenMagneticSeparatorRecipe getRecipe(String id) {
         final IRecipe<?> recipe = getRecipes().get(ResourceLocation.tryCreate(id));
 
-        if (recipe instanceof CrusherRecipe) {
-            return new ZenCrusherRecipe((CrusherRecipe) recipe);
+        if (recipe instanceof MagneticSeparatorRecipe) {
+            return new ZenMagneticSeparatorRecipe((MagneticSeparatorRecipe) recipe);
         }
 
-        throw new IllegalStateException("Invalid crusher recipe ID: " + id);
+        throw new IllegalStateException("Invalid magnetic separator recipe ID: " + id);
     }
 
     @Override
     public ResourceLocation getBracketResourceLocation() {
-        return CrusherRecipe.SERIALIZER.getRegistryName();
+        return MagneticSeparatorRecipe.SERIALIZER.getRegistryName();
     }
 
     @Override
     public IRecipeType<?> getRecipeType() {
-        return RealMinerals.CRUSHER_RECIPE_TYPE;
+        return RealMinerals.MAGNETIC_SEPARATOR_RECIPE_TYPE;
     }
 }

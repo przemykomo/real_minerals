@@ -11,39 +11,39 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 import xyz.przemyk.real_minerals.init.RealMinerals;
-import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherRecipe;
+import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerRecipe;
 
 @ZenRegister
-@ZenCodeType.Name("mods." + RealMinerals.MODID + ".Crusher")
-public class Crusher implements IRecipeManager {
+@ZenCodeType.Name("mods." + RealMinerals.MODID + ".Magnetizer")
+public class Magnetizer implements IRecipeManager {
 
-    public Crusher() {}
+    public Magnetizer() {}
 
     @ZenCodeType.Method
-    public ZenCrusherRecipe create(String id, IIngredient input, IItemStack output) {
-        final ZenCrusherRecipe recipe = new ZenCrusherRecipe(id, input, output);
+    public ZenMagnetizerRecipe create(String id, IIngredient input, IItemStack output) {
+        final ZenMagnetizerRecipe recipe = new ZenMagnetizerRecipe(id, input, output);
         CraftTweakerAPI.apply(new ActionAddRecipe(this, recipe.getInternal(), ""));
         return recipe;
     }
 
     @ZenCodeType.Method
-    public ZenCrusherRecipe getRecipe(String id) {
+    public ZenMagnetizerRecipe getRecipe(String id) {
         final IRecipe<?> recipe = getRecipes().get(ResourceLocation.tryCreate(id));
 
-        if (recipe instanceof CrusherRecipe) {
-            return new ZenCrusherRecipe((CrusherRecipe) recipe);
+        if (recipe instanceof MagnetizerRecipe) {
+            return new ZenMagnetizerRecipe((MagnetizerRecipe) recipe);
         }
 
-        throw new IllegalStateException("Invalid crusher recipe ID: " + id);
+        throw new IllegalStateException("Invalid magnetizer recipe ID: " + id);
     }
 
     @Override
     public ResourceLocation getBracketResourceLocation() {
-        return CrusherRecipe.SERIALIZER.getRegistryName();
+        return MagnetizerRecipe.SERIALIZER.getRegistryName();
     }
 
     @Override
     public IRecipeType<?> getRecipeType() {
-        return RealMinerals.CRUSHER_RECIPE_TYPE;
+        return RealMinerals.MAGNETIZER_RECIPE_TYPE;
     }
 }
