@@ -51,7 +51,7 @@ public class CrusherRecipe extends MachineRecipe {
         return ingredients.get(0).test(input);
     }
 
-    private static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CrusherRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CrusherRecipe> {
 
         public Serializer() {
             setRegistryName(new ResourceLocation(RealMinerals.MODID, "crusher"));
