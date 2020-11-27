@@ -7,8 +7,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryScreen;
 import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceScreen;
+import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorScreen;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorScreen;
-import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorContainer;
 import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorScreen;
 import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerScreen;
 import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceScreen;
@@ -26,5 +26,6 @@ public class ClientSetup {
         ScreenManager.registerFactory(Registering.ELECTRIC_FURNACE_CONTAINER.get(), ElectricFurnaceScreen::new);
         ScreenManager.registerFactory(Registering.MAGNETIZER_CONTAINER.get(), MagnetizerScreen::new);
         ScreenManager.registerFactory(Registering.MAGNETIC_SEPARATOR_CONTAINER.get(), MagneticSeparatorScreen::new);
+        ScreenManager.registerFactory(Registering.GAS_SEPARATOR_CONTAINER.get(), GasSeparatorScreen::new);
     }
 }

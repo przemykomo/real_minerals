@@ -13,6 +13,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorRecipe;
+import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorRecipeType;
 import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorRecipe;
 import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorRecipeType;
 import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerRecipe;
@@ -42,13 +44,15 @@ public class RealMinerals {
     public static final IRecipeType<AlloyRecipe> ALLOY_RECIPE_TYPE = new AlloyRecipeType();
     public static final IRecipeType<MagnetizerRecipe> MAGNETIZER_RECIPE_TYPE = new MagnetizerRecipeType();
     public static final IRecipeType<MagneticSeparatorRecipe> MAGNETIC_SEPARATOR_RECIPE_TYPE = new MagneticSeparatorRecipeType();
+    public static final IRecipeType<GasSeparatorRecipe> GAS_SEPARATOR_RECIPE_TYPE = new GasSeparatorRecipeType();
 
     private void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(CRUSHER_RECIPE_TYPE.toString()), CRUSHER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(ALLOY_RECIPE_TYPE.toString()), ALLOY_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MAGNETIZER_RECIPE_TYPE.toString()), MAGNETIZER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MAGNETIC_SEPARATOR_RECIPE_TYPE.toString()), MAGNETIC_SEPARATOR_RECIPE_TYPE);
-        event.getRegistry().registerAll(CrusherRecipe.SERIALIZER, AlloyRecipe.SERIALIZER, MagnetizerRecipe.SERIALIZER, MagneticSeparatorRecipe.SERIALIZER);
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(GAS_SEPARATOR_RECIPE_TYPE.toString()), GAS_SEPARATOR_RECIPE_TYPE);
+        event.getRegistry().registerAll(CrusherRecipe.SERIALIZER, AlloyRecipe.SERIALIZER, MagnetizerRecipe.SERIALIZER, MagneticSeparatorRecipe.SERIALIZER, GasSeparatorRecipe.SERIALIZER);
     }
 
     @Nullable
@@ -75,6 +79,4 @@ public class RealMinerals {
             return new ItemStack(Registering.CRUSHER_BLOCK.ITEM.get());
         }
     };
-
-
 }

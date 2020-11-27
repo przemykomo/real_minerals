@@ -30,11 +30,6 @@ public class MagneticSeparatorRecipe extends MachineRecipe {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
     public IRecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }

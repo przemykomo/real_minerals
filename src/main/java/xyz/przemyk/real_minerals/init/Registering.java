@@ -22,6 +22,9 @@ import xyz.przemyk.real_minerals.machines.electric.battery.BatteryTileEntity;
 import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceBlock;
 import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceContainer;
 import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceTileEntity;
+import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorBlock;
+import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorContainer;
+import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorTileEntity;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorBlock;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorContainer;
 import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorTileEntity;
@@ -99,6 +102,10 @@ public class Registering {
     public static final BlockRegistryObject MAGNETIC_SEPARATOR_BLOCK = BLOCKS_ITEMS.register("magnetic_separator", () -> new MagneticSeparatorBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
     public static final RegistryObject<TileEntityType<MagneticSeparatorTileEntity>> MAGNETIC_SEPARATOR_TILE_ENTITY_TYPE = TILE_ENTITIES.register("magnetic_separator", () -> TileEntityType.Builder.create(MagneticSeparatorTileEntity::new, MAGNETIC_SEPARATOR_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<MagneticSeparatorContainer>> MAGNETIC_SEPARATOR_CONTAINER = CONTAINERS.register("magnetic_separator", () -> new ContainerType<>(MagneticSeparatorContainer::getClientContainer));
+
+    public static final BlockRegistryObject GAS_SEPARATOR_BLOCK = BLOCKS_ITEMS.register("gas_separator", () -> new GasSeparatorBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<TileEntityType<GasSeparatorTileEntity>> GAS_SEPARATOR_TILE_ENTITY_TYPE = TILE_ENTITIES.register("gas_separator", () -> TileEntityType.Builder.create(GasSeparatorTileEntity::new, GAS_SEPARATOR_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<ContainerType<GasSeparatorContainer>> GAS_SEPARATOR_CONTAINER = CONTAINERS.register("gas_separator", () -> new ContainerType<>(GasSeparatorContainer::getClientContainer));
     //</editor-fold>
 
     /////////////////////////////////////// ELECTRIC CABLES
@@ -217,4 +224,5 @@ public class Registering {
     public static final RegistryObject<Item> METEORITE_IRON_INGOT = ITEMS.register( "meteorite_iron_ingot", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
     public static final RegistryObject<Item> METEORITE_IRON_NUGGET = ITEMS.register("meteorite_iron_nugget", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
 
+    public static final BlockRegistryObject SHALE_GAS_STONE_BLOCK = BLOCKS_ITEMS.register("shale_gas_stone", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ITEM_GROUP);
 }

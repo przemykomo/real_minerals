@@ -1,3 +1,4 @@
 {
-    "real_minerals.gui.energy": "Energy: %s FE"
+    "real_minerals.gui.energy": "Energy: %s FE",
+    "real_minerals.gui.gas": "Gas: %s mb"
 }
