@@ -1,7 +1,6 @@
 package xyz.przemyk.real_minerals.worldgen;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -14,8 +13,6 @@ import xyz.przemyk.real_minerals.init.Registering;
 import java.util.Random;
 
 public class MeteoriteFeature extends Feature<NoFeatureConfig> {
-
-    public static final int EXPLOSION_SIZE = 3;
 
     public MeteoriteFeature(Codec<NoFeatureConfig> codec) {
         super(codec);

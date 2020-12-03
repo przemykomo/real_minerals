@@ -3,8 +3,11 @@ package xyz.przemyk.real_minerals.init;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
@@ -16,6 +19,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.cables.CableBlock;
 import xyz.przemyk.real_minerals.cables.CableTileEntity;
+import xyz.przemyk.real_minerals.fluid.GasBucketItem;
+import xyz.przemyk.real_minerals.fluid.ShaleGasFluid;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryBlock;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryContainer;
 import xyz.przemyk.real_minerals.machines.electric.battery.BatteryTileEntity;
@@ -56,6 +61,7 @@ public class Registering {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MODID);
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, MODID);
 
     public static void init() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -65,6 +71,7 @@ public class Registering {
         CONTAINERS.register(eventBus);
         BLOCKS.register(eventBus);
         FEATURES.register(eventBus);
+        FLUIDS.register(eventBus);
     }
 
     ////////////////////////////////////////////////////////////////// MACHINES
@@ -225,4 +232,6 @@ public class Registering {
     public static final RegistryObject<Item> METEORITE_IRON_NUGGET = ITEMS.register("meteorite_iron_nugget", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
 
     public static final BlockRegistryObject SHALE_GAS_STONE_BLOCK = BLOCKS_ITEMS.register("shale_gas_stone", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ITEM_GROUP);
+    public static final RegistryObject<Fluid> SHALE_GAS_FLUID = FLUIDS.register("shale_gas", ShaleGasFluid::new);
+    public static final RegistryObject<Item> SHALE_GAS_BUCKET = ITEMS.register("shale_gas_bucket", () -> new GasBucketItem(SHALE_GAS_FLUID, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ITEM_GROUP)));
 }

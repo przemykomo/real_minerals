@@ -4,7 +4,7 @@
     "item": "real_minerals:shale_gas_stone"
   },
   "fluidOutput": {
-    "fluid": "minecraft:water",
+    "fluid": "real_minerals:shale_gas",
     "amount": 100
   },
   "itemOutput": {
