@@ -1,0 +1,19 @@
+{
+    "parent": "block/cube",
+    "display": {
+        "firstperson_righthand": {
+            "rotation": [ 0, 135, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 0.40, 0.40, 0.40 ]
+        }
+    },
+    "textures": {
+        "particle": "#up",
+        "up": "real_minerals:block/battery_top",
+        "north": "real_minerals:block/battery_front_0",
+        "east": "real_minerals:block/battery_input",
+        "west": "real_minerals:block/battery_output",
+        "south": "real_minerals:block/battery_side",
+        "down": "real_minerals:block/bronze_machine_bottom"
+    }
+}

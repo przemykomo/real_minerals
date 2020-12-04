@@ -1,0 +1,79 @@
+{
+    "variants": {
+        "facing=east,charges=0": {
+            "model": "real_minerals:block/battery_0",
+            "y": 90
+        },
+        "facing=north,charges=0": {
+            "model": "real_minerals:block/battery_0"
+        },
+        "facing=south,charges=0": {
+            "model": "real_minerals:block/battery_0",
+            "y": 180
+        },
+        "facing=west,charges=0": {
+            "model": "real_minerals:block/battery_0",
+            "y": 270
+        },
+        "facing=east,charges=1": {
+            "model": "real_minerals:block/battery_1",
+            "y": 90
+        },
+        "facing=north,charges=1": {
+            "model": "real_minerals:block/battery_1"
+        },
+        "facing=south,charges=1": {
+            "model": "real_minerals:block/battery_1",
+            "y": 180
+        },
+        "facing=west,charges=1": {
+            "model": "real_minerals:block/battery_1",
+            "y": 270
+        },
+        "facing=east,charges=2": {
+            "model": "real_minerals:block/battery_2",
+            "y": 90
+        },
+        "facing=north,charges=2": {
+            "model": "real_minerals:block/battery_2"
+        },
+        "facing=south,charges=2": {
+            "model": "real_minerals:block/battery_2",
+            "y": 180
+        },
+        "facing=west,charges=2": {
+            "model": "real_minerals:block/battery_2",
+            "y": 270
+        },
+        "facing=east,charges=3": {
+            "model": "real_minerals:block/battery_3",
+            "y": 90
+        },
+        "facing=north,charges=3": {
+            "model": "real_minerals:block/battery_3"
+        },
+        "facing=south,charges=3": {
+            "model": "real_minerals:block/battery_3",
+            "y": 180
+        },
+        "facing=west,charges=3": {
+            "model": "real_minerals:block/battery_3",
+            "y": 270
+        },
+        "facing=east,charges=4": {
+            "model": "real_minerals:block/battery_4",
+            "y": 90
+        },
+        "facing=north,charges=4": {
+            "model": "real_minerals:block/battery_4"
+        },
+        "facing=south,charges=4": {
+            "model": "real_minerals:block/battery_4",
+            "y": 180
+        },
+        "facing=west,charges=4": {
+            "model": "real_minerals:block/battery_4",
+            "y": 270
+        }
+    }
+}

@@ -14,13 +14,13 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class ElectricMachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public abstract class EnergyOutputTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
     public final ElectricMachineEnergyStorage energyStorage;
 
     protected final LazyOptional<ElectricMachineEnergyStorage> energyStorageLazyOptional;
 
-    public ElectricMachineTileEntity(TileEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage) {
+    public EnergyOutputTileEntity(TileEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage) {
         super(tileEntityTypeIn);
         this.energyStorage = energyStorage;
         this.energyStorageLazyOptional = LazyOptional.of(() -> energyStorage);

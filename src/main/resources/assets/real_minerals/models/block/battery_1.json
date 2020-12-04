@@ -1,0 +1,6 @@
+{
+    "parent": "real_minerals:block/battery_0",
+    "textures": {
+        "north": "real_minerals:block/battery_front_1"
+    }
+}

@@ -17,12 +17,12 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.electric.ElectricMachineEnergyStorage;
-import xyz.przemyk.real_minerals.machines.electric.ElectricMachineTileEntity;
+import xyz.przemyk.real_minerals.machines.electric.EnergyOutputTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BurningGeneratorTileEntity extends ElectricMachineTileEntity {
+public class BurningGeneratorTileEntity extends EnergyOutputTileEntity {
 
     public static final int FE_PER_TICK = 20;
 
