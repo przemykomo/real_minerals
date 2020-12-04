@@ -1,33 +1,39 @@
 package xyz.przemyk.real_minerals.machines.electric;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class RecipeProcessingTileEntity<T extends IRecipe<?>> extends ElectricMachineTileEntity {
+public abstract class ElectricRecipeProcessingTileEntity<T extends IRecipe<?>> extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
     public final ItemStackHandler itemHandler;
+    public final ElectricMachineEnergyStorage energyStorage;
     public int workingTime;
 
     private final int energyPerTick;
     private final int workingTimeTotal;
 
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional;
+    protected final LazyOptional<ElectricMachineEnergyStorage> energyStorageLazyOptional;
 
-    public RecipeProcessingTileEntity(TileEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage, int energyPerTick, int itemHandlerSize, int workingTimeTotal) {
-        super(tileEntityTypeIn, energyStorage);
+    public ElectricRecipeProcessingTileEntity(TileEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage, int energyPerTick, int itemHandlerSize, int workingTimeTotal) {
+        super(tileEntityTypeIn);
         this.energyPerTick = energyPerTick;
         this.itemHandler = new ItemStackHandler(itemHandlerSize) {
             @Override
@@ -37,12 +43,13 @@ public abstract class RecipeProcessingTileEntity<T extends IRecipe<?>> extends E
         };
         this.workingTimeTotal = workingTimeTotal;
         this.itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
+        this.energyStorage = energyStorage;
+        this.energyStorageLazyOptional = LazyOptional.of(() -> energyStorage);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void tick() { //TODO: change block state
-        super.tick();
+    public void tick() {
         if (!world.isRemote()) {
             boolean dirty = false;
             boolean wasWorking = workingTime > 0;
@@ -51,21 +58,27 @@ public abstract class RecipeProcessingTileEntity<T extends IRecipe<?>> extends E
                 if (canProcess(recipe)) {
                     if (!wasWorking) {
                         dirty = true;
+                        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.LIT, true), 3);
                     }
                     ++workingTime;
-                    energyStorage.extractEnergy(energyPerTick, false);
+                    energyStorage.removeEnergy(energyPerTick);
                     if (workingTime >= workingTimeTotal) {
                         workingTime = 0;
+                        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.LIT, false), 3);
                         process(recipe);
                     }
                 } else {
                     if (wasWorking) {
                         dirty = true;
+                        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.LIT, false), 3);
                     }
                     workingTime = 0;
                 }
             } else {
                 workingTime = 0;
+                if (wasWorking) {
+                    world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.LIT, false), 3);
+                }
             }
 
             if (dirty) {
@@ -84,12 +97,14 @@ public abstract class RecipeProcessingTileEntity<T extends IRecipe<?>> extends E
     public void remove() {
         super.remove();
         itemHandlerLazyOptional.invalidate();
+        energyStorageLazyOptional.invalidate();
     }
 
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         workingTime = nbt.getInt("WorkingTime");
+        energyStorage.setEnergy(nbt.getInt("energy"));
         super.read(state, nbt);
     }
 
@@ -97,12 +112,16 @@ public abstract class RecipeProcessingTileEntity<T extends IRecipe<?>> extends E
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("inv", itemHandler.serializeNBT());
         compound.putInt("WorkingTime", workingTime);
+        compound.putInt("energy", energyStorage.getEnergyStored());
         return super.write(compound);
     }
 
     @Nonnull
     @Override
     public <C> LazyOptional<C> getCapability(@Nonnull Capability<C> cap, @Nullable Direction side) {
+        if (cap == CapabilityEnergy.ENERGY) {
+            return energyStorageLazyOptional.cast();
+        }
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return itemHandlerLazyOptional.cast();
         }
@@ -110,9 +129,9 @@ public abstract class RecipeProcessingTileEntity<T extends IRecipe<?>> extends E
     }
 
     protected static class RecipeProcessingMachineSyncData implements IIntArray {
-        private final RecipeProcessingTileEntity<?> machine;
+        private final ElectricRecipeProcessingTileEntity<?> machine;
 
-        public RecipeProcessingMachineSyncData(RecipeProcessingTileEntity<?> electricFurnaceTileEntity) {
+        public RecipeProcessingMachineSyncData(ElectricRecipeProcessingTileEntity<?> electricFurnaceTileEntity) {
             machine = electricFurnaceTileEntity;
         }
 

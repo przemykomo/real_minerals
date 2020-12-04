@@ -7,21 +7,20 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.electric.ElectricMachineEnergyStorage;
-import xyz.przemyk.real_minerals.machines.electric.RecipeProcessingTileEntity;
+import xyz.przemyk.real_minerals.machines.electric.ElectricRecipeProcessingTileEntity;
 
 import javax.annotation.Nullable;
 
-public class ElectricFurnaceTileEntity extends RecipeProcessingTileEntity<FurnaceRecipe> {
+public class ElectricFurnaceTileEntity extends ElectricRecipeProcessingTileEntity<FurnaceRecipe> {
 
     public static final int FE_PER_TICK = 20;
     public static final int WORKING_TIME_TOTAL = 80;
 
     public ElectricFurnaceTileEntity() {
-        super(Registering.ELECTRIC_FURNACE_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, FE_PER_TICK), FE_PER_TICK, 2, WORKING_TIME_TOTAL);
+        super(Registering.ELECTRIC_FURNACE_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0), FE_PER_TICK, 2, WORKING_TIME_TOTAL);
     }
 
     private FurnaceRecipe cachedRecipe = null;

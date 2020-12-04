@@ -26,6 +26,11 @@ public class ElectricMachineEnergyStorage extends EnergyStorage {
         this.energy += Math.min(capacity - this.energy, energy);
     }
 
+    //used internally in machines
+    public void removeEnergy(int energy) {
+        this.energy -= Math.min(this.energy, energy);
+    }
+
     public void trySendToNeighbors(IBlockReader world, BlockPos pos) {
         for (Direction side : Direction.values()) {
             if (energy <= 0) {

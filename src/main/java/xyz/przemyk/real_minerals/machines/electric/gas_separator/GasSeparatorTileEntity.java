@@ -20,12 +20,12 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.electric.ElectricMachineEnergyStorage;
-import xyz.przemyk.real_minerals.machines.electric.RecipeProcessingTileEntity;
+import xyz.przemyk.real_minerals.machines.electric.ElectricRecipeProcessingTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GasSeparatorTileEntity extends RecipeProcessingTileEntity<GasSeparatorRecipe> {
+public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<GasSeparatorRecipe> {
 
     public static final int FE_PER_TICK = 60;
     public static final int WORKING_TIME_TOTAL = 120;
@@ -35,7 +35,7 @@ public class GasSeparatorTileEntity extends RecipeProcessingTileEntity<GasSepara
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
     public GasSeparatorTileEntity() {
-        super(Registering.GAS_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, FE_PER_TICK), FE_PER_TICK, 2, WORKING_TIME_TOTAL);
+        super(Registering.GAS_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0), FE_PER_TICK, 2, WORKING_TIME_TOTAL);
     }
 
     @Override

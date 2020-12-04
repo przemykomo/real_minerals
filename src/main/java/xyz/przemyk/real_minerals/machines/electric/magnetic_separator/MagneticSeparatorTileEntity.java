@@ -9,15 +9,15 @@ import net.minecraft.util.text.ITextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.electric.ElectricMachineEnergyStorage;
-import xyz.przemyk.real_minerals.machines.electric.RecipeProcessingTileEntity;
+import xyz.przemyk.real_minerals.machines.electric.ElectricRecipeProcessingTileEntity;
 
-public class MagneticSeparatorTileEntity extends RecipeProcessingTileEntity<MagneticSeparatorRecipe> {
+public class MagneticSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<MagneticSeparatorRecipe> {
 
     public static final int FE_PER_TICK = 60;
     public static final int WORKING_TIME_TOTAL = 120;
 
     public MagneticSeparatorTileEntity() {
-        super(Registering.MAGNETIC_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, FE_PER_TICK), FE_PER_TICK, 3, WORKING_TIME_TOTAL);
+        super(Registering.MAGNETIC_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0), FE_PER_TICK, 3, WORKING_TIME_TOTAL);
     }
 
     private MagneticSeparatorRecipe cachedRecipe = null;
