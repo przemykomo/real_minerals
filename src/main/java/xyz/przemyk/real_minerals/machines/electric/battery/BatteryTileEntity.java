@@ -1,11 +1,13 @@
 package xyz.przemyk.real_minerals.machines.electric.battery;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -15,36 +17,44 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.machines.electric.ElectricMachineEnergyStorage;
-import xyz.przemyk.real_minerals.machines.electric.EnergyOutputTileEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class BatteryTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
-    public final ElectricMachineEnergyStorage energyStorage;
+    public final BatteryEnergyStorage energyStorage;
 
-    public final LazyOptional<ElectricMachineEnergyStorage> energyStorageLazyOptional;
+    public final LazyOptional<BatteryEnergyStorage.Input> inputEnergyStorageLazyOptional;
+    public final LazyOptional<BatteryEnergyStorage.Output> outputEnergyStorageLazyOptional;
 
     public BatteryTileEntity() {
         super(Registering.BATTERY_TILE_ENTITY_TYPE.get());
-        this.energyStorage = new ElectricMachineEnergyStorage(1_000_000, 1_000);
-        this.energyStorageLazyOptional = LazyOptional.of(() -> energyStorage);
+        this.energyStorage = new BatteryEnergyStorage(1_000_000, 1_000, this);
+        this.inputEnergyStorageLazyOptional = LazyOptional.of(() -> energyStorage.input);
+        this.outputEnergyStorageLazyOptional = LazyOptional.of(() -> energyStorage.output);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void tick() {
-        if (!world.isRemote()) {
-            energyStorage.trySendToNeighbors(world, pos);
+        energyStorage.trySendTo(world, pos, getBlockState().get(HorizontalBlock.HORIZONTAL_FACING).rotateYCCW());
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public void updateBlockState() {
+        int charge = energyStorage.getEnergyStored() * 4 / energyStorage.getMaxEnergyStored();
+        BlockState blockState = getBlockState();
+        if (charge != blockState.get(BlockStateProperties.CHARGES)) {
+            world.setBlockState(pos, blockState.with(BlockStateProperties.CHARGES, charge));
         }
     }
 
     @Override
     public void remove() {
         super.remove();
-        energyStorageLazyOptional.invalidate();
+        inputEnergyStorageLazyOptional.invalidate();
+        outputEnergyStorageLazyOptional.invalidate();
     }
 
     @Override
@@ -63,7 +73,15 @@ public class BatteryTileEntity extends TileEntity implements ITickableTileEntity
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityEnergy.ENERGY) {
-            return energyStorageLazyOptional.cast();
+            Direction facing = getBlockState().get(HorizontalBlock.HORIZONTAL_FACING);
+
+            if (side == facing.rotateY()) {
+                return inputEnergyStorageLazyOptional.cast();
+            }
+
+            if (side == facing.rotateYCCW()) {
+                return outputEnergyStorageLazyOptional.cast();
+            }
         }
         return super.getCapability(cap, side);
     }
