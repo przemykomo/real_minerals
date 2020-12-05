@@ -287,4 +287,19 @@ public class CableBlock extends Block {
         }
         super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (player.getHeldItem(handIn).getItem() == Items.STICK && !worldIn.isRemote()) {
+            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if (tileEntity != null) {
+                player.sendStatusMessage(new StringTextComponent(tileEntity.getCapability(CapabilityEnergy.ENERGY).map(energy -> {
+                    CableEnergyStorage cableEnergyStorage = (CableEnergyStorage) energy;
+                    return "Stored: " + energy.getEnergyStored() + " Connectors: " + cableEnergyStorage.cableNetwork.getConnectors() + " Network: " + cableEnergyStorage.cableNetwork.getID();
+                }).orElse("no")), true);
+            }
+        }
+        return ActionResultType.PASS;
+    }
 }
