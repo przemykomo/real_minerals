@@ -237,8 +237,20 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
     }
 
     public void tick() {
-        for (BlockPos connector : connectorCables) {
-            energyStorage.trySendToNeighbors(world, connector);
+        if (connectorCables.size() > 0) {
+            int extractEnergyPerCable = energyStorage.getEnergyStored() / connectorCables.size();
+            for (BlockPos connector : connectorCables) {
+                energyStorage.trySendToNeighbors(world, connector, extractEnergyPerCable);
+            }
         }
+    }
+
+    public int getConnectors() {
+        return connectorCables.size();
+    }
+
+    @Override
+    public String toString() {
+        return getID();
     }
 }
