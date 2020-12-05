@@ -13,7 +13,7 @@
         "north": "real_minerals:block/battery_front_0",
         "east": "real_minerals:block/battery_input",
         "west": "real_minerals:block/battery_output",
-        "south": "real_minerals:block/battery_side",
+        "south": "#north",
         "down": "real_minerals:block/bronze_machine_bottom"
     }
 }
