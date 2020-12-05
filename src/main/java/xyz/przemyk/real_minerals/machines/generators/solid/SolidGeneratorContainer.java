@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.electric.generator;
+package xyz.przemyk.real_minerals.machines.generators.solid;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,15 +15,15 @@ import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.BaseMachineContainer;
 import xyz.przemyk.real_minerals.machines.not_electric.MachineFuelSlot;
 
-public class BurningGeneratorContainer extends BaseMachineContainer {
+public class SolidGeneratorContainer extends BaseMachineContainer {
 
     public static final TranslationTextComponent TITLE = new TranslationTextComponent(RealMinerals.MODID + ".name.burning_generator");
 
-    public static BurningGeneratorContainer getClientContainer(int id, PlayerInventory playerInventory) {
-        return new BurningGeneratorContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(), new IntArray(3), Minecraft.getInstance().player);
+    public static SolidGeneratorContainer getClientContainer(int id, PlayerInventory playerInventory) {
+        return new SolidGeneratorContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(), new IntArray(3), Minecraft.getInstance().player);
     }
 
-    public BurningGeneratorContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
+    public SolidGeneratorContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
         super(Registering.BURNING_GENERATOR_CONTAINER.get(), windowId, Registering.BURNING_GENERATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
 
         addSlot(new MachineFuelSlot(itemHandler, 0, 80, 62));

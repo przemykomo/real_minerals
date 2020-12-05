@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
@@ -14,9 +15,10 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import xyz.przemyk.real_minerals.fluid.DrainOnlyFluidTank;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.electric.ElectricMachineEnergyStorage;
@@ -30,12 +32,26 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
     public static final int FE_PER_TICK = 60;
     public static final int WORKING_TIME_TOTAL = 120;
 
-    public final FluidTank fluidTank = new FluidTank(FluidAttributes.BUCKET_VOLUME);
+    public final DrainOnlyFluidTank fluidTank = new DrainOnlyFluidTank(FluidAttributes.BUCKET_VOLUME);
 
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
     public GasSeparatorTileEntity() {
         super(Registering.GAS_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0), FE_PER_TICK, 2, WORKING_TIME_TOTAL);
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public void tick() {
+        super.tick();
+
+        for (Direction direction : Direction.values()) {
+            TileEntity tileEntity = world.getTileEntity(pos.offset(direction));
+            if (tileEntity != null) {
+                tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite())
+                        .ifPresent(fluidHandler -> FluidUtil.tryFluidTransfer(fluidHandler, fluidTank, fluidTank.getFluidAmount(), true));
+            }
+        }
     }
 
     @Override
@@ -108,7 +124,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
         FluidStack fluidOutput = recipe.getFluidOutput();
         ItemStack itemOutput = recipe.getRecipeOutput();
 
-        fluidTank.fill(fluidOutput, IFluidHandler.FluidAction.EXECUTE);
+        fluidTank.fillInternal(fluidOutput);
 
         if (!itemOutput.isEmpty()) {
             if (itemStack.isEmpty()) {
@@ -132,8 +148,8 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
     protected static class GasSeparatorSyncData implements IIntArray {
         private final GasSeparatorTileEntity machine;
 
-        public GasSeparatorSyncData(GasSeparatorTileEntity electricFurnaceTileEntity) {
-            machine = electricFurnaceTileEntity;
+        public GasSeparatorSyncData(GasSeparatorTileEntity machine) {
+            this.machine = machine;
         }
 
         @Override
@@ -159,14 +175,12 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
                 case 1:
                     machine.energyStorage.setEnergy(value);
                     break;
-//                case 2:
-//                    machine.fluidTank.getFluidAmount()
             }
         }
 
         @Override
         public int size() {
-            return 3;
+            return 4;
         }
     }
 }

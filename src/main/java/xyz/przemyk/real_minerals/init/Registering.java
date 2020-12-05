@@ -6,7 +6,6 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.gen.feature.Feature;
@@ -30,9 +29,12 @@ import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceTileEn
 import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorBlock;
 import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorContainer;
 import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorTileEntity;
-import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorBlock;
-import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorContainer;
-import xyz.przemyk.real_minerals.machines.electric.generator.BurningGeneratorTileEntity;
+import xyz.przemyk.real_minerals.machines.generators.gas.GasGeneratorBlock;
+import xyz.przemyk.real_minerals.machines.generators.gas.GasGeneratorContainer;
+import xyz.przemyk.real_minerals.machines.generators.gas.GasGeneratorTileEntity;
+import xyz.przemyk.real_minerals.machines.generators.solid.SolidGeneratorBlock;
+import xyz.przemyk.real_minerals.machines.generators.solid.SolidGeneratorContainer;
+import xyz.przemyk.real_minerals.machines.generators.solid.SolidGeneratorTileEntity;
 import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorBlock;
 import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorContainer;
 import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorTileEntity;
@@ -87,13 +89,18 @@ public class Registering {
     public static final RegistryObject<ContainerType<AlloyFurnaceContainer>> ALLOY_FURNACE_CONTAINER = CONTAINERS.register("alloy_furnace", () -> new ContainerType<>(AlloyFurnaceContainer::getClientContainer));
     //</editor-fold>
 
+    /////////////////////////////////////// ELECTRIC GENERATORS
+    public static final BlockRegistryObject BURNING_GENERATOR_BLOCK = BLOCKS_ITEMS.register("burning_generator", () -> new SolidGeneratorBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<TileEntityType<SolidGeneratorTileEntity>> BURNING_GENERATOR_TILE_ENTITY_TYPE = TILE_ENTITIES.register("burning_generator", () -> TileEntityType.Builder.create(SolidGeneratorTileEntity::new, BURNING_GENERATOR_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<ContainerType<SolidGeneratorContainer>> BURNING_GENERATOR_CONTAINER = CONTAINERS.register("burning_generator", () -> new ContainerType<>(SolidGeneratorContainer::getClientContainer));
+
+    public static final BlockRegistryObject GAS_GENERATOR_BLOCK = BLOCKS_ITEMS.register("gas_generator", () -> new GasGeneratorBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
+    public static final RegistryObject<TileEntityType<GasGeneratorTileEntity>> GAS_GENERATOR_TILE_ENTITY_TYPE = TILE_ENTITIES.register("gas_generator", () -> TileEntityType.Builder.create(GasGeneratorTileEntity::new, GAS_GENERATOR_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<ContainerType<GasGeneratorContainer>> GAS_GENERATOR_CONTAINER = CONTAINERS.register("gas_generator", () -> new ContainerType<>(GasGeneratorContainer::getClientContainer));
+
     /////////////////////////////////////// ELECTRIC MACHINES
 
     //<editor-fold desc="Electric machines">
-    public static final BlockRegistryObject BURNING_GENERATOR_BLOCK = BLOCKS_ITEMS.register("burning_generator", () -> new BurningGeneratorBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
-    public static final RegistryObject<TileEntityType<BurningGeneratorTileEntity>> BURNING_GENERATOR_TILE_ENTITY_TYPE = TILE_ENTITIES.register("burning_generator", () -> TileEntityType.Builder.create(BurningGeneratorTileEntity::new, BURNING_GENERATOR_BLOCK.BLOCK.get()).build(null));
-    public static final RegistryObject<ContainerType<BurningGeneratorContainer>> BURNING_GENERATOR_CONTAINER = CONTAINERS.register("burning_generator", () -> new ContainerType<>(BurningGeneratorContainer::getClientContainer));
-
     public static final BlockRegistryObject BATTERY_BLOCK = BLOCKS_ITEMS.register("battery", () -> new BatteryBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
     public static final RegistryObject<TileEntityType<BatteryTileEntity>> BATTERY_TILE_ENTITY_TYPE = TILE_ENTITIES.register("battery", () -> TileEntityType.Builder.create(BatteryTileEntity::new, BATTERY_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<BatteryContainer>> BATTERY_CONTAINER = CONTAINERS.register("battery", () -> new ContainerType<>(BatteryContainer::getClientContainer));

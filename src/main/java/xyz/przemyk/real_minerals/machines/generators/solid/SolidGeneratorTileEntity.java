@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.electric.generator;
+package xyz.przemyk.real_minerals.machines.generators.solid;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
@@ -22,7 +23,7 @@ import xyz.przemyk.real_minerals.machines.electric.EnergyOutputTileEntity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BurningGeneratorTileEntity extends EnergyOutputTileEntity {
+public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
 
     public static final int FE_PER_TICK = 20;
 
@@ -32,7 +33,7 @@ public class BurningGeneratorTileEntity extends EnergyOutputTileEntity {
 
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
 
-    public BurningGeneratorTileEntity() {
+    public SolidGeneratorTileEntity() {
         super(Registering.BURNING_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 80));
     }
 
@@ -46,18 +47,22 @@ public class BurningGeneratorTileEntity extends EnergyOutputTileEntity {
     @Override
     public void tick() {
         super.tick();
-        if (!world.isRemote()) {
+        if (!world.isRemote) {
             boolean dirty = false;
 
             if (isBurning()) {
                 --burnTime;
+                dirty = true;
                 energyStorage.addEnergy(FE_PER_TICK);
-            } else {
+                if (!isBurning()) {
+                    world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
+                }
+            } else if (energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored()) {
                 ItemStack fuelStack = itemHandler.getStackInSlot(0);
-                burnTime = ForgeHooks.getBurnTime(fuelStack);
-                burnTimeTotal = burnTime;
+                burnTime = burnTimeTotal = ForgeHooks.getBurnTime(fuelStack);
                 if (isBurning()) {
                     dirty = true;
+                    world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, true), 3);
                     if (fuelStack.hasContainerItem()) {
                         itemHandler.setStackInSlot(1, fuelStack.getContainerItem());
                     } else {
@@ -79,12 +84,16 @@ public class BurningGeneratorTileEntity extends EnergyOutputTileEntity {
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
+        burnTime = nbt.getInt("BurnTime");
+        burnTimeTotal = nbt.getInt("BurnTimeTotal");
         super.read(state, nbt);
     }
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("inv", itemHandler.serializeNBT());
+        compound.putInt("BurnTime", burnTime);
+        compound.putInt("BurnTimeTotal", burnTimeTotal);
         return super.write(compound);
     }
 
@@ -99,19 +108,19 @@ public class BurningGeneratorTileEntity extends EnergyOutputTileEntity {
 
     @Override
     public ITextComponent getDisplayName() {
-        return BurningGeneratorContainer.TITLE;
+        return SolidGeneratorContainer.TITLE;
     }
 
     @Override
     public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
-        return new BurningGeneratorContainer(id, playerInventory, getPos(), itemHandler, new GeneratorSyncData(this), serverPlayer);
+        return new SolidGeneratorContainer(id, playerInventory, getPos(), itemHandler, new GeneratorSyncData(this), serverPlayer);
     }
 
     private static class GeneratorSyncData implements IIntArray {
-        private final BurningGeneratorTileEntity machine;
+        private final SolidGeneratorTileEntity machine;
 
-        public GeneratorSyncData(BurningGeneratorTileEntity crusher) {
-            this.machine = crusher;
+        public GeneratorSyncData(SolidGeneratorTileEntity machine) {
+            this.machine = machine;
         }
 
         public int get(int index) {

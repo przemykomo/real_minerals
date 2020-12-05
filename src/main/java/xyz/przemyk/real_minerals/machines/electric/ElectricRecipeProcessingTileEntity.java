@@ -58,26 +58,26 @@ public abstract class ElectricRecipeProcessingTileEntity<T extends IRecipe<?>> e
                 if (canProcess(recipe)) {
                     if (!wasWorking) {
                         dirty = true;
-                        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.LIT, true), 3);
+                        world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, true), 3);
                     }
                     ++workingTime;
                     energyStorage.removeEnergy(energyPerTick);
                     if (workingTime >= workingTimeTotal) {
                         workingTime = 0;
-                        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.LIT, false), 3);
+                        world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
                         process(recipe);
                     }
                 } else {
                     if (wasWorking) {
                         dirty = true;
-                        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.LIT, false), 3);
+                        world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
                     }
                     workingTime = 0;
                 }
             } else {
                 workingTime = 0;
                 if (wasWorking) {
-                    world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.LIT, false), 3);
+                    world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
                 }
             }
 

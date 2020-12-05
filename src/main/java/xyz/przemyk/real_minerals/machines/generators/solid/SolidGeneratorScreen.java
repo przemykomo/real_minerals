@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.machines.electric.generator;
+package xyz.przemyk.real_minerals.machines.generators.solid;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -10,11 +10,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import xyz.przemyk.real_minerals.init.RealMinerals;
 
-public class BurningGeneratorScreen extends ContainerScreen<BurningGeneratorContainer> {
+public class SolidGeneratorScreen extends ContainerScreen<SolidGeneratorContainer> {
 
     private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/burning_generator.png");
 
-    public BurningGeneratorScreen(BurningGeneratorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public SolidGeneratorScreen(SolidGeneratorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
     }
 
