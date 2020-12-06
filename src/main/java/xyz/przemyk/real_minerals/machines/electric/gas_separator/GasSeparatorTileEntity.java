@@ -103,7 +103,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
                 return true;
             }
 
-            if (!currentFluidOutput.isFluidEqual(fluidOutput)) {
+            if (!currentFluidOutput.isEmpty() && !currentFluidOutput.isFluidEqual(fluidOutput)) {
                 return false;
             }
 
