@@ -52,7 +52,7 @@ import xyz.przemyk.real_minerals.worldgen.MeteoriteFeature;
 import static xyz.przemyk.real_minerals.init.RealMinerals.ITEM_GROUP;
 import static xyz.przemyk.real_minerals.init.RealMinerals.MODID;
 
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions", "unused"})
 public class Registering {
 
     private Registering() {}
