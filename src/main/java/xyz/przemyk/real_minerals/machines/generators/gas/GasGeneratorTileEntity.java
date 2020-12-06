@@ -14,6 +14,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import xyz.przemyk.real_minerals.datagen.providers.FluidTags;
 import xyz.przemyk.real_minerals.fluid.FillOnlyFluidTank;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.machines.electric.ElectricMachineEnergyStorage;
@@ -24,18 +25,18 @@ import javax.annotation.Nullable;
 
 public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
 
-    public static final int FE_PER_TICK = 40;
-
     public static final int TANK_VOLUME = FluidAttributes.BUCKET_VOLUME;
 
     public final FillOnlyFluidTank fluidTank = new FillOnlyFluidTank(TANK_VOLUME);
     public int burnTime;
     public int burnTimeTotal;
+    public int energyPerTick;
 
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
     public GasGeneratorTileEntity() {
         super(Registering.GAS_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 160));
+        fluidTank.setValidator(fluidStack -> FluidTags.BURNABLE_GAS.contains(fluidStack.getFluid()));
     }
 
     @Override
@@ -53,13 +54,15 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
             if (isBurning()) {
                 --burnTime;
                 dirty = true;
-                energyStorage.addEnergy(FE_PER_TICK);
+                energyStorage.addEnergy(energyPerTick);
                 if (!isBurning()) {
                     world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
                 }
             } else if (energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored()) {
-                if (fluidTank.drainInternal(1).getAmount() > 0) {
-                    burnTime = burnTimeTotal = 20;
+                if (fluidTank.getFluidAmount() >= 50) {
+                    burnTime = burnTimeTotal = 100;
+                    fluidTank.drainInternal(50);
+                    energyPerTick = 40;
                     dirty = true;
                     world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, true), 3);
                 }
