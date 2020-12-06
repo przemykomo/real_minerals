@@ -81,7 +81,7 @@ public class ShaleGasFluid extends Fluid {
                 .viscosity(100)
                 .gaseous()
                 .rarity(Rarity.UNCOMMON)
-                .sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)
+//                .sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)
                 .build(this);
     }
 }
