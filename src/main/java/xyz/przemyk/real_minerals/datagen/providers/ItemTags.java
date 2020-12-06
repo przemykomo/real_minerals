@@ -12,6 +12,7 @@ import xyz.przemyk.real_minerals.init.Registering;
 import javax.annotation.Nullable;
 
 public class ItemTags extends ItemTagsProvider {
+
     public ItemTags(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockTagProvider, modId, existingFileHelper);
     }
