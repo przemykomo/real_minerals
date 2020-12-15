@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -96,7 +97,7 @@ public class Registering {
 
     public static final BlockRegistryObject GAS_GENERATOR_BLOCK = BLOCKS_ITEMS.register("gas_generator", () -> new GasGeneratorBlock(AbstractBlock.Properties.create(Material.IRON, MaterialColor.IRON).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5F).sound(SoundType.METAL)), ITEM_GROUP);
     public static final RegistryObject<TileEntityType<GasGeneratorTileEntity>> GAS_GENERATOR_TILE_ENTITY_TYPE = TILE_ENTITIES.register("gas_generator", () -> TileEntityType.Builder.create(GasGeneratorTileEntity::new, GAS_GENERATOR_BLOCK.BLOCK.get()).build(null));
-    public static final RegistryObject<ContainerType<GasGeneratorContainer>> GAS_GENERATOR_CONTAINER = CONTAINERS.register("gas_generator", () -> new ContainerType<>(GasGeneratorContainer::getClientContainer));
+    public static final RegistryObject<ContainerType<GasGeneratorContainer>> GAS_GENERATOR_CONTAINER = CONTAINERS.register("gas_generator", () -> IForgeContainerType.create(GasGeneratorContainer::getClientContainer));
 
     /////////////////////////////////////// ELECTRIC MACHINES
 

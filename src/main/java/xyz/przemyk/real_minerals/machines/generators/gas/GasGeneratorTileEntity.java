@@ -5,10 +5,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -27,7 +31,13 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
 
     public static final int TANK_VOLUME = FluidAttributes.BUCKET_VOLUME;
 
-    public final FillOnlyFluidTank fluidTank = new FillOnlyFluidTank(TANK_VOLUME);
+    public final FillOnlyFluidTank fluidTank = new FillOnlyFluidTank(TANK_VOLUME) {
+        @Override
+        protected void onContentsChanged() {
+            syncToClient();
+        }
+    };
+
     public int burnTime;
     public int burnTimeTotal;
     public int energyPerTick;
@@ -153,5 +163,26 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
         public int size() {
             return 4;
         }
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    protected void syncToClient() {
+        if (!world.isRemote) {
+            ((ServerWorld) world).getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(pos), false)
+                    .forEach(player -> player.connection.sendPacket(getUpdatePacket()));
+        }
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        CompoundNBT nbt = new CompoundNBT();
+        fluidTank.writeToNBT(nbt);
+        return new SUpdateTileEntityPacket(pos, 0, nbt);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        fluidTank.readFromNBT(pkt.getNbtCompound());
     }
 }

@@ -18,7 +18,7 @@ public class FillOnlyFluidTank extends FluidTank {
         return FluidStack.EMPTY;
     }
 
-    public FluidStack drainInternal(int maxDrain) {
-        return super.drain(maxDrain, FluidAction.EXECUTE);
+    public void drainInternal(int maxDrain) {
+        super.drain(maxDrain, FluidAction.EXECUTE);
     }
 }
