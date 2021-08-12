@@ -4,6 +4,6 @@
         "top": "real_minerals:block/alloy_furnace_top",
         "front": "real_minerals:block/alloy_furnace_front",
         "side": "real_minerals:block/alloy_furnace_side",
-        "bottom": "real_minerals:block/machine_bottom"
+        "bottom": "real_minerals:block/basic_machine_bottom"
     }
 }

@@ -1,9 +1,6 @@
 {
-    "parent": "minecraft:block/orientable_with_bottom",
+    "parent": "real_minerals:block/alloy_furnace",
     "textures": {
-        "top": "real_minerals:block/alloy_furnace_top",
-        "front": "real_minerals:block/alloy_furnace_front_on",
-        "side": "real_minerals:block/alloy_furnace_side",
-        "bottom": "real_minerals:block/machine_bottom"
+        "front": "real_minerals:block/alloy_furnace_front_on"
     }
 }
