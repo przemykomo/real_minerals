@@ -7,7 +7,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -15,9 +15,11 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.fluids.FluidAttributes;
+import xyz.przemyk.real_minerals.init.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 
 public class ShaleGasFluid extends Fluid {
+
     @Override
     public Item getFilledBucket() {
         return Registering.SHALE_GAS_BUCKET.get();
@@ -75,9 +77,8 @@ public class ShaleGasFluid extends Fluid {
 
     @Override
     protected FluidAttributes createAttributes() {
-        return FluidAttributes.builder(null, null)
-                .translationKey("block.minecraft.air")
-                .color(0xA38126E4)
+        return FluidAttributes.builder(new ResourceLocation(RealMinerals.MODID, "block/shale_gas_still"), null)
+                .translationKey(RealMinerals.MODID + ".shale_gas")
                 .viscosity(100)
                 .gaseous()
                 .rarity(Rarity.UNCOMMON)
