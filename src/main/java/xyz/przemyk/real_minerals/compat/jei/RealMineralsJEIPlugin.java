@@ -10,16 +10,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorContainer;
-import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorScreen;
-import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerContainer;
-import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerScreen;
-import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceContainer;
-import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceScreen;
-import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherContainer;
-import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherScreen;
+import xyz.przemyk.real_minerals.containers.MagneticSeparatorContainer;
+import xyz.przemyk.real_minerals.screen.MagneticSeparatorScreen;
+import xyz.przemyk.real_minerals.containers.MagnetizerContainer;
+import xyz.przemyk.real_minerals.screen.MagnetizerScreen;
+import xyz.przemyk.real_minerals.containers.AlloyFurnaceContainer;
+import xyz.przemyk.real_minerals.screen.AlloyFurnaceScreen;
+import xyz.przemyk.real_minerals.containers.CrusherContainer;
+import xyz.przemyk.real_minerals.screen.CrusherScreen;
 
 @JeiPlugin
 public class RealMineralsJEIPlugin implements IModPlugin {

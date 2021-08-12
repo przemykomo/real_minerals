@@ -7,7 +7,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.init.RealMinerals;
 
 import javax.annotation.Nullable;
 

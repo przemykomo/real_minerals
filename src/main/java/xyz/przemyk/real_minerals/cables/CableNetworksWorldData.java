@@ -9,7 +9,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.util.StringUtils;
 
 import java.util.HashMap;

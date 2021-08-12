@@ -5,16 +5,16 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import xyz.przemyk.real_minerals.machines.electric.battery.BatteryScreen;
-import xyz.przemyk.real_minerals.machines.electric.furnace.ElectricFurnaceScreen;
-import xyz.przemyk.real_minerals.machines.electric.gas_separator.GasSeparatorScreen;
-import xyz.przemyk.real_minerals.machines.generators.gas.GasGeneratorContainer;
-import xyz.przemyk.real_minerals.machines.generators.gas.GasGeneratorScreen;
-import xyz.przemyk.real_minerals.machines.generators.solid.SolidGeneratorScreen;
-import xyz.przemyk.real_minerals.machines.electric.magnetic_separator.MagneticSeparatorScreen;
-import xyz.przemyk.real_minerals.machines.electric.magnetizer.MagnetizerScreen;
-import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyFurnaceScreen;
-import xyz.przemyk.real_minerals.machines.not_electric.crusher.CrusherScreen;
+import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.screen.BatteryScreen;
+import xyz.przemyk.real_minerals.screen.ElectricFurnaceScreen;
+import xyz.przemyk.real_minerals.screen.GasSeparatorScreen;
+import xyz.przemyk.real_minerals.screen.GasGeneratorScreen;
+import xyz.przemyk.real_minerals.screen.SolidGeneratorScreen;
+import xyz.przemyk.real_minerals.screen.MagneticSeparatorScreen;
+import xyz.przemyk.real_minerals.screen.MagnetizerScreen;
+import xyz.przemyk.real_minerals.screen.AlloyFurnaceScreen;
+import xyz.przemyk.real_minerals.screen.CrusherScreen;
 
 @Mod.EventBusSubscriber(modid = RealMinerals.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientSetup {

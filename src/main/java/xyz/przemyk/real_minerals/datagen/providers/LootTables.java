@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
-import xyz.przemyk.real_minerals.init.RealMinerals;
+import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 
 import java.io.IOException;

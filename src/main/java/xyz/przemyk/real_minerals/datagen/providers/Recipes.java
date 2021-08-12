@@ -12,7 +12,7 @@ import xyz.przemyk.real_minerals.init.Registering;
 
 import java.util.function.Consumer;
 
-import static xyz.przemyk.real_minerals.init.RealMinerals.MODID;
+import static xyz.przemyk.real_minerals.RealMinerals.MODID;
 
 public class Recipes extends RecipeProvider {
     public Recipes(DataGenerator generatorIn) {

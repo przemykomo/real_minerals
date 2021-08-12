@@ -8,8 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import xyz.przemyk.real_minerals.init.RealMinerals;
-import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyRecipe;
+import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.recipes.AlloyRecipe;
 
 import javax.annotation.Nullable;
 import java.util.List;

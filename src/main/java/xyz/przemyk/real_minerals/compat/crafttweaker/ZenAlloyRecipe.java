@@ -7,8 +7,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
-import xyz.przemyk.real_minerals.init.RealMinerals;
-import xyz.przemyk.real_minerals.machines.not_electric.alloy_furnace.AlloyRecipe;
+import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.recipes.AlloyRecipe;
 
 @ZenRegister
 @ZenCodeType.Name("mods." + RealMinerals.MODID + ".ZenAlloyRecipe")
