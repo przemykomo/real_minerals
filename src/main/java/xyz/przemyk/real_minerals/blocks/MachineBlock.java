@@ -1,106 +1,111 @@
 package xyz.przemyk.real_minerals.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xyz.przemyk.real_minerals.tileentity.TickableBlockEntity;
 
 import javax.annotation.Nullable;
-import java.util.function.Supplier;
+import java.util.function.BiFunction;
 
-public class MachineBlock extends Block {
+public class MachineBlock extends Block implements EntityBlock {
 
-    private final Supplier<TileEntity> tileEntitySupplier;
+    private final BiFunction<BlockPos, BlockState, BlockEntity> tileEntitySupplier;
 
-    public MachineBlock(Properties properties, Supplier<TileEntity> tileEntitySupplier) {
+    public MachineBlock(Properties properties, BiFunction<BlockPos, BlockState, BlockEntity> tileEntitySupplier) {
         super(properties);
         this.tileEntitySupplier = tileEntitySupplier;
-        setDefaultState(this.stateContainer.getBaseState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.LIT, Boolean.FALSE));
+        registerDefaultState(this.stateDefinition.any().setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH).setValue(BlockStateProperties.LIT, Boolean.FALSE));
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return tileEntitySupplier.apply(blockPos, blockState);
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return tileEntitySupplier.get();
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+        return (level1, blockPos, blockState1, blockEntity) -> ((TickableBlockEntity) blockEntity).tick();
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.isIn(newState.getBlock())) {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity != null) {
                 tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(inventory -> {
                     for (int i = 0; i < inventory.getSlots(); ++i) {
-                        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), inventory.getStackInSlot(i));
+                        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), inventory.getStackInSlot(i));
                     }
                 });
             }
-            super.onReplaced(state, worldIn, pos, newState, isMoving);
+            super.onRemove(state, worldIn, pos, newState, isMoving);
         }
     }
 
     @SuppressWarnings("deprecation")
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (!worldIn.isClientSide) {
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity != null) {
-                ItemStack itemStack = player.getHeldItem(handIn);
-                Direction face = hit.getFace();
+                ItemStack itemStack = player.getItemInHand(handIn);
+                Direction face = hit.getDirection();
                 if (tryExtractFluid(worldIn, pos, player, handIn, tileEntity, itemStack, face)) {
-                    return ActionResultType.CONSUME;
+                    return InteractionResult.CONSUME;
                 }
 
-                if (tileEntity instanceof INamedContainerProvider) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, pos);
+                if (tileEntity instanceof MenuProvider) {
+                    NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, pos);
                 }
             }
-            return ActionResultType.CONSUME;
+            return InteractionResult.CONSUME;
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
-    private static boolean tryExtractFluid(World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, TileEntity tileEntity, ItemStack itemStack, Direction face) {
+    private static boolean tryExtractFluid(Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockEntity tileEntity, ItemStack itemStack, Direction face) {
         if (!itemStack.isEmpty()) {
             ItemStack copy = ItemHandlerHelper.copyStackWithSize(itemStack, 1);
             copy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(itemFluidHandler ->
                     tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, face).ifPresent(tileFluidHandler -> {
                 FluidStack transferred = tryTransfer(itemFluidHandler, tileFluidHandler, Integer.MAX_VALUE);
                 if (!transferred.isEmpty()) {
-                    worldIn.playSound(null, pos, transferred.getFluid().getAttributes().getEmptySound(transferred), SoundCategory.BLOCKS, 1.0f, 1.0f);
+                    worldIn.playSound(null, pos, transferred.getFluid().getAttributes().getEmptySound(transferred), SoundSource.BLOCKS, 1.0f, 1.0f);
                 } else {
                     transferred = tryTransfer(tileFluidHandler, itemFluidHandler, Integer.MAX_VALUE);
                     if (!transferred.isEmpty()) {
-                        worldIn.playSound(null, pos, transferred.getFluid().getAttributes().getFillSound(transferred), SoundCategory.BLOCKS, 1.0f, 1.0f);
+                        worldIn.playSound(null, pos, transferred.getFluid().getAttributes().getFillSound(transferred), SoundSource.BLOCKS, 1.0f, 1.0f);
                     }
                 }
 
                 if (!transferred.isEmpty()) {
-                    player.setHeldItem(handIn, DrinkHelper.fill(itemStack, player, itemFluidHandler.getContainer()));
+                    player.setItemInHand(handIn, ItemUtils.createFilledResult(itemStack, player, itemFluidHandler.getContainer()));
                 }
             }));
             return copy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent();
@@ -129,24 +134,24 @@ public class MachineBlock extends Block {
 
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(HorizontalBlock.HORIZONTAL_FACING, BlockStateProperties.LIT);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(HorizontalDirectionalBlock.FACING, BlockStateProperties.LIT);
     }
 
     @Override
-    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
-        return state.with(HorizontalBlock.HORIZONTAL_FACING, direction.rotate(state.get(HorizontalBlock.HORIZONTAL_FACING)));
+    public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation direction) {
+        return state.setValue(HorizontalDirectionalBlock.FACING, direction.rotate(state.getValue(HorizontalDirectionalBlock.FACING)));
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(HorizontalBlock.HORIZONTAL_FACING)));
+        return state.rotate(mirrorIn.getRotation(state.getValue(HorizontalDirectionalBlock.FACING)));
     }
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, context.getHorizontalDirection().getOpposite());
     }
 }

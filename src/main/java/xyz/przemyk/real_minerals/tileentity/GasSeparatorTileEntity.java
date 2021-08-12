@@ -1,16 +1,17 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -37,8 +38,9 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
 
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
-    public GasSeparatorTileEntity() {
-        super(Registering.GAS_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0), FE_PER_TICK, 2, WORKING_TIME_TOTAL);
+    public GasSeparatorTileEntity(BlockPos blockPos, BlockState blockState) {
+        super(Registering.GAS_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
+                FE_PER_TICK, 2, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -47,7 +49,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
         super.tick();
 
         for (Direction direction : Direction.values()) {
-            TileEntity tileEntity = world.getTileEntity(pos.offset(direction));
+            BlockEntity tileEntity = level.getBlockEntity(worldPosition.relative(direction));
             if (tileEntity != null) {
                 tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite())
                         .ifPresent(fluidHandler -> FluidUtil.tryFluidTransfer(fluidHandler, fluidTank, fluidTank.getFluidAmount(), true));
@@ -56,14 +58,14 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
-        super.read(state, nbt);
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         fluidTank.readFromNBT(nbt);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        compound = super.write(compound);
+    public CompoundTag save(CompoundTag compound) {
+        compound = super.save(compound);
         fluidTank.writeToNBT(compound);
         return compound;
     }
@@ -86,7 +88,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
             return cachedRecipe;
         }
 
-        cachedRecipe = RealMinerals.getRecipe(input, world, RealMinerals.GAS_SEPARATOR_RECIPE_TYPE);
+        cachedRecipe = RealMinerals.getRecipe(input, level, RealMinerals.GAS_SEPARATOR_RECIPE_TYPE);
         return cachedRecipe;
     }
 
@@ -94,7 +96,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
     protected boolean canProcess(GasSeparatorRecipe recipe) {
         if (recipe != null) {
             FluidStack fluidOutput = recipe.getFluidOutput();
-            ItemStack itemOutput = recipe.getRecipeOutput();
+            ItemStack itemOutput = recipe.getResultItem();
             if (fluidOutput.isEmpty()) {
                 return false;
             }
@@ -108,7 +110,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
                 return false;
             }
 
-            if (!currentItemOutput.isEmpty() && !currentItemOutput.isItemEqual(itemOutput)) {
+            if (!currentItemOutput.isEmpty() && !currentItemOutput.sameItem(itemOutput)) {
                 return false;
             }
 
@@ -123,7 +125,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
         ItemStack itemStack = itemHandler.getStackInSlot(1);
 
         FluidStack fluidOutput = recipe.getFluidOutput();
-        ItemStack itemOutput = recipe.getRecipeOutput();
+        ItemStack itemOutput = recipe.getResultItem();
 
         fluidTank.fillInternal(fluidOutput);
 
@@ -137,16 +139,16 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return GasSeparatorContainer.TITLE;
     }
 
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
-        return new GasSeparatorContainer(id, playerInventory, getPos(), itemHandler, new GasSeparatorSyncData(this), serverPlayer);
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
+        return new GasSeparatorContainer(id, playerInventory, getBlockPos(), itemHandler, new GasSeparatorSyncData(this), serverPlayer);
     }
 
-    protected static class GasSeparatorSyncData implements IIntArray {
+    protected static class GasSeparatorSyncData implements ContainerData {
         private final GasSeparatorTileEntity machine;
 
         public GasSeparatorSyncData(GasSeparatorTileEntity machine) {
@@ -180,7 +182,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
         }
 
         @Override
-        public int size() {
+        public int getCount() {
             return 4;
         }
     }

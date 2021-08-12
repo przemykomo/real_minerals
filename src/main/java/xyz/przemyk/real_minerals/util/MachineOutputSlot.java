@@ -1,51 +1,50 @@
 package xyz.przemyk.real_minerals.util;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
 public class MachineOutputSlot extends SlotItemHandler {
-    private final PlayerEntity player;
+    private final Player player;
     private int removeCount;
 
-    public MachineOutputSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, PlayerEntity playerEntity) {
+    public MachineOutputSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, Player playerEntity) {
         super(itemHandler, index, xPosition, yPosition);
         player = playerEntity;
     }
 
     @Override
-    public boolean isItemValid(@Nonnull ItemStack stack) {
+    public boolean mayPlace(@Nonnull ItemStack stack) {
         return false;
     }
 
     @Override
-    public ItemStack decrStackSize(int amount) {
-        if (this.getHasStack()) {
-            this.removeCount += Math.min(amount, this.getStack().getCount());
+    public ItemStack remove(int amount) {
+        if (this.hasItem()) {
+            this.removeCount += Math.min(amount, this.getItem().getCount());
         }
 
-        return super.decrStackSize(amount);
+        return super.remove(amount);
     }
 
     @Override
-    public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
-        this.onCrafting(stack);
+    public void onTake(Player thePlayer, ItemStack stack) {
+        this.checkTakeAchievements(stack);
         super.onTake(thePlayer, stack);
-        return stack;
     }
 
     @Override
-    protected void onCrafting(ItemStack stack, int amount) {
+    protected void onQuickCraft(ItemStack stack, int amount) {
         this.removeCount += amount;
-        this.onCrafting(stack);
+        this.checkTakeAchievements(stack);
     }
 
     @Override
-    protected void onCrafting(ItemStack stack) {
-        stack.onCrafting(this.player.world, this.player, this.removeCount);
+    protected void checkTakeAchievements(ItemStack stack) {
+        stack.onCraftedBy(this.player.level, this.player, this.removeCount);
         this.removeCount = 0;
         // TODO: playerCrushedEvent similar to playerSmeltedEvent?
     }

@@ -1,11 +1,11 @@
 package xyz.przemyk.real_minerals.cables;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -15,16 +15,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class CableTileEntity extends TileEntity {
+public class CableTileEntity extends BlockEntity {
 
     private String networkID;
 
-    public CableTileEntity() {
-        super(Registering.CABLE_TILE_ENTITY_TYPE.get());
-    }
-
-    public CableTileEntity(TileEntityType<?> tileEntityType) {
-        super(tileEntityType);
+    public CableTileEntity(BlockPos blockPos, BlockState blockState) {
+        super(Registering.CABLE_TILE_ENTITY_TYPE.get(), blockPos, blockState);
     }
 
     public String getNetworkID() {
@@ -37,15 +33,15 @@ public class CableTileEntity extends TileEntity {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.putString("networkID", networkID);
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
         networkID = nbt.getString("networkID");
-        super.read(state, nbt);
+        super.load(nbt);
     }
 
     private LazyOptional<CableEnergyStorage> cachedEnergyStorage = LazyOptional.empty();
@@ -54,7 +50,7 @@ public class CableTileEntity extends TileEntity {
         if (cachedEnergyStorage.isPresent()) {
             return cachedEnergyStorage;
         }
-        CableNetwork cableNetwork = CableNetworksWorldData.get((ServerWorld) world).getNetworks().get(networkID);
+        CableNetwork cableNetwork = CableNetworksSavedData.get((ServerLevel) level).getNetworks().get(networkID);
         if (cableNetwork == null) {
             System.out.println("Cable network is null!");
             return cachedEnergyStorage;
@@ -66,7 +62,7 @@ public class CableTileEntity extends TileEntity {
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityEnergy.ENERGY && !world.isRemote()) {
+        if (cap == CapabilityEnergy.ENERGY && !level.isClientSide()) {
             return getCachedEnergyStorage().cast();
         }
         return super.getCapability(cap, side);

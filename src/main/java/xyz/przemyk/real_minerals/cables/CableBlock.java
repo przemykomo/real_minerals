@@ -2,37 +2,37 @@ package xyz.przemyk.real_minerals.cables;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class CableBlock extends Block {
+public class CableBlock extends Block implements EntityBlock {
 
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
@@ -41,25 +41,25 @@ public class CableBlock extends Block {
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
 
-    public static final VoxelShape CENTER_SHAPE = makeCuboidShape(5, 5, 5, 11, 11, 11);
-    private static final Map<Direction, VoxelShape> SIDE_TO_SHAPE = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.makeCuboidShape(5, 5, 0, 11, 11, 5), Direction.SOUTH, Block.makeCuboidShape(5, 5, 11, 11, 11, 16), Direction.EAST, Block.makeCuboidShape(11, 5, 5, 16, 11, 11), Direction.WEST, Block.makeCuboidShape(0, 5, 5, 5, 11, 11), Direction.UP, Block.makeCuboidShape(5, 11, 5, 11, 16, 11)));
+    public static final VoxelShape CENTER_SHAPE = box(5, 5, 5, 11, 11, 11);
+    private static final Map<Direction, VoxelShape> SIDE_TO_SHAPE = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.box(5, 5, 0, 11, 11, 5), Direction.SOUTH, Block.box(5, 5, 11, 11, 11, 16), Direction.EAST, Block.box(11, 5, 5, 16, 11, 11), Direction.WEST, Block.box(0, 5, 5, 5, 11, 11), Direction.UP, Block.box(5, 11, 5, 11, 16, 11)));
 
     private final Map<BlockState, VoxelShape> stateToShapeMap = new HashMap<>();
 
     public CableBlock(Properties properties) {
         super(properties);
-        setDefaultState(getDefaultState()
-                .with(NORTH, false)
-                .with(EAST, false)
-                .with(SOUTH, false)
-                .with(WEST, false)
-                .with(UP, false)
-                .with(DOWN, false)
+        registerDefaultState(defaultBlockState()
+                .setValue(NORTH, false)
+                .setValue(EAST, false)
+                .setValue(SOUTH, false)
+                .setValue(WEST, false)
+                .setValue(UP, false)
+                .setValue(DOWN, false)
         );
 
-        SIDE_TO_SHAPE.put(Direction.DOWN, Block.makeCuboidShape(5, 0, 5, 11, 5, 11)); // looks like ImmutableMap.of() doesn't support so many arguments
+        SIDE_TO_SHAPE.put(Direction.DOWN, Block.box(5, 0, 5, 11, 5, 11)); // looks like ImmutableMap.of() doesn't support so many arguments
 
-        for (BlockState blockState : getStateContainer().getValidStates()) {
+        for (BlockState blockState : getStateDefinition().getPossibleStates()) {
             stateToShapeMap.put(blockState, getShapeForState(blockState));
         }
     }
@@ -68,9 +68,9 @@ public class CableBlock extends Block {
         VoxelShape voxelShape = CENTER_SHAPE;
 
         for (Direction direction : Direction.values()) {
-            boolean connected = blockState.get(getPropertyFromDirection(direction));
+            boolean connected = blockState.getValue(getPropertyFromDirection(direction));
             if (connected) {
-                voxelShape = VoxelShapes.or(voxelShape, SIDE_TO_SHAPE.get(direction));
+                voxelShape = Shapes.or(voxelShape, SIDE_TO_SHAPE.get(direction));
             }
         }
 
@@ -78,55 +78,40 @@ public class CableBlock extends Block {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN);
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return stateToShapeMap.get(state);
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new CableTileEntity();
-    }
-
     @SuppressWarnings("deprecation")
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
         boolean isConnectedToTileEntity = false;
         BooleanProperty property = getPropertyFromDirection(facing);
         Connection connection = hasConnection(world, currentPos, facing);
         switch (connection) {
-            case NONE:
-                stateIn = stateIn.with(property, false);
-                break;
-            case CABLE:
-                stateIn = stateIn.with(property, true);
-                break;
-            case MACHINE:
-                stateIn = stateIn.with(property, true);
+            case NONE -> stateIn = stateIn.setValue(property, false);
+            case CABLE -> stateIn = stateIn.setValue(property, true);
+            case MACHINE -> {
+                stateIn = stateIn.setValue(property, true);
                 isConnectedToTileEntity = true;
-                break;
-            case TILE_ENTITY:
-                stateIn = stateIn.with(property, false);
+            }
+            case TILE_ENTITY -> {
+                stateIn = stateIn.setValue(property, false);
                 isConnectedToTileEntity = true;
-                break;
+            }
         }
 
-        if (!world.isRemote()) {
-            TileEntity tileEntity = world.getTileEntity(currentPos);
-            if (tileEntity instanceof CableTileEntity) {
-                CableTileEntity cableTileEntity = (CableTileEntity) tileEntity;
-                CableNetwork cableNetwork = CableNetworksWorldData.get((ServerWorld) world).getNetworks().get(cableTileEntity.getNetworkID());
+        if (!world.isClientSide()) {
+            BlockEntity tileEntity = world.getBlockEntity(currentPos);
+            if (tileEntity instanceof CableTileEntity cableTileEntity) {
+                CableNetwork cableNetwork = CableNetworksSavedData.get((ServerLevel) world).getNetworks().get(cableTileEntity.getNetworkID());
                 if (isConnectedToTileEntity) {
                     cableNetwork.addConnectorCable(cableTileEntity);
                 } else if (connection != Connection.CABLE) {
@@ -139,38 +124,33 @@ public class CableBlock extends Block {
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState currentState = getDefaultState();
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState currentState = defaultBlockState();
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
 
         boolean isConnectedToTileEntity = false;
         for (Direction direction : Direction.values()) {
             BooleanProperty property = getPropertyFromDirection(direction);
             Connection connection = hasConnection(world, pos, direction);
             switch (connection) {
-                case NONE:
-                    currentState = currentState.with(property, false);
-                    break;
-                case CABLE:
-                    currentState = currentState.with(property, true);
-                    break;
-                case MACHINE:
-                    currentState = currentState.with(property, true);
+                case NONE -> currentState = currentState.setValue(property, false);
+                case CABLE -> currentState = currentState.setValue(property, true);
+                case MACHINE -> {
+                    currentState = currentState.setValue(property, true);
                     isConnectedToTileEntity = true;
-                    break;
-                case TILE_ENTITY:
-                    currentState = currentState.with(property, false);
+                }
+                case TILE_ENTITY -> {
+                    currentState = currentState.setValue(property, false);
                     isConnectedToTileEntity = true;
-                    break;
+                }
             }
         }
 
-        if (!world.isRemote()) {
-            TileEntity tileEntity = world.getTileEntity(pos);
-            if (tileEntity instanceof CableTileEntity) {
-                CableTileEntity cableTileEntity = (CableTileEntity) tileEntity;
-                CableNetwork cableNetwork = CableNetworksWorldData.get((ServerWorld) world).getNetworks().get(cableTileEntity.getNetworkID());
+        if (!world.isClientSide()) {
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity instanceof CableTileEntity cableTileEntity) {
+                CableNetwork cableNetwork = CableNetworksSavedData.get((ServerLevel) world).getNetworks().get(cableTileEntity.getNetworkID());
                 if (isConnectedToTileEntity) {
                     cableNetwork.addConnectorCable(cableTileEntity);
                 } else {
@@ -181,6 +161,12 @@ public class CableBlock extends Block {
         return currentState;
     }
 
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return null;
+    }
+
     public enum Connection {
         NONE,
         CABLE,
@@ -188,8 +174,8 @@ public class CableBlock extends Block {
         TILE_ENTITY
     }
 
-    protected Connection hasConnection(IWorld world, BlockPos pos, Direction direction) {
-        TileEntity tileEntity = world.getTileEntity(pos.offset(direction));
+    protected Connection hasConnection(LevelAccessor world, BlockPos pos, Direction direction) {
+        BlockEntity tileEntity = world.getBlockEntity(pos.relative(direction));
         if (tileEntity == null) {
             return Connection.NONE;
         }
@@ -206,34 +192,33 @@ public class CableBlock extends Block {
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if (!worldIn.isRemote()) {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof CableTileEntity) {
-                CableTileEntity cableTileEntity = (CableTileEntity) tileEntity;
+    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (!worldIn.isClientSide()) {
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+            if (tileEntity instanceof CableTileEntity cableTileEntity) {
                 ArrayList<CableTileEntity> connectedCables = new ArrayList<>();
 
                 for (Direction direction : Direction.values()) {
-                    TileEntity other = worldIn.getTileEntity(pos.offset(direction));
+                    BlockEntity other = worldIn.getBlockEntity(pos.relative(direction));
                     if (other instanceof CableTileEntity) {
                         connectedCables.add((CableTileEntity) other);
                     }
                 }
 
-                CableNetworksWorldData cableNetworksWorldData = CableNetworksWorldData.get((ServerWorld) worldIn);
+                CableNetworksSavedData cableNetworksSavedData = CableNetworksSavedData.get((ServerLevel) worldIn);
                 if (connectedCables.size() > 0) {
                     Set<String> networkIDs = new HashSet<>();
                     connectedCables.forEach(connectedCable -> networkIDs.add(connectedCable.getNetworkID()));
                     if (networkIDs.size() == 1) {
                         @SuppressWarnings("OptionalGetWithoutIsPresent")
-                        CableNetwork cableNetwork = cableNetworksWorldData.getNetworks().get(networkIDs.stream().findFirst().get());
+                        CableNetwork cableNetwork = cableNetworksSavedData.getNetworks().get(networkIDs.stream().findFirst().get());
                         cableNetwork.addCable(cableTileEntity);
                         cableTileEntity.setNetworkID(cableNetwork.getID());
                     } else {
                         // merge smaller networks to largest one
                         ArrayList<CableNetwork> connectedNetworks = new ArrayList<>();
                         for (String networkID : networkIDs) {
-                            connectedNetworks.add(cableNetworksWorldData.getNetworks().get(networkID));
+                            connectedNetworks.add(cableNetworksSavedData.getNetworks().get(networkID));
                         }
 
                         CableNetwork largestNetwork = connectedNetworks.get(0);
@@ -244,14 +229,14 @@ public class CableBlock extends Block {
                         }
 
                         for (CableNetwork cableNetwork : connectedNetworks) {
-                            cableNetwork.mergeInto(largestNetwork, (ServerWorld) worldIn);
+                            cableNetwork.mergeInto(largestNetwork, (ServerLevel) worldIn);
                         }
 
                         largestNetwork.addCable(cableTileEntity);
                         cableTileEntity.setNetworkID(largestNetwork.getID());
                     }
                 } else {
-                    CableNetwork cableNetwork = cableNetworksWorldData.createNetwork();
+                    CableNetwork cableNetwork = cableNetworksSavedData.createNetwork();
                     cableNetwork.addCable(cableTileEntity);
                     cableTileEntity.setNetworkID(cableNetwork.getID());
                 }
@@ -260,46 +245,40 @@ public class CableBlock extends Block {
     }
 
     public static BooleanProperty getPropertyFromDirection(Direction direction) {
-        switch (direction){
-            case UP:
-                return UP;
-            case DOWN:
-                return DOWN;
-            case EAST:
-                return EAST;
-            case WEST:
-                return WEST;
-            case SOUTH:
-                return SOUTH;
-            default:
-                return NORTH;
-        }
+        return switch (direction) {
+            case UP -> UP;
+            case DOWN -> DOWN;
+            case EAST -> EAST;
+            case WEST -> WEST;
+            case SOUTH -> SOUTH;
+            default -> NORTH;
+        };
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!worldIn.isRemote() && newState.getBlock() != state.getBlock()) {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!worldIn.isClientSide() && newState.getBlock() != state.getBlock()) {
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity instanceof CableTileEntity) {
-                CableNetworksWorldData.get((ServerWorld) worldIn).getNetworks().get(((CableTileEntity) tileEntity).getNetworkID()).removeCable(pos, (ServerWorld) worldIn, state);
+                CableNetworksSavedData.get((ServerLevel) worldIn).getNetworks().get(((CableTileEntity) tileEntity).getNetworkID()).removeCable(pos, (ServerLevel) worldIn, state);
             }
         }
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
+        super.onRemove(state, worldIn, pos, newState, isMoving);
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player.getHeldItem(handIn).getItem() == Items.STICK && !worldIn.isRemote()) {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (player.getItemInHand(handIn).getItem() == Items.STICK && !worldIn.isClientSide()) {
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity != null) {
-                player.sendStatusMessage(new StringTextComponent(tileEntity.getCapability(CapabilityEnergy.ENERGY).map(energy -> {
+                player.displayClientMessage(new TextComponent(tileEntity.getCapability(CapabilityEnergy.ENERGY).map(energy -> {
                     CableEnergyStorage cableEnergyStorage = (CableEnergyStorage) energy;
                     return "Stored: " + energy.getEnergyStored() + " Connectors: " + cableEnergyStorage.cableNetwork.getConnectors() + " Network: " + cableEnergyStorage.cableNetwork.getID();
                 }).orElse("no")), true);
             }
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 }

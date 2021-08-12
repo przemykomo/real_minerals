@@ -1,7 +1,8 @@
 package xyz.przemyk.real_minerals.datagen.providers;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -19,7 +20,7 @@ public class BlockStates extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS_ITEMS.allBlocks) {
-            if (blockRegistryObject.BLOCK.get().hasTileEntity(blockRegistryObject.BLOCK.get().getDefaultState())) {
+            if (blockRegistryObject.BLOCK.get() instanceof EntityBlock) {
                 continue;
             }
             Block block = blockRegistryObject.BLOCK.get();

@@ -1,6 +1,6 @@
 package xyz.przemyk.real_minerals.init;
 
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,15 +21,15 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
-        ScreenManager.registerFactory(Registering.BURNING_GENERATOR_CONTAINER.get(), SolidGeneratorScreen::new);
-        ScreenManager.registerFactory(Registering.GAS_GENERATOR_CONTAINER.get(), GasGeneratorScreen::new);
+        MenuScreens.register(Registering.BURNING_GENERATOR_CONTAINER.get(), SolidGeneratorScreen::new);
+        MenuScreens.register(Registering.GAS_GENERATOR_CONTAINER.get(), GasGeneratorScreen::new);
 
-        ScreenManager.registerFactory(Registering.CRUSHER_CONTAINER.get(), CrusherScreen::new);
-        ScreenManager.registerFactory(Registering.ALLOY_FURNACE_CONTAINER.get(), AlloyFurnaceScreen::new);
-        ScreenManager.registerFactory(Registering.BATTERY_CONTAINER.get(), BatteryScreen::new);
-        ScreenManager.registerFactory(Registering.ELECTRIC_FURNACE_CONTAINER.get(), ElectricFurnaceScreen::new);
-        ScreenManager.registerFactory(Registering.MAGNETIZER_CONTAINER.get(), MagnetizerScreen::new);
-        ScreenManager.registerFactory(Registering.MAGNETIC_SEPARATOR_CONTAINER.get(), MagneticSeparatorScreen::new);
-        ScreenManager.registerFactory(Registering.GAS_SEPARATOR_CONTAINER.get(), GasSeparatorScreen::new);
+        MenuScreens.register(Registering.CRUSHER_CONTAINER.get(), CrusherScreen::new);
+        MenuScreens.register(Registering.ALLOY_FURNACE_CONTAINER.get(), AlloyFurnaceScreen::new);
+        MenuScreens.register(Registering.BATTERY_CONTAINER.get(), BatteryScreen::new);
+        MenuScreens.register(Registering.ELECTRIC_FURNACE_CONTAINER.get(), ElectricFurnaceScreen::new);
+        MenuScreens.register(Registering.MAGNETIZER_CONTAINER.get(), MagnetizerScreen::new);
+        MenuScreens.register(Registering.MAGNETIC_SEPARATOR_CONTAINER.get(), MagneticSeparatorScreen::new);
+        MenuScreens.register(Registering.GAS_SEPARATOR_CONTAINER.get(), GasSeparatorScreen::new);
     }
 }

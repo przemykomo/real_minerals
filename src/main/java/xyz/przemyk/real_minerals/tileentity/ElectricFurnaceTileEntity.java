@@ -1,43 +1,48 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.state.BlockState;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.ElectricFurnaceContainer;
 
 import javax.annotation.Nullable;
 
-public class ElectricFurnaceTileEntity extends ElectricRecipeProcessingTileEntity<FurnaceRecipe> {
+import xyz.przemyk.real_minerals.tileentity.ElectricRecipeProcessingTileEntity.RecipeProcessingMachineSyncData;
+
+public class ElectricFurnaceTileEntity extends ElectricRecipeProcessingTileEntity<SmeltingRecipe> {
 
     public static final int FE_PER_TICK = 20;
     public static final int WORKING_TIME_TOTAL = 80;
 
-    public ElectricFurnaceTileEntity() {
-        super(Registering.ELECTRIC_FURNACE_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0), FE_PER_TICK, 2, WORKING_TIME_TOTAL);
+    public ElectricFurnaceTileEntity(BlockPos blockPos, BlockState blockState) {
+        super(Registering.ELECTRIC_FURNACE_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
+                FE_PER_TICK, 2, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 
-    private FurnaceRecipe cachedRecipe = null;
+    private SmeltingRecipe cachedRecipe = null;
 
     @SuppressWarnings("ConstantConditions")
-    protected FurnaceRecipe getCachedRecipe() {
-        if (cachedRecipe != null && cachedRecipe.matches(new Inventory(itemHandler.getStackInSlot(0)), world)) {
+    protected SmeltingRecipe getCachedRecipe() {
+        if (cachedRecipe != null && cachedRecipe.matches(new SimpleContainer(itemHandler.getStackInSlot(0)), level)) {
             return cachedRecipe;
         }
 
-        cachedRecipe = world.getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(itemHandler.getStackInSlot(0)), world).orElse(null);
+        cachedRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(itemHandler.getStackInSlot(0)), level).orElse(null);
         return cachedRecipe;
     }
 
-    protected boolean canProcess(@Nullable FurnaceRecipe recipe) {
+    protected boolean canProcess(@Nullable SmeltingRecipe recipe) {
         if (recipe != null) {
-            ItemStack outputStack = recipe.getRecipeOutput();
+            ItemStack outputStack = recipe.getResultItem();
             if (outputStack.isEmpty()) {
                 return false;
             }
@@ -45,7 +50,7 @@ public class ElectricFurnaceTileEntity extends ElectricRecipeProcessingTileEntit
             if (currentOutput.isEmpty()) {
                 return true;
             }
-            if (!currentOutput.isItemEqual(outputStack)) {
+            if (!currentOutput.sameItem(outputStack)) {
                 return false;
             }
             return currentOutput.getCount() + outputStack.getCount() <= currentOutput.getMaxStackSize();
@@ -54,10 +59,10 @@ public class ElectricFurnaceTileEntity extends ElectricRecipeProcessingTileEntit
     }
 
     @Override
-    protected void process(FurnaceRecipe recipe) {
+    protected void process(SmeltingRecipe recipe) {
         itemHandler.getStackInSlot(0).shrink(1);
         ItemStack outputStack = itemHandler.getStackInSlot(1);
-        ItemStack recipeOutput = recipe.getRecipeOutput();
+        ItemStack recipeOutput = recipe.getResultItem();
         if (outputStack.isEmpty()) {
             itemHandler.setStackInSlot(1, recipeOutput.copy());
         } else {
@@ -66,12 +71,12 @@ public class ElectricFurnaceTileEntity extends ElectricRecipeProcessingTileEntit
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return ElectricFurnaceContainer.TITLE;
     }
 
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
-        return new ElectricFurnaceContainer(id, playerInventory, getPos(), itemHandler, new RecipeProcessingMachineSyncData(this), serverPlayer);
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
+        return new ElectricFurnaceContainer(id, playerInventory, getBlockPos(), itemHandler, new RecipeProcessingMachineSyncData(this), serverPlayer);
     }
 }

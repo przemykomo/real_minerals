@@ -1,9 +1,11 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.state.BlockState;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
@@ -19,18 +21,18 @@ public class CrusherTileEntity extends MachineTileEntity<CrusherRecipe> {
         return 100;
     }
 
-    public CrusherTileEntity() {
-        super(Registering.CRUSHER_TILE_ENTITY_TYPE.get(), new MachineItemStackHandler(1), RealMinerals.CRUSHER_RECIPE_TYPE);
+    public CrusherTileEntity(BlockPos blockPos, BlockState blockState) {
+        super(Registering.CRUSHER_TILE_ENTITY_TYPE.get(), new MachineItemStackHandler(1), RealMinerals.CRUSHER_RECIPE_TYPE, blockPos, blockState);
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return CrusherContainer.TITLE;
     }
 
     @Nullable
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
-        return new CrusherContainer(id, playerInventory, getPos(), itemHandler, new MachineSyncData(this), serverPlayer);
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
+        return new CrusherContainer(id, playerInventory, getBlockPos(), itemHandler, new MachineSyncData(this), serverPlayer);
     }
 }

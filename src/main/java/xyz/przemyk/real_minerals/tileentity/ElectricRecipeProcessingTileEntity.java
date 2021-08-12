@@ -1,15 +1,15 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -21,7 +21,7 @@ import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class ElectricRecipeProcessingTileEntity<T extends IRecipe<?>> extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public abstract class ElectricRecipeProcessingTileEntity<T extends Recipe<?>> extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public final ItemStackHandler itemHandler;
     public final ElectricMachineEnergyStorage energyStorage;
@@ -33,13 +33,13 @@ public abstract class ElectricRecipeProcessingTileEntity<T extends IRecipe<?>> e
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional;
     protected final LazyOptional<ElectricMachineEnergyStorage> energyStorageLazyOptional;
 
-    public ElectricRecipeProcessingTileEntity(TileEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage, int energyPerTick, int itemHandlerSize, int workingTimeTotal) {
-        super(tileEntityTypeIn);
+    public ElectricRecipeProcessingTileEntity(BlockEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage, int energyPerTick, int itemHandlerSize, int workingTimeTotal, BlockPos blockPos, BlockState blockState) {
+        super(tileEntityTypeIn, blockPos, blockState);
         this.energyPerTick = energyPerTick;
         this.itemHandler = new ItemStackHandler(itemHandlerSize) {
             @Override
             protected void onContentsChanged(int slot) {
-                markDirty();
+                setChanged();
             }
         };
         this.workingTimeTotal = workingTimeTotal;
@@ -51,7 +51,7 @@ public abstract class ElectricRecipeProcessingTileEntity<T extends IRecipe<?>> e
     @SuppressWarnings("ConstantConditions")
     @Override
     public void tick() {
-        if (!world.isRemote()) {
+        if (!level.isClientSide()) {
             boolean dirty = false;
             boolean wasWorking = workingTime > 0;
             if (energyStorage.getEnergyStored() >= energyPerTick) {
@@ -59,31 +59,31 @@ public abstract class ElectricRecipeProcessingTileEntity<T extends IRecipe<?>> e
                 if (canProcess(recipe)) {
                     if (!wasWorking) {
                         dirty = true;
-                        world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, true), 3);
+                        level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, true), 3);
                     }
                     ++workingTime;
                     energyStorage.removeEnergy(energyPerTick);
                     if (workingTime >= workingTimeTotal) {
                         workingTime = 0;
-                        world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
+                        level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, false), 3);
                         process(recipe);
                     }
                 } else {
                     if (wasWorking) {
                         dirty = true;
-                        world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
+                        level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, false), 3);
                     }
                     workingTime = 0;
                 }
             } else {
                 workingTime = 0;
                 if (wasWorking) {
-                    world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
+                    level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, false), 3);
                 }
             }
 
             if (dirty) {
-                markDirty();
+                setChanged();
             }
         }
     }
@@ -95,26 +95,26 @@ public abstract class ElectricRecipeProcessingTileEntity<T extends IRecipe<?>> e
     protected abstract T getCachedRecipe();
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         itemHandlerLazyOptional.invalidate();
         energyStorageLazyOptional.invalidate();
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         workingTime = nbt.getInt("WorkingTime");
         energyStorage.setEnergy(nbt.getInt("energy"));
-        super.read(state, nbt);
+        super.load(nbt);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.put("inv", itemHandler.serializeNBT());
         compound.putInt("WorkingTime", workingTime);
         compound.putInt("energy", energyStorage.getEnergyStored());
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Nonnull
@@ -129,7 +129,7 @@ public abstract class ElectricRecipeProcessingTileEntity<T extends IRecipe<?>> e
         return super.getCapability(cap, side);
     }
 
-    protected static class RecipeProcessingMachineSyncData implements IIntArray {
+    protected static class RecipeProcessingMachineSyncData implements ContainerData {
         private final ElectricRecipeProcessingTileEntity<?> machine;
 
         public RecipeProcessingMachineSyncData(ElectricRecipeProcessingTileEntity<?> electricFurnaceTileEntity) {
@@ -160,7 +160,7 @@ public abstract class ElectricRecipeProcessingTileEntity<T extends IRecipe<?>> e
         }
 
         @Override
-        public int size() {
+        public int getCount() {
             return 2;
         }
     }

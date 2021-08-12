@@ -1,12 +1,11 @@
 package xyz.przemyk.real_minerals.recipes;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -14,6 +13,11 @@ import xyz.przemyk.real_minerals.RealMinerals;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
+
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 
 public class GasSeparatorRecipe extends MachineRecipe {
 
@@ -36,52 +40,52 @@ public class GasSeparatorRecipe extends MachineRecipe {
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return true;
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return RealMinerals.GAS_SEPARATOR_RECIPE_TYPE;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<GasSeparatorRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<GasSeparatorRecipe> {
 
         public Serializer() {
             setRegistryName(new ResourceLocation(RealMinerals.MODID, "gas_separator"));
         }
 
         @Override
-        public GasSeparatorRecipe read(ResourceLocation recipeId, JsonObject json) {
-            final Ingredient input = Ingredient.deserialize(JSONUtils.getJsonObject(json, "input"));
+        public GasSeparatorRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            final Ingredient input = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input"));
 
-            final JsonObject jsonObject = JSONUtils.getJsonObject(json, "fluidOutput");
+            final JsonObject jsonObject = GsonHelper.getAsJsonObject(json, "fluidOutput");
             final FluidStack fluidOutput = new FluidStack(Objects.requireNonNull(ForgeRegistries.FLUIDS.getValue(new ResourceLocation(jsonObject.get("fluid").getAsString()))), jsonObject.get("amount").getAsInt());
 
-            final ItemStack itemOutput = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "itemOutput"));
+            final ItemStack itemOutput = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "itemOutput")).getDefaultInstance();
 
             return new GasSeparatorRecipe(recipeId, input, fluidOutput, itemOutput);
         }
 
         @Nullable
         @Override
-        public GasSeparatorRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-            final Ingredient input = Ingredient.read(buffer);
+        public GasSeparatorRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+            final Ingredient input = Ingredient.fromNetwork(buffer);
             final FluidStack fluidOutput = buffer.readFluidStack();
-            final ItemStack itemOutput = buffer.readItemStack();
+            final ItemStack itemOutput = buffer.readItem();
             return new GasSeparatorRecipe(recipeId, input, fluidOutput, itemOutput);
         }
 
         @Override
-        public void write(PacketBuffer buffer, GasSeparatorRecipe recipe) {
-            recipe.ingredients.get(0).write(buffer);
+        public void toNetwork(FriendlyByteBuf buffer, GasSeparatorRecipe recipe) {
+            recipe.ingredients.get(0).toNetwork(buffer);
             buffer.writeFluidStack(recipe.fluidOutput);
-            buffer.writeItemStack(recipe.outputs.get(0));
+            buffer.writeItem(recipe.outputs.get(0));
         }
     }
 }

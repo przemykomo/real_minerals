@@ -1,15 +1,16 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -33,13 +34,13 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
 
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
 
-    public SolidGeneratorTileEntity() {
-        super(Registering.BURNING_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 80));
+    public SolidGeneratorTileEntity(BlockPos blockPos, BlockState blockState) {
+        super(Registering.BURNING_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 80), blockPos, blockState);
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         itemHandlerLazyOptional.invalidate();
     }
 
@@ -47,7 +48,7 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
     @Override
     public void tick() {
         super.tick();
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             boolean dirty = false;
 
             if (isBurning()) {
@@ -55,14 +56,14 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
                 dirty = true;
                 energyStorage.addEnergy(FE_PER_TICK);
                 if (!isBurning()) {
-                    world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
+                    level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, false), 3);
                 }
             } else if (energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored()) {
                 ItemStack fuelStack = itemHandler.getStackInSlot(0);
-                burnTime = burnTimeTotal = ForgeHooks.getBurnTime(fuelStack);
+                burnTime = burnTimeTotal = ForgeHooks.getBurnTime(fuelStack, null);
                 if (isBurning()) {
                     dirty = true;
-                    world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, true), 3);
+                    level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, true), 3);
                     if (fuelStack.hasContainerItem()) {
                         itemHandler.setStackInSlot(1, fuelStack.getContainerItem());
                     } else {
@@ -72,7 +73,7 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
             }
 
             if (dirty) {
-                markDirty();
+                setChanged();
             }
         }
     }
@@ -82,19 +83,19 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         burnTime = nbt.getInt("BurnTime");
         burnTimeTotal = nbt.getInt("BurnTimeTotal");
-        super.read(state, nbt);
+        super.load(nbt);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.put("inv", itemHandler.serializeNBT());
         compound.putInt("BurnTime", burnTime);
         compound.putInt("BurnTimeTotal", burnTimeTotal);
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Nonnull
@@ -107,16 +108,16 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return SolidGeneratorContainer.TITLE;
     }
 
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
-        return new SolidGeneratorContainer(id, playerInventory, getPos(), itemHandler, new GeneratorSyncData(this), serverPlayer);
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
+        return new SolidGeneratorContainer(id, playerInventory, getBlockPos(), itemHandler, new GeneratorSyncData(this), serverPlayer);
     }
 
-    private static class GeneratorSyncData implements IIntArray {
+    private static class GeneratorSyncData implements ContainerData {
         private final SolidGeneratorTileEntity machine;
 
         public GeneratorSyncData(SolidGeneratorTileEntity machine) {
@@ -150,7 +151,7 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
 
         }
 
-        public int size() {
+        public int getCount() {
             return 3;
         }
     }

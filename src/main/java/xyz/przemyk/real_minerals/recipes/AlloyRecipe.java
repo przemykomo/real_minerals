@@ -3,15 +3,15 @@ package xyz.przemyk.real_minerals.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.przemyk.real_minerals.RealMinerals;
@@ -33,33 +33,33 @@ public class AlloyRecipe extends MachineRecipe {
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return ingredients.size() <= width * height;
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return RealMinerals.ALLOY_RECIPE_TYPE;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AlloyRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AlloyRecipe> {
 
         public Serializer() {
             setRegistryName(new ResourceLocation(RealMinerals.MODID, "alloy"));
         }
 
         @Override
-        public AlloyRecipe read(ResourceLocation recipeId, JsonObject json) {
-            NonNullList<Ingredient> ingredients = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
+        public AlloyRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            NonNullList<Ingredient> ingredients = readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));
             if (ingredients.isEmpty()) {
                 throw new JsonParseException("No ingredients for alloying recipe.");
             } else {
-                ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+                ItemStack result = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")).getDefaultInstance();
                 return new AlloyRecipe(result, recipeId, ingredients);
             }
         }
@@ -68,8 +68,8 @@ public class AlloyRecipe extends MachineRecipe {
             NonNullList<Ingredient> ingredients = NonNullList.create();
 
             for (int i = 0; i < ingredientArray.size(); ++i) {
-                Ingredient ingredient = Ingredient.deserialize(ingredientArray.get(i));
-                if (!ingredient.hasNoMatchingItems()) {
+                Ingredient ingredient = Ingredient.fromJson(ingredientArray.get(i));
+                if (!ingredient.isEmpty()) {
                     ingredients.add(ingredient);
                 }
             }
@@ -78,27 +78,27 @@ public class AlloyRecipe extends MachineRecipe {
         }
         @Nullable
         @Override
-        public AlloyRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+        public AlloyRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             int ingredientsSize = buffer.readVarInt();
             NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientsSize, Ingredient.EMPTY);
 
             for (int i = 0; i < ingredientsSize; ++i) {
-                ingredients.set(i, Ingredient.read(buffer));
+                ingredients.set(i, Ingredient.fromNetwork(buffer));
             }
 
-            ItemStack output = buffer.readItemStack();
+            ItemStack output = buffer.readItem();
             return new AlloyRecipe(output, recipeId, ingredients);
         }
 
         @Override
-        public void write(PacketBuffer buffer, AlloyRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, AlloyRecipe recipe) {
             buffer.writeVarInt(recipe.ingredients.size());
 
             for (Ingredient ingredient : recipe.ingredients) {
-                ingredient.write(buffer);
+                ingredient.toNetwork(buffer);
             }
 
-            buffer.writeItemStack(recipe.outputs.get(0));
+            buffer.writeItem(recipe.outputs.get(0));
         }
     }
 }

@@ -1,14 +1,14 @@
 package xyz.przemyk.real_minerals.recipes;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
-public abstract class MachineRecipe implements IRecipe<IInventory> {
+public abstract class MachineRecipe implements Recipe<Container> {
 
     protected final NonNullList<ItemStack> outputs;
     protected final ResourceLocation id;
@@ -22,13 +22,13 @@ public abstract class MachineRecipe implements IRecipe<IInventory> {
 
     @Deprecated // ignored method, use isValidInput
     @Override
-    public boolean matches(IInventory inv, World worldIn) {
+    public boolean matches(Container inv, Level worldIn) {
         return false;
     }
 
     @Deprecated // ignored method, use getRecipeOutput
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(Container inv) {
         return outputs.get(0).copy();
     }
 
@@ -38,7 +38,7 @@ public abstract class MachineRecipe implements IRecipe<IInventory> {
     }
 
     @Override // use getRecipeOutputs for multiple outputs
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return outputs.get(0);
     }
 

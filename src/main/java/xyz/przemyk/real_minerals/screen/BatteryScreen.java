@@ -1,44 +1,45 @@
 package xyz.przemyk.real_minerals.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import xyz.przemyk.real_minerals.containers.BatteryContainer;
 import xyz.przemyk.real_minerals.RealMinerals;
 
-public class BatteryScreen extends ContainerScreen<BatteryContainer> {
+public class BatteryScreen extends AbstractContainerScreen<BatteryContainer> {
 
     private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/battery.png");
 
-    public BatteryScreen(BatteryContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public BatteryScreen(BatteryContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        if (isPointInRegion(80, 7, 16, 72, mouseX, mouseY)) {
-            renderTooltip(matrixStack, new TranslationTextComponent(RealMinerals.MODID + ".gui.energy",container.machineData.get(0)), mouseX, mouseY);
+        if (isHovering(80, 7, 16, 72, mouseX, mouseY)) {
+            renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.energy",menu.machineData.get(0)), mouseX, mouseY);
         } else {
-            renderHoveredTooltip(matrixStack, mouseX, mouseY);
+            renderTooltip(matrixStack, mouseX, mouseY);
         }
     }
 
-    @SuppressWarnings({"ConstantConditions", "deprecation"})
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bindTexture(GUI);
-        int i = this.guiLeft;
-        int j = this.guiTop;
-        this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, GUI);
+        int i = this.leftPos;
+        int j = this.topPos;
+        this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
-        int energy = container.machineData.get(0);
+        int energy = menu.machineData.get(0);
         if (energy > 0) {
             int k = energy * 71 / 1_000_000;
             this.blit(matrixStack, i + 80, j + 78 - k, 176, 85 - k, 16, k + 1);

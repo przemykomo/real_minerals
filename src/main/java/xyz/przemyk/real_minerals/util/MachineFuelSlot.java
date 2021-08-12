@@ -1,6 +1,6 @@
 package xyz.przemyk.real_minerals.util;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -14,7 +14,7 @@ public class MachineFuelSlot extends SlotItemHandler {
     }
 
     @Override
-    public boolean isItemValid(@Nonnull ItemStack stack) {
-        return ForgeHooks.getBurnTime(stack) > 0;
+    public boolean mayPlace(@Nonnull ItemStack stack) {
+        return ForgeHooks.getBurnTime(stack, null) > 0;
     }
 }

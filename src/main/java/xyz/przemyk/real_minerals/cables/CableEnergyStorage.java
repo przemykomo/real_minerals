@@ -1,9 +1,9 @@
 package xyz.przemyk.real_minerals.cables;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -22,7 +22,7 @@ public class CableEnergyStorage implements IEnergyStorage {
         this.energy = energy;
     }
 
-    public void trySendToNeighbors(IBlockReader world, BlockPos pos, int maxExtract) {
+    public void trySendToNeighbors(BlockGetter world, BlockPos pos, int maxExtract) {
         for (Direction side : Direction.values()) {
             if (energy <= 0) {
                 return;
@@ -31,8 +31,8 @@ public class CableEnergyStorage implements IEnergyStorage {
         }
     }
 
-    public void trySendTo(IBlockReader world, BlockPos pos, Direction side, int maxExtract) {
-        TileEntity tileEntity = world.getTileEntity(pos.offset(side));
+    public void trySendTo(BlockGetter world, BlockPos pos, Direction side, int maxExtract) {
+        BlockEntity tileEntity = world.getBlockEntity(pos.relative(side));
         if (tileEntity != null && !(tileEntity instanceof CableTileEntity)) {
             tileEntity.getCapability(CapabilityEnergy.ENERGY, side.getOpposite()).ifPresent(other -> {
                 if (other.canReceive()) {
@@ -66,7 +66,7 @@ public class CableEnergyStorage implements IEnergyStorage {
             energy += energyReceived;
 
             if (energyReceived > 0) {
-                cableNetwork.worldData.markDirty();
+                cableNetwork.worldData.setDirty();
             }
         }
         return energyReceived;
@@ -79,7 +79,7 @@ public class CableEnergyStorage implements IEnergyStorage {
             energy -= energyExtracted;
 
             if (energyExtracted > 0) {
-                cableNetwork.worldData.markDirty();
+                cableNetwork.worldData.setDirty();
             }
         }
         return energyExtracted;

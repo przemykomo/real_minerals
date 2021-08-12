@@ -1,12 +1,12 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -15,41 +15,41 @@ import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class EnergyOutputTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public abstract class EnergyOutputTileEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public final ElectricMachineEnergyStorage energyStorage;
     protected final LazyOptional<ElectricMachineEnergyStorage> energyStorageLazyOptional;
 
-    public EnergyOutputTileEntity(TileEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage) {
-        super(tileEntityTypeIn);
+    public EnergyOutputTileEntity(BlockEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage, BlockPos blockPos, BlockState blockState) {
+        super(tileEntityTypeIn, blockPos, blockState);
         this.energyStorage = energyStorage;
         this.energyStorageLazyOptional = LazyOptional.of(() -> energyStorage);
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         energyStorageLazyOptional.invalidate();
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void tick() {
-        if (!world.isRemote()) {
-            energyStorage.trySendToNeighbors(world, pos);
+        if (!level.isClientSide()) {
+            energyStorage.trySendToNeighbors(level, worldPosition);
         }
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
         energyStorage.setEnergy(nbt.getInt("energy"));
-        super.read(state, nbt);
+        super.load(nbt);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.putInt("energy", energyStorage.getEnergyStored());
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Nonnull

@@ -1,31 +1,31 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.block.AbstractFurnaceBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 import xyz.przemyk.real_minerals.recipes.MachineRecipe;
+import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public abstract class MachineTileEntity<T extends MachineRecipe> extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public final MachineItemStackHandler itemHandler;
     public int burnTime;
@@ -33,19 +33,19 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEnt
     public int burnTimeTotal;
 
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional;
-    private final IRecipeType<T> recipeType;
+    private final RecipeType<T> recipeType;
 
-    public MachineTileEntity(TileEntityType<?> tileEntityTypeIn, MachineItemStackHandler itemHandler, IRecipeType<T> recipeType) {
-        super(tileEntityTypeIn);
+    public MachineTileEntity(BlockEntityType<?> tileEntityTypeIn, MachineItemStackHandler itemHandler, RecipeType<T> recipeType, BlockPos blockPos, BlockState blockState) {
+        super(tileEntityTypeIn, blockPos, blockState);
         this.itemHandler = itemHandler;
-        itemHandler.setMarkDirty(this::markDirty);
+        itemHandler.setMarkDirty(this::setChanged);
         this.itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
         this.recipeType = recipeType;
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         itemHandlerLazyOptional.invalidate();
     }
 
@@ -59,19 +59,19 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEnt
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         burnTime = nbt.getInt("BurnTime");
         workingTime = nbt.getInt("WorkingTime");
-        super.read(state, nbt);
+        super.load(nbt);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.put("inv", itemHandler.serializeNBT());
         compound.putInt("BurnTime", burnTime);
         compound.putInt("WorkingTime", workingTime);
-        return super.write(compound);
+        return super.save(compound);
     }
 
     private MachineRecipe cachedRecipe = null;
@@ -82,7 +82,7 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEnt
             return cachedRecipe;
         }
 
-        cachedRecipe = RealMinerals.getRecipe(input, world, recipeType);
+        cachedRecipe = RealMinerals.getRecipe(input, level, recipeType);
         return cachedRecipe;
     }
 
@@ -99,7 +99,7 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEnt
             --burnTime;
         }
 
-        if (!world.isRemote()) {
+        if (!level.isClientSide()) {
             ItemStack fuelStack = itemHandler.getFuelStack();
             NonNullList<ItemStack> inputStacks = itemHandler.getInputStacks();
             boolean areInputsEmpty = itemHandler.areInputsEmpty();
@@ -107,7 +107,7 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEnt
                 MachineRecipe recipe = getCachedRecipe(inputStacks);
                 if (itemHandler.canProcess(recipe)) {
                     if (!isBurning()) {
-                        burnTime = ForgeHooks.getBurnTime(fuelStack);
+                        burnTime = ForgeHooks.getBurnTime(fuelStack, null);
                         burnTimeTotal = burnTime;
                         if (isBurning()) {
                             dirty = true;
@@ -129,7 +129,7 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEnt
                     workingTime = 0;
                 }
             } else if (!isBurning() && workingTime > 0) {
-                workingTime = MathHelper.clamp(workingTime - 2, 0, getWorkingTimeTotal());
+                workingTime = Mth.clamp(workingTime - 2, 0, getWorkingTimeTotal());
             }
 
             if (areInputsEmpty) {
@@ -138,16 +138,16 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEnt
 
             if (wasBurning != isBurning()) {
                 dirty = true;
-                world.setBlockState(this.pos, world.getBlockState(this.pos).with(AbstractFurnaceBlock.LIT, this.isBurning()), 3);
+                level.setBlock(this.worldPosition, level.getBlockState(this.worldPosition).setValue(AbstractFurnaceBlock.LIT, this.isBurning()), 3);
             }
         }
 
         if (dirty) {
-            markDirty();
+            setChanged();
         }
     }
 
-    protected static class MachineSyncData implements IIntArray {
+    protected static class MachineSyncData implements ContainerData {
         private final MachineTileEntity<?> machine;
 
         public MachineSyncData(MachineTileEntity<?> crusher) {
@@ -184,7 +184,7 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends TileEnt
 
         }
 
-        public int size() {
+        public int getCount() {
             return 4;
         }
     }

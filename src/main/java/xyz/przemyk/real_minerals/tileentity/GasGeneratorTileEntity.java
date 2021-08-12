@@ -1,18 +1,19 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -44,14 +45,14 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
 
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
-    public GasGeneratorTileEntity() {
-        super(Registering.GAS_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 160));
+    public GasGeneratorTileEntity(BlockPos blockPos, BlockState blockState) {
+        super(Registering.GAS_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 160), blockPos, blockState);
         fluidTank.setValidator(fluidStack -> FluidTags.BURNABLE_GAS.contains(fluidStack.getFluid()));
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         fluidHandlerLazyOptional.invalidate();
     }
 
@@ -59,14 +60,14 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
     @Override
     public void tick() {
         super.tick();
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             boolean dirty = false;
             if (isBurning()) {
                 --burnTime;
                 dirty = true;
                 energyStorage.addEnergy(energyPerTick);
                 if (!isBurning()) {
-                    world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, false), 3);
+                    level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, false), 3);
                 }
             } else if (energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored()) {
                 if (fluidTank.getFluidAmount() >= 50) {
@@ -74,12 +75,12 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
                     fluidTank.drainInternal(50);
                     energyPerTick = 40;
                     dirty = true;
-                    world.setBlockState(pos, getBlockState().with(BlockStateProperties.LIT, true), 3);
+                    level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, true), 3);
                 }
             }
 
             if (dirty) {
-                markDirty();
+                setChanged();
             }
         }
     }
@@ -89,16 +90,16 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
-        super.read(state, nbt);
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         fluidTank.readFromNBT(nbt);
         burnTime = nbt.getInt("BurnTime");
         burnTimeTotal = nbt.getInt("BurnTimeTotal");
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        compound = super.write(compound);
+    public CompoundTag save(CompoundTag compound) {
+        compound = super.save(compound);
         fluidTank.writeToNBT(compound);
         compound.putInt("BurnTime", burnTime);
         compound.putInt("BurnTimeTotal", burnTimeTotal);
@@ -115,16 +116,16 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return GasGeneratorContainer.TITLE;
     }
 
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
-        return new GasGeneratorContainer(id, playerInventory, getPos(), new GeneratorSyncData(this), serverPlayer);
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
+        return new GasGeneratorContainer(id, playerInventory, getBlockPos(), new GeneratorSyncData(this), serverPlayer);
     }
 
-    private static class GeneratorSyncData implements IIntArray {
+    private static class GeneratorSyncData implements ContainerData {
         private final GasGeneratorTileEntity machine;
 
         public GeneratorSyncData(GasGeneratorTileEntity machine) {
@@ -160,29 +161,29 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
 
         }
 
-        public int size() {
+        public int getCount() {
             return 4;
         }
     }
 
     @SuppressWarnings("ConstantConditions")
     protected void syncToClient() {
-        if (!world.isRemote) {
-            ((ServerWorld) world).getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(pos), false)
-                    .forEach(player -> player.connection.sendPacket(getUpdatePacket()));
+        if (!level.isClientSide) {
+            ((ServerLevel) level).getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)
+                    .forEach(player -> player.connection.send(getUpdatePacket()));
         }
     }
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbt = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbt = new CompoundTag();
         fluidTank.writeToNBT(nbt);
-        return new SUpdateTileEntityPacket(pos, 0, nbt);
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, nbt);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        fluidTank.readFromNBT(pkt.getNbtCompound());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        fluidTank.readFromNBT(pkt.getTag());
     }
 }

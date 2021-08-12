@@ -1,8 +1,8 @@
 package xyz.przemyk.real_minerals.init;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 public class BlockRegistryObject {
     public final RegistryObject<Block> BLOCK;

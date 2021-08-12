@@ -3,6 +3,8 @@ package xyz.przemyk.real_minerals.fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+
 public class DrainOnlyFluidTank extends FluidTank {
     public DrainOnlyFluidTank(int capacity) {
         super(capacity);

@@ -3,11 +3,11 @@ package xyz.przemyk.real_minerals.datagen.recipe_builders;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.resources.ResourceLocation;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.recipes.AlloyRecipe;
 
@@ -56,18 +56,18 @@ public class AlloyRecipeBuilder {
      * Builds this recipe into an {@link IFinishedRecipe}.
      */
     @SuppressWarnings("ConstantConditions")
-    public void build(Consumer<IFinishedRecipe> consumerIn) {
+    public void build(Consumer<FinishedRecipe> consumerIn) {
         this.build(consumerIn, new ResourceLocation(RealMinerals.MODID, result.getRegistryName().getPath() + "_alloy"));
     }
 
     /**
      * Builds this recipe into an {@link IFinishedRecipe}.
      */
-    public void build(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
+    public void build(Consumer<FinishedRecipe> consumerIn, ResourceLocation id) {
         consumerIn.accept(new Result(id, this.result, this.count, this.ingredients));
     }
 
-    public static class Result implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
         private final Item result;
         private final int count;
@@ -82,10 +82,10 @@ public class AlloyRecipeBuilder {
 
         @SuppressWarnings("ConstantConditions")
         @Override
-        public void serialize(JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
             JsonArray inputArray = new JsonArray();
             for (Ingredient ingredient : ingredients) {
-                inputArray.add(ingredient.serialize());
+                inputArray.add(ingredient.toJson());
             }
 
             json.add("ingredients", inputArray);
@@ -99,24 +99,24 @@ public class AlloyRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
             return id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public RecipeSerializer<?> getType() {
             return AlloyRecipe.SERIALIZER;
         }
 
         @Nullable
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
             return null;
         }
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
             return null;
         }
     }

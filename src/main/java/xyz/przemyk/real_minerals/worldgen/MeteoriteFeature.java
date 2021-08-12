@@ -1,36 +1,40 @@
 package xyz.przemyk.real_minerals.worldgen;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import xyz.przemyk.real_minerals.init.Registering;
 
 import java.util.Random;
 
-public class MeteoriteFeature extends Feature<NoFeatureConfig> {
+public class MeteoriteFeature extends Feature<NoneFeatureConfiguration> {
 
-    public MeteoriteFeature(Codec<NoFeatureConfig> codec) {
+    public MeteoriteFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        Random rand = context.random();
+        BlockPos pos = context.origin();
+        WorldGenLevel reader = context.level();
 
         if (rand.nextInt(500) == 0) {
             int x = pos.getX() + rand.nextInt(15);
             int z = pos.getZ() + rand.nextInt(15);
-            int y = reader.getHeight(Heightmap.Type.WORLD_SURFACE_WG, x, z);
+            int y = reader.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
             if (y == 0) {
                 return false;
             }
 
             final int maxY = 255;
-            BlockPos.Mutable blockPos = new BlockPos.Mutable();
+            BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
 
             float meteoriteRadius = (rand.nextFloat() * 4) + 2;
 
@@ -49,14 +53,14 @@ public class MeteoriteFeature extends Feature<NoFeatureConfig> {
                         final double distanceFrom = dx * dx + dz * dz;
 
                         if (j > h + distanceFrom * 0.02) {
-                            reader.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
+                            reader.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
                         }
                     }
                 }
             }
 
-            BlockPos meteoritePos = new BlockPos(x, reader.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z), z);
-            reader.setBlockState(meteoritePos, Registering.METEORITE.BLOCK.get().getDefaultState(), 2);
+            BlockPos meteoritePos = new BlockPos(x, reader.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z), z);
+            reader.setBlock(meteoritePos, Registering.METEORITE.BLOCK.get().defaultBlockState(), 2);
             return true;
         }
 

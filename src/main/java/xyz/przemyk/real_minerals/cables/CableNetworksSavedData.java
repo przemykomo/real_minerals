@@ -1,10 +1,10 @@
 package xyz.przemyk.real_minerals.cables;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.WorldSavedData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.TickEvent;
@@ -16,29 +16,32 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class CableNetworksWorldData extends WorldSavedData {
+public class CableNetworksSavedData extends SavedData {
     public static final String NAME = RealMinerals.MODID + "_cable_networks";
 
     private final Map<String, CableNetwork> networks;
-    private final ServerWorld world;
+    private final ServerLevel world;
 
     public Map<String, CableNetwork> getNetworks() {
         return networks;
     }
 
-    public CableNetworksWorldData(ServerWorld world) {
-        super(NAME);
+    public CableNetworksSavedData(ServerLevel world) {
         this.networks = new HashMap<>();
         this.world = world;
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    @Override
-    public void read(CompoundNBT nbt) {
-        ListNBT networksListNBT = nbt.getList("networks", Constants.NBT.TAG_COMPOUND);
-        for (INBT networkNBT : networksListNBT) {
-            CompoundNBT networkCompound = (CompoundNBT) networkNBT;
+    public CableNetworksSavedData(CompoundTag nbt, ServerLevel level) {
+        this.networks = new HashMap<>();
+        this.world = level;
+
+        MinecraftForge.EVENT_BUS.register(this);
+
+        ListTag networksListNBT = nbt.getList("networks", Constants.NBT.TAG_COMPOUND);
+        for (Tag networkNBT : networksListNBT) {
+            CompoundTag networkCompound = (CompoundTag) networkNBT;
             CableNetwork network = new CableNetwork(this, world);
             network.deserializeNBT(networkCompound);
             networks.put(network.getID(), network);
@@ -46,22 +49,23 @@ public class CableNetworksWorldData extends WorldSavedData {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        ListNBT networksListNBT = new ListNBT();
+    public CompoundTag save(CompoundTag compound) {
+        ListTag networksListNBT = new ListTag();
         networks.values().forEach(cableNetwork -> networksListNBT.add(cableNetwork.serializeNBT()));
         compound.put("networks", networksListNBT);
         return compound;
     }
 
-    public static CableNetworksWorldData get(ServerWorld world) {
-        return world.getSavedData().getOrCreate(() -> new CableNetworksWorldData(world), NAME);
+    public static CableNetworksSavedData get(ServerLevel world) {
+        return world.getDataStorage().computeIfAbsent(compoundTag -> new CableNetworksSavedData(compoundTag, world),
+                () -> new CableNetworksSavedData(world), NAME);
     }
 
     public CableNetwork createNetwork() {
         String id = StringUtils.randomString(new Random(), 8);
         CableNetwork cableNetwork = new CableNetwork(id, this, world);
         networks.put(id, cableNetwork);
-        markDirty();
+        setDirty();
         return cableNetwork;
     }
 

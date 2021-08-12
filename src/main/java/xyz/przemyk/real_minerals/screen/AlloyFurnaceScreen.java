@@ -1,39 +1,40 @@
 package xyz.przemyk.real_minerals.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import xyz.przemyk.real_minerals.containers.AlloyFurnaceContainer;
 import xyz.przemyk.real_minerals.RealMinerals;
 
-public class AlloyFurnaceScreen extends ContainerScreen<AlloyFurnaceContainer> {
+public class AlloyFurnaceScreen extends AbstractContainerScreen<AlloyFurnaceContainer> {
 
     private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/alloy_furnace.png");
 
-    public AlloyFurnaceScreen(AlloyFurnaceContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public AlloyFurnaceScreen(AlloyFurnaceContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        renderTooltip(matrixStack, mouseX, mouseY);
     }
 
-    @SuppressWarnings({"ConstantConditions", "deprecation"})
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bindTexture(GUI);
-        int i = this.guiLeft;
-        int j = this.guiTop;
-        this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
-        IIntArray alloyFurnaceData = container.machineData;
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, GUI);
+        int i = this.leftPos;
+        int j = this.topPos;
+        this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        ContainerData alloyFurnaceData = menu.machineData;
         if (alloyFurnaceData.get(0) > 0) {
             int k = getBurnLeftScaled();
             this.blit(matrixStack, i + 38, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
@@ -45,11 +46,11 @@ public class AlloyFurnaceScreen extends ContainerScreen<AlloyFurnaceContainer> {
     }
 
     private int getBurnLeftScaled() {
-        int burnTimeTotal = container.machineData.get(3);
+        int burnTimeTotal = menu.machineData.get(3);
         if (burnTimeTotal == 0) {
             burnTimeTotal = 200;
         }
 
-        return container.machineData.get(0) * 13 / burnTimeTotal;
+        return menu.machineData.get(0) * 13 / burnTimeTotal;
     }
 }

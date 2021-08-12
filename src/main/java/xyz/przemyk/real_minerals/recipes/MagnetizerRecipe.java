@@ -2,15 +2,15 @@ package xyz.przemyk.real_minerals.recipes;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
@@ -26,22 +26,22 @@ public class MagnetizerRecipe extends MachineRecipe {
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return true;
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return RealMinerals.MAGNETIZER_RECIPE_TYPE;
     }
 
     @Override
-    public ItemStack getIcon() {
+    public ItemStack getToastSymbol() {
         return new ItemStack(Registering.MAGNETIZER_BLOCK.ITEM.get());
     }
 
@@ -50,32 +50,32 @@ public class MagnetizerRecipe extends MachineRecipe {
         return ingredients.get(0).test(input);
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MagnetizerRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<MagnetizerRecipe> {
 
         public Serializer() {
             setRegistryName(new ResourceLocation(RealMinerals.MODID, "magnetizer"));
         }
 
         @Override
-        public MagnetizerRecipe read(ResourceLocation recipeId, JsonObject json) {
-            final JsonElement inputElement = JSONUtils.isJsonArray(json, "input") ? JSONUtils.getJsonArray(json, "input") : JSONUtils.getJsonObject(json, "input");
-            final Ingredient input = Ingredient.deserialize(inputElement);
-            final ItemStack output = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "output"));
+        public MagnetizerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            final JsonElement inputElement = GsonHelper.isArrayNode(json, "input") ? GsonHelper.getAsJsonArray(json, "input") : GsonHelper.getAsJsonObject(json, "input");
+            final Ingredient input = Ingredient.fromJson(inputElement);
+            final ItemStack output = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "output")).getDefaultInstance();
             return new MagnetizerRecipe(recipeId, input, output);
         }
 
         @Nullable
         @Override
-        public MagnetizerRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-            final Ingredient input = Ingredient.read(buffer);
-            final ItemStack output = buffer.readItemStack();
+        public MagnetizerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+            final Ingredient input = Ingredient.fromNetwork(buffer);
+            final ItemStack output = buffer.readItem();
             return new MagnetizerRecipe(recipeId, input, output);
         }
 
         @Override
-        public void write(PacketBuffer buffer, MagnetizerRecipe recipe) {
-            recipe.ingredients.get(0).write(buffer);
-            buffer.writeItemStack(recipe.outputs.get(0));
+        public void toNetwork(FriendlyByteBuf buffer, MagnetizerRecipe recipe) {
+            recipe.ingredients.get(0).toNetwork(buffer);
+            buffer.writeItem(recipe.outputs.get(0));
         }
     }
 }

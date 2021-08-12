@@ -1,7 +1,7 @@
 package xyz.przemyk.real_minerals.util;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemStackHandler;
 import xyz.przemyk.real_minerals.recipes.MachineRecipe;
@@ -33,7 +33,7 @@ public class MachineItemStackHandler extends ItemStackHandler {
     @Nonnull
     @Override
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        if (slot == inputSize + 1 && ForgeHooks.getBurnTime(stack) == 0) {
+        if (slot == inputSize + 1 && ForgeHooks.getBurnTime(stack, null) == 0) {
             return stack;
         }
         return super.insertItem(slot, stack, simulate);
@@ -58,7 +58,7 @@ public class MachineItemStackHandler extends ItemStackHandler {
 
     public boolean canProcess(@Nullable MachineRecipe recipe) {
         if (recipe != null) {
-            ItemStack outputStack = recipe.getRecipeOutput();
+            ItemStack outputStack = recipe.getResultItem();
             if (outputStack.isEmpty()) {
                 return false;
             }
@@ -66,7 +66,7 @@ public class MachineItemStackHandler extends ItemStackHandler {
             if (currentOutput.isEmpty()) {
                 return true;
             }
-            if (!currentOutput.isItemEqual(outputStack)) {
+            if (!currentOutput.sameItem(outputStack)) {
                 return false;
             }
             return currentOutput.getCount() + outputStack.getCount() <= currentOutput.getMaxStackSize();
@@ -75,12 +75,12 @@ public class MachineItemStackHandler extends ItemStackHandler {
     }
 
     public void processRecipe(MachineRecipe recipe) {
-        ItemStack recipeOutput = recipe.getRecipeOutput();
+        ItemStack recipeOutput = recipe.getResultItem();
         ItemStack currentOutput = getOutputStack();
 
         if (currentOutput.isEmpty()) {
             setStackInSlot(getSlots() - 1, recipeOutput.copy());
-        } else if (recipeOutput.isItemEqual(currentOutput)) {
+        } else if (recipeOutput.sameItem(currentOutput)) {
             currentOutput.grow(recipeOutput.getCount());
         }
 

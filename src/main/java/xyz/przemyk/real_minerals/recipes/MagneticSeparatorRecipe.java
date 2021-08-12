@@ -1,15 +1,15 @@
 package xyz.przemyk.real_minerals.recipes;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.przemyk.real_minerals.RealMinerals;
 
@@ -24,17 +24,17 @@ public class MagneticSeparatorRecipe extends MachineRecipe {
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return true;
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return RealMinerals.MAGNETIC_SEPARATOR_RECIPE_TYPE;
     }
 
@@ -43,17 +43,17 @@ public class MagneticSeparatorRecipe extends MachineRecipe {
         return ingredients.get(0).test(input.get(0));
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MagneticSeparatorRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<MagneticSeparatorRecipe> {
 
         public Serializer() {
             setRegistryName(new ResourceLocation(RealMinerals.MODID, "magnetic_separator"));
         }
 
         @Override
-        public MagneticSeparatorRecipe read(ResourceLocation recipeId, JsonObject json) {
-            final Ingredient input = Ingredient.deserialize(JSONUtils.getJsonObject(json, "input"));
-            final ItemStack output = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "output"));
-            final ItemStack secondOutput = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "secondOutput"));
+        public MagneticSeparatorRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            final Ingredient input = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input"));
+            final ItemStack output = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "output")).getDefaultInstance();
+            final ItemStack secondOutput = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "secondOutput")).getDefaultInstance();
             NonNullList<ItemStack> outputs = NonNullList.create();
             outputs.add(output);
             outputs.add(secondOutput);
@@ -62,10 +62,10 @@ public class MagneticSeparatorRecipe extends MachineRecipe {
 
         @Nullable
         @Override
-        public MagneticSeparatorRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-            final Ingredient input = Ingredient.read(buffer);
-            final ItemStack output = buffer.readItemStack();
-            final ItemStack secondOutput = buffer.readItemStack();
+        public MagneticSeparatorRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+            final Ingredient input = Ingredient.fromNetwork(buffer);
+            final ItemStack output = buffer.readItem();
+            final ItemStack secondOutput = buffer.readItem();
             NonNullList<ItemStack> outputs = NonNullList.create();
             outputs.add(output);
             outputs.add(secondOutput);
@@ -73,10 +73,10 @@ public class MagneticSeparatorRecipe extends MachineRecipe {
         }
 
         @Override
-        public void write(PacketBuffer buffer, MagneticSeparatorRecipe recipe) {
-            recipe.ingredients.get(0).write(buffer);
-            buffer.writeItemStack(recipe.outputs.get(0));
-            buffer.writeItemStack(recipe.outputs.get(1));
+        public void toNetwork(FriendlyByteBuf buffer, MagneticSeparatorRecipe recipe) {
+            recipe.ingredients.get(0).toNetwork(buffer);
+            buffer.writeItem(recipe.outputs.get(0));
+            buffer.writeItem(recipe.outputs.get(1));
         }
     }
 }

@@ -1,37 +1,37 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.containers.BatteryContainer;
+import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.util.BatteryEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BatteryTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class BatteryTileEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public final BatteryEnergyStorage energyStorage;
 
     public final LazyOptional<BatteryEnergyStorage.Input> inputEnergyStorageLazyOptional;
     public final LazyOptional<BatteryEnergyStorage.Output> outputEnergyStorageLazyOptional;
 
-    public BatteryTileEntity() {
-        super(Registering.BATTERY_TILE_ENTITY_TYPE.get());
+    public BatteryTileEntity(BlockPos blockPos, BlockState blockState) {
+        super(Registering.BATTERY_TILE_ENTITY_TYPE.get(), blockPos, blockState);
         this.energyStorage = new BatteryEnergyStorage(1_000_000, 1_000, this);
         this.inputEnergyStorageLazyOptional = LazyOptional.of(() -> energyStorage.input);
         this.outputEnergyStorageLazyOptional = LazyOptional.of(() -> energyStorage.output);
@@ -40,48 +40,48 @@ public class BatteryTileEntity extends TileEntity implements ITickableTileEntity
     @SuppressWarnings("ConstantConditions")
     @Override
     public void tick() {
-        energyStorage.trySendTo(world, pos, getBlockState().get(HorizontalBlock.HORIZONTAL_FACING).rotateYCCW());
+        energyStorage.trySendTo(level, worldPosition, getBlockState().getValue(HorizontalDirectionalBlock.FACING).getCounterClockWise());
     }
 
     @SuppressWarnings("ConstantConditions")
     public void updateBlockState() {
         int charge = energyStorage.getEnergyStored() * 4 / energyStorage.getMaxEnergyStored();
         BlockState blockState = getBlockState();
-        if (charge != blockState.get(BlockStateProperties.CHARGES)) {
-            world.setBlockState(pos, blockState.with(BlockStateProperties.CHARGES, charge));
+        if (charge != blockState.getValue(BlockStateProperties.RESPAWN_ANCHOR_CHARGES)) {
+            level.setBlockAndUpdate(worldPosition, blockState.setValue(BlockStateProperties.RESPAWN_ANCHOR_CHARGES, charge));
         }
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         inputEnergyStorageLazyOptional.invalidate();
         outputEnergyStorageLazyOptional.invalidate();
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
         energyStorage.setEnergy(nbt.getInt("energy"));
-        super.read(state, nbt);
+        super.load(nbt);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.putInt("energy", energyStorage.getEnergyStored());
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityEnergy.ENERGY) {
-            Direction facing = getBlockState().get(HorizontalBlock.HORIZONTAL_FACING);
+            Direction facing = getBlockState().getValue(HorizontalDirectionalBlock.FACING);
 
-            if (side == facing.rotateY()) {
+            if (side == facing.getClockWise()) {
                 return inputEnergyStorageLazyOptional.cast();
             }
 
-            if (side == facing.rotateYCCW()) {
+            if (side == facing.getCounterClockWise()) {
                 return outputEnergyStorageLazyOptional.cast();
             }
         }
@@ -89,17 +89,17 @@ public class BatteryTileEntity extends TileEntity implements ITickableTileEntity
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return BatteryContainer.TITLE;
     }
 
     @Nullable
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
-        return new BatteryContainer(id, playerInventory, getPos(), new BatterySyncData(this), serverPlayer);
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
+        return new BatteryContainer(id, playerInventory, getBlockPos(), new BatterySyncData(this), serverPlayer);
     }
 
-    private static class BatterySyncData implements IIntArray {
+    private static class BatterySyncData implements ContainerData {
         private final BatteryTileEntity battery;
         public BatterySyncData(BatteryTileEntity batteryTileEntity) {
             battery = batteryTileEntity;
@@ -121,7 +121,7 @@ public class BatteryTileEntity extends TileEntity implements ITickableTileEntity
         }
 
         @Override
-        public int size() {
+        public int getCount() {
             return 1;
         }
     }

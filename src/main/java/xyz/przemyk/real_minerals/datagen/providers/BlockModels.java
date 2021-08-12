@@ -1,6 +1,7 @@
 package xyz.przemyk.real_minerals.datagen.providers;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -17,7 +18,7 @@ public class BlockModels extends BlockModelProvider {
     @Override
     protected void registerModels() {
         for (BlockRegistryObject blockRegistryObject : Registering.BLOCKS_ITEMS.allBlocks) {
-            if (blockRegistryObject.BLOCK.get().hasTileEntity(blockRegistryObject.BLOCK.get().getDefaultState())) {
+            if (blockRegistryObject.BLOCK.get() instanceof EntityBlock) {
                 continue;
             }
             String path = blockRegistryObject.BLOCK.get().getRegistryName().getPath();

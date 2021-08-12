@@ -1,11 +1,11 @@
 package xyz.przemyk.real_minerals.init;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -29,9 +29,9 @@ public class BlockDeferredRegister {
         itemRegister.register(bus);
     }
 
-    public BlockRegistryObject register(final String name, final Supplier<Block> sup, ItemGroup itemGroup) {
+    public BlockRegistryObject register(final String name, final Supplier<Block> sup, CreativeModeTab itemGroup) {
         RegistryObject<Block> block = blockRegister.register(name, sup);
-        RegistryObject<BlockItem> item = itemRegister.register(name, () -> new BlockItem(block.get(), new Item.Properties().group(itemGroup)));
+        RegistryObject<BlockItem> item = itemRegister.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(itemGroup)));
         BlockRegistryObject blockRegistryObject = new BlockRegistryObject(block, item);
         allBlocks.add(blockRegistryObject);
         return blockRegistryObject;

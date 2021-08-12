@@ -1,14 +1,14 @@
 package xyz.przemyk.real_minerals.containers;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -18,13 +18,13 @@ import xyz.przemyk.real_minerals.util.MachineOutputSlot;
 
 public class MagnetizerContainer extends BaseMachineContainer {
 
-    public static final TranslationTextComponent TITLE = new TranslationTextComponent(RealMinerals.MODID + ".name.magnetizer");
+    public static final TranslatableComponent TITLE = new TranslatableComponent(RealMinerals.MODID + ".name.magnetizer");
 
-    public static MagnetizerContainer getClientContainer(int id, PlayerInventory playerInventory) {
-        return new MagnetizerContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(2), new IntArray(2), Minecraft.getInstance().player);
+    public static MagnetizerContainer getClientContainer(int id, Inventory playerInventory) {
+        return new MagnetizerContainer(id, playerInventory, BlockPos.ZERO, new ItemStackHandler(2), new SimpleContainerData(2), Minecraft.getInstance().player);
     }
 
-    public MagnetizerContainer(int windowId, PlayerInventory playerInventory, BlockPos pos, IItemHandler itemHandler, IIntArray machineData, PlayerEntity playerEntity) {
+    public MagnetizerContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
         super(Registering.MAGNETIZER_CONTAINER.get(), windowId, Registering.MAGNETIZER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
 
         addSlot(new SlotItemHandler(itemHandler, 0, 56, 35));
@@ -34,33 +34,33 @@ public class MagnetizerContainer extends BaseMachineContainer {
     }
 
     @Override //TODO: does it work the way it should?
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack stack = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack stack = slot.getItem();
             itemstack = stack.copy();
             if (index == 0) {
-                if (!mergeItemStack(stack, 1, 37, true)) {
+                if (!moveItemStackTo(stack, 1, 37, true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onSlotChange(stack, itemstack);
+                slot.onQuickCraft(stack, itemstack);
             } else {
-                if (!mergeItemStack(stack, 0, 1, false)) {
+                if (!moveItemStackTo(stack, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 } else if (index < 28) {
-                    if (!mergeItemStack(stack, 28, 37, false)) {
+                    if (!moveItemStackTo(stack, 28, 37, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index < 37 && !mergeItemStack(stack, 1, 28, false)) {
+                } else if (index < 37 && !moveItemStackTo(stack, 1, 28, false)) {
                     return ItemStack.EMPTY;
                 }
             }
 
             if (stack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
 
             if (stack.getCount() == itemstack.getCount()) {

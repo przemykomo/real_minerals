@@ -1,35 +1,35 @@
 package xyz.przemyk.real_minerals.cables;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.*;
 
-public class CableNetwork implements INBTSerializable<CompoundNBT> {
+public class CableNetwork implements INBTSerializable<CompoundTag> {
 
     private final Set<BlockPos> cables;
     private final Set<BlockPos> connectorCables;
-    private final ServerWorld world;
-    public final CableNetworksWorldData worldData;
+    private final ServerLevel world;
+    public final CableNetworksSavedData worldData;
     public CableEnergyStorage energyStorage;
 
     public LazyOptional<CableEnergyStorage> energyStorageLazyOptional;
 
     private String ID;
 
-    public CableNetwork(String id, CableNetworksWorldData worldData, ServerWorld world) {
+    public CableNetwork(String id, CableNetworksSavedData worldData, ServerLevel world) {
         this(worldData, world);
         this.ID = id;
     }
 
-    public CableNetwork(CableNetworksWorldData worldData, ServerWorld world) {
+    public CableNetwork(CableNetworksSavedData worldData, ServerLevel world) {
         this.energyStorage = new CableEnergyStorage(this);
         this.energyStorageLazyOptional = LazyOptional.of(() -> energyStorage);
         this.cables = new HashSet<>();
@@ -39,18 +39,18 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
     }
 
     public void addCable(CableTileEntity cableTileEntity) {
-        cables.add(cableTileEntity.getPos());
-        worldData.markDirty();
+        cables.add(cableTileEntity.getBlockPos());
+        worldData.setDirty();
     }
 
     public void addConnectorCable(CableTileEntity cableTileEntity) {
-        connectorCables.add(cableTileEntity.getPos());
-        worldData.markDirty();
+        connectorCables.add(cableTileEntity.getBlockPos());
+        worldData.setDirty();
     }
 
     public void removeConnector(CableTileEntity cableTileEntity) {
-        connectorCables.remove(cableTileEntity.getPos());
-        worldData.markDirty();
+        connectorCables.remove(cableTileEntity.getBlockPos());
+        worldData.setDirty();
     }
 
     public int getSize() {
@@ -61,21 +61,21 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
      * Merges this network to other. Removes THIS network.
      * @param other the other network
      */
-    public void mergeInto(CableNetwork other, ServerWorld world) {
+    public void mergeInto(CableNetwork other, ServerLevel world) {
         if (other == this) {
             return;
         }
 
         remove();
         for (BlockPos blockPos : cables) {
-            TileEntity tileEntity = world.getTileEntity(blockPos);
+            BlockEntity tileEntity = world.getBlockEntity(blockPos);
             if (tileEntity instanceof CableTileEntity) {
                 ((CableTileEntity) tileEntity).setNetworkID(other.getID());
                 other.cables.add(blockPos);
             }
         }
         for (BlockPos blockPos : connectorCables) {
-            TileEntity tileEntity = world.getTileEntity(blockPos);
+            BlockEntity tileEntity = world.getBlockEntity(blockPos);
             if (tileEntity instanceof CableTileEntity) {
                 other.connectorCables.add(blockPos);
             }
@@ -84,13 +84,13 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
 
     private void remove() {
         worldData.getNetworks().remove(getID());
-        worldData.markDirty();
+        worldData.setDirty();
         energyStorageLazyOptional.invalidate();
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT compoundNBT = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag compoundNBT = new CompoundTag();
         ArrayList<Integer> arrayList = new ArrayList<>();
 
         for (BlockPos blockPos : cables) {
@@ -117,7 +117,7 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         int[] blocks = nbt.getIntArray("blocks");
         cables.clear();
         for (int i = 0; i < blocks.length / 3; ++i) {
@@ -140,7 +140,7 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
         return ID;
     }
 
-    public void removeCable(BlockPos removedPos, ServerWorld world, BlockState removedState) {
+    public void removeCable(BlockPos removedPos, ServerLevel world, BlockState removedState) {
         cables.remove(removedPos);
         connectorCables.remove(removedPos);
         if (cables.size() == 0) {
@@ -151,8 +151,8 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
         Set<BlockPos> connectedBlocks = new HashSet<>();
         for (Direction direction : Direction.values()) {
             BooleanProperty property = CableBlock.getPropertyFromDirection(direction);
-            if (removedState.get(property)) {
-                BlockPos connectedBlock = removedPos.offset(direction);
+            if (removedState.getValue(property)) {
+                BlockPos connectedBlock = removedPos.relative(direction);
                 if (world.getBlockState(connectedBlock).getBlock() instanceof CableBlock) {
                     connectedBlocks.add(connectedBlock);
                 }
@@ -183,11 +183,11 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
                 }
             }
 
-            CableNetworksWorldData worldData = CableNetworksWorldData.get(world);
+            CableNetworksSavedData worldData = CableNetworksSavedData.get(world);
             for (Set<BlockPos> newNetworkCables : combinedNewNetworks.values()) {
                 CableNetwork newNetwork = worldData.createNetwork();
                 for (BlockPos blockPos : newNetworkCables) {
-                    TileEntity tileEntity = world.getTileEntity(blockPos);
+                    BlockEntity tileEntity = world.getBlockEntity(blockPos);
                     if (tileEntity instanceof CableTileEntity) {
                         ((CableTileEntity) tileEntity).setNetworkID(newNetwork.getID());
                         newNetwork.cables.add(blockPos);
@@ -196,7 +196,7 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
             }
         }
 
-        worldData.markDirty();
+        worldData.setDirty();
     }
 
     /**
@@ -211,8 +211,8 @@ public class CableNetwork implements INBTSerializable<CompoundNBT> {
         BlockState blockState = world.getBlockState(currentPos);
         for (Direction direction : Direction.values()) {
             BooleanProperty property = CableBlock.getPropertyFromDirection(direction);
-            if (blockState.get(property)) {
-                BlockPos connectedBlock = currentPos.offset(direction);
+            if (blockState.getValue(property)) {
+                BlockPos connectedBlock = currentPos.relative(direction);
                 if (world.getBlockState(connectedBlock).getBlock() instanceof CableBlock) {
                     if (scannedPositions.contains(connectedBlock)) {
                         continue;

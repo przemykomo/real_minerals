@@ -1,10 +1,10 @@
 package xyz.przemyk.real_minerals.datagen.providers;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.FluidTagsProvider;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.tags.FluidTagsProvider;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.tags.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.Registering;
@@ -17,11 +17,11 @@ public class FluidTags extends FluidTagsProvider {
         super(generatorIn, modId, existingFileHelper);
     }
 
-    public static final ITag.INamedTag<Fluid> BURNABLE_GAS = tag("burnable_gas");
+    public static final Tag.Named<Fluid> BURNABLE_GAS = tag("burnable_gas");
 
     @Override
-    protected void registerTags() {
-        getOrCreateBuilder(BURNABLE_GAS).add(Registering.SHALE_GAS_FLUID.get());
+    protected void addTags() {
+        tag(BURNABLE_GAS).add(Registering.SHALE_GAS_FLUID.get());
     }
 
     @SuppressWarnings("SameParameterValue")

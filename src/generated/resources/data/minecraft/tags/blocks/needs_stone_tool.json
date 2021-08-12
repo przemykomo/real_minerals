@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "real_minerals:copper_block",
+    "real_minerals:copper_ore",
+    "real_minerals:tin_block",
+    "real_minerals:tin_ore",
+    "real_minerals:aluminum_block",
+    "real_minerals:aluminum_ore",
+    "real_minerals:zinc_block",
+    "real_minerals:zinc_ore",
+    "real_minerals:magnetite_block",
+    "real_minerals:magnetite_ore"
+  ]
+}

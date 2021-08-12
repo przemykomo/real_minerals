@@ -1,12 +1,12 @@
 package xyz.przemyk.real_minerals.datagen.recipe_builders;
 
 import com.google.gson.JsonObject;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.resources.ResourceLocation;
 import xyz.przemyk.real_minerals.recipes.MagneticSeparatorRecipe;
 
 import javax.annotation.Nullable;
@@ -19,9 +19,9 @@ public class MagneticSeparatorRecipeBuilder {
     private int secondOutputCount = 0;
 
     private final Ingredient input;
-    private final IRecipeSerializer<?> serializer;
+    private final RecipeSerializer<?> serializer;
 
-    public MagneticSeparatorRecipeBuilder(IRecipeSerializer<?> serializer, Ingredient input, Item output, int count) {
+    public MagneticSeparatorRecipeBuilder(RecipeSerializer<?> serializer, Ingredient input, Item output, int count) {
         this.serializer = serializer;
         this.input = input;
         this.output = output;
@@ -46,21 +46,21 @@ public class MagneticSeparatorRecipeBuilder {
         secondOutput(secondOutput, outputCount);
     }
 
-    public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
+    public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
         consumer.accept(new ResultRecipe(id, serializer, input, output, outputCount, secondOutput, secondOutputCount));
     }
 
-    public static class ResultRecipe implements IFinishedRecipe {
+    public static class ResultRecipe implements FinishedRecipe {
         private final ResourceLocation id;
         private final Ingredient input;
         private final Item output;
         private final int outputCount;
         private final Item secondOutput;
         private final int secondOutputCount;
-        private final IRecipeSerializer<?> serializer;
+        private final RecipeSerializer<?> serializer;
 
 
-        public ResultRecipe(ResourceLocation id, IRecipeSerializer<?> serializer, Ingredient input, Item output, int outputCount, Item secondOutput, int secondOutputCount) {
+        public ResultRecipe(ResourceLocation id, RecipeSerializer<?> serializer, Ingredient input, Item output, int outputCount, Item secondOutput, int secondOutputCount) {
             this.id = id;
             this.input = input;
             this.output = output;
@@ -72,8 +72,8 @@ public class MagneticSeparatorRecipeBuilder {
 
         @SuppressWarnings("ConstantConditions")
         @Override
-        public void serialize(JsonObject json) {
-            json.add("input", input.serialize());
+        public void serializeRecipeData(JsonObject json) {
+            json.add("input", input.toJson());
 
             JsonObject outputObject = new JsonObject();
             outputObject.addProperty("item", output.getRegistryName().toString());
@@ -93,24 +93,24 @@ public class MagneticSeparatorRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
             return id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public RecipeSerializer<?> getType() {
             return serializer;
         }
 
         @Nullable
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
             return null;
         }
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
             return null;
         }
     }

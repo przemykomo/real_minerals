@@ -1,93 +1,89 @@
 package xyz.przemyk.real_minerals.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldVertexBufferUploader;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix4f;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.opengl.GL11;
-import xyz.przemyk.real_minerals.containers.GasGeneratorContainer;
 import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.containers.GasGeneratorContainer;
 import xyz.przemyk.real_minerals.tileentity.GasGeneratorTileEntity;
 
-public class GasGeneratorScreen extends ContainerScreen<GasGeneratorContainer> {
+public class GasGeneratorScreen extends AbstractContainerScreen<GasGeneratorContainer> {
 
     private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/gas_generator.png");
 
-    public GasGeneratorScreen(GasGeneratorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public GasGeneratorScreen(GasGeneratorContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
     }
 
     @Override
     protected void init() {
         super.init();
-        titleX = (this.xSize - this.font.getStringPropertyWidth(this.title)) / 2;
+        titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
+    }
+
+    @Override
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        if (isHovering(153, 7, 16, 72, mouseX, mouseY)) {
+            renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.energy", menu.machineData.get(2)), mouseX, mouseY);
+        } else if (isHovering(7, 7, 18, 72, mouseX, mouseY)) {
+            renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.gas", menu.tileEntity.fluidTank.getFluid().getFluid().getAttributes().getDisplayName(menu.tileEntity.fluidTank.getFluid()), menu.machineData.get(3)), mouseX, mouseY);
+        } else {
+            renderTooltip(matrixStack, mouseX, mouseY);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        if (isPointInRegion(153, 7, 16, 72, mouseX, mouseY)) {
-            renderTooltip(matrixStack, new TranslationTextComponent(RealMinerals.MODID + ".gui.energy", container.machineData.get(2)), mouseX, mouseY);
-        } else if (isPointInRegion(7, 7, 18, 72, mouseX, mouseY)) {
-            renderTooltip(matrixStack, new TranslationTextComponent(RealMinerals.MODID + ".gui.gas", container.tileEntity.fluidTank.getFluid().getFluid().getAttributes().getDisplayName(container.tileEntity.fluidTank.getFluid()), container.machineData.get(3)), mouseX, mouseY);
-        } else {
-            renderHoveredTooltip(matrixStack, mouseX, mouseY);
-        }
-    }
-
-    @SuppressWarnings({"ConstantConditions", "deprecation"})
-    @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bindTexture(GUI);
-        this.blit(matrixStack, guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
-        if (container.machineData.get(0) > 0) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, GUI);
+        this.blit(matrixStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
+        if (menu.machineData.get(0) > 0) {
             int k = getBurnLeftScaled();
-            this.blit(matrixStack, guiLeft + 80, guiTop + 75 - k, 176, 12 - k, 14, k + 1);
+            this.blit(matrixStack, leftPos + 80, topPos + 75 - k, 176, 12 - k, 14, k + 1);
         }
 
-        int energy = container.machineData.get(2);
+        int energy = menu.machineData.get(2);
         if (energy > 0) {
             int k = energy * 71 / 10000;
-            this.blit(matrixStack, guiLeft + 153, guiTop + 78 - k, 176, 85 - k, 16, k + 1);
+            this.blit(matrixStack, leftPos + 153, topPos + 78 - k, 176, 85 - k, 16, k + 1);
         }
 
-        int gas = container.machineData.get(3);
+        int gas = menu.machineData.get(3);
         if (gas > 0) {
             int fluidHeight = gas * 68 / GasGeneratorTileEntity.TANK_VOLUME;
 
-            FluidStack fluidStack = container.tileEntity.fluidTank.getFluid();
+            FluidStack fluidStack = menu.tileEntity.fluidTank.getFluid();
             if (!fluidStack.isEmpty()) {
-                TextureAtlasSprite fluidSprite = minecraft.getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(fluidStack.getFluid().getAttributes().getStillTexture(fluidStack));
+                TextureAtlasSprite fluidSprite = minecraft.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidStack.getFluid().getAttributes().getStillTexture(fluidStack));
                 setColorRGBA(fluidStack.getFluid().getAttributes().getColor(fluidStack));
                 renderTiledTextureAtlas(matrixStack, this, fluidSprite, 9, 77 - fluidHeight, 14, fluidHeight, 71, fluidStack.getFluid().getAttributes().isGaseous(fluidStack));
             }
         }
 
-        this.minecraft.getTextureManager().bindTexture(GUI);
-        blit(matrixStack, guiLeft + 9, guiTop + 9, 192, 0, 14, 71);
+        RenderSystem.setShaderTexture(0, GUI);
+        blit(matrixStack, leftPos + 9, topPos + 9, 192, 0, 14, 71);
     }
 
-    public static void renderTiledTextureAtlas(MatrixStack matrices, ContainerScreen<?> screen, TextureAtlasSprite sprite, int x, int y, int width, int height, int depth, boolean upsideDown) {
-        screen.getMinecraft().getTextureManager().bindTexture(sprite.getAtlasTexture().getTextureLocation());
-        BufferBuilder builder = Tessellator.getInstance().getBuffer();
-        builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+    public static void renderTiledTextureAtlas(PoseStack matrices, AbstractContainerScreen<?> screen, TextureAtlasSprite sprite, int x, int y, int width, int height, int depth, boolean upsideDown) {
+        RenderSystem.setShaderTexture(0, sprite.atlas().location());
+        BufferBuilder builder = Tesselator.getInstance().getBuilder();
+        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        float u1 = sprite.getMinU();
-        float v1 = sprite.getMinV();
+        float u1 = sprite.getU0();
+        float v1 = sprite.getV0();
         int spriteHeight = sprite.getHeight();
         int spriteWidth = sprite.getWidth();
         int startX = x + screen.getGuiLeft();
@@ -96,18 +92,18 @@ public class GasGeneratorScreen extends ContainerScreen<GasGeneratorContainer> {
         do {
             int renderHeight = Math.min(spriteHeight, height);
             height -= renderHeight;
-            float v2 = sprite.getInterpolatedV((16f * renderHeight) / spriteHeight);
+            float v2 = sprite.getV((16f * renderHeight) / spriteHeight);
 
             // we need to draw the quads per width too
             int x2 = startX;
             int widthLeft = width;
-            Matrix4f matrix = matrices.getLast().getMatrix();
+            Matrix4f matrix = matrices.last().pose();
             // tile horizontally
             do {
                 int renderWidth = Math.min(spriteWidth, widthLeft);
                 widthLeft -= renderWidth;
 
-                float u2 = sprite.getInterpolatedU((16f * renderWidth) / spriteWidth);
+                float u2 = sprite.getU((16f * renderWidth) / spriteWidth);
                 if(upsideDown) {
                     // FIXME: I think this causes tiling errors, look into it
                     buildSquare(matrix, builder, x2, x2 + renderWidth, startY, startY + renderHeight, depth, u1, u2, v2, v1);
@@ -121,16 +117,15 @@ public class GasGeneratorScreen extends ContainerScreen<GasGeneratorContainer> {
         } while(height > 0);
 
         // finish drawing sprites
-        builder.finishDrawing();
-        RenderSystem.enableAlphaTest();
-        WorldVertexBufferUploader.draw(builder);
+        builder.end();
+        BufferUploader.end(builder);
     }
 
     private static void buildSquare(Matrix4f matrix, BufferBuilder builder, int x1, int x2, int y1, int y2, int z, float u1, float u2, float v1, float v2) {
-        builder.pos(matrix, x1, y2, z).tex(u1, v2).endVertex();
-        builder.pos(matrix, x2, y2, z).tex(u2, v2).endVertex();
-        builder.pos(matrix, x2, y1, z).tex(u2, v1).endVertex();
-        builder.pos(matrix, x1, y1, z).tex(u1, v1).endVertex();
+        builder.vertex(matrix, x1, y2, z).uv(u1, v2).endVertex();
+        builder.vertex(matrix, x2, y2, z).uv(u2, v2).endVertex();
+        builder.vertex(matrix, x2, y1, z).uv(u2, v1).endVertex();
+        builder.vertex(matrix, x1, y1, z).uv(u1, v1).endVertex();
     }
 
     public static void setColorRGBA(int color) {
@@ -139,7 +134,7 @@ public class GasGeneratorScreen extends ContainerScreen<GasGeneratorContainer> {
         float g = green(color) / 255.0F;
         float b = blue(color) / 255.0F;
 
-        RenderSystem.color4f(r, g, b, a);
+        RenderSystem.setShaderColor(r, g, b, a);
     }
 
     public static int alpha(int c) {
@@ -159,17 +154,17 @@ public class GasGeneratorScreen extends ContainerScreen<GasGeneratorContainer> {
     }
 
     private int getBurnLeftScaled() {
-        int burnTimeTotal = container.machineData.get(1);
+        int burnTimeTotal = menu.machineData.get(1);
         if (burnTimeTotal == 0) {
             burnTimeTotal = 200;
         }
 
-        return container.machineData.get(0) * 13 / burnTimeTotal;
+        return menu.machineData.get(0) * 13 / burnTimeTotal;
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
-        this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+        this.font.draw(matrixStack, this.title, (float)this.titleLabelX, (float)this.titleLabelY, 4210752);
         // don't render "Inventory" text
     }
 }

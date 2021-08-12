@@ -1,24 +1,29 @@
 package xyz.przemyk.real_minerals.tileentity;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.state.BlockState;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.MagneticSeparatorContainer;
 import xyz.przemyk.real_minerals.recipes.MagneticSeparatorRecipe;
 
+import xyz.przemyk.real_minerals.tileentity.ElectricRecipeProcessingTileEntity.RecipeProcessingMachineSyncData;
+
 public class MagneticSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<MagneticSeparatorRecipe> {
 
     public static final int FE_PER_TICK = 60;
     public static final int WORKING_TIME_TOTAL = 120;
 
-    public MagneticSeparatorTileEntity() {
-        super(Registering.MAGNETIC_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0), FE_PER_TICK, 3, WORKING_TIME_TOTAL);
+    public MagneticSeparatorTileEntity(BlockPos blockPos, BlockState blockState) {
+        super(Registering.MAGNETIC_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
+                FE_PER_TICK, 3, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 
     private MagneticSeparatorRecipe cachedRecipe = null;
@@ -30,7 +35,7 @@ public class MagneticSeparatorTileEntity extends ElectricRecipeProcessingTileEnt
             return cachedRecipe;
         }
 
-        cachedRecipe = RealMinerals.getRecipe(input, world, RealMinerals.MAGNETIC_SEPARATOR_RECIPE_TYPE);
+        cachedRecipe = RealMinerals.getRecipe(input, level, RealMinerals.MAGNETIC_SEPARATOR_RECIPE_TYPE);
         return cachedRecipe;
     }
 
@@ -49,11 +54,11 @@ public class MagneticSeparatorTileEntity extends ElectricRecipeProcessingTileEnt
                 return true;
             }
 
-            if (!currentOutput.isItemEqual(outputStack)) {
+            if (!currentOutput.sameItem(outputStack)) {
                 return false;
             }
 
-            if (!currentSecondaryOutput.isEmpty() && !currentSecondaryOutput.isItemEqual(secondaryOutputStack)) {
+            if (!currentSecondaryOutput.isEmpty() && !currentSecondaryOutput.sameItem(secondaryOutputStack)) {
                 return false;
             }
 
@@ -88,12 +93,12 @@ public class MagneticSeparatorTileEntity extends ElectricRecipeProcessingTileEnt
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return MagneticSeparatorContainer.TITLE;
     }
 
     @Override
-    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity serverPlayer) {
-        return new MagneticSeparatorContainer(id, playerInventory, getPos(), itemHandler, new RecipeProcessingMachineSyncData(this), serverPlayer);
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
+        return new MagneticSeparatorContainer(id, playerInventory, getBlockPos(), itemHandler, new RecipeProcessingMachineSyncData(this), serverPlayer);
     }
 }
