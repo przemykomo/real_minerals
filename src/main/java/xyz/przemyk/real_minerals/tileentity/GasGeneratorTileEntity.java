@@ -22,7 +22,7 @@ import xyz.przemyk.real_minerals.containers.GasGeneratorContainer;
 import xyz.przemyk.real_minerals.datagen.providers.FluidTags;
 import xyz.przemyk.real_minerals.fluid.FillOnlyFluidTank;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.ElectricMachineEnergyStorage;
+import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

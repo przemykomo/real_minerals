@@ -21,10 +21,13 @@ public class MeteoriteFeature extends Feature<NoFeatureConfig> {
     @Override
     public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
 
-        if (rand.nextInt(100) > 98) {
+        if (rand.nextInt(500) == 0) {
             int x = pos.getX() + rand.nextInt(15);
             int z = pos.getZ() + rand.nextInt(15);
             int y = reader.getHeight(Heightmap.Type.WORLD_SURFACE_WG, x, z);
+            if (y == 0) {
+                return false;
+            }
 
             final int maxY = 255;
             BlockPos.Mutable blockPos = new BlockPos.Mutable();
@@ -54,7 +57,6 @@ public class MeteoriteFeature extends Feature<NoFeatureConfig> {
 
             BlockPos meteoritePos = new BlockPos(x, reader.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z), z);
             reader.setBlockState(meteoritePos, Registering.METEORITE.BLOCK.get().getDefaultState(), 2);
-
             return true;
         }
 

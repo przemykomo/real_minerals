@@ -1,6 +1,7 @@
 package xyz.przemyk.real_minerals.compat.jei;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -17,9 +18,9 @@ import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.recipes.CrusherRecipe;
 
-import static xyz.przemyk.real_minerals.compat.jei.RealMineralsJEIPlugin.RECIPE_GUI_VANILLA;
-
 public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
+
+    public static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation(ModIds.JEI_ID, "textures/gui/gui_vanilla.png");
 
     protected static final int inputSlot = 0;
     protected static final int outputSlot = 2;

@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals;
+package xyz.przemyk.real_minerals.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

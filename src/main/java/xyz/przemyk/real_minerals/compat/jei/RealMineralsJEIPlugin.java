@@ -23,7 +23,6 @@ import xyz.przemyk.real_minerals.screen.CrusherScreen;
 
 @JeiPlugin
 public class RealMineralsJEIPlugin implements IModPlugin {
-    public static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation(ModIds.JEI_ID, "textures/gui/gui_vanilla.png");
     public static final ResourceLocation RECIPE_GUI_MOD = new ResourceLocation(RealMinerals.MODID, "textures/gui/jei_gui.png");
 
     public static final ResourceLocation CRUSHER_CATEGORY_ID = new ResourceLocation(RealMinerals.MODID, "crushing");

@@ -12,7 +12,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.MachineFuelSlot;
+import xyz.przemyk.real_minerals.util.MachineFuelSlot;
 
 public class SolidGeneratorContainer extends BaseMachineContainer {
 

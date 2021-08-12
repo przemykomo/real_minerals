@@ -10,7 +10,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import xyz.przemyk.real_minerals.ElectricMachineEnergyStorage;
+import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals;
+package xyz.przemyk.real_minerals.util;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -11,6 +11,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import org.lwjgl.opengl.GL11;
+import xyz.przemyk.real_minerals.RealMinerals;
 
 public class FluidDisplay {
 

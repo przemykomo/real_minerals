@@ -18,7 +18,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import xyz.przemyk.real_minerals.containers.SolidGeneratorContainer;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.ElectricMachineEnergyStorage;
+import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

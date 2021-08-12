@@ -6,7 +6,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.ITextComponent;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.MachineItemStackHandler;
+import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 import xyz.przemyk.real_minerals.containers.CrusherContainer;
 import xyz.przemyk.real_minerals.recipes.CrusherRecipe;
 

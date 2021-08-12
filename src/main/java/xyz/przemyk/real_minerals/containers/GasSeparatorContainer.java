@@ -13,7 +13,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.MachineOutputSlot;
+import xyz.przemyk.real_minerals.util.MachineOutputSlot;
 
 public class GasSeparatorContainer extends BaseMachineContainer {
 

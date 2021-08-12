@@ -9,7 +9,7 @@ import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.text.ITextComponent;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.ElectricMachineEnergyStorage;
+import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.ElectricFurnaceContainer;
 
 import javax.annotation.Nullable;

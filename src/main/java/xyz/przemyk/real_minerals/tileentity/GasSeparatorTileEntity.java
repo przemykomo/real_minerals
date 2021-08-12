@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.przemyk.real_minerals.fluid.DrainOnlyFluidTank;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.ElectricMachineEnergyStorage;
+import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.GasSeparatorContainer;
 import xyz.przemyk.real_minerals.recipes.GasSeparatorRecipe;
 

@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals;
+package xyz.przemyk.real_minerals.util;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;

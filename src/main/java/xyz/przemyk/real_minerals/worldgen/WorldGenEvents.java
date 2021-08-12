@@ -50,7 +50,7 @@ public class WorldGenEvents {
             oreFeatures.add(() -> Feature.ORE.withConfiguration(new OreFeatureConfig(GRAVEL, Registering.ZIRCONIUM_GRAVEL_ORE.BLOCK.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
 
             //meteorites
-            if (category != Biome.Category.RIVER && category != Biome.Category.SWAMP && category != Biome.Category.OCEAN && category != Biome.Category.BEACH) {
+            if (category != Biome.Category.NONE && category != Biome.Category.RIVER && category != Biome.Category.SWAMP && category != Biome.Category.OCEAN && category != Biome.Category.BEACH) {
                 List<Supplier<ConfiguredFeature<?, ?>>> localModificationsFeatures = event.getGeneration().getFeatures(GenerationStage.Decoration.LOCAL_MODIFICATIONS);
                 localModificationsFeatures.add(() -> Registering.METEORITE_FEATURE.get().withConfiguration(NoFeatureConfig.field_236559_b_));
             }

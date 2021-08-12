@@ -19,7 +19,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.MachineItemStackHandler;
+import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 import xyz.przemyk.real_minerals.recipes.MachineRecipe;
 
 import javax.annotation.Nonnull;

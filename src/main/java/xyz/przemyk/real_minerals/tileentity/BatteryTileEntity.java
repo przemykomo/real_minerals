@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.containers.BatteryContainer;
-import xyz.przemyk.real_minerals.BatteryEnergyStorage;
+import xyz.przemyk.real_minerals.util.BatteryEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
