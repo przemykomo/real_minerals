@@ -35,9 +35,15 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
     public final FillOnlyFluidTank fluidTank = new FillOnlyFluidTank(TANK_VOLUME) {
         @Override
         protected void onContentsChanged() {
-            syncToClient();
+            markUpdated();
         }
     };
+
+    @SuppressWarnings("ConstantConditions")
+    private void markUpdated() {
+        this.setChanged();
+        this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+    }
 
     public int burnTime;
     public int burnTimeTotal;
@@ -133,32 +139,21 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
         }
 
         public int get(int index) {
-            switch(index) {
-                case 0:
-                    return machine.burnTime;
-                case 1:
-                    return machine.burnTimeTotal;
-                case 2:
-                    return machine.energyStorage.getEnergyStored();
-                case 3:
-                    return machine.fluidTank.getFluidAmount();
-                default:
-                    return 0;
-            }
+            return switch (index) {
+                case 0 -> machine.burnTime;
+                case 1 -> machine.burnTimeTotal;
+                case 2 -> machine.energyStorage.getEnergyStored();
+                case 3 -> machine.fluidTank.getFluidAmount();
+                default -> 0;
+            };
         }
 
         public void set(int index, int value) {
-            switch(index) {
-                case 0:
-                    machine.burnTime = value;
-                    break;
-                case 1:
-                    machine.burnTimeTotal = value;
-                    break;
-                case 2:
-                    machine.energyStorage.setEnergy(value);
+            switch (index) {
+                case 0 -> machine.burnTime = value;
+                case 1 -> machine.burnTimeTotal = value;
+                case 2 -> machine.energyStorage.setEnergy(value);
             }
-
         }
 
         public int getCount() {
@@ -166,24 +161,24 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
-    protected void syncToClient() {
-        if (!level.isClientSide) {
-            ((ServerLevel) level).getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)
-                    .forEach(player -> player.connection.send(getUpdatePacket()));
-        }
-    }
-
-    @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbt = new CompoundTag();
-        fluidTank.writeToNBT(nbt);
-        return new ClientboundBlockEntityDataPacket(worldPosition, 0, nbt);
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return fluidTank.writeToNBT(super.getUpdateTag());
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        super.handleUpdateTag(tag);
+        fluidTank.readFromNBT(tag);
     }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        fluidTank.readFromNBT(pkt.getTag());
+        handleUpdateTag(pkt.getTag());
     }
 }

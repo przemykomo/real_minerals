@@ -1,5 +1,6 @@
 package xyz.przemyk.real_minerals.fluid;
 
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
@@ -82,7 +83,7 @@ public class ShaleGasFluid extends Fluid {
                 .viscosity(100)
                 .gaseous()
                 .rarity(Rarity.UNCOMMON)
-//                .sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)
+                .sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
                 .build(this);
     }
 }

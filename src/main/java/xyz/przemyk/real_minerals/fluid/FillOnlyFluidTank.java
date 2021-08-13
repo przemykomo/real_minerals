@@ -13,9 +13,7 @@ public class FillOnlyFluidTank extends FluidTank {
         super(capacity);
     }
 
-    @Nonnull
     @Override
-    @Deprecated
     public FluidStack drain(int maxDrain, FluidAction action) {
         return FluidStack.EMPTY;
     }
