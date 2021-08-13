@@ -1,6 +1,6 @@
 {
     "real_minerals.gui.energy": "Energy: %s FE",
-    "real_minerals.gui.gas": "%s: %s mb",
+    "real_minerals.gui.fluid": "%s: %s mb",
     "real_minerals.name.gas_generator": "Gas Generator",
     "real_minerals.shale_gas": "Shale Gas"
 }

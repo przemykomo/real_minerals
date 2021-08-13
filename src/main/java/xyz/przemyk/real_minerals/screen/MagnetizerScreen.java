@@ -11,48 +11,29 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import xyz.przemyk.real_minerals.containers.MagnetizerContainer;
 import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.screen.modules.EnergyModule;
 import xyz.przemyk.real_minerals.tileentity.MagnetizerTileEntity;
 
-public class MagnetizerScreen extends AbstractContainerScreen<MagnetizerContainer> {
+public class MagnetizerScreen extends MachineScreen<MagnetizerContainer> {
 
     private static final ResourceLocation GUI = new ResourceLocation(RealMinerals.MODID, "textures/gui/magnetizer.png");
 
     public MagnetizerScreen(MagnetizerContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+        super(screenContainer, inv, titleIn, GUI);
+        screenModules.add(new EnergyModule(() -> menu.machineData.get(1), 10_000, 153, 7, this));
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        if (isHovering(153, 7, 16, 72, mouseX, mouseY)) {
-            renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.energy", menu.machineData.get(1)), mouseX, mouseY);
-        } else {
-            renderTooltip(matrixStack, mouseX, mouseY);
-        }
-    }
-
-    @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        super.renderBg(matrixStack, partialTicks, mouseX, mouseY);
         RenderSystem.setShaderTexture(0, GUI);
-        int i = this.leftPos;
-        int j = this.topPos;
-        this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
-        ContainerData machineData = menu.machineData;
-        int workTime = machineData.get(0);
+
+        int workTime = menu.machineData.get(0);
         if (workTime > 0) {
-            this.blit(matrixStack, i + 57, j + 54 + 12 - 13, 176, 12 - 13, 14, 15);
+            this.blit(matrixStack, this.leftPos + 57, this.topPos + 54 + 12 - 13, 176, 12 - 13, 14, 15);
 
             int l = workTime * 24 / MagnetizerTileEntity.WORKING_TIME_TOTAL;
-            this.blit(matrixStack, i + 79, j + 34, 176, 14, l + 1, 16);
-        }
-
-        int energy = machineData.get(1);
-        if (energy > 0) {
-            int k = energy * 71 / 10000;
-            this.blit(matrixStack, i + 153, j + 78 - k, 176, 102 - k, 16, k + 1);
+            this.blit(matrixStack, this.leftPos + 79, this.topPos + 34, 176, 14, l + 1, 16);
         }
     }
 }

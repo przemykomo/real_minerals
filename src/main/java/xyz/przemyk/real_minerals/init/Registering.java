@@ -58,7 +58,7 @@ public class Registering {
     private Registering() {}
 
     public static final BlockDeferredRegister BLOCKS_ITEMS = new BlockDeferredRegister(MODID);
-    public static final ItemDeferredRegister ITEMS = new ItemDeferredRegister(MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MODID);

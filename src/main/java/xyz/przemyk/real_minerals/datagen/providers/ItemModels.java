@@ -24,14 +24,12 @@ public class ItemModels extends ItemModelProvider {
                 continue;
             }
             String path = blockRegistryObject.ITEM.get().getRegistryName().getPath();
-            getBuilder(path)
-                    .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
+            getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
         }
 
-        for (RegistryObject<Item> itemRegistryObject : Registering.ITEMS.allItems) {
+        for (RegistryObject<Item> itemRegistryObject : Registering.ITEMS.getEntries()) {
             String path = itemRegistryObject.get().getRegistryName().getPath();
-            getBuilder(path)
-                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
+            getBuilder(path).parent(new ModelFile.UncheckedModelFile("item/generated"))
                     .texture("layer0", modLoc("item/" + path));
         }
     }

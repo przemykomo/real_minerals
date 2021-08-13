@@ -131,39 +131,22 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
         return new GasGeneratorContainer(id, playerInventory, getBlockPos(), new GeneratorSyncData(this), serverPlayer);
     }
 
-    private static class GeneratorSyncData implements ContainerData {
-        private final GasGeneratorTileEntity machine;
-
-        public GeneratorSyncData(GasGeneratorTileEntity machine) {
-            this.machine = machine;
-        }
+    private record GeneratorSyncData(GasGeneratorTileEntity machine) implements ContainerData {
 
         public int get(int index) {
             return switch (index) {
                 case 0 -> machine.burnTime;
                 case 1 -> machine.burnTimeTotal;
                 case 2 -> machine.energyStorage.getEnergyStored();
-                case 3 -> machine.fluidTank.getFluidAmount();
                 default -> 0;
             };
         }
 
-        public void set(int index, int value) {
-            switch (index) {
-                case 0 -> machine.burnTime = value;
-                case 1 -> machine.burnTimeTotal = value;
-                case 2 -> machine.energyStorage.setEnergy(value);
-            }
-        }
+        public void set(int index, int value) {}
 
         public int getCount() {
-            return 4;
+            return 3;
         }
-    }
-
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override
@@ -175,6 +158,11 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
         fluidTank.readFromNBT(tag);
+    }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
     }
 
     @Override

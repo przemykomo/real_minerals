@@ -59,7 +59,7 @@ public class MachinesRegistry {
 
     public static final BlockRegistryObject GAS_SEPARATOR_BLOCK = Registering.BLOCKS_ITEMS.register("gas_separator", () -> new MachineBlock(GasSeparatorTileEntity::new), ITEM_GROUP);
     public static final RegistryObject<BlockEntityType<GasSeparatorTileEntity>> GAS_SEPARATOR_TILE_ENTITY_TYPE = Registering.TILE_ENTITIES.register("gas_separator", () -> BlockEntityType.Builder.of(GasSeparatorTileEntity::new, GAS_SEPARATOR_BLOCK.BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<GasSeparatorContainer>> GAS_SEPARATOR_CONTAINER = Registering.CONTAINERS.register("gas_separator", () -> new MenuType<>(GasSeparatorContainer::getClientContainer));
+    public static final RegistryObject<MenuType<GasSeparatorContainer>> GAS_SEPARATOR_CONTAINER = Registering.CONTAINERS.register("gas_separator", () -> IForgeContainerType.create(GasSeparatorContainer::getClientContainer));
     //</editor-fold>
 
     //<editor-fold desc="Electric cables">

@@ -1,6 +1,8 @@
 package xyz.przemyk.real_minerals.tileentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -70,7 +72,6 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
         return compound;
     }
 
-    @Nonnull
     @Override
     public <C> LazyOptional<C> getCapability(@Nonnull Capability<C> cap, @Nullable Direction side) {
         if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -148,42 +149,44 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
         return new GasSeparatorContainer(id, playerInventory, getBlockPos(), itemHandler, new GasSeparatorSyncData(this), serverPlayer);
     }
 
-    protected static class GasSeparatorSyncData implements ContainerData {
-        private final GasSeparatorTileEntity machine;
-
-        public GasSeparatorSyncData(GasSeparatorTileEntity machine) {
-            this.machine = machine;
-        }
+    protected record GasSeparatorSyncData(GasSeparatorTileEntity machine) implements ContainerData {
 
         @Override
         public int get(int index) {
-            switch (index) {
-                case 0:
-                    return machine.workingTime;
-                case 1:
-                    return machine.energyStorage.getEnergyStored();
-                case 2:
-                    return machine.fluidTank.getFluidAmount();
-                default:
-                    return 0;
-            }
+            return switch (index) {
+                case 0 -> machine.workingTime;
+                case 1 -> machine.energyStorage.getEnergyStored();
+                default -> 0;
+            };
         }
 
         @Override
-        public void set(int index, int value) {
-            switch (index) {
-                case 0:
-                    machine.workingTime = value;
-                    break;
-                case 1:
-                    machine.energyStorage.setEnergy(value);
-                    break;
-            }
-        }
+        public void set(int index, int value) {}
 
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return fluidTank.writeToNBT(super.getUpdateTag());
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        super.handleUpdateTag(tag);
+        fluidTank.readFromNBT(tag);
+    }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        handleUpdateTag(pkt.getTag());
     }
 }

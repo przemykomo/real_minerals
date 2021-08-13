@@ -3,10 +3,6 @@ package xyz.przemyk.real_minerals.fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-import javax.annotation.Nonnull;
-
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-
 public class FillOnlyFluidTank extends FluidTank {
 
     public FillOnlyFluidTank(int capacity) {
