@@ -20,8 +20,8 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.przemyk.real_minerals.fluid.DrainOnlyFluidTank;
-import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
+import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.GasSeparatorContainer;
 import xyz.przemyk.real_minerals.recipes.GasSeparatorRecipe;
@@ -39,7 +39,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
     public GasSeparatorTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(Registering.GAS_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
+        super(MachinesRegistry.GAS_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
                 FE_PER_TICK, 2, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 
@@ -88,7 +88,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
             return cachedRecipe;
         }
 
-        cachedRecipe = RealMinerals.getRecipe(input, level, RealMinerals.GAS_SEPARATOR_RECIPE_TYPE);
+        cachedRecipe = Recipes.getRecipe(input, level, Recipes.GAS_SEPARATOR_RECIPE_TYPE);
         return cachedRecipe;
     }
 

@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.przemyk.real_minerals.containers.GasGeneratorContainer;
 import xyz.przemyk.real_minerals.datagen.providers.FluidTags;
 import xyz.przemyk.real_minerals.fluid.FillOnlyFluidTank;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 
 import javax.annotation.Nonnull;
@@ -46,7 +46,7 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
     public GasGeneratorTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(Registering.GAS_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 160), blockPos, blockState);
+        super(MachinesRegistry.GAS_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 160), blockPos, blockState);
         fluidTank.setValidator(fluidStack -> FluidTags.BURNABLE_GAS.contains(fluidStack.getFluid()));
     }
 

@@ -14,7 +14,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.MachineFuelSlot;
 import xyz.przemyk.real_minerals.util.MachineOutputSlot;
 
@@ -27,7 +27,7 @@ public class AlloyFurnaceContainer extends BaseMachineContainer {
     }
 
     public AlloyFurnaceContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(Registering.ALLOY_FURNACE_CONTAINER.get(), windowId, Registering.ALLOY_FURNACE_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
+        super(MachinesRegistry.ALLOY_FURNACE_CONTAINER.get(), windowId, MachinesRegistry.ALLOY_FURNACE_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
 
         addSlot(new SlotItemHandler(itemHandler, 0, 19, 16));
         addSlot(new SlotItemHandler(itemHandler, 1, 38, 16));

@@ -10,7 +10,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.tileentity.GasGeneratorTileEntity;
 
 public class GasGeneratorContainer extends BaseMachineContainer {
@@ -25,7 +25,7 @@ public class GasGeneratorContainer extends BaseMachineContainer {
     public final GasGeneratorTileEntity tileEntity;
 
     public GasGeneratorContainer(int windowId, Inventory playerInventory, BlockPos pos, ContainerData machineData, Player playerEntity) {
-        super(Registering.GAS_GENERATOR_CONTAINER.get(), windowId, Registering.GAS_GENERATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
+        super(MachinesRegistry.GAS_GENERATOR_CONTAINER.get(), windowId, MachinesRegistry.GAS_GENERATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
 
         tileEntity = (GasGeneratorTileEntity) playerEntity.level.getBlockEntity(pos);
 

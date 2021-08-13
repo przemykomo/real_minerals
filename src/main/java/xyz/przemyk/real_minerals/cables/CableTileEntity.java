@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,7 +20,7 @@ public class CableTileEntity extends BlockEntity {
     private String networkID;
 
     public CableTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(Registering.CABLE_TILE_ENTITY_TYPE.get(), blockPos, blockState);
+        super(MachinesRegistry.CABLE_TILE_ENTITY_TYPE.get(), blockPos, blockState);
     }
 
     public String getNetworkID() {

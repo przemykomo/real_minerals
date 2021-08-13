@@ -7,7 +7,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import xyz.przemyk.real_minerals.init.GravelMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.StoneMinerals;
 
 import javax.annotation.Nullable;
 
@@ -122,64 +124,64 @@ public class ItemTags extends ItemTagsProvider {
 
         copy(BlockTags.STORAGE_COPPER, STORAGE_COPPER);
         copy(BlockTags.ORES_COPPER, ORES_COPPER);
-        tag(INGOTS_COPPER).add(Registering.COPPER_INGOT.get());
-        tag(NUGGETS_COPPER).add(Registering.COPPER_NUGGET.get());
-        tag(DUSTS_COPPER).add(Registering.COPPER_DUST.get());
+        tag(INGOTS_COPPER).add(StoneMinerals.COPPER_ITEMS.INGOT.get());
+        tag(NUGGETS_COPPER).add(StoneMinerals.COPPER_ITEMS.NUGGET.get());
+        tag(DUSTS_COPPER).add(StoneMinerals.COPPER_ITEMS.INGOT.get());
 
         copy(BlockTags.STORAGE_LEAD, STORAGE_LEAD);
         copy(BlockTags.ORES_LEAD, ORES_LEAD);
-        tag(INGOTS_LEAD).add(Registering.LEAD_INGOT.get());
-        tag(NUGGETS_LEAD).add(Registering.LEAD_NUGGET.get());
-        tag(DUSTS_LEAD).add(Registering.LEAD_DUST.get());
+        tag(INGOTS_LEAD).add(StoneMinerals.LEAD_ITEMS.INGOT.get());
+        tag(NUGGETS_LEAD).add(StoneMinerals.LEAD_ITEMS.NUGGET.get());
+        tag(DUSTS_LEAD).add(StoneMinerals.LEAD_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_MAGNESIUM, STORAGE_MAGNESIUM);
         copy(BlockTags.ORES_MAGNESIUM, ORES_MAGNESIUM);
-        tag(INGOTS_MAGNESIUM).add(Registering.MAGNESIUM_INGOT.get());
-        tag(NUGGETS_MAGNESIUM).add(Registering.MAGNESIUM_NUGGET.get());
-        tag(DUSTS_MAGNESIUM).add(Registering.MAGNESIUM_DUST.get());
+        tag(INGOTS_MAGNESIUM).add(StoneMinerals.MAGNESIUM_ITEMS.INGOT.get());
+        tag(NUGGETS_MAGNESIUM).add(StoneMinerals.MAGNESIUM_ITEMS.NUGGET.get());
+        tag(DUSTS_MAGNESIUM).add(StoneMinerals.MAGNESIUM_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_NICKEL, STORAGE_NICKEL);
         copy(BlockTags.ORES_NICKEL, ORES_NICKEL);
-        tag(INGOTS_NICKEL).add(Registering.NICKEL_INGOT.get());
-        tag(NUGGETS_NICKEL).add(Registering.NICKEL_NUGGET.get());
-        tag(DUSTS_NICKEL).add(Registering.NICKEL_DUST.get());
+        tag(INGOTS_NICKEL).add(StoneMinerals.NICKEL_ITEMS.INGOT.get());
+        tag(NUGGETS_NICKEL).add(StoneMinerals.NICKEL_ITEMS.NUGGET.get());
+        tag(DUSTS_NICKEL).add(StoneMinerals.NICKEL_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_PLATINUM, STORAGE_PLATINUM);
         copy(BlockTags.ORES_PLATINUM, ORES_PLATINUM);
-        tag(INGOTS_PLATINUM).add(Registering.PLATINUM_INGOT.get());
-        tag(NUGGETS_PLATINUM).add(Registering.PLATINUM_NUGGET.get());
-        tag(DUSTS_PLATINUM).add(Registering.PLATINUM_DUST.get());
+        tag(INGOTS_PLATINUM).add(StoneMinerals.PLATINUM_ITEMS.INGOT.get());
+        tag(NUGGETS_PLATINUM).add(StoneMinerals.PLATINUM_ITEMS.NUGGET.get());
+        tag(DUSTS_PLATINUM).add(StoneMinerals.PLATINUM_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_SILVER, STORAGE_SILVER);
         copy(BlockTags.ORES_SILVER, ORES_SILVER);
-        tag(INGOTS_SILVER).add(Registering.SILVER_INGOT.get());
-        tag(NUGGETS_SILVER).add(Registering.SILVER_NUGGET.get());
-        tag(DUSTS_SILVER).add(Registering.SILVER_DUST.get());
+        tag(INGOTS_SILVER).add(StoneMinerals.SILVER_ITEMS.INGOT.get());
+        tag(NUGGETS_SILVER).add(StoneMinerals.SILVER_ITEMS.NUGGET.get());
+        tag(DUSTS_SILVER).add(StoneMinerals.SILVER_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_TIN, STORAGE_TIN);
         copy(BlockTags.ORES_TIN, ORES_TIN);
-        tag(INGOTS_TIN).add(Registering.TIN_INGOT.get());
-        tag(NUGGETS_TIN).add(Registering.TIN_NUGGET.get());
-        tag(DUSTS_TIN).add(Registering.TIN_DUST.get());
+        tag(INGOTS_TIN).add(StoneMinerals.TIN_ITEMS.INGOT.get());
+        tag(NUGGETS_TIN).add(StoneMinerals.TIN_ITEMS.NUGGET.get());
+        tag(DUSTS_TIN).add(StoneMinerals.TIN_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_ALUMINUM, STORAGE_ALUMINUM);
         copy(BlockTags.ORES_ALUMINUM, ORES_ALUMINUM);
-        tag(INGOTS_ALUMINUM).add(Registering.ALUMINUM_INGOT.get());
-        tag(NUGGETS_ALUMINUM).add(Registering.ALUMINUM_NUGGET.get());
-        tag(DUSTS_ALUMINUM).add(Registering.ALUMINUM_DUST.get());
+        tag(INGOTS_ALUMINUM).add(StoneMinerals.ALUMINUM_ITEMS.INGOT.get());
+        tag(NUGGETS_ALUMINUM).add(StoneMinerals.ALUMINUM_ITEMS.NUGGET.get());
+        tag(DUSTS_ALUMINUM).add(StoneMinerals.ALUMINUM_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_ZINC, STORAGE_ZINC);
         copy(BlockTags.ORES_ZINC, ORES_ZINC);
-        tag(INGOTS_ZINC).add(Registering.ZINC_INGOT.get());
-        tag(NUGGETS_ZINC).add(Registering.ZINC_NUGGET.get());
-        tag(DUSTS_ZINC).add(Registering.ZINC_DUST.get());
+        tag(INGOTS_ZINC).add(StoneMinerals.ZINC_ITEMS.INGOT.get());
+        tag(NUGGETS_ZINC).add(StoneMinerals.ZINC_ITEMS.NUGGET.get());
+        tag(DUSTS_ZINC).add(StoneMinerals.ZINC_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_MAGNETITE, STORAGE_MAGNETITE);
         copy(BlockTags.ORES_MAGNETITE, ORES_MAGNETITE);
-        tag(INGOTS_MAGNETITE).add(Registering.MAGNETITE_INGOT.get());
-        tag(NUGGETS_MAGNETITE).add(Registering.MAGNETITE_NUGGET.get());
-        tag(DUSTS_MAGNETITE).add(Registering.MAGNETITE_DUST.get());
-        tag(GEAR_MAGNETITE).add(Registering.MAGNETITE_GEAR.get());
+        tag(INGOTS_MAGNETITE).add(StoneMinerals.MAGNETITE_ITEMS.INGOT.get());
+        tag(NUGGETS_MAGNETITE).add(StoneMinerals.MAGNETITE_ITEMS.NUGGET.get());
+        tag(DUSTS_MAGNETITE).add(StoneMinerals.MAGNETITE_ITEMS.DUST.get());
+        tag(GEAR_MAGNETITE).add(StoneMinerals.MAGNETITE_GEAR.get());
 
         ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
 
@@ -188,33 +190,33 @@ public class ItemTags extends ItemTagsProvider {
 
         copy(BlockTags.STORAGE_RUTHENIUM, STORAGE_RUTHENIUM);
         copy(BlockTags.GRAVEL_ORES_RUTHENIUM, GRAVEL_ORES_RUTHENIUM);
-        tag(INGOTS_RUTHENIUM).add(Registering.RUTHENIUM_INGOT.get());
-        tag(NUGGETS_RUTHENIUM).add(Registering.RUTHENIUM_NUGGET.get());
-        tag(DUSTS_RUTHENIUM).add(Registering.RUTHENIUM_DUST.get());
+        tag(INGOTS_RUTHENIUM).add(GravelMinerals.RUTHENIUM_ITEMS.INGOT.get());
+        tag(NUGGETS_RUTHENIUM).add(GravelMinerals.RUTHENIUM_ITEMS.NUGGET.get());
+        tag(DUSTS_RUTHENIUM).add(GravelMinerals.RUTHENIUM_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_ZIRCONIUM, STORAGE_ZIRCONIUM);
         copy(BlockTags.GRAVEL_ORES_ZIRCONIUM, GRAVEL_ORES_ZIRCONIUM);
-        tag(INGOTS_ZIRCONIUM).add(Registering.ZIRCONIUM_INGOT.get());
-        tag(NUGGETS_ZIRCONIUM).add(Registering.ZIRCONIUM_NUGGET.get());
-        tag(DUSTS_ZIRCONIUM).add(Registering.ZIRCONIUM_DUST.get());
+        tag(INGOTS_ZIRCONIUM).add(GravelMinerals.ZIRCONIUM_ITEMS.INGOT.get());
+        tag(NUGGETS_ZIRCONIUM).add(GravelMinerals.ZIRCONIUM_ITEMS.NUGGET.get());
+        tag(DUSTS_ZIRCONIUM).add(GravelMinerals.ZIRCONIUM_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_IRIDIUM, STORAGE_IRIDIUM);
         copy(BlockTags.GRAVEL_ORES_IRIDIUM, GRAVEL_ORES_IRIDIUM);
-        tag(INGOTS_IRIDIUM).add(Registering.IRIDIUM_INGOT.get());
-        tag(NUGGETS_IRIDIUM).add(Registering.IRIDIUM_NUGGET.get());
-        tag(DUSTS_IRIDIUM).add(Registering.IRIDIUM_DUST.get());
+        tag(INGOTS_IRIDIUM).add(GravelMinerals.IRIDIUM_ITEMS.INGOT.get());
+        tag(NUGGETS_IRIDIUM).add(GravelMinerals.IRIDIUM_ITEMS.NUGGET.get());
+        tag(DUSTS_IRIDIUM).add(GravelMinerals.IRIDIUM_ITEMS.DUST.get());
 
         ////////////////////////////////////////////////////////////////// ALLOYS
 
         copy(BlockTags.STORAGE_BRASS, STORAGE_BRASS);
-        tag(INGOTS_BRASS).add(Registering.BRASS_INGOT.get());
-        tag(NUGGETS_BRASS).add(Registering.BRASS_NUGGET.get());
-        tag(DUSTS_BRASS).add(Registering.BRASS_DUST.get());
+        tag(INGOTS_BRASS).add(Registering.BRASS_ITEMS.INGOT.get());
+        tag(NUGGETS_BRASS).add(Registering.BRASS_ITEMS.NUGGET.get());
+        tag(DUSTS_BRASS).add(Registering.BRASS_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_BRONZE, STORAGE_BRONZE);
-        tag(INGOTS_BRONZE).add(Registering.BRONZE_INGOT.get());
-        tag(NUGGETS_BRONZE).add(Registering.BRONZE_NUGGET.get());
-        tag(DUSTS_BRONZE).add(Registering.BRONZE_DUST.get());
+        tag(INGOTS_BRONZE).add(Registering.BRONZE_ITEMS.INGOT.get());
+        tag(NUGGETS_BRONZE).add(Registering.BRONZE_ITEMS.NUGGET.get());
+        tag(DUSTS_BRONZE).add(Registering.BRONZE_ITEMS.DUST.get());
     }
 
     private static Tags.IOptionalNamedTag<Item> tag(String name) {

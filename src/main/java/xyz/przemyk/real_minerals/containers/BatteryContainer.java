@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 
 public class BatteryContainer extends BaseMachineContainer {
 
@@ -20,7 +20,7 @@ public class BatteryContainer extends BaseMachineContainer {
     }
 
     public BatteryContainer(int id, Inventory playerInventory, BlockPos pos, ContainerData batterySyncData, Player serverPlayer) {
-        super(Registering.BATTERY_CONTAINER.get(), id, Registering.BATTERY_BLOCK.BLOCK.get(), pos, batterySyncData, serverPlayer);
+        super(MachinesRegistry.BATTERY_CONTAINER.get(), id, MachinesRegistry.BATTERY_BLOCK.BLOCK.get(), pos, batterySyncData, serverPlayer);
 
         addPlayerSlots(playerInventory);
     }

@@ -13,7 +13,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.MachineOutputSlot;
 
 public class MagnetizerContainer extends BaseMachineContainer {
@@ -25,7 +25,7 @@ public class MagnetizerContainer extends BaseMachineContainer {
     }
 
     public MagnetizerContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(Registering.MAGNETIZER_CONTAINER.get(), windowId, Registering.MAGNETIZER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
+        super(MachinesRegistry.MAGNETIZER_CONTAINER.get(), windowId, MachinesRegistry.MAGNETIZER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
 
         addSlot(new SlotItemHandler(itemHandler, 0, 56, 35));
         addSlot(new MachineOutputSlot(itemHandler, 1, 116, 35, playerEntity));

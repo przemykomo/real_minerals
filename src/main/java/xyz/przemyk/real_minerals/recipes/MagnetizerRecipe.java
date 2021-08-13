@@ -13,7 +13,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
+import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 
@@ -37,12 +38,12 @@ public class MagnetizerRecipe extends MachineRecipe {
 
     @Override
     public RecipeType<?> getType() {
-        return RealMinerals.MAGNETIZER_RECIPE_TYPE;
+        return Recipes.MAGNETIZER_RECIPE_TYPE;
     }
 
     @Override
     public ItemStack getToastSymbol() {
-        return new ItemStack(Registering.MAGNETIZER_BLOCK.ITEM.get());
+        return new ItemStack(MachinesRegistry.MAGNETIZER_BLOCK.ITEM.get());
     }
 
     public boolean isValidInput(NonNullList<ItemStack> inputList) {
@@ -60,7 +61,7 @@ public class MagnetizerRecipe extends MachineRecipe {
         public MagnetizerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             final JsonElement inputElement = GsonHelper.isArrayNode(json, "input") ? GsonHelper.getAsJsonArray(json, "input") : GsonHelper.getAsJsonObject(json, "input");
             final Ingredient input = Ingredient.fromJson(inputElement);
-            final ItemStack output = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "output")).getDefaultInstance();
+            final ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
             return new MagnetizerRecipe(recipeId, input, output);
         }
 

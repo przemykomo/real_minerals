@@ -8,13 +8,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
-import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
+import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.MagnetizerContainer;
 import xyz.przemyk.real_minerals.recipes.MagnetizerRecipe;
-
-import xyz.przemyk.real_minerals.tileentity.ElectricRecipeProcessingTileEntity.RecipeProcessingMachineSyncData;
 
 public class MagnetizerTileEntity extends ElectricRecipeProcessingTileEntity<MagnetizerRecipe> {
 
@@ -22,7 +20,7 @@ public class MagnetizerTileEntity extends ElectricRecipeProcessingTileEntity<Mag
     public static final int WORKING_TIME_TOTAL = 120;
 
     public MagnetizerTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(Registering.MAGNETIZER_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
+        super(MachinesRegistry.MAGNETIZER_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
                 FE_PER_TICK, 2, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 
@@ -35,7 +33,7 @@ public class MagnetizerTileEntity extends ElectricRecipeProcessingTileEntity<Mag
             return cachedRecipe;
         }
 
-        cachedRecipe = RealMinerals.getRecipe(input, level, RealMinerals.MAGNETIZER_RECIPE_TYPE);
+        cachedRecipe = Recipes.getRecipe(input, level, Recipes.MAGNETIZER_RECIPE_TYPE);
         return cachedRecipe;
     }
 

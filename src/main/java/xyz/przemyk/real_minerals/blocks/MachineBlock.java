@@ -18,9 +18,12 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -37,8 +40,8 @@ public class MachineBlock extends Block implements EntityBlock {
 
     private final BiFunction<BlockPos, BlockState, BlockEntity> tileEntitySupplier;
 
-    public MachineBlock(Properties properties, BiFunction<BlockPos, BlockState, BlockEntity> tileEntitySupplier) {
-        super(properties);
+    public MachineBlock(BiFunction<BlockPos, BlockState, BlockEntity> tileEntitySupplier) {
+        super(Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL));
         this.tileEntitySupplier = tileEntitySupplier;
         registerDefaultState(this.stateDefinition.any().setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH).setValue(BlockStateProperties.LIT, Boolean.FALSE));
     }

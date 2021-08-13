@@ -17,8 +17,8 @@ import java.util.Random;
 
 public class CrusherBlock extends MachineBlock {
 
-    public CrusherBlock(Properties properties) {
-        super(properties, CrusherTileEntity::new);
+    public CrusherBlock() {
+        super(CrusherTileEntity::new);
     }
 
     @Override

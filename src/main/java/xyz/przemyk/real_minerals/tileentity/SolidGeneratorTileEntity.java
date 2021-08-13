@@ -18,7 +18,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import xyz.przemyk.real_minerals.containers.SolidGeneratorContainer;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 
 import javax.annotation.Nonnull;
@@ -35,7 +35,7 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
 
     public SolidGeneratorTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(Registering.BURNING_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 80), blockPos, blockState);
+        super(MachinesRegistry.BURNING_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 80), blockPos, blockState);
     }
 
     @Override

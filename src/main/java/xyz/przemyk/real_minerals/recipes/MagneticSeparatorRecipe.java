@@ -12,6 +12,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 
@@ -35,7 +36,7 @@ public class MagneticSeparatorRecipe extends MachineRecipe {
 
     @Override
     public RecipeType<?> getType() {
-        return RealMinerals.MAGNETIC_SEPARATOR_RECIPE_TYPE;
+        return Recipes.MAGNETIC_SEPARATOR_RECIPE_TYPE;
     }
 
     @Override
@@ -52,8 +53,8 @@ public class MagneticSeparatorRecipe extends MachineRecipe {
         @Override
         public MagneticSeparatorRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             final Ingredient input = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input"));
-            final ItemStack output = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "output")).getDefaultInstance();
-            final ItemStack secondOutput = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "secondOutput")).getDefaultInstance();
+            final ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
+            final ItemStack secondOutput = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "secondOutput"));
             NonNullList<ItemStack> outputs = NonNullList.create();
             outputs.add(output);
             outputs.add(secondOutput);

@@ -17,7 +17,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import xyz.przemyk.real_minerals.containers.BatteryContainer;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.BatteryEnergyStorage;
 
 import javax.annotation.Nonnull;
@@ -31,7 +31,7 @@ public class BatteryTileEntity extends BlockEntity implements TickableBlockEntit
     public final LazyOptional<BatteryEnergyStorage.Output> outputEnergyStorageLazyOptional;
 
     public BatteryTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(Registering.BATTERY_TILE_ENTITY_TYPE.get(), blockPos, blockState);
+        super(MachinesRegistry.BATTERY_TILE_ENTITY_TYPE.get(), blockPos, blockState);
         this.energyStorage = new BatteryEnergyStorage(1_000_000, 1_000, this);
         this.inputEnergyStorageLazyOptional = LazyOptional.of(() -> energyStorage.input);
         this.outputEnergyStorageLazyOptional = LazyOptional.of(() -> energyStorage.output);

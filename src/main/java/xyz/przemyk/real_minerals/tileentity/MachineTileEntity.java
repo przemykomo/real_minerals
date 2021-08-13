@@ -18,7 +18,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.recipes.MachineRecipe;
 import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 
@@ -82,7 +82,7 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends BlockEn
             return cachedRecipe;
         }
 
-        cachedRecipe = RealMinerals.getRecipe(input, level, recipeType);
+        cachedRecipe = Recipes.getRecipe(input, level, recipeType);
         return cachedRecipe;
     }
 

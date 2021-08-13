@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 
@@ -44,7 +45,7 @@ public class AlloyRecipe extends MachineRecipe {
 
     @Override
     public RecipeType<?> getType() {
-        return RealMinerals.ALLOY_RECIPE_TYPE;
+        return Recipes.ALLOY_RECIPE_TYPE;
     }
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AlloyRecipe> {
@@ -59,7 +60,7 @@ public class AlloyRecipe extends MachineRecipe {
             if (ingredients.isEmpty()) {
                 throw new JsonParseException("No ingredients for alloying recipe.");
             } else {
-                ItemStack result = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")).getDefaultInstance();
+                ItemStack result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
                 return new AlloyRecipe(result, recipeId, ingredients);
             }
         }

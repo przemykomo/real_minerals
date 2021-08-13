@@ -14,7 +14,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.MachineFuelSlot;
 import xyz.przemyk.real_minerals.util.MachineOutputSlot;
 
@@ -27,7 +27,7 @@ public class CrusherContainer extends BaseMachineContainer {
     }
 
     public CrusherContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(Registering.CRUSHER_CONTAINER.get(), windowId, Registering.CRUSHER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
+        super(MachinesRegistry.CRUSHER_CONTAINER.get(), windowId, MachinesRegistry.CRUSHER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
 
         addSlot(new SlotItemHandler(itemHandler, 0, 56, 17));
         addSlot(new MachineFuelSlot(itemHandler, 1, 56, 53));

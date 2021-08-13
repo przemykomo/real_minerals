@@ -22,7 +22,7 @@ public class DataGenerators {
         BlockTags blockTags = new BlockTags(generator, RealMinerals.MODID, existingFileHelper);
         generator.addProvider(blockTags);
         generator.addProvider(new ItemTags(generator, blockTags, RealMinerals.MODID, existingFileHelper));
-        generator.addProvider(new Recipes(generator));
+        generator.addProvider(new DatagenRecipes(generator));
         generator.addProvider(new FluidTags(generator, RealMinerals.MODID, existingFileHelper));
     }
 }

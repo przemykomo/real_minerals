@@ -10,13 +10,11 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.ElectricFurnaceContainer;
 
 import javax.annotation.Nullable;
-
-import xyz.przemyk.real_minerals.tileentity.ElectricRecipeProcessingTileEntity.RecipeProcessingMachineSyncData;
 
 public class ElectricFurnaceTileEntity extends ElectricRecipeProcessingTileEntity<SmeltingRecipe> {
 
@@ -24,7 +22,7 @@ public class ElectricFurnaceTileEntity extends ElectricRecipeProcessingTileEntit
     public static final int WORKING_TIME_TOTAL = 80;
 
     public ElectricFurnaceTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(Registering.ELECTRIC_FURNACE_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
+        super(MachinesRegistry.ELECTRIC_FURNACE_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
                 FE_PER_TICK, 2, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 

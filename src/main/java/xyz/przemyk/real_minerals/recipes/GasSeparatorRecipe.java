@@ -18,6 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import xyz.przemyk.real_minerals.init.Recipes;
 
 public class GasSeparatorRecipe extends MachineRecipe {
 
@@ -51,7 +52,7 @@ public class GasSeparatorRecipe extends MachineRecipe {
 
     @Override
     public RecipeType<?> getType() {
-        return RealMinerals.GAS_SEPARATOR_RECIPE_TYPE;
+        return Recipes.GAS_SEPARATOR_RECIPE_TYPE;
     }
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<GasSeparatorRecipe> {
@@ -67,7 +68,7 @@ public class GasSeparatorRecipe extends MachineRecipe {
             final JsonObject jsonObject = GsonHelper.getAsJsonObject(json, "fluidOutput");
             final FluidStack fluidOutput = new FluidStack(Objects.requireNonNull(ForgeRegistries.FLUIDS.getValue(new ResourceLocation(jsonObject.get("fluid").getAsString()))), jsonObject.get("amount").getAsInt());
 
-            final ItemStack itemOutput = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "itemOutput")).getDefaultInstance();
+            final ItemStack itemOutput = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "itemOutput"));
 
             return new GasSeparatorRecipe(recipeId, input, fluidOutput, itemOutput);
         }

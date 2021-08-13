@@ -12,7 +12,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.MachineOutputSlot;
 
 public class GasSeparatorContainer extends BaseMachineContainer {
@@ -24,7 +24,7 @@ public class GasSeparatorContainer extends BaseMachineContainer {
     }
 
     public GasSeparatorContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(Registering.GAS_SEPARATOR_CONTAINER.get(), windowId, Registering.GAS_SEPARATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
+        super(MachinesRegistry.GAS_SEPARATOR_CONTAINER.get(), windowId, MachinesRegistry.GAS_SEPARATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
 
         addSlot(new SlotItemHandler(itemHandler, 0, 45, 27));
         addSlot(new MachineOutputSlot(itemHandler, 1, 111, 49, playerEntity));

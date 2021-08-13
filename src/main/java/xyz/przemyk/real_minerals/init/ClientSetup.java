@@ -21,15 +21,15 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
-        MenuScreens.register(Registering.BURNING_GENERATOR_CONTAINER.get(), SolidGeneratorScreen::new);
-        MenuScreens.register(Registering.GAS_GENERATOR_CONTAINER.get(), GasGeneratorScreen::new);
+        MenuScreens.register(MachinesRegistry.BURNING_GENERATOR_CONTAINER.get(), SolidGeneratorScreen::new);
+        MenuScreens.register(MachinesRegistry.GAS_GENERATOR_CONTAINER.get(), GasGeneratorScreen::new);
 
-        MenuScreens.register(Registering.CRUSHER_CONTAINER.get(), CrusherScreen::new);
-        MenuScreens.register(Registering.ALLOY_FURNACE_CONTAINER.get(), AlloyFurnaceScreen::new);
-        MenuScreens.register(Registering.BATTERY_CONTAINER.get(), BatteryScreen::new);
-        MenuScreens.register(Registering.ELECTRIC_FURNACE_CONTAINER.get(), ElectricFurnaceScreen::new);
-        MenuScreens.register(Registering.MAGNETIZER_CONTAINER.get(), MagnetizerScreen::new);
-        MenuScreens.register(Registering.MAGNETIC_SEPARATOR_CONTAINER.get(), MagneticSeparatorScreen::new);
-        MenuScreens.register(Registering.GAS_SEPARATOR_CONTAINER.get(), GasSeparatorScreen::new);
+        MenuScreens.register(MachinesRegistry.CRUSHER_CONTAINER.get(), CrusherScreen::new);
+        MenuScreens.register(MachinesRegistry.ALLOY_FURNACE_CONTAINER.get(), AlloyFurnaceScreen::new);
+        MenuScreens.register(MachinesRegistry.BATTERY_CONTAINER.get(), BatteryScreen::new);
+        MenuScreens.register(MachinesRegistry.ELECTRIC_FURNACE_CONTAINER.get(), ElectricFurnaceScreen::new);
+        MenuScreens.register(MachinesRegistry.MAGNETIZER_CONTAINER.get(), MagnetizerScreen::new);
+        MenuScreens.register(MachinesRegistry.MAGNETIC_SEPARATOR_CONTAINER.get(), MagneticSeparatorScreen::new);
+        MenuScreens.register(MachinesRegistry.GAS_SEPARATOR_CONTAINER.get(), GasSeparatorScreen::new);
     }
 }

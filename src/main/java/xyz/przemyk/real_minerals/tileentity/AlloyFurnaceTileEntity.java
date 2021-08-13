@@ -6,15 +6,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
-import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
+import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 import xyz.przemyk.real_minerals.containers.AlloyFurnaceContainer;
 import xyz.przemyk.real_minerals.recipes.AlloyRecipe;
 
 import javax.annotation.Nullable;
-
-import xyz.przemyk.real_minerals.tileentity.MachineTileEntity.MachineSyncData;
 
 public class AlloyFurnaceTileEntity extends MachineTileEntity<AlloyRecipe> {
 
@@ -24,7 +22,7 @@ public class AlloyFurnaceTileEntity extends MachineTileEntity<AlloyRecipe> {
     }
 
     public AlloyFurnaceTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(Registering.ALLOY_FURNACE_TILE_ENTITY_TYPE.get(), new MachineItemStackHandler(5), RealMinerals.ALLOY_RECIPE_TYPE, blockPos, blockState);
+        super(MachinesRegistry.ALLOY_FURNACE_TILE_ENTITY_TYPE.get(), new MachineItemStackHandler(5), Recipes.ALLOY_RECIPE_TYPE, blockPos, blockState);
     }
 
     @Override
