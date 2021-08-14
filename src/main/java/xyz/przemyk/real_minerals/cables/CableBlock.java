@@ -134,37 +134,16 @@ public class CableBlock extends Block implements EntityBlock {
             BooleanProperty property = getPropertyFromDirection(direction);
             Connection connection = hasConnection(world, pos, direction);
             switch (connection) {
-                case NONE -> currentState = currentState.setValue(property, false);
-                case CABLE -> currentState = currentState.setValue(property, true);
-                case MACHINE -> {
-                    currentState = currentState.setValue(property, true);
-                    isConnectedToTileEntity = true;
-                }
-                case BLOCK_ENTITY -> {
-                    currentState = currentState.setValue(property, false);
-                    isConnectedToTileEntity = true;
-                }
-            }
-        }
-
-        if (!world.isClientSide()) {
-            BlockEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof CableBlockEntity cableTileEntity) {
-                CableNetwork cableNetwork = CableNetworksSavedData.get((ServerLevel) world).getNetworks().get(cableTileEntity.getNetworkID());
-                if (isConnectedToTileEntity) {
-                    cableNetwork.addConnectorCable(cableTileEntity);
-                } else {
-                    cableNetwork.removeConnector(cableTileEntity);
-                }
+                case NONE, BLOCK_ENTITY -> currentState = currentState.setValue(property, false);
+                case CABLE, MACHINE -> currentState = currentState.setValue(property, true);
             }
         }
         return currentState;
     }
 
-    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return null;
+        return new CableBlockEntity(blockPos, blockState);
     }
 
     public enum Connection {
@@ -198,10 +177,14 @@ public class CableBlock extends Block implements EntityBlock {
             if (tileEntity instanceof CableBlockEntity cableTileEntity) {
                 ArrayList<CableBlockEntity> connectedCables = new ArrayList<>();
 
+                boolean connectedToBlockEntity = false;
+
                 for (Direction direction : Direction.values()) {
                     BlockEntity other = worldIn.getBlockEntity(pos.relative(direction));
                     if (other instanceof CableBlockEntity) {
                         connectedCables.add((CableBlockEntity) other);
+                    } else if (tileEntity != null) {
+                        connectedToBlockEntity = true;
                     }
                 }
 
@@ -213,6 +196,9 @@ public class CableBlock extends Block implements EntityBlock {
                         @SuppressWarnings("OptionalGetWithoutIsPresent")
                         CableNetwork cableNetwork = cableNetworksSavedData.getNetworks().get(networkIDs.stream().findFirst().get());
                         cableNetwork.addCable(cableTileEntity);
+                        if (connectedToBlockEntity) {
+                            cableNetwork.addConnectorCable(cableTileEntity);
+                        }
                         cableTileEntity.setNetworkID(cableNetwork.getID());
                     } else {
                         // merge smaller networks to largest one
