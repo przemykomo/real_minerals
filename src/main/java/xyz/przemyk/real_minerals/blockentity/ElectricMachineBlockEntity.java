@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.tileentity;
+package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +21,7 @@ import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class ElectricRecipeProcessingTileEntity<T extends Recipe<?>> extends BlockEntity implements TickableBlockEntity, MenuProvider {
+public abstract class ElectricMachineBlockEntity<T extends Recipe<?>> extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public final ItemStackHandler itemHandler;
     public final ElectricMachineEnergyStorage energyStorage;
@@ -33,7 +33,7 @@ public abstract class ElectricRecipeProcessingTileEntity<T extends Recipe<?>> ex
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional;
     protected final LazyOptional<ElectricMachineEnergyStorage> energyStorageLazyOptional;
 
-    public ElectricRecipeProcessingTileEntity(BlockEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage, int energyPerTick, int itemHandlerSize, int workingTimeTotal, BlockPos blockPos, BlockState blockState) {
+    public ElectricMachineBlockEntity(BlockEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage, int energyPerTick, int itemHandlerSize, int workingTimeTotal, BlockPos blockPos, BlockState blockState) {
         super(tileEntityTypeIn, blockPos, blockState);
         this.energyPerTick = energyPerTick;
         this.itemHandler = new ItemStackHandler(itemHandlerSize) {
@@ -130,9 +130,9 @@ public abstract class ElectricRecipeProcessingTileEntity<T extends Recipe<?>> ex
     }
 
     protected static class RecipeProcessingMachineSyncData implements ContainerData {
-        private final ElectricRecipeProcessingTileEntity<?> machine;
+        private final ElectricMachineBlockEntity<?> machine;
 
-        public RecipeProcessingMachineSyncData(ElectricRecipeProcessingTileEntity<?> electricFurnaceTileEntity) {
+        public RecipeProcessingMachineSyncData(ElectricMachineBlockEntity<?> electricFurnaceTileEntity) {
             machine = electricFurnaceTileEntity;
         }
 

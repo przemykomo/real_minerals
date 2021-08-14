@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.tileentity;
+package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -14,13 +14,13 @@ import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.MagneticSeparatorContainer;
 import xyz.przemyk.real_minerals.recipes.MagneticSeparatorRecipe;
 
-public class MagneticSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<MagneticSeparatorRecipe> {
+public class MagneticSeparatorBlockEntity extends ElectricMachineBlockEntity<MagneticSeparatorRecipe> {
 
     public static final int FE_PER_TICK = 60;
     public static final int WORKING_TIME_TOTAL = 120;
 
-    public MagneticSeparatorTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(MachinesRegistry.MAGNETIC_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
+    public MagneticSeparatorBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(MachinesRegistry.MAGNETIC_SEPARATOR_BLOCK_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
                 FE_PER_TICK, 3, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 

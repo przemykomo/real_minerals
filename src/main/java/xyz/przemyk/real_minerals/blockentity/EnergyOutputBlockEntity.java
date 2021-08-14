@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.tileentity;
+package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,12 +15,12 @@ import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class EnergyOutputTileEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
+public abstract class EnergyOutputBlockEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public final ElectricMachineEnergyStorage energyStorage;
     protected final LazyOptional<ElectricMachineEnergyStorage> energyStorageLazyOptional;
 
-    public EnergyOutputTileEntity(BlockEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage, BlockPos blockPos, BlockState blockState) {
+    public EnergyOutputBlockEntity(BlockEntityType<?> tileEntityTypeIn, ElectricMachineEnergyStorage energyStorage, BlockPos blockPos, BlockState blockState) {
         super(tileEntityTypeIn, blockPos, blockState);
         this.energyStorage = energyStorage;
         this.energyStorageLazyOptional = LazyOptional.of(() -> energyStorage);

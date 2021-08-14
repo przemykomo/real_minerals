@@ -8,7 +8,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
@@ -18,7 +17,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
-import xyz.przemyk.real_minerals.tileentity.BatteryTileEntity;
+import xyz.przemyk.real_minerals.blockentity.BatteryBlockEntity;
 
 import javax.annotation.Nullable;
 
@@ -69,6 +68,6 @@ public class BatteryBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new BatteryTileEntity(blockPos, blockState);
+        return new BatteryBlockEntity(blockPos, blockState);
     }
 }

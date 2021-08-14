@@ -11,14 +11,14 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import xyz.przemyk.real_minerals.tileentity.CrusherTileEntity;
+import xyz.przemyk.real_minerals.blockentity.CrusherBlockEntity;
 
 import java.util.Random;
 
 public class CrusherBlock extends MachineBlock {
 
     public CrusherBlock() {
-        super(CrusherTileEntity::new);
+        super(CrusherBlockEntity::new);
     }
 
     @Override

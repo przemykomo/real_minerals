@@ -11,9 +11,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.screen.GasGeneratorScreen;
 import xyz.przemyk.real_minerals.screen.MachineScreen;
-import xyz.przemyk.real_minerals.tileentity.GasGeneratorTileEntity;
 
 public class TankModule extends ScreenModule {
 
@@ -49,7 +47,7 @@ public class TankModule extends ScreenModule {
             if (!fluidStack.isEmpty()) {
                 TextureAtlasSprite fluidSprite = screen.getMinecraft().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidStack.getFluid().getAttributes().getStillTexture(fluidStack));
                 setColorRGBA(fluidStack.getFluid().getAttributes().getColor(fluidStack));
-                renderTiledTextureAtlas(matrixStack, screen, fluidSprite, x + 2, y + height - 2 - fluidHeight, width - 4, fluidHeight, height - 1, fluidStack.getFluid().getAttributes().isGaseous(fluidStack));
+                renderTiledTextureAtlas(matrixStack, screen, fluidSprite, x + 2, y + height - 2 - fluidHeight, width - 4, fluidHeight, 100, fluidStack.getFluid().getAttributes().isGaseous(fluidStack));
             }
         }
 

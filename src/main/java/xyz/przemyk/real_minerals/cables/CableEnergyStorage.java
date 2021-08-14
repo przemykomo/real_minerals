@@ -33,7 +33,7 @@ public class CableEnergyStorage implements IEnergyStorage {
 
     public void trySendTo(BlockGetter world, BlockPos pos, Direction side, int maxExtract) {
         BlockEntity tileEntity = world.getBlockEntity(pos.relative(side));
-        if (tileEntity != null && !(tileEntity instanceof CableTileEntity)) {
+        if (tileEntity != null && !(tileEntity instanceof CableBlockEntity)) {
             tileEntity.getCapability(CapabilityEnergy.ENERGY, side.getOpposite()).ifPresent(other -> {
                 if (other.canReceive()) {
                     int toSend = extractEnergy(maxExtract, true);

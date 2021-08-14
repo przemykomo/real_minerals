@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.tileentity;
+package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +25,7 @@ import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class MachineTileEntity<T extends MachineRecipe> extends BlockEntity implements TickableBlockEntity, MenuProvider {
+public abstract class BasicMachineBlockEntity<T extends MachineRecipe> extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public final MachineItemStackHandler itemHandler;
     public int burnTime;
@@ -35,7 +35,7 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends BlockEn
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional;
     private final RecipeType<T> recipeType;
 
-    public MachineTileEntity(BlockEntityType<?> tileEntityTypeIn, MachineItemStackHandler itemHandler, RecipeType<T> recipeType, BlockPos blockPos, BlockState blockState) {
+    public BasicMachineBlockEntity(BlockEntityType<?> tileEntityTypeIn, MachineItemStackHandler itemHandler, RecipeType<T> recipeType, BlockPos blockPos, BlockState blockState) {
         super(tileEntityTypeIn, blockPos, blockState);
         this.itemHandler = itemHandler;
         itemHandler.setMarkDirty(this::setChanged);
@@ -147,42 +147,24 @@ public abstract class MachineTileEntity<T extends MachineRecipe> extends BlockEn
         }
     }
 
-    protected static class MachineSyncData implements ContainerData {
-        private final MachineTileEntity<?> machine;
+    protected static class BasicMachineSyncData implements ContainerData {
+        private final BasicMachineBlockEntity<?> machine;
 
-        public MachineSyncData(MachineTileEntity<?> crusher) {
+        public BasicMachineSyncData(BasicMachineBlockEntity<?> crusher) {
             this.machine = crusher;
         }
 
         public int get(int index) {
-            switch (index) {
-                case 0:
-                    return machine.burnTime;
-                case 1:
-                    return machine.workingTime;
-                case 2:
-                    return machine.getWorkingTimeTotal();
-                case 3:
-                    return machine.burnTimeTotal;
-                default:
-                    return 0;
-            }
+            return switch (index) {
+                case 0 -> machine.burnTime;
+                case 1 -> machine.workingTime;
+                case 2 -> machine.getWorkingTimeTotal();
+                case 3 -> machine.burnTimeTotal;
+                default -> 0;
+            };
         }
 
-        public void set(int index, int value) {
-            switch (index) {
-                case 0:
-                    machine.burnTime = value;
-                    break;
-                case 1:
-                    machine.workingTime = value;
-                    break;
-                case 3:
-                    machine.burnTimeTotal = value;
-                    break;
-            }
-
-        }
+        public void set(int index, int value) {}
 
         public int getCount() {
             return 4;

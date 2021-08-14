@@ -2,17 +2,13 @@ package xyz.przemyk.real_minerals.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import xyz.przemyk.real_minerals.containers.ElectricFurnaceContainer;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.screen.modules.EnergyModule;
-import xyz.przemyk.real_minerals.tileentity.ElectricFurnaceTileEntity;
+import xyz.przemyk.real_minerals.blockentity.ElectricFurnaceBlockEntity;
 
 public class ElectricFurnaceScreen extends MachineScreen<ElectricFurnaceContainer> {
 
@@ -33,7 +29,7 @@ public class ElectricFurnaceScreen extends MachineScreen<ElectricFurnaceContaine
             this.blit(matrixStack, this.leftPos + 56, this.topPos + 54 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
         }
 
-        int l = workTime != 0 ? workTime * 24 / ElectricFurnaceTileEntity.WORKING_TIME_TOTAL : 0;
+        int l = workTime != 0 ? workTime * 24 / ElectricFurnaceBlockEntity.WORKING_TIME_TOTAL : 0;
         this.blit(matrixStack, this.leftPos + 79, this.topPos + 34, 176, 14, l + 1, 16);
     }
 }

@@ -38,17 +38,17 @@ public class CableNetwork implements INBTSerializable<CompoundTag> {
         this.world = world;
     }
 
-    public void addCable(CableTileEntity cableTileEntity) {
+    public void addCable(CableBlockEntity cableTileEntity) {
         cables.add(cableTileEntity.getBlockPos());
         worldData.setDirty();
     }
 
-    public void addConnectorCable(CableTileEntity cableTileEntity) {
+    public void addConnectorCable(CableBlockEntity cableTileEntity) {
         connectorCables.add(cableTileEntity.getBlockPos());
         worldData.setDirty();
     }
 
-    public void removeConnector(CableTileEntity cableTileEntity) {
+    public void removeConnector(CableBlockEntity cableTileEntity) {
         connectorCables.remove(cableTileEntity.getBlockPos());
         worldData.setDirty();
     }
@@ -69,14 +69,14 @@ public class CableNetwork implements INBTSerializable<CompoundTag> {
         remove();
         for (BlockPos blockPos : cables) {
             BlockEntity tileEntity = world.getBlockEntity(blockPos);
-            if (tileEntity instanceof CableTileEntity) {
-                ((CableTileEntity) tileEntity).setNetworkID(other.getID());
+            if (tileEntity instanceof CableBlockEntity) {
+                ((CableBlockEntity) tileEntity).setNetworkID(other.getID());
                 other.cables.add(blockPos);
             }
         }
         for (BlockPos blockPos : connectorCables) {
             BlockEntity tileEntity = world.getBlockEntity(blockPos);
-            if (tileEntity instanceof CableTileEntity) {
+            if (tileEntity instanceof CableBlockEntity) {
                 other.connectorCables.add(blockPos);
             }
         }
@@ -188,8 +188,8 @@ public class CableNetwork implements INBTSerializable<CompoundTag> {
                 CableNetwork newNetwork = worldData.createNetwork();
                 for (BlockPos blockPos : newNetworkCables) {
                     BlockEntity tileEntity = world.getBlockEntity(blockPos);
-                    if (tileEntity instanceof CableTileEntity) {
-                        ((CableTileEntity) tileEntity).setNetworkID(newNetwork.getID());
+                    if (tileEntity instanceof CableBlockEntity) {
+                        ((CableBlockEntity) tileEntity).setNetworkID(newNetwork.getID());
                         newNetwork.cables.add(blockPos);
                     }
                 }

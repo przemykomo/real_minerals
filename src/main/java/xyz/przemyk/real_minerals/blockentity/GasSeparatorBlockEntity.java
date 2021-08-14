@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.tileentity;
+package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
@@ -31,7 +31,7 @@ import xyz.przemyk.real_minerals.recipes.GasSeparatorRecipe;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<GasSeparatorRecipe> {
+public class GasSeparatorBlockEntity extends ElectricMachineBlockEntity<GasSeparatorRecipe> {
 
     public static final int FE_PER_TICK = 60;
     public static final int WORKING_TIME_TOTAL = 120;
@@ -40,8 +40,8 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
 
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
-    public GasSeparatorTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(MachinesRegistry.GAS_SEPARATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
+    public GasSeparatorBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(MachinesRegistry.GAS_SEPARATOR_BLOCK_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
                 FE_PER_TICK, 2, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 
@@ -149,7 +149,7 @@ public class GasSeparatorTileEntity extends ElectricRecipeProcessingTileEntity<G
         return new GasSeparatorContainer(id, playerInventory, getBlockPos(), itemHandler, new GasSeparatorSyncData(this), serverPlayer);
     }
 
-    protected record GasSeparatorSyncData(GasSeparatorTileEntity machine) implements ContainerData {
+    protected record GasSeparatorSyncData(GasSeparatorBlockEntity machine) implements ContainerData {
 
         @Override
         public int get(int index) {

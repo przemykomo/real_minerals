@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.tileentity;
+package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -14,15 +14,15 @@ import xyz.przemyk.real_minerals.recipes.CrusherRecipe;
 
 import javax.annotation.Nullable;
 
-public class CrusherTileEntity extends MachineTileEntity<CrusherRecipe> {
+public class CrusherBlockEntity extends BasicMachineBlockEntity<CrusherRecipe> {
 
     @Override
     public int getWorkingTimeTotal() {
         return 100;
     }
 
-    public CrusherTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(MachinesRegistry.CRUSHER_TILE_ENTITY_TYPE.get(), new MachineItemStackHandler(1), Recipes.CRUSHER_RECIPE_TYPE, blockPos, blockState);
+    public CrusherBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(MachinesRegistry.CRUSHER_BLOCK_ENTITY_TYPE.get(), new MachineItemStackHandler(1), Recipes.CRUSHER_RECIPE_TYPE, blockPos, blockState);
     }
 
     @Override
@@ -33,6 +33,6 @@ public class CrusherTileEntity extends MachineTileEntity<CrusherRecipe> {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
-        return new CrusherContainer(id, playerInventory, getBlockPos(), itemHandler, new MachineSyncData(this), serverPlayer);
+        return new CrusherContainer(id, playerInventory, getBlockPos(), itemHandler, new BasicMachineSyncData(this), serverPlayer);
     }
 }

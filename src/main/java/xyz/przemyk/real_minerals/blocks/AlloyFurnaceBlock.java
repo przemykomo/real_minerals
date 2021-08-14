@@ -9,14 +9,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import xyz.przemyk.real_minerals.tileentity.AlloyFurnaceTileEntity;
+import xyz.przemyk.real_minerals.blockentity.AlloyFurnaceBlockEntity;
 
 import java.util.Random;
 
 public class AlloyFurnaceBlock extends MachineBlock {
 
     public AlloyFurnaceBlock() {
-        super(AlloyFurnaceTileEntity::new);
+        super(AlloyFurnaceBlockEntity::new);
     }
 
     @Override

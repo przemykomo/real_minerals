@@ -7,19 +7,19 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
-import xyz.przemyk.real_minerals.tileentity.BatteryTileEntity;
+import xyz.przemyk.real_minerals.blockentity.BatteryBlockEntity;
 
 public class BatteryEnergyStorage extends EnergyStorage {
 
     public final Input input;
     public final Output output;
-    public final BatteryTileEntity tileEntity;
+    public final BatteryBlockEntity blockEntity;
 
-    public BatteryEnergyStorage(int capacity, int maxTransfer, BatteryTileEntity tileEntity) {
+    public BatteryEnergyStorage(int capacity, int maxTransfer, BatteryBlockEntity tileEntity) {
         super(capacity, maxTransfer);
         this.input = new Input(this);
         this.output = new Output(this);
-        this.tileEntity = tileEntity;
+        this.blockEntity = tileEntity;
     }
 
     public void trySendTo(BlockGetter world, BlockPos pos, Direction side) {
@@ -41,7 +41,7 @@ public class BatteryEnergyStorage extends EnergyStorage {
     public int receiveEnergy(int maxReceive, boolean simulate) {
         int received = super.receiveEnergy(maxReceive, simulate);
         if (received > 0) {
-            tileEntity.updateBlockState();
+            blockEntity.updateBlockState();
         }
         return received;
     }
@@ -50,7 +50,7 @@ public class BatteryEnergyStorage extends EnergyStorage {
     public int extractEnergy(int maxExtract, boolean simulate) {
         int extracted = super.extractEnergy(maxExtract, simulate);
         if (extracted > 0) {
-            tileEntity.updateBlockState();
+            blockEntity.updateBlockState();
         }
         return extracted;
     }

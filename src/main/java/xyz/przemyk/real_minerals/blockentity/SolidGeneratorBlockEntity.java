@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.tileentity;
+package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,7 +24,7 @@ import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
+public class SolidGeneratorBlockEntity extends EnergyOutputBlockEntity {
 
     public static final int FE_PER_TICK = 20;
 
@@ -34,8 +34,8 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
 
     protected final LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
 
-    public SolidGeneratorTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(MachinesRegistry.BURNING_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 80), blockPos, blockState);
+    public SolidGeneratorBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(MachinesRegistry.BURNING_GENERATOR_BLOCK_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 80), blockPos, blockState);
     }
 
     @Override
@@ -118,9 +118,9 @@ public class SolidGeneratorTileEntity extends EnergyOutputTileEntity {
     }
 
     private static class GeneratorSyncData implements ContainerData {
-        private final SolidGeneratorTileEntity machine;
+        private final SolidGeneratorBlockEntity machine;
 
-        public GeneratorSyncData(SolidGeneratorTileEntity machine) {
+        public GeneratorSyncData(SolidGeneratorBlockEntity machine) {
             this.machine = machine;
         }
 

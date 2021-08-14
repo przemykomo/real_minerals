@@ -1,10 +1,9 @@
 package xyz.przemyk.real_minerals.worldgen;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -21,14 +20,14 @@ public class MeteoriteFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        Random rand = context.random();
-        BlockPos pos = context.origin();
-        WorldGenLevel reader = context.level();
+        Random random = context.random();
+        BlockPos origin = context.origin();
+        WorldGenLevel level = context.level();
 
-        if (rand.nextInt(500) == 0) {
-            int x = pos.getX() + rand.nextInt(15);
-            int z = pos.getZ() + rand.nextInt(15);
-            int y = reader.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
+        if (random.nextInt(500) == 0) {
+            int x = origin.getX() + random.nextInt(15);
+            int z = origin.getZ() + random.nextInt(15);
+            int y = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
             if (y == 0) {
                 return false;
             }
@@ -36,7 +35,7 @@ public class MeteoriteFeature extends Feature<NoneFeatureConfiguration> {
             final int maxY = 255;
             BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
 
-            float meteoriteRadius = (rand.nextFloat() * 4) + 2;
+            float meteoriteRadius = (random.nextFloat() * 4) + 2;
 
             for (int j = y - 5; j <= maxY; j++) {
                 blockPos.setY(j);
@@ -53,14 +52,14 @@ public class MeteoriteFeature extends Feature<NoneFeatureConfiguration> {
                         final double distanceFrom = dx * dx + dz * dz;
 
                         if (j > h + distanceFrom * 0.02) {
-                            reader.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
+                            level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
                         }
                     }
                 }
             }
 
-            BlockPos meteoritePos = new BlockPos(x, reader.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z), z);
-            reader.setBlock(meteoritePos, Registering.METEORITE.BLOCK.get().defaultBlockState(), 2);
+            BlockPos meteoritePos = new BlockPos(x, level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z), z);
+            level.setBlock(meteoritePos, Registering.METEORITE.BLOCK.get().defaultBlockState(), 2);
             return true;
         }
 

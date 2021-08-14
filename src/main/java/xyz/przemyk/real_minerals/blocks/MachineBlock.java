@@ -30,24 +30,24 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xyz.przemyk.real_minerals.tileentity.TickableBlockEntity;
+import xyz.przemyk.real_minerals.blockentity.TickableBlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.function.BiFunction;
 
 public class MachineBlock extends Block implements EntityBlock {
 
-    private final BiFunction<BlockPos, BlockState, BlockEntity> tileEntitySupplier;
+    private final BiFunction<BlockPos, BlockState, BlockEntity> blockEntitySupplier;
 
-    public MachineBlock(BiFunction<BlockPos, BlockState, BlockEntity> tileEntitySupplier) {
+    public MachineBlock(BiFunction<BlockPos, BlockState, BlockEntity> blockEntitySupplier) {
         super(Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL));
-        this.tileEntitySupplier = tileEntitySupplier;
+        this.blockEntitySupplier = blockEntitySupplier;
         registerDefaultState(this.stateDefinition.any().setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH).setValue(BlockStateProperties.LIT, Boolean.FALSE));
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return tileEntitySupplier.apply(blockPos, blockState);
+        return blockEntitySupplier.apply(blockPos, blockState);
     }
 
     @Override

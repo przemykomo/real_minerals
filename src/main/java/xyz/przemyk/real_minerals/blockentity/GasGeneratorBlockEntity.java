@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.tileentity;
+package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -11,9 +11,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -28,11 +26,9 @@ import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
+public class GasGeneratorBlockEntity extends EnergyOutputBlockEntity {
 
-    public static final int TANK_VOLUME = FluidAttributes.BUCKET_VOLUME;
-
-    public final FillOnlyFluidTank fluidTank = new FillOnlyFluidTank(TANK_VOLUME) {
+    public final FillOnlyFluidTank fluidTank = new FillOnlyFluidTank(FluidAttributes.BUCKET_VOLUME) {
         @Override
         protected void onContentsChanged() {
             markUpdated();
@@ -51,8 +47,8 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
 
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
-    public GasGeneratorTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(MachinesRegistry.GAS_GENERATOR_TILE_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 160), blockPos, blockState);
+    public GasGeneratorBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(MachinesRegistry.GAS_GENERATOR_BLOCK_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 160), blockPos, blockState);
         fluidTank.setValidator(fluidStack -> FluidTags.BURNABLE_GAS.contains(fluidStack.getFluid()));
     }
 
@@ -131,7 +127,7 @@ public class GasGeneratorTileEntity extends EnergyOutputTileEntity {
         return new GasGeneratorContainer(id, playerInventory, getBlockPos(), new GeneratorSyncData(this), serverPlayer);
     }
 
-    private record GeneratorSyncData(GasGeneratorTileEntity machine) implements ContainerData {
+    private record GeneratorSyncData(GasGeneratorBlockEntity machine) implements ContainerData {
 
         public int get(int index) {
             return switch (index) {

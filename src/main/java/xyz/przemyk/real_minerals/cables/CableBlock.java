@@ -102,7 +102,7 @@ public class CableBlock extends Block implements EntityBlock {
                 stateIn = stateIn.setValue(property, true);
                 isConnectedToTileEntity = true;
             }
-            case TILE_ENTITY -> {
+            case BLOCK_ENTITY -> {
                 stateIn = stateIn.setValue(property, false);
                 isConnectedToTileEntity = true;
             }
@@ -110,7 +110,7 @@ public class CableBlock extends Block implements EntityBlock {
 
         if (!world.isClientSide()) {
             BlockEntity tileEntity = world.getBlockEntity(currentPos);
-            if (tileEntity instanceof CableTileEntity cableTileEntity) {
+            if (tileEntity instanceof CableBlockEntity cableTileEntity) {
                 CableNetwork cableNetwork = CableNetworksSavedData.get((ServerLevel) world).getNetworks().get(cableTileEntity.getNetworkID());
                 if (isConnectedToTileEntity) {
                     cableNetwork.addConnectorCable(cableTileEntity);
@@ -140,7 +140,7 @@ public class CableBlock extends Block implements EntityBlock {
                     currentState = currentState.setValue(property, true);
                     isConnectedToTileEntity = true;
                 }
-                case TILE_ENTITY -> {
+                case BLOCK_ENTITY -> {
                     currentState = currentState.setValue(property, false);
                     isConnectedToTileEntity = true;
                 }
@@ -149,7 +149,7 @@ public class CableBlock extends Block implements EntityBlock {
 
         if (!world.isClientSide()) {
             BlockEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof CableTileEntity cableTileEntity) {
+            if (tileEntity instanceof CableBlockEntity cableTileEntity) {
                 CableNetwork cableNetwork = CableNetworksSavedData.get((ServerLevel) world).getNetworks().get(cableTileEntity.getNetworkID());
                 if (isConnectedToTileEntity) {
                     cableNetwork.addConnectorCable(cableTileEntity);
@@ -171,7 +171,7 @@ public class CableBlock extends Block implements EntityBlock {
         NONE,
         CABLE,
         MACHINE,
-        TILE_ENTITY
+        BLOCK_ENTITY
     }
 
     protected Connection hasConnection(LevelAccessor world, BlockPos pos, Direction direction) {
@@ -180,7 +180,7 @@ public class CableBlock extends Block implements EntityBlock {
             return Connection.NONE;
         }
 
-        if (tileEntity instanceof CableTileEntity) {
+        if (tileEntity instanceof CableBlockEntity) {
             return Connection.CABLE;
         }
 
@@ -188,20 +188,20 @@ public class CableBlock extends Block implements EntityBlock {
             return Connection.MACHINE;
         }
 
-        return Connection.TILE_ENTITY;
+        return Connection.BLOCK_ENTITY;
     }
 
     @Override
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         if (!worldIn.isClientSide()) {
             BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            if (tileEntity instanceof CableTileEntity cableTileEntity) {
-                ArrayList<CableTileEntity> connectedCables = new ArrayList<>();
+            if (tileEntity instanceof CableBlockEntity cableTileEntity) {
+                ArrayList<CableBlockEntity> connectedCables = new ArrayList<>();
 
                 for (Direction direction : Direction.values()) {
                     BlockEntity other = worldIn.getBlockEntity(pos.relative(direction));
-                    if (other instanceof CableTileEntity) {
-                        connectedCables.add((CableTileEntity) other);
+                    if (other instanceof CableBlockEntity) {
+                        connectedCables.add((CableBlockEntity) other);
                     }
                 }
 
@@ -260,8 +260,8 @@ public class CableBlock extends Block implements EntityBlock {
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!worldIn.isClientSide() && newState.getBlock() != state.getBlock()) {
             BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            if (tileEntity instanceof CableTileEntity) {
-                CableNetworksSavedData.get((ServerLevel) worldIn).getNetworks().get(((CableTileEntity) tileEntity).getNetworkID()).removeCable(pos, (ServerLevel) worldIn, state);
+            if (tileEntity instanceof CableBlockEntity) {
+                CableNetworksSavedData.get((ServerLevel) worldIn).getNetworks().get(((CableBlockEntity) tileEntity).getNetworkID()).removeCable(pos, (ServerLevel) worldIn, state);
             }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);

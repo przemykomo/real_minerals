@@ -9,38 +9,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import xyz.przemyk.real_minerals.cables.CableBlock;
-import xyz.przemyk.real_minerals.cables.CableTileEntity;
 import xyz.przemyk.real_minerals.fluid.GasBucketItem;
 import xyz.przemyk.real_minerals.fluid.ShaleGasFluid;
-import xyz.przemyk.real_minerals.blocks.MachineBlock;
-import xyz.przemyk.real_minerals.blocks.AlloyFurnaceBlock;
-import xyz.przemyk.real_minerals.containers.AlloyFurnaceContainer;
-import xyz.przemyk.real_minerals.tileentity.AlloyFurnaceTileEntity;
-import xyz.przemyk.real_minerals.blocks.CrusherBlock;
-import xyz.przemyk.real_minerals.containers.CrusherContainer;
-import xyz.przemyk.real_minerals.tileentity.CrusherTileEntity;
-import xyz.przemyk.real_minerals.blocks.BatteryBlock;
-import xyz.przemyk.real_minerals.containers.BatteryContainer;
-import xyz.przemyk.real_minerals.tileentity.BatteryTileEntity;
-import xyz.przemyk.real_minerals.containers.ElectricFurnaceContainer;
-import xyz.przemyk.real_minerals.tileentity.ElectricFurnaceTileEntity;
-import xyz.przemyk.real_minerals.containers.GasSeparatorContainer;
-import xyz.przemyk.real_minerals.tileentity.GasSeparatorTileEntity;
-import xyz.przemyk.real_minerals.containers.MagneticSeparatorContainer;
-import xyz.przemyk.real_minerals.tileentity.MagneticSeparatorTileEntity;
-import xyz.przemyk.real_minerals.containers.MagnetizerContainer;
-import xyz.przemyk.real_minerals.tileentity.MagnetizerTileEntity;
-import xyz.przemyk.real_minerals.containers.GasGeneratorContainer;
-import xyz.przemyk.real_minerals.tileentity.GasGeneratorTileEntity;
-import xyz.przemyk.real_minerals.containers.SolidGeneratorContainer;
-import xyz.przemyk.real_minerals.tileentity.SolidGeneratorTileEntity;
 import xyz.przemyk.real_minerals.worldgen.MeteoriteFeature;
 
 import static xyz.przemyk.real_minerals.RealMinerals.ITEM_GROUP;
@@ -48,7 +22,6 @@ import static xyz.przemyk.real_minerals.RealMinerals.MODID;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.GravelBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
@@ -59,7 +32,7 @@ public class Registering {
 
     public static final BlockDeferredRegister BLOCKS_ITEMS = new BlockDeferredRegister(MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MODID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, MODID);
@@ -67,7 +40,7 @@ public class Registering {
     public static void init(IEventBus eventBus) {
         BLOCKS_ITEMS.register(eventBus);
         ITEMS.register(eventBus);
-        TILE_ENTITIES.register(eventBus);
+        BLOCK_ENTITIES.register(eventBus);
         CONTAINERS.register(eventBus);
         FEATURES.register(eventBus);
         FLUIDS.register(eventBus);

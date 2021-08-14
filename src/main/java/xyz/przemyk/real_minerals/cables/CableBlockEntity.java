@@ -15,12 +15,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class CableTileEntity extends BlockEntity {
+public class CableBlockEntity extends BlockEntity {
 
     private String networkID;
 
-    public CableTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(MachinesRegistry.CABLE_TILE_ENTITY_TYPE.get(), blockPos, blockState);
+    public CableBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(MachinesRegistry.CABLE_BLOCK_ENTITY_TYPE.get(), blockPos, blockState);
     }
 
     public String getNetworkID() {

@@ -2,17 +2,13 @@ package xyz.przemyk.real_minerals.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import xyz.przemyk.real_minerals.containers.MagneticSeparatorContainer;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.screen.modules.EnergyModule;
-import xyz.przemyk.real_minerals.tileentity.MagneticSeparatorTileEntity;
+import xyz.przemyk.real_minerals.blockentity.MagneticSeparatorBlockEntity;
 
 public class MagneticSeparatorScreen extends MachineScreen<MagneticSeparatorContainer> {
 
@@ -32,7 +28,7 @@ public class MagneticSeparatorScreen extends MachineScreen<MagneticSeparatorCont
         if (workTime > 0) {
             this.blit(matrixStack, leftPos + 46, topPos + 46 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
 
-            int l = workTime * 31 / MagneticSeparatorTileEntity.WORKING_TIME_TOTAL;
+            int l = workTime * 31 / MagneticSeparatorBlockEntity.WORKING_TIME_TOTAL;
             this.blit(matrixStack, leftPos + 66, topPos + 26, 176, 14, l, 33);
         }
     }

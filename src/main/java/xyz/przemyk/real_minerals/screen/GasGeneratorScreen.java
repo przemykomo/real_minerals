@@ -2,20 +2,13 @@ package xyz.przemyk.real_minerals.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.containers.GasGeneratorContainer;
 import xyz.przemyk.real_minerals.screen.modules.EnergyModule;
-import xyz.przemyk.real_minerals.screen.modules.ScreenModule;
 import xyz.przemyk.real_minerals.screen.modules.TankModule;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GasGeneratorScreen extends MachineScreen<GasGeneratorContainer> {
 
@@ -23,7 +16,7 @@ public class GasGeneratorScreen extends MachineScreen<GasGeneratorContainer> {
 
     public GasGeneratorScreen(GasGeneratorContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn, GUI);
-        screenModules.add(new TankModule(7, 7, 18, 72, this, menu.tileEntity.fluidTank));
+        screenModules.add(new TankModule(7, 7, 18, 72, this, menu.blockEntity.fluidTank));
         screenModules.add(new EnergyModule(() -> menu.machineData.get(2), 10_000, 153, 7, this));
     }
 

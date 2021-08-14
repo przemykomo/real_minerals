@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.tileentity;
+package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,15 +23,15 @@ import xyz.przemyk.real_minerals.util.BatteryEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BatteryTileEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
+public class BatteryBlockEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public final BatteryEnergyStorage energyStorage;
 
     public final LazyOptional<BatteryEnergyStorage.Input> inputEnergyStorageLazyOptional;
     public final LazyOptional<BatteryEnergyStorage.Output> outputEnergyStorageLazyOptional;
 
-    public BatteryTileEntity(BlockPos blockPos, BlockState blockState) {
-        super(MachinesRegistry.BATTERY_TILE_ENTITY_TYPE.get(), blockPos, blockState);
+    public BatteryBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(MachinesRegistry.BATTERY_BLOCK_ENTITY_TYPE.get(), blockPos, blockState);
         this.energyStorage = new BatteryEnergyStorage(1_000_000, 1_000, this);
         this.inputEnergyStorageLazyOptional = LazyOptional.of(() -> energyStorage.input);
         this.outputEnergyStorageLazyOptional = LazyOptional.of(() -> energyStorage.output);
@@ -100,9 +100,9 @@ public class BatteryTileEntity extends BlockEntity implements TickableBlockEntit
     }
 
     private static class BatterySyncData implements ContainerData {
-        private final BatteryTileEntity battery;
-        public BatterySyncData(BatteryTileEntity batteryTileEntity) {
-            battery = batteryTileEntity;
+        private final BatteryBlockEntity battery;
+        public BatterySyncData(BatteryBlockEntity batteryBlockEntity) {
+            battery = batteryBlockEntity;
         }
 
         @Override
