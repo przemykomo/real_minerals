@@ -7,7 +7,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
-import xyz.przemyk.real_minerals.recipes.MagneticSeparatorRecipe;
+import xyz.przemyk.real_minerals.datapack.recipes.MagneticSeparatorRecipe;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;

@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.recipes;
+package xyz.przemyk.real_minerals.datapack.recipes;
 
 import com.google.gson.JsonObject;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +16,7 @@ import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 
-public class MagneticSeparatorRecipe extends MachineRecipe {
+public class MagneticSeparatorRecipe extends ItemMachineRecipe {
 
     public static final Serializer SERIALIZER = new Serializer();
 

@@ -33,16 +33,12 @@ public abstract class MachineScreen<T extends AbstractContainerMenu> extends Abs
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-//        if (isHovering(153, 7, 16, 72, mouseX, mouseY)) {
-//            renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.energy", menu.machineData.get(2)), mouseX, mouseY);
-//        } else {
-            for (ScreenModule screenModule : screenModules) {
-                if (screenModule.renderHovering(matrixStack, mouseX, mouseY, partialTicks)) {
-                    return;
-                }
+        for (ScreenModule screenModule : screenModules) {
+            if (screenModule.renderHovering(matrixStack, mouseX, mouseY, partialTicks)) {
+                return;
             }
-            renderTooltip(matrixStack, mouseX, mouseY);
-//        }
+        }
+        renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override

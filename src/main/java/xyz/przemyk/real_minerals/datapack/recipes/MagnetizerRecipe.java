@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.recipes;
+package xyz.przemyk.real_minerals.datapack.recipes;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,11 +18,11 @@ import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 
-public class CrusherRecipe extends MachineRecipe {
+public class MagnetizerRecipe extends ItemMachineRecipe {
 
     public static final Serializer SERIALIZER = new Serializer();
 
-    public CrusherRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
+    public MagnetizerRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
         super(NonNullList.withSize(1, output), id, NonNullList.withSize(1, input));
     }
 
@@ -38,12 +38,12 @@ public class CrusherRecipe extends MachineRecipe {
 
     @Override
     public RecipeType<?> getType() {
-        return Recipes.CRUSHER_RECIPE_TYPE;
+        return Recipes.MAGNETIZER_RECIPE_TYPE;
     }
 
     @Override
     public ItemStack getToastSymbol() {
-        return new ItemStack(MachinesRegistry.CRUSHER_BLOCK.ITEM.get());
+        return new ItemStack(MachinesRegistry.MAGNETIZER_BLOCK.ITEM.get());
     }
 
     public boolean isValidInput(NonNullList<ItemStack> inputList) {
@@ -51,30 +51,30 @@ public class CrusherRecipe extends MachineRecipe {
         return ingredients.get(0).test(input);
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CrusherRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<MagnetizerRecipe> {
 
         public Serializer() {
-            setRegistryName(new ResourceLocation(RealMinerals.MODID, "crusher"));
+            setRegistryName(new ResourceLocation(RealMinerals.MODID, "magnetizer"));
         }
 
         @Override
-        public CrusherRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+        public MagnetizerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             final JsonElement inputElement = GsonHelper.isArrayNode(json, "input") ? GsonHelper.getAsJsonArray(json, "input") : GsonHelper.getAsJsonObject(json, "input");
             final Ingredient input = Ingredient.fromJson(inputElement);
             final ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-            return new CrusherRecipe(recipeId, input, output);
+            return new MagnetizerRecipe(recipeId, input, output);
         }
 
         @Nullable
         @Override
-        public CrusherRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public MagnetizerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             final Ingredient input = Ingredient.fromNetwork(buffer);
             final ItemStack output = buffer.readItem();
-            return new CrusherRecipe(recipeId, input, output);
+            return new MagnetizerRecipe(recipeId, input, output);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, CrusherRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, MagnetizerRecipe recipe) {
             recipe.ingredients.get(0).toNetwork(buffer);
             buffer.writeItem(recipe.outputs.get(0));
         }

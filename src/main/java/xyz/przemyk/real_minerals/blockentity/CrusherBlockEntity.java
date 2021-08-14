@@ -10,7 +10,7 @@ import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 import xyz.przemyk.real_minerals.containers.CrusherContainer;
-import xyz.przemyk.real_minerals.recipes.CrusherRecipe;
+import xyz.przemyk.real_minerals.datapack.recipes.CrusherRecipe;
 
 import javax.annotation.Nullable;
 

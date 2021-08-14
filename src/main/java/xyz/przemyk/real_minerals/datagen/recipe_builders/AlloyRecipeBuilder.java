@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.recipes.AlloyRecipe;
+import xyz.przemyk.real_minerals.datapack.recipes.AlloyRecipe;
 
 import javax.annotation.Nullable;
 import java.util.List;

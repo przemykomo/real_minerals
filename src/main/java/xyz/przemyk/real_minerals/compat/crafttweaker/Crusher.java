@@ -11,7 +11,7 @@
 //import net.minecraft.util.ResourceLocation;
 //import org.openzen.zencode.java.ZenCodeType;
 //import xyz.przemyk.real_minerals.RealMinerals;
-//import xyz.przemyk.real_minerals.recipes.CrusherRecipe;
+//import xyz.przemyk.real_minerals.datapack.recipes.CrusherRecipe;
 //
 //@ZenRegister
 //@ZenCodeType.Name("mods." + RealMinerals.MODID + ".Crusher")

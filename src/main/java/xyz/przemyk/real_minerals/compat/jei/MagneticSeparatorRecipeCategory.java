@@ -14,7 +14,7 @@
 //import net.minecraft.util.ResourceLocation;
 //import xyz.przemyk.real_minerals.RealMinerals;
 //import xyz.przemyk.real_minerals.init.Registering;
-//import xyz.przemyk.real_minerals.recipes.MagneticSeparatorRecipe;
+//import xyz.przemyk.real_minerals.datapack.recipes.MagneticSeparatorRecipe;
 //
 //import static xyz.przemyk.real_minerals.compat.jei.RealMineralsJEIPlugin.RECIPE_GUI_MOD;
 //

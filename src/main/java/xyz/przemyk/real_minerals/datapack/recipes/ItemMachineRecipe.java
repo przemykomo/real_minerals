@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.recipes;
+package xyz.przemyk.real_minerals.datapack.recipes;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -8,13 +8,13 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
-public abstract class MachineRecipe implements Recipe<Container> {
+public abstract class ItemMachineRecipe implements Recipe<Container> {
 
     protected final NonNullList<ItemStack> outputs;
     protected final ResourceLocation id;
     protected final NonNullList<Ingredient> ingredients;
 
-    public MachineRecipe(NonNullList<ItemStack> outputs, ResourceLocation id, NonNullList<Ingredient> ingredients) {
+    public ItemMachineRecipe(NonNullList<ItemStack> outputs, ResourceLocation id, NonNullList<Ingredient> ingredients) {
         this.outputs = outputs;
         this.id = id;
         this.ingredients = ingredients;

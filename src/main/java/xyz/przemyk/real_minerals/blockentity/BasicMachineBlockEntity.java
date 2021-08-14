@@ -19,13 +19,13 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import xyz.przemyk.real_minerals.init.Recipes;
-import xyz.przemyk.real_minerals.recipes.MachineRecipe;
+import xyz.przemyk.real_minerals.datapack.recipes.ItemMachineRecipe;
 import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class BasicMachineBlockEntity<T extends MachineRecipe> extends BlockEntity implements TickableBlockEntity, MenuProvider {
+public abstract class BasicMachineBlockEntity<T extends ItemMachineRecipe> extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
     public final MachineItemStackHandler itemHandler;
     public int burnTime;
@@ -74,10 +74,10 @@ public abstract class BasicMachineBlockEntity<T extends MachineRecipe> extends B
         return super.save(compound);
     }
 
-    private MachineRecipe cachedRecipe = null;
+    private ItemMachineRecipe cachedRecipe = null;
 
     @Nullable
-    protected MachineRecipe getCachedRecipe(NonNullList<ItemStack> input) {
+    protected ItemMachineRecipe getCachedRecipe(NonNullList<ItemStack> input) {
         if (cachedRecipe != null && cachedRecipe.isValidInput(input)) {
             return cachedRecipe;
         }
@@ -104,7 +104,7 @@ public abstract class BasicMachineBlockEntity<T extends MachineRecipe> extends B
             NonNullList<ItemStack> inputStacks = itemHandler.getInputStacks();
             boolean areInputsEmpty = itemHandler.areInputsEmpty();
             if ((isBurning() || !fuelStack.isEmpty()) && !areInputsEmpty) {
-                MachineRecipe recipe = getCachedRecipe(inputStacks);
+                ItemMachineRecipe recipe = getCachedRecipe(inputStacks);
                 if (itemHandler.canProcess(recipe)) {
                     if (!isBurning()) {
                         burnTime = ForgeHooks.getBurnTime(fuelStack, null);

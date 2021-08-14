@@ -12,7 +12,7 @@ import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.MagnetizerContainer;
-import xyz.przemyk.real_minerals.recipes.MagnetizerRecipe;
+import xyz.przemyk.real_minerals.datapack.recipes.MagnetizerRecipe;
 
 public class MagnetizerBlockEntity extends ElectricMachineBlockEntity<MagnetizerRecipe> {
 

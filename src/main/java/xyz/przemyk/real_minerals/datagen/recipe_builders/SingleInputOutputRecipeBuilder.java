@@ -7,8 +7,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.resources.ResourceLocation;
-import xyz.przemyk.real_minerals.recipes.MagnetizerRecipe;
-import xyz.przemyk.real_minerals.recipes.CrusherRecipe;
+import xyz.przemyk.real_minerals.datapack.recipes.MagnetizerRecipe;
+import xyz.przemyk.real_minerals.datapack.recipes.CrusherRecipe;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;

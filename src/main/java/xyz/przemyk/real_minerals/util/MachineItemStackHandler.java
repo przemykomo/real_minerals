@@ -4,7 +4,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.ItemStackHandler;
-import xyz.przemyk.real_minerals.recipes.MachineRecipe;
+import xyz.przemyk.real_minerals.datapack.recipes.ItemMachineRecipe;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -56,7 +56,7 @@ public class MachineItemStackHandler extends ItemStackHandler {
         return true;
     }
 
-    public boolean canProcess(@Nullable MachineRecipe recipe) {
+    public boolean canProcess(@Nullable ItemMachineRecipe recipe) {
         if (recipe != null) {
             ItemStack outputStack = recipe.getResultItem();
             if (outputStack.isEmpty()) {
@@ -74,7 +74,7 @@ public class MachineItemStackHandler extends ItemStackHandler {
         return false;
     }
 
-    public void processRecipe(MachineRecipe recipe) {
+    public void processRecipe(ItemMachineRecipe recipe) {
         ItemStack recipeOutput = recipe.getResultItem();
         ItemStack currentOutput = getOutputStack();
 

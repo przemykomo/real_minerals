@@ -16,7 +16,7 @@
 //import net.minecraft.util.ResourceLocation;
 //import xyz.przemyk.real_minerals.RealMinerals;
 //import xyz.przemyk.real_minerals.init.Registering;
-//import xyz.przemyk.real_minerals.recipes.CrusherRecipe;
+//import xyz.przemyk.real_minerals.datapack.recipes.CrusherRecipe;
 //
 //public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipe> {
 //

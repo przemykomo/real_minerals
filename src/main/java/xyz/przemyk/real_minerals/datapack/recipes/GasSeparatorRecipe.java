@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.recipes;
+package xyz.przemyk.real_minerals.datapack.recipes;
 
 import com.google.gson.JsonObject;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +20,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import xyz.przemyk.real_minerals.init.Recipes;
 
-public class GasSeparatorRecipe extends MachineRecipe {
+public class GasSeparatorRecipe extends ItemMachineRecipe {
 
     public static final Serializer SERIALIZER = new Serializer();
 

@@ -19,6 +19,8 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.przemyk.real_minerals.containers.GasGeneratorContainer;
 import xyz.przemyk.real_minerals.datagen.providers.FluidTags;
+import xyz.przemyk.real_minerals.datapack.GasBurningEntry;
+import xyz.przemyk.real_minerals.datapack.GasBurningReloadListener;
 import xyz.przemyk.real_minerals.fluid.FillOnlyFluidTank;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
@@ -63,26 +65,24 @@ public class GasGeneratorBlockEntity extends EnergyOutputBlockEntity {
     public void tick() {
         super.tick();
         if (!level.isClientSide) {
-            boolean dirty = false;
             if (isBurning()) {
                 --burnTime;
-                dirty = true;
+                setChanged();
                 energyStorage.addEnergy(energyPerTick);
                 if (!isBurning()) {
                     level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, false), 3);
                 }
-            } else if (energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored()) {
-                if (fluidTank.getFluidAmount() >= 50) {
-                    burnTime = burnTimeTotal = 100;
-                    fluidTank.drainInternal(50);
-                    energyPerTick = 40;
-                    dirty = true;
-                    level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, true), 3);
+            } else if (energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored() && !fluidTank.isEmpty()) {
+                GasBurningEntry gasBurningEntry = GasBurningReloadListener.gasBurningEntries.get(fluidTank.getFluid().getFluid());
+                if (gasBurningEntry != null) {
+                    if (fluidTank.getFluidAmount() >= gasBurningEntry.fluidStack().getAmount()) {
+                        fluidTank.drainInternal(gasBurningEntry.fluidStack().getAmount());
+                        energyPerTick = gasBurningEntry.energyPerTick();
+                        burnTime = burnTimeTotal = gasBurningEntry.burnTime();
+                        setChanged();
+                        level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, true), 3);
+                    }
                 }
-            }
-
-            if (dirty) {
-                setChanged();
             }
         }
     }

@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import xyz.przemyk.real_minerals.recipes.*;
+import xyz.przemyk.real_minerals.datapack.recipes.*;
 
 import javax.annotation.Nullable;
 import java.util.Set;
@@ -37,7 +37,7 @@ public class Recipes {
     }
 
     @Nullable
-    public static<T extends MachineRecipe> T getRecipe(NonNullList<ItemStack> input, Level world, RecipeType<T> recipeType) {
+    public static<T extends ItemMachineRecipe> T getRecipe(NonNullList<ItemStack> input, Level world, RecipeType<T> recipeType) {
         if (input.size() > 0) {
             Set<T> recipes = getAllRecipes(world, recipeType);
             for (T recipe : recipes){

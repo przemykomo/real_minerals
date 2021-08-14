@@ -12,7 +12,7 @@ import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import xyz.przemyk.real_minerals.containers.MagneticSeparatorContainer;
-import xyz.przemyk.real_minerals.recipes.MagneticSeparatorRecipe;
+import xyz.przemyk.real_minerals.datapack.recipes.MagneticSeparatorRecipe;
 
 public class MagneticSeparatorBlockEntity extends ElectricMachineBlockEntity<MagneticSeparatorRecipe> {
 

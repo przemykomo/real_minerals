@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.recipes;
+package xyz.przemyk.real_minerals.datapack.recipes;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -19,7 +19,7 @@ import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 
-public class AlloyRecipe extends MachineRecipe {
+public class AlloyRecipe extends ItemMachineRecipe {
 
     public static final Serializer SERIALIZER = new Serializer();
 
