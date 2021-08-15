@@ -1,18 +1,23 @@
 package xyz.przemyk.real_minerals.init;
 
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import xyz.przemyk.real_minerals.fluid.EnrichedShaleGasFluid;
 import xyz.przemyk.real_minerals.fluid.GasBucketItem;
 import xyz.przemyk.real_minerals.fluid.ShaleGasFluid;
 import xyz.przemyk.real_minerals.worldgen.MeteoriteFeature;
@@ -20,12 +25,7 @@ import xyz.przemyk.real_minerals.worldgen.MeteoriteFeature;
 import static xyz.przemyk.real_minerals.RealMinerals.ITEM_GROUP;
 import static xyz.przemyk.real_minerals.RealMinerals.MODID;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-
-@SuppressWarnings({"ConstantConditions", "unused"})
+@SuppressWarnings({"unused"})
 public class Registering {
 
     private Registering() {}
@@ -60,13 +60,14 @@ public class Registering {
     //<editor-fold desc="Misc">
     public static final RegistryObject<MeteoriteFeature> METEORITE_FEATURE = FEATURES.register("meteorite", () -> new MeteoriteFeature(NoneFeatureConfiguration.CODEC));
     public static final BlockRegistryObject METEORITE = BLOCKS_ITEMS.register("meteorite", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)), ITEM_GROUP);
-    public static final RegistryObject<Item> METEORITE_IRON_DUST = simpleItem("meteorite_iron_dust");
-    public static final RegistryObject<Item> METEORITE_IRON_INGOT = simpleItem("meteorite_iron_ingot");
-    public static final RegistryObject<Item> METEORITE_IRON_NUGGET = simpleItem("meteorite_iron_nugget");
+    public static final RegistryMetalSet METEORITE_IRON_ITEMS = new RegistryMetalSet("meteorite_iron");
 
-    public static final BlockRegistryObject SHALE_GAS_STONE_BLOCK = BLOCKS_ITEMS.register("shale_gas_stone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)), ITEM_GROUP);
+    public static final BlockRegistryObject SHALE_GAS_STONE = BLOCKS_ITEMS.register("shale_gas_stone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)), ITEM_GROUP);
     public static final RegistryObject<Fluid> SHALE_GAS_FLUID = FLUIDS.register("shale_gas", ShaleGasFluid::new);
-    public static final RegistryObject<Item> SHALE_GAS_BUCKET = ITEMS.register("shale_gas_bucket", () -> new GasBucketItem(SHALE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
+    public static final RegistryObject<GasBucketItem> SHALE_GAS_BUCKET = ITEMS.register("shale_gas_bucket", () -> new GasBucketItem(SHALE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
+
+    public static final RegistryObject<EnrichedShaleGasFluid> ENRICHED_SHALE_GAS_FLUID = FLUIDS.register("enriched_shale_gas", EnrichedShaleGasFluid::new);
+    public static final RegistryObject<GasBucketItem> ENRICHED_SHALE_GAS_BUCKET = ITEMS.register("enriched_shale_gas_bucket", () -> new GasBucketItem(ENRICHED_SHALE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
     //</editor-fold>
 
     static RegistryObject<Item> simpleItem(String name) {

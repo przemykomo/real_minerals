@@ -21,8 +21,6 @@ import javax.annotation.Nullable;
 
 public class AlloyRecipe extends ItemMachineRecipe {
 
-    public static final Serializer SERIALIZER = new Serializer();
-
     public AlloyRecipe(ItemStack output, ResourceLocation id, NonNullList<Ingredient> ingredients) {
         super(NonNullList.withSize(1, output), id, ingredients);
     }
@@ -40,7 +38,7 @@ public class AlloyRecipe extends ItemMachineRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
+        return Recipes.ALLOY_SERIALIZER.get();
     }
 
     @Override
@@ -49,10 +47,6 @@ public class AlloyRecipe extends ItemMachineRecipe {
     }
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AlloyRecipe> {
-
-        public Serializer() {
-            setRegistryName(new ResourceLocation(RealMinerals.MODID, "alloy"));
-        }
 
         @Override
         public AlloyRecipe fromJson(ResourceLocation recipeId, JsonObject json) {

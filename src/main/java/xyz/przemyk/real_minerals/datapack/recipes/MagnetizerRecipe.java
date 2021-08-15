@@ -20,8 +20,6 @@ import javax.annotation.Nullable;
 
 public class MagnetizerRecipe extends ItemMachineRecipe {
 
-    public static final Serializer SERIALIZER = new Serializer();
-
     public MagnetizerRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
         super(NonNullList.withSize(1, output), id, NonNullList.withSize(1, input));
     }
@@ -33,7 +31,7 @@ public class MagnetizerRecipe extends ItemMachineRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
+        return Recipes.MAGNETIZER_SERIALIZER.get();
     }
 
     @Override
@@ -52,10 +50,6 @@ public class MagnetizerRecipe extends ItemMachineRecipe {
     }
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<MagnetizerRecipe> {
-
-        public Serializer() {
-            setRegistryName(new ResourceLocation(RealMinerals.MODID, "magnetizer"));
-        }
 
         @Override
         public MagnetizerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {

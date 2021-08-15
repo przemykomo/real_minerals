@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.datapack.recipes.AlloyRecipe;
+import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -53,7 +54,7 @@ public class AlloyRecipeBuilder {
     }
 
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}.
+     * Builds this recipe into an {@link FinishedRecipe}.
      */
     @SuppressWarnings("ConstantConditions")
     public void build(Consumer<FinishedRecipe> consumerIn) {
@@ -61,7 +62,7 @@ public class AlloyRecipeBuilder {
     }
 
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}.
+     * Builds this recipe into an {@link FinishedRecipe}.
      */
     public void build(Consumer<FinishedRecipe> consumerIn, ResourceLocation id) {
         consumerIn.accept(new Result(id, this.result, this.count, this.ingredients));
@@ -105,7 +106,7 @@ public class AlloyRecipeBuilder {
 
         @Override
         public RecipeSerializer<?> getType() {
-            return AlloyRecipe.SERIALIZER;
+            return Recipes.ALLOY_SERIALIZER.get();
         }
 
         @Nullable

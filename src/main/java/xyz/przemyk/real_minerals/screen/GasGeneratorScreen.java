@@ -20,7 +20,6 @@ public class GasGeneratorScreen extends MachineScreen<GasGeneratorContainer> {
         screenModules.add(new EnergyModule(() -> menu.machineData.get(2), 10_000, 153, 7, this));
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         super.renderBg(matrixStack, partialTicks, mouseX, mouseY);

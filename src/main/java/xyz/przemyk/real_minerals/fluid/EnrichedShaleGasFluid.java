@@ -3,9 +3,9 @@ package xyz.przemyk.real_minerals.fluid;
 import net.minecraft.world.item.Item;
 import xyz.przemyk.real_minerals.init.Registering;
 
-public class ShaleGasFluid extends GasFluid {
+public class EnrichedShaleGasFluid extends GasFluid {
     @Override
     public Item getBucket() {
-        return Registering.SHALE_GAS_BUCKET.get();
+        return Registering.ENRICHED_SHALE_GAS_BUCKET.get();
     }
 }

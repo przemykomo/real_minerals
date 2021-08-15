@@ -60,6 +60,10 @@ public class MachinesRegistry {
     public static final BlockRegistryObject GAS_SEPARATOR_BLOCK = Registering.BLOCKS_ITEMS.register("gas_separator", () -> new MachineBlock(GasSeparatorBlockEntity::new), ITEM_GROUP);
     public static final RegistryObject<BlockEntityType<GasSeparatorBlockEntity>> GAS_SEPARATOR_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("gas_separator", () -> BlockEntityType.Builder.of(GasSeparatorBlockEntity::new, GAS_SEPARATOR_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<GasSeparatorContainer>> GAS_SEPARATOR_CONTAINER = Registering.CONTAINERS.register("gas_separator", () -> IForgeContainerType.create(GasSeparatorContainer::getClientContainer));
+
+    public static final BlockRegistryObject GAS_ENRICHER_BLOCK = Registering.BLOCKS_ITEMS.register("gas_enricher", () -> new MachineBlock(GasEnricherBlockEntity::new), ITEM_GROUP);
+    public static final RegistryObject<BlockEntityType<GasEnricherBlockEntity>> GAS_ENRICHER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("gas_enricher", () -> BlockEntityType.Builder.of(GasEnricherBlockEntity::new, GAS_ENRICHER_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<GasEnricherContainer>> GAS_ENRICHER_CONTAINER = Registering.CONTAINERS.register("gas_enricher", () -> IForgeContainerType.create(GasEnricherContainer::getClientContainer));
     //</editor-fold>
 
     //<editor-fold desc="Electric cables">

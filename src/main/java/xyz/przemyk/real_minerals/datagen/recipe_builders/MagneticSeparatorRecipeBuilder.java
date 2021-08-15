@@ -8,6 +8,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import xyz.przemyk.real_minerals.datapack.recipes.MagneticSeparatorRecipe;
+import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
@@ -29,11 +30,11 @@ public class MagneticSeparatorRecipeBuilder {
     }
 
     public static MagneticSeparatorRecipeBuilder magneticSeparatorRecipe(Ingredient ingredient, Item output, int count) {
-        return new MagneticSeparatorRecipeBuilder(MagneticSeparatorRecipe.SERIALIZER, ingredient, output, count);
+        return new MagneticSeparatorRecipeBuilder(Recipes.MAGNETIC_SEPARATOR_SERIALIZER.get(), ingredient, output, count);
     }
 
     public static MagneticSeparatorRecipeBuilder magneticSeparatorRecipe(Ingredient ingredient, Item output) {
-        return new MagneticSeparatorRecipeBuilder(MagneticSeparatorRecipe.SERIALIZER, ingredient, output, 1);
+        return new MagneticSeparatorRecipeBuilder(Recipes.MAGNETIC_SEPARATOR_SERIALIZER.get(), ingredient, output, 1);
     }
 
     public MagneticSeparatorRecipeBuilder secondOutput(Item secondOutput, int count) {

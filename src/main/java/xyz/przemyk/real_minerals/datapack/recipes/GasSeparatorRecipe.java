@@ -22,8 +22,6 @@ import xyz.przemyk.real_minerals.init.Recipes;
 
 public class GasSeparatorRecipe extends ItemMachineRecipe {
 
-    public static final Serializer SERIALIZER = new Serializer();
-
     private final FluidStack fluidOutput;
 
     public GasSeparatorRecipe(ResourceLocation id, Ingredient input, FluidStack fluidOutput, ItemStack itemOutput) {
@@ -47,7 +45,7 @@ public class GasSeparatorRecipe extends ItemMachineRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
+        return Recipes.GAS_SEPARATOR_SERIALIZER.get();
     }
 
     @Override
@@ -56,10 +54,6 @@ public class GasSeparatorRecipe extends ItemMachineRecipe {
     }
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<GasSeparatorRecipe> {
-
-        public Serializer() {
-            setRegistryName(new ResourceLocation(RealMinerals.MODID, "gas_separator"));
-        }
 
         @Override
         public GasSeparatorRecipe fromJson(ResourceLocation recipeId, JsonObject json) {

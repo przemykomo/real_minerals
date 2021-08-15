@@ -53,10 +53,6 @@ public class CrusherRecipe extends ItemMachineRecipe {
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CrusherRecipe> {
 
-        public Serializer() {
-            setRegistryName(new ResourceLocation(RealMinerals.MODID, "crusher"));
-        }
-
         @Override
         public CrusherRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             final JsonElement inputElement = GsonHelper.isArrayNode(json, "input") ? GsonHelper.getAsJsonArray(json, "input") : GsonHelper.getAsJsonObject(json, "input");

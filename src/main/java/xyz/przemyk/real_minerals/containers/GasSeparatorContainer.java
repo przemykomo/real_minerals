@@ -19,12 +19,10 @@ import xyz.przemyk.real_minerals.util.MachineOutputSlot;
 
 public class GasSeparatorContainer extends BaseMachineContainer {
 
-    public static final TranslatableComponent TITLE = new TranslatableComponent(RealMinerals.MODID + ".name.gas_separator");
-
     public final GasSeparatorBlockEntity blockEntity;
 
     public static GasSeparatorContainer getClientContainer(int id, Inventory playerInventory, FriendlyByteBuf data) {
-        return new GasSeparatorContainer(id, playerInventory, data.readBlockPos(), new ItemStackHandler(2), new SimpleContainerData(3), Minecraft.getInstance().player);
+        return new GasSeparatorContainer(id, playerInventory, data.readBlockPos(), new ItemStackHandler(2), new SimpleContainerData(2), Minecraft.getInstance().player);
     }
 
     public GasSeparatorContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {

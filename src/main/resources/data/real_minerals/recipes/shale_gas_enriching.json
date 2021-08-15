@@ -1,0 +1,11 @@
+{
+    "type": "real_minerals:gas_enricher",
+    "input": {
+        "fluid": "real_minerals:shale_gas",
+        "amount": 100
+    },
+    "output": {
+        "fluid": "real_minerals:enriched_shale_gas",
+        "amount": 100
+    }
+}

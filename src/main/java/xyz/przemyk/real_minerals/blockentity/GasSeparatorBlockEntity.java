@@ -1,19 +1,19 @@
 package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.core.NonNullList;
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -21,12 +21,16 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.containers.GasSeparatorContainer;
+import xyz.przemyk.real_minerals.datapack.recipes.GasSeparatorRecipe;
 import xyz.przemyk.real_minerals.fluid.DrainOnlyFluidTank;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
-import xyz.przemyk.real_minerals.containers.GasSeparatorContainer;
-import xyz.przemyk.real_minerals.datapack.recipes.GasSeparatorRecipe;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,13 +40,20 @@ public class GasSeparatorBlockEntity extends ElectricMachineBlockEntity<GasSepar
     public static final int FE_PER_TICK = 60;
     public static final int WORKING_TIME_TOTAL = 120;
 
-    public final DrainOnlyFluidTank fluidTank = new DrainOnlyFluidTank(FluidAttributes.BUCKET_VOLUME);
+    public final ItemStackHandler itemHandler = new ItemStackHandler(2) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            markUpdated();
+        }
+    };
+    public final LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
 
+    public final DrainOnlyFluidTank fluidTank = new DrainOnlyFluidTank(FluidAttributes.BUCKET_VOLUME);
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
     public GasSeparatorBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MachinesRegistry.GAS_SEPARATOR_BLOCK_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
-                FE_PER_TICK, 2, WORKING_TIME_TOTAL, blockPos, blockState);
+                FE_PER_TICK, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -60,22 +71,33 @@ public class GasSeparatorBlockEntity extends ElectricMachineBlockEntity<GasSepar
     }
 
     @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        itemHandlerLazyOptional.invalidate();
+        fluidHandlerLazyOptional.invalidate();
+    }
+
+    @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
+        itemHandler.deserializeNBT(nbt.getCompound("inv"));
         fluidTank.readFromNBT(nbt);
     }
 
     @Override
     public CompoundTag save(CompoundTag compound) {
-        compound = super.save(compound);
+        compound.put("inv", itemHandler.serializeNBT());
         fluidTank.writeToNBT(compound);
-        return compound;
+        return super.save(compound);
     }
 
     @Override
     public <C> LazyOptional<C> getCapability(@Nonnull Capability<C> cap, @Nullable Direction side) {
         if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return fluidHandlerLazyOptional.cast();
+        }
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return itemHandlerLazyOptional.cast();
         }
         return super.getCapability(cap, side);
     }
@@ -139,34 +161,16 @@ public class GasSeparatorBlockEntity extends ElectricMachineBlockEntity<GasSepar
         }
     }
 
+    public static final TranslatableComponent TITLE = new TranslatableComponent(RealMinerals.MODID + ".name.gas_separator");
+
     @Override
     public Component getDisplayName() {
-        return GasSeparatorContainer.TITLE;
+        return TITLE;
     }
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
-        return new GasSeparatorContainer(id, playerInventory, getBlockPos(), itemHandler, new GasSeparatorSyncData(this), serverPlayer);
-    }
-
-    protected record GasSeparatorSyncData(GasSeparatorBlockEntity machine) implements ContainerData {
-
-        @Override
-        public int get(int index) {
-            return switch (index) {
-                case 0 -> machine.workingTime;
-                case 1 -> machine.energyStorage.getEnergyStored();
-                default -> 0;
-            };
-        }
-
-        @Override
-        public void set(int index, int value) {}
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
+        return new GasSeparatorContainer(id, playerInventory, getBlockPos(), itemHandler, new ElectricRecipeProcessingMachineSyncData(this), serverPlayer);
     }
 
     @Override

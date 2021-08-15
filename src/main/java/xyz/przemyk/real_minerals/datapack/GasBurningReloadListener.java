@@ -23,7 +23,7 @@ import java.util.Objects;
 public class GasBurningReloadListener extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
-    public static Map<Fluid, GasBurningEntry> gasBurningEntries;
+    public static Map<Fluid, GasBurningEntry> gasBurningEntries = new HashMap<>();
 
     public GasBurningReloadListener() {
         super(GSON, RealMinerals.MODID + "/gas_burning");

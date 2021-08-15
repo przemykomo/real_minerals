@@ -1,0 +1,6 @@
+{
+    "fluid": "real_minerals:enriched_shale_gas",
+    "amount": 50,
+    "energy_per_tick": 1000,
+    "burn_time": 100
+}

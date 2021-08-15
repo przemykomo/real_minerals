@@ -51,7 +51,7 @@ public class GasGeneratorBlockEntity extends EnergyOutputBlockEntity {
 
     public GasGeneratorBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MachinesRegistry.GAS_GENERATOR_BLOCK_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 0, 160), blockPos, blockState);
-        fluidTank.setValidator(fluidStack -> FluidTags.BURNABLE_GAS.contains(fluidStack.getFluid()));
+        fluidTank.setValidator(fluidStack -> GasBurningReloadListener.gasBurningEntries.containsKey(fluidStack.getFluid()));
     }
 
     @Override

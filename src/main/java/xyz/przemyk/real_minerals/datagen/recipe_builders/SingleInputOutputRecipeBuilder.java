@@ -9,6 +9,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.resources.ResourceLocation;
 import xyz.przemyk.real_minerals.datapack.recipes.MagnetizerRecipe;
 import xyz.przemyk.real_minerals.datapack.recipes.CrusherRecipe;
+import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
@@ -27,18 +28,18 @@ public class SingleInputOutputRecipeBuilder {
     }
 
     public static SingleInputOutputRecipeBuilder crushingRecipe(Ingredient ingredient, ItemLike result) {
-        return new SingleInputOutputRecipeBuilder(CrusherRecipe.SERIALIZER, ingredient, result, 1);
+        return new SingleInputOutputRecipeBuilder(Recipes.CRUSHER_SERIALIZER.get(), ingredient, result, 1);
     }
 
     public static SingleInputOutputRecipeBuilder crushingRecipe(Ingredient ingredient, ItemLike result, int count) {
-        return new SingleInputOutputRecipeBuilder(CrusherRecipe.SERIALIZER, ingredient, result, count);
+        return new SingleInputOutputRecipeBuilder(Recipes.CRUSHER_SERIALIZER.get(), ingredient, result, count);
     }
     public static SingleInputOutputRecipeBuilder magnetizerRecipe(Ingredient ingredient, ItemLike result) {
-        return new SingleInputOutputRecipeBuilder(MagnetizerRecipe.SERIALIZER, ingredient, result, 1);
+        return new SingleInputOutputRecipeBuilder(Recipes.MAGNETIZER_SERIALIZER.get(), ingredient, result, 1);
     }
 
     public static SingleInputOutputRecipeBuilder magnetizerRecipe(Ingredient ingredient, ItemLike result, int count) {
-        return new SingleInputOutputRecipeBuilder(MagnetizerRecipe.SERIALIZER, ingredient, result, count);
+        return new SingleInputOutputRecipeBuilder(Recipes.MAGNETIZER_SERIALIZER.get(), ingredient, result, count);
     }
 
     public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {

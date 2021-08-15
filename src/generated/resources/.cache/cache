@@ -80,6 +80,7 @@ b7e8582bfdd1150430e018b0da3e3117931155c7 assets/real_minerals/models/item/brass_
 c3d9ef173cb692f0a8a446408ae0319f129b5799 assets/real_minerals/models/item/copper_ingot.json
 86239fa6f543bffb5ba12dc08bfccbd7a12a8cc7 assets/real_minerals/models/item/copper_nugget.json
 0d3ea60ed194c5d3b9c24773c12232fd2fd640c7 assets/real_minerals/models/item/copper_ore.json
+24f4949aa48dff62b3f8cfdf015978308dbf45eb assets/real_minerals/models/item/enriched_shale_gas_bucket.json
 1f1adb2b6d1e1656cfea68c113a905e059660801 assets/real_minerals/models/item/gold_gravel_ore.json
 5474f3f572b54a62aff45da62752b107b8faa377 assets/real_minerals/models/item/iridium_block.json
 e5e6d72bc2c39ae66821ad682a2fb33be9b884eb assets/real_minerals/models/item/iridium_dust.json
@@ -178,7 +179,7 @@ d01fc44d25fffd57785ef6ebfba95c6da4188ec2 data/forge/tags/blocks/storage_blocks/z
 748ea8a9fe4fbb764e7d0426a3f9abf9edfceea6 data/forge/tags/items/dusts/aluminum.json
 9d4722a0617f2afb9d29890c6107c66329eb2d16 data/forge/tags/items/dusts/brass.json
 2724eafded1a6351d689897fbf0b0c472efa751d data/forge/tags/items/dusts/bronze.json
-21e34a32964ed55bc699b47e4e1adff4aa225b46 data/forge/tags/items/dusts/copper.json
+2d08ac92a749de7f0179339ac90092af6fbfbe1a data/forge/tags/items/dusts/copper.json
 9c55878fe08f7e515be02151ef375205e2463bec data/forge/tags/items/dusts/iridium.json
 1502c370e1b00227ed564a339e190727b15d1a7e data/forge/tags/items/dusts/lead.json
 7e61d9c8a37f9c67ed8b239933f3d25bf8f01d23 data/forge/tags/items/dusts/magnesium.json
@@ -252,7 +253,7 @@ b6ca8b1340ff88881b24ba7b3ed2301230fb80c9 data/forge/tags/items/storage_blocks/si
 224dd196af03f1077a6bf6d08caa4e38b6688779 data/forge/tags/items/storage_blocks/zinc.json
 d01fc44d25fffd57785ef6ebfba95c6da4188ec2 data/forge/tags/items/storage_blocks/zirconium.json
 4d74544dd4daca12af6ca9a566c231214cc38fb0 data/minecraft/tags/blocks/beacon_base_blocks.json
-c7ead3b1eff42fab22d05a37c04cd9712b2fbf10 data/minecraft/tags/blocks/mineable/pickaxe.json
+76d94b5b607f7ffd811026ea12e1d6057929bf2e data/minecraft/tags/blocks/mineable/pickaxe.json
 0af52a23f371e8ed783b9937bb8545f4c656da94 data/minecraft/tags/blocks/mineable/shovel.json
 d1cfc84131a205e0f11e0b1f37a4c6f8b64272be data/minecraft/tags/blocks/needs_diamond_tool.json
 1ff70e4ac7f5593480b801a0e96ff0bc018e021c data/minecraft/tags/blocks/needs_iron_tool.json
@@ -380,6 +381,7 @@ bb4baaa2615ce417a8b7b4535e79d3acbc0fe795 data/real_minerals/loot_tables/blocks/b
 07b308d1f0f435c885b511d534ce4c24acabb893 data/real_minerals/loot_tables/blocks/copper_ore.json
 a9df88a77ef82dc8101215a9f27fd318c795c9ed data/real_minerals/loot_tables/blocks/crusher.json
 f15693318068c806f0085bd2846170c2d2cfec37 data/real_minerals/loot_tables/blocks/electric_furnace.json
+f2f8ccef253548a4c1cb83f5490badfa25101aaa data/real_minerals/loot_tables/blocks/gas_enricher.json
 b7c960868b3a58be4010e765c77f391163cdaf6c data/real_minerals/loot_tables/blocks/gas_generator.json
 6ce3c4ebecc95457493fbf797f5172a8ed6857d3 data/real_minerals/loot_tables/blocks/gas_separator.json
 b51388510ad70c2fc1f3d04a86f193984a9400e9 data/real_minerals/loot_tables/blocks/gold_gravel_ore.json
