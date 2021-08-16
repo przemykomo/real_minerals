@@ -46,7 +46,9 @@ public class Registering {
         FLUIDS.register(eventBus);
         StoneMinerals.init();
         GravelMinerals.init();
+        ObsidianMinerals.init();
         MachinesRegistry.init();
+        WorldGenRegistry.init(eventBus);
     }
 
     //<editor-fold desc="Alloys">
@@ -58,7 +60,6 @@ public class Registering {
     //</editor-fold>
 
     //<editor-fold desc="Misc">
-    public static final RegistryObject<MeteoriteFeature> METEORITE_FEATURE = FEATURES.register("meteorite", () -> new MeteoriteFeature(NoneFeatureConfiguration.CODEC));
     public static final BlockRegistryObject METEORITE = BLOCKS_ITEMS.register("meteorite", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)), ITEM_GROUP);
     public static final RegistryMetalSet METEORITE_IRON_ITEMS = new RegistryMetalSet("meteorite_iron");
 
