@@ -44,10 +44,10 @@ public class Registering {
         CONTAINERS.register(eventBus);
         FEATURES.register(eventBus);
         FLUIDS.register(eventBus);
+        MachinesRegistry.init();
         StoneMinerals.init();
         GravelMinerals.init();
         ObsidianMinerals.init();
-        MachinesRegistry.init();
         WorldGenRegistry.init(eventBus);
     }
 

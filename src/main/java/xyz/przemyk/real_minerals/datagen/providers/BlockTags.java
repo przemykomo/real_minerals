@@ -6,10 +6,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import xyz.przemyk.real_minerals.init.BlockRegistryObject;
-import xyz.przemyk.real_minerals.init.GravelMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
-import xyz.przemyk.real_minerals.init.StoneMinerals;
+import xyz.przemyk.real_minerals.init.*;
 
 import javax.annotation.Nullable;
 
@@ -64,6 +61,14 @@ public class BlockTags extends BlockTagsProvider {
     public static final Tags.IOptionalNamedTag<Block> GRAVEL_ORES_IRIDIUM = tag("gravel_ores/iridium");
     //</editor-fold>
 
+    //<editor-fold desc="Metals with obsidian ores">
+    public static final Tags.IOptionalNamedTag<Block> STORAGE_TUNGSTEN = tag("storage_blocks/tungsten");
+    public static final Tags.IOptionalNamedTag<Block> OBSIDIAN_ORES_TUNGSTEN = tag("obsidian_ores/tungsten");
+
+    public static final Tags.IOptionalNamedTag<Block> STORAGE_RHENIUM = tag("storage_blocks/rhenium");
+    public static final Tags.IOptionalNamedTag<Block> OBSIDIAN_ORES_RHENIUM = tag("obsidian_ores/rhenium");
+    //</editor-fold>
+
     //<editor-fold desc="Alloys">
     public static final Tags.IOptionalNamedTag<Block> STORAGE_BRASS = tag("storage_blocks/brass");
     public static final Tags.IOptionalNamedTag<Block> STORAGE_BRONZE = tag("storage_blocks/bronze");
@@ -116,6 +121,14 @@ public class BlockTags extends BlockTagsProvider {
 
         tag(STORAGE_IRIDIUM).add(GravelMinerals.IRIDIUM_BLOCK.BLOCK.get());
         tag(GRAVEL_ORES_IRIDIUM).add(GravelMinerals.IRIDIUM_GRAVEL_ORE.BLOCK.get());
+        //</editor-fold>
+
+        //<editor-fold desc="Metals with obsidian ores">
+        tag(STORAGE_TUNGSTEN).add(ObsidianMinerals.TUNGSTEN_BLOCK.BLOCK.get());
+        tag(OBSIDIAN_ORES_TUNGSTEN).add(ObsidianMinerals.TUNGSTEN_OBSIDIAN_ORE.BLOCK.get());
+
+        tag(STORAGE_RHENIUM).add(ObsidianMinerals.RHENIUM_BLOCK.BLOCK.get());
+        tag(OBSIDIAN_ORES_RHENIUM).add(ObsidianMinerals.RHENIUM_OBSIDIAN_ORE.BLOCK.get());
         //</editor-fold>
 
         //<editor-fold desc="Alloys">

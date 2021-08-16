@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.GravelMinerals;
+import xyz.przemyk.real_minerals.init.ObsidianMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.init.StoneMinerals;
 
@@ -19,8 +20,7 @@ public class ItemTags extends ItemTagsProvider {
         super(dataGenerator, blockTagProvider, modId, existingFileHelper);
     }
 
-    ////////////////////////////////////////////////////////////////// METALS WITH STONE ORES
-
+    //<editor-fold desc="Metals with stone ores">
     public static final Tags.IOptionalNamedTag<Item> STORAGE_COPPER = tag("storage_blocks/copper");
     public static final Tags.IOptionalNamedTag<Item> ORES_COPPER = tag("ores/copper");
     public static final Tags.IOptionalNamedTag<Item> INGOTS_COPPER = tag("ingots/copper");
@@ -81,9 +81,9 @@ public class ItemTags extends ItemTagsProvider {
     public static final Tags.IOptionalNamedTag<Item> NUGGETS_MAGNETITE = tag("nuggets/magnetite");
     public static final Tags.IOptionalNamedTag<Item> DUSTS_MAGNETITE = tag("dusts/magnetite");
     public static final Tags.IOptionalNamedTag<Item> GEAR_MAGNETITE = tag("gear/magnetite");
+    //</editor-fold>
 
-    ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
-
+    //<editor-fold desc="Metals with gravel ores">
     public static final Tags.IOptionalNamedTag<Item> GRAVEL_ORES_GOLD = tag("gravel_ores/gold");
     public static final Tags.IOptionalNamedTag<Item> GRAVEL_ORES_PLATINUM = tag("gravel_ores/platinum");
 
@@ -104,9 +104,23 @@ public class ItemTags extends ItemTagsProvider {
     public static final Tags.IOptionalNamedTag<Item> INGOTS_IRIDIUM = tag("ingots/iridium");
     public static final Tags.IOptionalNamedTag<Item> NUGGETS_IRIDIUM = tag("nuggets/iridium");
     public static final Tags.IOptionalNamedTag<Item> DUSTS_IRIDIUM = tag("dusts/iridium");
+    //</editor-fold>
 
-    ////////////////////////////////////////////////////////////////// ALLOYS
+    //<editor-fold desc="Metals with obsidian ores">
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_TUNGSTEN = tag("storage_blocks/tungsten");
+    public static final Tags.IOptionalNamedTag<Item> OBSIDIAN_ORES_TUNGSTEN = tag("obsidian_ores/tungsten");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_TUNGSTEN = tag("ingots/tungsten");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_TUNGSTEN = tag("nuggets/tungsten");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_TUNGSTEN = tag("dusts/tungsten");
 
+    public static final Tags.IOptionalNamedTag<Item> STORAGE_RHENIUM = tag("storage_blocks/rhenium");
+    public static final Tags.IOptionalNamedTag<Item> OBSIDIAN_ORES_RHENIUM = tag("obsidian_ores/rhenium");
+    public static final Tags.IOptionalNamedTag<Item> INGOTS_RHENIUM = tag("ingots/rhenium");
+    public static final Tags.IOptionalNamedTag<Item> NUGGETS_RHENIUM = tag("nuggets/rhenium");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_RHENIUM = tag("dusts/rhenium");
+    //</editor-fold>
+
+    //<editor-fold desc="Alloys">
     public static final Tags.IOptionalNamedTag<Item> STORAGE_BRASS = tag("storage_blocks/brass");
     public static final Tags.IOptionalNamedTag<Item> INGOTS_BRASS = tag("ingots/brass");
     public static final Tags.IOptionalNamedTag<Item> NUGGETS_BRASS = tag("nuggets/brass");
@@ -116,12 +130,12 @@ public class ItemTags extends ItemTagsProvider {
     public static final Tags.IOptionalNamedTag<Item> INGOTS_BRONZE = tag("ingots/bronze");
     public static final Tags.IOptionalNamedTag<Item> NUGGETS_BRONZE = tag("nuggets/bronze");
     public static final Tags.IOptionalNamedTag<Item> DUSTS_BRONZE = tag("dusts/bronze");
+    //</editor-fold>
 
     @Override
     protected void addTags() {
 
-        ////////////////////////////////////////////////////////////////// METALS WITH STONE ORES
-
+        //<editor-fold desc="Metals with stone ores">
         copy(BlockTags.STORAGE_COPPER, STORAGE_COPPER);
         copy(BlockTags.ORES_COPPER, ORES_COPPER);
         tag(INGOTS_COPPER).add(StoneMinerals.COPPER_ITEMS.INGOT.get());
@@ -182,9 +196,9 @@ public class ItemTags extends ItemTagsProvider {
         tag(NUGGETS_MAGNETITE).add(StoneMinerals.MAGNETITE_ITEMS.NUGGET.get());
         tag(DUSTS_MAGNETITE).add(StoneMinerals.MAGNETITE_ITEMS.DUST.get());
         tag(GEAR_MAGNETITE).add(StoneMinerals.MAGNETITE_GEAR.get());
+        //</editor-fold>
 
-        ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
-
+        //<editor-fold desc="Metals with gravel ores">
         copy(BlockTags.GRAVEL_ORES_GOLD, GRAVEL_ORES_GOLD);
         copy(BlockTags.GRAVEL_ORES_PLATINUM, GRAVEL_ORES_PLATINUM);
 
@@ -205,9 +219,23 @@ public class ItemTags extends ItemTagsProvider {
         tag(INGOTS_IRIDIUM).add(GravelMinerals.IRIDIUM_ITEMS.INGOT.get());
         tag(NUGGETS_IRIDIUM).add(GravelMinerals.IRIDIUM_ITEMS.NUGGET.get());
         tag(DUSTS_IRIDIUM).add(GravelMinerals.IRIDIUM_ITEMS.DUST.get());
+        //</editor-fold>
 
-        ////////////////////////////////////////////////////////////////// ALLOYS
+        //<editor-fold desc="Metals with obsidian ores">
+        copy(BlockTags.STORAGE_TUNGSTEN, STORAGE_TUNGSTEN);
+        copy(BlockTags.OBSIDIAN_ORES_TUNGSTEN, OBSIDIAN_ORES_TUNGSTEN);
+        tag(INGOTS_TUNGSTEN).add(ObsidianMinerals.TUNGSTEN_ITEMS.INGOT.get());
+        tag(NUGGETS_TUNGSTEN).add(ObsidianMinerals.TUNGSTEN_ITEMS.NUGGET.get());
+        tag(DUSTS_TUNGSTEN).add(ObsidianMinerals.TUNGSTEN_ITEMS.DUST.get());
 
+        copy(BlockTags.STORAGE_RHENIUM, STORAGE_RHENIUM);
+        copy(BlockTags.OBSIDIAN_ORES_RHENIUM, OBSIDIAN_ORES_RHENIUM);
+        tag(INGOTS_RHENIUM).add(ObsidianMinerals.RHENIUM_ITEMS.INGOT.get());
+        tag(NUGGETS_RHENIUM).add(ObsidianMinerals.RHENIUM_ITEMS.NUGGET.get());
+        tag(DUSTS_RHENIUM).add(ObsidianMinerals.RHENIUM_ITEMS.DUST.get());
+        //</editor-fold>
+
+        //<editor-fold desc="Alloys">
         copy(BlockTags.STORAGE_BRASS, STORAGE_BRASS);
         tag(INGOTS_BRASS).add(Registering.BRASS_ITEMS.INGOT.get());
         tag(NUGGETS_BRASS).add(Registering.BRASS_ITEMS.NUGGET.get());
@@ -217,6 +245,7 @@ public class ItemTags extends ItemTagsProvider {
         tag(INGOTS_BRONZE).add(Registering.BRONZE_ITEMS.INGOT.get());
         tag(NUGGETS_BRONZE).add(Registering.BRONZE_ITEMS.NUGGET.get());
         tag(DUSTS_BRONZE).add(Registering.BRONZE_ITEMS.DUST.get());
+        //</editor-fold>
     }
 
     private static Tags.IOptionalNamedTag<Item> tag(String name) {

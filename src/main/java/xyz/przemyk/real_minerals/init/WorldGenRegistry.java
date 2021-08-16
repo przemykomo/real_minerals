@@ -49,7 +49,8 @@ public class WorldGenRegistry {
     public static ConfiguredFeature<?, ?> IRIDIUM_GRAVEL_ORE;
     public static ConfiguredFeature<?, ?> ZIRCONIUM_GRAVEL_ORE;
 
-    public static ConfiguredFeature<?, ?> CHROMIUM_OBSIDIAN_ORE;
+    public static ConfiguredFeature<?, ?> TUNGSTEN_OBSIDIAN_ORE;
+    public static ConfiguredFeature<?, ?> RHENIUM_OBSIDIAN_ORE;
 
     public static ConfiguredFeature<?, ?> METEORITE;
 
@@ -78,7 +79,8 @@ public class WorldGenRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_zirconium"), ZIRCONIUM_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.ZIRCONIUM_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
 
 //            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_obsidian_chromium"), CHROMIUM_OBSIDIAN_ORE = OBSIDIAN_ORE_FEATURE.get().configured(new UnderwaterMagmaConfiguration(10, 10, 1F)).squared().rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(39)).count(UniformInt.of(4, 10)));
-            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_obsidian_chromium"), CHROMIUM_OBSIDIAN_ORE = Feature.ORE.configured(new OreConfiguration(OBSIDIAN, ObsidianMinerals.CHROMIUM_OBSIDIAN_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(20)).squared().count(20));
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_obsidian_tungsten"), TUNGSTEN_OBSIDIAN_ORE = Feature.ORE.configured(new OreConfiguration(OBSIDIAN, ObsidianMinerals.TUNGSTEN_OBSIDIAN_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(20)).squared().count(20));
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_obsidian_rhenium"), RHENIUM_OBSIDIAN_ORE = Feature.ORE.configured(new OreConfiguration(OBSIDIAN, ObsidianMinerals.RHENIUM_OBSIDIAN_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(20)).squared().count(20));
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "meteorite"), METEORITE = METEORITE_FEATURE.get().configured(NoneFeatureConfiguration.INSTANCE));
         });
@@ -106,7 +108,8 @@ public class WorldGenRegistry {
             oreFeatures.add(() -> IRIDIUM_GRAVEL_ORE);
             oreFeatures.add(() -> ZIRCONIUM_GRAVEL_ORE);
 
-            oreFeatures.add(() -> CHROMIUM_OBSIDIAN_ORE);
+            oreFeatures.add(() -> TUNGSTEN_OBSIDIAN_ORE);
+            oreFeatures.add(() -> RHENIUM_OBSIDIAN_ORE);
 
             //meteorites
             if (category != Biome.BiomeCategory.NONE && category != Biome.BiomeCategory.RIVER && category != Biome.BiomeCategory.SWAMP && category != Biome.BiomeCategory.OCEAN && category != Biome.BiomeCategory.BEACH) {
