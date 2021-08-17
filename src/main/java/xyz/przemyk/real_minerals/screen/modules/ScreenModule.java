@@ -8,7 +8,7 @@ public abstract class ScreenModule {
     public final int x, y;
     public final MachineScreen<?> screen;
 
-    protected ScreenModule(int x, int y, MachineScreen<?> screen) {
+    public ScreenModule(int x, int y, MachineScreen<?> screen) {
         this.x = x;
         this.y = y;
         this.screen = screen;

@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import xyz.przemyk.real_minerals.containers.GasSeparatorContainer;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.screen.modules.EnergyModule;
+import xyz.przemyk.real_minerals.screen.modules.ProgressArrowModule;
 import xyz.przemyk.real_minerals.screen.modules.TankModule;
 import xyz.przemyk.real_minerals.blockentity.GasSeparatorBlockEntity;
 
@@ -19,6 +20,7 @@ public class GasSeparatorScreen extends MachineScreen<GasSeparatorContainer> {
         super(screenContainer, inv, titleIn, GUI);
         screenModules.add(new TankModule(110, 7, 18, 35, this, menu.blockEntity.fluidTank));
         screenModules.add(new EnergyModule(() -> menu.machineData.get(1), 10_000, 153, 7, this));
+        screenModules.add(new ProgressArrowModule(72, 26, this, () -> menu.machineData.get(0), GasSeparatorBlockEntity.WORKING_TIME_TOTAL));
     }
 
     @Override
@@ -26,12 +28,8 @@ public class GasSeparatorScreen extends MachineScreen<GasSeparatorContainer> {
         super.renderBg(matrixStack, partialTicks, mouseX, mouseY);
         RenderSystem.setShaderTexture(0, GUI);
 
-        int workTime = menu.machineData.get(0);
-        if (workTime > 0) {
-            this.blit(matrixStack, leftPos + 46, topPos + 46 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
-
-            int l = workTime * 31 / GasSeparatorBlockEntity.WORKING_TIME_TOTAL;
-            this.blit(matrixStack, leftPos + 66, topPos + 26, 176, 14, l, 33);
+        if (menu.machineData.get(0) > 0) {
+            blit(matrixStack, leftPos + 46, topPos + 46 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
         }
     }
 }

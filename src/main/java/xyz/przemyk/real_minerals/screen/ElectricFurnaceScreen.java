@@ -9,6 +9,7 @@ import xyz.przemyk.real_minerals.containers.ElectricFurnaceContainer;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.screen.modules.EnergyModule;
 import xyz.przemyk.real_minerals.blockentity.ElectricFurnaceBlockEntity;
+import xyz.przemyk.real_minerals.screen.modules.ProgressArrowModule;
 
 public class ElectricFurnaceScreen extends MachineScreen<ElectricFurnaceContainer> {
 
@@ -17,6 +18,7 @@ public class ElectricFurnaceScreen extends MachineScreen<ElectricFurnaceContaine
     public ElectricFurnaceScreen(ElectricFurnaceContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn, GUI);
         screenModules.add(new EnergyModule(() -> menu.machineData.get(1), 10_000, 153, 7, this));
+        screenModules.add(new ProgressArrowModule(79, 34, this, () -> menu.machineData.get(0), ElectricFurnaceBlockEntity.WORKING_TIME_TOTAL));
     }
 
     @Override
@@ -24,12 +26,8 @@ public class ElectricFurnaceScreen extends MachineScreen<ElectricFurnaceContaine
         super.renderBg(matrixStack, partialTicks, mouseX, mouseY);
         RenderSystem.setShaderTexture(0, GUI);
 
-        int workTime = menu.machineData.get(0);
-        if (workTime > 0) {
-            this.blit(matrixStack, this.leftPos + 56, this.topPos + 54 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
+        if (menu.machineData.get(0) > 0) {
+            blit(matrixStack, this.leftPos + 56, this.topPos + 54 + 12 - 13, 176, 12 - 13, 14, 13 + 1);
         }
-
-        int l = workTime != 0 ? workTime * 24 / ElectricFurnaceBlockEntity.WORKING_TIME_TOTAL : 0;
-        this.blit(matrixStack, this.leftPos + 79, this.topPos + 34, 176, 14, l + 1, 16);
     }
 }

@@ -55,6 +55,7 @@ public class WorldGenRegistry {
     public static ConfiguredFeature<?, ?> ALUMINUM_ORE;
     public static ConfiguredFeature<?, ?> ZINC_ORE;
     public static ConfiguredFeature<?, ?> MAGNETITE_ORE;
+    public static ConfiguredFeature<?, ?> SHALE_GAS_ORE;
 
     public static ConfiguredFeature<?, ?> GOLD_GRAVEL_ORE;
     public static ConfiguredFeature<?, ?> PLATINUM_GRAVEL_ORE;
@@ -87,6 +88,7 @@ public class WorldGenRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_aluminum"), ALUMINUM_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.ALUMINUM_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_zinc"), ZINC_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.ZINC_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_magnetite"), MAGNETITE_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.MAGNETITE_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_shale_gas"), SHALE_GAS_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, Registering.SHALE_GAS_STONE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_gold"), GOLD_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.GOLD_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_platinum"), PLATINUM_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.PLATINUM_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
@@ -117,6 +119,7 @@ public class WorldGenRegistry {
             oreFeatures.add(() -> ALUMINUM_ORE);
             oreFeatures.add(() -> ZINC_ORE);
             oreFeatures.add(() -> MAGNETITE_ORE);
+            oreFeatures.add(() -> SHALE_GAS_ORE);
 
             oreFeatures.add(() -> GOLD_GRAVEL_ORE);
             oreFeatures.add(() -> PLATINUM_GRAVEL_ORE);

@@ -1,6 +1,5 @@
 package xyz.przemyk.real_minerals.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -9,6 +8,7 @@ import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.blockentity.GasEnricherBlockEntity;
 import xyz.przemyk.real_minerals.containers.GasEnricherContainer;
 import xyz.przemyk.real_minerals.screen.modules.EnergyModule;
+import xyz.przemyk.real_minerals.screen.modules.ProgressArrowModule;
 import xyz.przemyk.real_minerals.screen.modules.TankModule;
 
 public class GasEnricherScreen extends MachineScreen<GasEnricherContainer> {
@@ -20,16 +20,7 @@ public class GasEnricherScreen extends MachineScreen<GasEnricherContainer> {
         screenModules.add(new TankModule(55, 7, 18, 72, this, menu.blockEntity.doubleFluidTank.input));
         screenModules.add(new TankModule(109, 7, 18, 72, this, menu.blockEntity.doubleFluidTank.output));
         screenModules.add(new EnergyModule(() -> menu.machineData.get(1), 10_000, 153, 7, this));
-    }
-
-    @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        super.renderBg(matrixStack, partialTicks, mouseX, mouseY);
-        RenderSystem.setShaderTexture(0, GUI);
-
-        int workTime = menu.machineData.get(0);
-        int l = workTime != 0 ? workTime * 24 / GasEnricherBlockEntity.WORKING_TIME_TOTAL : 0;
-        this.blit(matrixStack, this.leftPos + 79, this.topPos + 34, 176, 72, l + 1, 16);
+        screenModules.add(new ProgressArrowModule(79, 34, this, () -> menu.machineData.get(0), GasEnricherBlockEntity.WORKING_TIME_TOTAL));
     }
 
     @Override
