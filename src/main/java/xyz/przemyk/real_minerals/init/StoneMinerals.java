@@ -52,6 +52,9 @@ public class StoneMinerals {
     public static final BlockRegistryObject MAGNETITE_ORE = stoneOre("magnetite_ore");
     public static final RegistryObject<Item> MAGNETITE_GEAR = Registering.simpleItem("magnetite_gear");
 
+    public static final BlockRegistryObject SULFUR_ORE = stoneOre("sulfur_ore");
+    public static final RegistryObject<Item> SULFUR = Registering.simpleItem("sulfur");
+
     static void init() {}
 
     static BlockRegistryObject stoneOre(String name) {

@@ -45,6 +45,8 @@ public class BlockTags extends BlockTagsProvider {
 
     public static final Tags.IOptionalNamedTag<Block> STORAGE_MAGNETITE = tag("storage_blocks/magnetite");
     public static final Tags.IOptionalNamedTag<Block> ORES_MAGNETITE = tag("ores/magnetite");
+
+    public static final Tags.IOptionalNamedTag<Block> ORES_SULFUR = tag("ores/sulfur");
     //</editor-fold>
 
     //<editor-fold desc="Metals with gravel ores">
@@ -107,6 +109,8 @@ public class BlockTags extends BlockTagsProvider {
 
         tag(STORAGE_MAGNETITE).add(StoneMinerals.MAGNETITE_BLOCK.BLOCK.get());
         tag(ORES_MAGNETITE).add(StoneMinerals.MAGNETITE_ORE.BLOCK.get());
+
+        tag(ORES_SULFUR).add(StoneMinerals.SULFUR_ORE.BLOCK.get());
         //</editor-fold>
 
         //<editor-fold desc="Metals with gravel ores">
@@ -159,7 +163,8 @@ public class BlockTags extends BlockTagsProvider {
                 StoneMinerals.TIN_BLOCK.BLOCK.get(), StoneMinerals.TIN_ORE.BLOCK.get(),
                 StoneMinerals.ALUMINUM_BLOCK.BLOCK.get(), StoneMinerals.ALUMINUM_ORE.BLOCK.get(),
                 StoneMinerals.ZINC_BLOCK.BLOCK.get(), StoneMinerals.ZINC_ORE.BLOCK.get(),
-                StoneMinerals.MAGNETITE_BLOCK.BLOCK.get(), StoneMinerals.MAGNETITE_ORE.BLOCK.get());
+                StoneMinerals.MAGNETITE_BLOCK.BLOCK.get(), StoneMinerals.MAGNETITE_ORE.BLOCK.get(),
+                StoneMinerals.SULFUR_ORE.BLOCK.get());
 
         tag(net.minecraft.tags.BlockTags.NEEDS_IRON_TOOL).add(
                 StoneMinerals.LEAD_BLOCK.BLOCK.get(), StoneMinerals.LEAD_ORE.BLOCK.get(),

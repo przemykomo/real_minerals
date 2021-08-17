@@ -81,6 +81,9 @@ public class ItemTags extends ItemTagsProvider {
     public static final Tags.IOptionalNamedTag<Item> NUGGETS_MAGNETITE = tag("nuggets/magnetite");
     public static final Tags.IOptionalNamedTag<Item> DUSTS_MAGNETITE = tag("dusts/magnetite");
     public static final Tags.IOptionalNamedTag<Item> GEAR_MAGNETITE = tag("gear/magnetite");
+
+    public static final Tags.IOptionalNamedTag<Item> ORES_SULFUR = tag("ores/sulfur");
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_SULFUR = tag("dusts/sulfur");
     //</editor-fold>
 
     //<editor-fold desc="Metals with gravel ores">
@@ -196,6 +199,9 @@ public class ItemTags extends ItemTagsProvider {
         tag(NUGGETS_MAGNETITE).add(StoneMinerals.MAGNETITE_ITEMS.NUGGET.get());
         tag(DUSTS_MAGNETITE).add(StoneMinerals.MAGNETITE_ITEMS.DUST.get());
         tag(GEAR_MAGNETITE).add(StoneMinerals.MAGNETITE_GEAR.get());
+
+        copy(BlockTags.ORES_SULFUR, ORES_SULFUR);
+        tag(DUSTS_SULFUR).add(StoneMinerals.SULFUR.get());
         //</editor-fold>
 
         //<editor-fold desc="Metals with gravel ores">

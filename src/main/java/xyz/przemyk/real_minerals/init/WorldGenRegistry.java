@@ -9,8 +9,10 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneDecoratorConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,18 +20,29 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.worldgen.MeteoriteFeature;
+import xyz.przemyk.real_minerals.worldgen.SulfurFeature;
+import xyz.przemyk.real_minerals.worldgen.UnderLavaDecorator;
 
 import java.util.List;
 import java.util.function.Supplier;
 
+import static xyz.przemyk.real_minerals.RealMinerals.MODID;
+
 public class WorldGenRegistry {
+
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MODID);
+    public static final DeferredRegister<FeatureDecorator<?>> DECORATORS = DeferredRegister.create(ForgeRegistries.DECORATORS, MODID);
 
     public static final RuleTest GRAVEL = new BlockMatchTest(Blocks.GRAVEL);
     public static final RuleTest OBSIDIAN = new BlockMatchTest(Blocks.OBSIDIAN);
 
-    public static final RegistryObject<MeteoriteFeature> METEORITE_FEATURE = Registering.FEATURES.register("meteorite", () -> new MeteoriteFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<MeteoriteFeature> METEORITE_FEATURE = FEATURES.register("meteorite", () -> new MeteoriteFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<SulfurFeature> SULFUR_FEATURE = FEATURES.register("sulfur", () -> new SulfurFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<UnderLavaDecorator> UNDER_LAVA_DECORATOR = DECORATORS.register("under_lava", () -> new UnderLavaDecorator(NoneDecoratorConfiguration.CODEC));
 
     //TODO: change rarity and height of ore generation
     public static ConfiguredFeature<?, ?> COPPER_ORE;
@@ -53,10 +66,13 @@ public class WorldGenRegistry {
     public static ConfiguredFeature<?, ?> RHENIUM_OBSIDIAN_ORE;
 
     public static ConfiguredFeature<?, ?> METEORITE;
+    public static ConfiguredFeature<?, ?> SULFUR;
 
     public static void init(IEventBus eventBus) {
         eventBus.addListener(WorldGenRegistry::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(WorldGenRegistry::addFeatures);
+        FEATURES.register(eventBus);
+        DECORATORS.register(eventBus);
     }
 
     private static void commonSetup(FMLCommonSetupEvent event) {
@@ -78,11 +94,11 @@ public class WorldGenRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_iridium"), IRIDIUM_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.IRIDIUM_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_zirconium"), ZIRCONIUM_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.ZIRCONIUM_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
 
-//            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_obsidian_chromium"), CHROMIUM_OBSIDIAN_ORE = OBSIDIAN_ORE_FEATURE.get().configured(new UnderwaterMagmaConfiguration(10, 10, 1F)).squared().rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(39)).count(UniformInt.of(4, 10)));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_obsidian_tungsten"), TUNGSTEN_OBSIDIAN_ORE = Feature.ORE.configured(new OreConfiguration(OBSIDIAN, ObsidianMinerals.TUNGSTEN_OBSIDIAN_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(20)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_obsidian_rhenium"), RHENIUM_OBSIDIAN_ORE = Feature.ORE.configured(new OreConfiguration(OBSIDIAN, ObsidianMinerals.RHENIUM_OBSIDIAN_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(20)).squared().count(20));
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "meteorite"), METEORITE = METEORITE_FEATURE.get().configured(NoneFeatureConfiguration.INSTANCE));
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "sulfur"), SULFUR = SULFUR_FEATURE.get().configured(NoneFeatureConfiguration.INSTANCE).decorated(UNDER_LAVA_DECORATOR.get().configured(NoneDecoratorConfiguration.INSTANCE)));
         });
     }
 
@@ -110,6 +126,8 @@ public class WorldGenRegistry {
 
             oreFeatures.add(() -> TUNGSTEN_OBSIDIAN_ORE);
             oreFeatures.add(() -> RHENIUM_OBSIDIAN_ORE);
+
+            oreFeatures.add(() -> SULFUR);
 
             //meteorites
             if (category != Biome.BiomeCategory.NONE && category != Biome.BiomeCategory.RIVER && category != Biome.BiomeCategory.SWAMP && category != Biome.BiomeCategory.OCEAN && category != Biome.BiomeCategory.BEACH) {

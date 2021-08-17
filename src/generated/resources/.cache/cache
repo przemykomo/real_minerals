@@ -26,6 +26,7 @@ fb67d5593b6f27085402c93728195f9d9a032b9a assets/real_minerals/blockstates/ruthen
 6d007b562997542958bc13867cbf6bbdb799e0d9 assets/real_minerals/blockstates/shale_gas_stone.json
 1a1fdf5e5667ebf7e8c5e27684aebaa396dd79b3 assets/real_minerals/blockstates/silver_block.json
 a82481f1042486583864840409b31e4bf90041c5 assets/real_minerals/blockstates/silver_ore.json
+de762df697d13b1d0c1378701adada9736c9cd4f assets/real_minerals/blockstates/sulfur_ore.json
 b4135263c67c366574e2d7746383d665706d5b5d assets/real_minerals/blockstates/tin_block.json
 fbdf5791a9d6bfeb26b5a50c9685625187684ae3 assets/real_minerals/blockstates/tin_ore.json
 6b020b5880f91361ef04b5cc0333b68eb22f0710 assets/real_minerals/blockstates/tungsten_block.json
@@ -62,6 +63,7 @@ b441e2b4841da371cd4c71150852b93e904d298b assets/real_minerals/models/block/ruthe
 881d0092a28b1eb5ea8121eea8741a7fff532fa7 assets/real_minerals/models/block/shale_gas_stone.json
 084fd6cccd19ee0e5842b8cbbb4676a5e71a6e37 assets/real_minerals/models/block/silver_block.json
 7d8b1410155ed3210620f114a0072be700bbb02e assets/real_minerals/models/block/silver_ore.json
+6eb50e87aabc1946f9a65388797b573aeea6ac98 assets/real_minerals/models/block/sulfur_ore.json
 0bbb39599d9a7f067b425f2bbf816848bccce45b assets/real_minerals/models/block/tin_block.json
 3cfc9661b061a616b826b743770930bce69ec2fd assets/real_minerals/models/block/tin_ore.json
 d81bfcf96bcbdc5c17aef57cbe22d88553f53aec assets/real_minerals/models/block/tungsten_block.json
@@ -143,6 +145,8 @@ f593b1f6c21a53256ed7b3f3ea81f993904c2254 assets/real_minerals/models/item/silver
 1e620abec8245346af24f904b101a0bbb9a1a208 assets/real_minerals/models/item/silver_ingot.json
 47a5d87cf58e2961559b55ce112156a2477fdf3b assets/real_minerals/models/item/silver_nugget.json
 e8fd6c8f59319ee79bf64ee350754a88ad0825af assets/real_minerals/models/item/silver_ore.json
+0b7993e088c3933f30581c9ea4fa69d020125b19 assets/real_minerals/models/item/sulfur.json
+bbb815b01bc9b9c603b2c540e0b80c13159a2b65 assets/real_minerals/models/item/sulfur_ore.json
 f304b35c901b02c9247659680f96c41fb31ffb73 assets/real_minerals/models/item/tin_block.json
 fc97068c83ebb7e3bdd85eed29b459ebd50a51ab assets/real_minerals/models/item/tin_dust.json
 f1aa47649a6405d3a34ae97916496162b366d0e3 assets/real_minerals/models/item/tin_ingot.json
@@ -178,6 +182,7 @@ c724f481ea37f2eec7e45a3cf29d511e129d0ec0 data/forge/tags/blocks/ores/magnetite.j
 70775341d5f99c59950ed8417f50836a6b230a66 data/forge/tags/blocks/ores/nickel.json
 d5a3310a18211d98621797211d4d9d07dda849ab data/forge/tags/blocks/ores/platinum.json
 d9d9c3f1546174c2d8b81fe4e5bbd2c1b0c61c95 data/forge/tags/blocks/ores/silver.json
+fca7d1b1051412b7123a9c695fabd889205301ef data/forge/tags/blocks/ores/sulfur.json
 b2fe11b452a70db581dd2124b84d0d54de2a9bdc data/forge/tags/blocks/ores/tin.json
 cecc3b86ee7deee28bddfa1600f6bc55625fdffa data/forge/tags/blocks/ores/zinc.json
 1b1e54f36cff1eb56b9b125c9c5464c1c6e51937 data/forge/tags/blocks/storage_blocks/aluminum.json
@@ -197,7 +202,6 @@ b6ca8b1340ff88881b24ba7b3ed2301230fb80c9 data/forge/tags/blocks/storage_blocks/s
 b74610ecbe99c50ecb6f6ddf51a35d4e6407c30d data/forge/tags/blocks/storage_blocks/tungsten.json
 224dd196af03f1077a6bf6d08caa4e38b6688779 data/forge/tags/blocks/storage_blocks/zinc.json
 d01fc44d25fffd57785ef6ebfba95c6da4188ec2 data/forge/tags/blocks/storage_blocks/zirconium.json
-35290b6c96d9a80c639d8e5927089b5a6d2d0f2c data/forge/tags/fluids/burnable_gas.json
 748ea8a9fe4fbb764e7d0426a3f9abf9edfceea6 data/forge/tags/items/dusts/aluminum.json
 9d4722a0617f2afb9d29890c6107c66329eb2d16 data/forge/tags/items/dusts/brass.json
 2724eafded1a6351d689897fbf0b0c472efa751d data/forge/tags/items/dusts/bronze.json
@@ -211,6 +215,7 @@ e62d068deba3e06465eceb687bade731d973a313 data/forge/tags/items/dusts/nickel.json
 7fc359043c7c3f7659dadec5860e1d83918a1ac5 data/forge/tags/items/dusts/rhenium.json
 ee23a54059974a33c1f24c25e48936054918717f data/forge/tags/items/dusts/ruthenium.json
 8c2c58b21e82b4294fedd1eb905051e5bffcc7b3 data/forge/tags/items/dusts/silver.json
+310228d4ec54733c721e0a20c2c50e16ad4eaba1 data/forge/tags/items/dusts/sulfur.json
 209b0a2a9c33b5932ca9e99655d650a93df1022e data/forge/tags/items/dusts/tin.json
 16d1bf9cee65cfd243d60045ee19956e59803f67 data/forge/tags/items/dusts/tungsten.json
 1bd3e4484c847b5148b8e971e2c6914fbb1308fa data/forge/tags/items/dusts/zinc.json
@@ -265,6 +270,7 @@ c724f481ea37f2eec7e45a3cf29d511e129d0ec0 data/forge/tags/items/ores/magnetite.js
 70775341d5f99c59950ed8417f50836a6b230a66 data/forge/tags/items/ores/nickel.json
 d5a3310a18211d98621797211d4d9d07dda849ab data/forge/tags/items/ores/platinum.json
 d9d9c3f1546174c2d8b81fe4e5bbd2c1b0c61c95 data/forge/tags/items/ores/silver.json
+fca7d1b1051412b7123a9c695fabd889205301ef data/forge/tags/items/ores/sulfur.json
 b2fe11b452a70db581dd2124b84d0d54de2a9bdc data/forge/tags/items/ores/tin.json
 cecc3b86ee7deee28bddfa1600f6bc55625fdffa data/forge/tags/items/ores/zinc.json
 1b1e54f36cff1eb56b9b125c9c5464c1c6e51937 data/forge/tags/items/storage_blocks/aluminum.json
@@ -285,7 +291,7 @@ b74610ecbe99c50ecb6f6ddf51a35d4e6407c30d data/forge/tags/items/storage_blocks/tu
 224dd196af03f1077a6bf6d08caa4e38b6688779 data/forge/tags/items/storage_blocks/zinc.json
 d01fc44d25fffd57785ef6ebfba95c6da4188ec2 data/forge/tags/items/storage_blocks/zirconium.json
 4d74544dd4daca12af6ca9a566c231214cc38fb0 data/minecraft/tags/blocks/beacon_base_blocks.json
-e6e4406da31f31a73efd2ac03030f51dd29df399 data/minecraft/tags/blocks/mineable/pickaxe.json
+2eeeb506923e491856fa84ee8bc340afa5b95542 data/minecraft/tags/blocks/mineable/pickaxe.json
 0af52a23f371e8ed783b9937bb8545f4c656da94 data/minecraft/tags/blocks/mineable/shovel.json
 d1cfc84131a205e0f11e0b1f37a4c6f8b64272be data/minecraft/tags/blocks/needs_diamond_tool.json
 1ff70e4ac7f5593480b801a0e96ff0bc018e021c data/minecraft/tags/blocks/needs_iron_tool.json
@@ -440,6 +446,7 @@ f31e5f79d2f2b03f2af322a90976927fbf0af08c data/real_minerals/loot_tables/blocks/r
 3687a9b356e23003136f98cc021519e41a200051 data/real_minerals/loot_tables/blocks/shale_gas_stone.json
 37bdd4674a4102f508bf488ca6866006338886f8 data/real_minerals/loot_tables/blocks/silver_block.json
 d431b1f0091e90347bcd5d12f99eec41ac44dae0 data/real_minerals/loot_tables/blocks/silver_ore.json
+14cb5b45688850f8d6d3d94c54702527a323951a data/real_minerals/loot_tables/blocks/sulfur_ore.json
 ee6c038ad980455f3cdc9cf01ecca93efd18979b data/real_minerals/loot_tables/blocks/tin_block.json
 7ff919f9a108f1acd513dcf239555a4986c09d6b data/real_minerals/loot_tables/blocks/tin_ore.json
 b68b985041eee83c7ee217be9e858d00ba1f93b6 data/real_minerals/loot_tables/blocks/tungsten_block.json

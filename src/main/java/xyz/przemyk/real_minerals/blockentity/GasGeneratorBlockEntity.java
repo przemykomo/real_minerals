@@ -18,7 +18,6 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.przemyk.real_minerals.containers.GasGeneratorContainer;
-import xyz.przemyk.real_minerals.datagen.providers.FluidTags;
 import xyz.przemyk.real_minerals.datapack.GasBurningEntry;
 import xyz.przemyk.real_minerals.datapack.GasBurningReloadListener;
 import xyz.przemyk.real_minerals.fluid.FillOnlyFluidTank;

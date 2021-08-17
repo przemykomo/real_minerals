@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -20,7 +19,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.fluid.EnrichedShaleGasFluid;
 import xyz.przemyk.real_minerals.fluid.GasBucketItem;
 import xyz.przemyk.real_minerals.fluid.ShaleGasFluid;
-import xyz.przemyk.real_minerals.worldgen.MeteoriteFeature;
 
 import static xyz.przemyk.real_minerals.RealMinerals.ITEM_GROUP;
 import static xyz.przemyk.real_minerals.RealMinerals.MODID;
@@ -34,7 +32,6 @@ public class Registering {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
-    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MODID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, MODID);
 
     public static void init(IEventBus eventBus) {
@@ -42,7 +39,6 @@ public class Registering {
         ITEMS.register(eventBus);
         BLOCK_ENTITIES.register(eventBus);
         CONTAINERS.register(eventBus);
-        FEATURES.register(eventBus);
         FLUIDS.register(eventBus);
         MachinesRegistry.init();
         StoneMinerals.init();
