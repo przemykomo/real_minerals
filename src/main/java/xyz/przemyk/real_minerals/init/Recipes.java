@@ -1,5 +1,6 @@
 package xyz.przemyk.real_minerals.init;
 
+import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -9,6 +10,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -17,6 +19,7 @@ import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.datapack.recipes.*;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,6 +44,9 @@ public class Recipes {
     public static final RecipeType<GasEnricherRecipe> GAS_ENRICHER_RECIPE_TYPE = new MachineRecipeType<>("gas_enricher");
     public static final RegistryObject<GasEnricherRecipe.Serializer> GAS_ENRICHER_SERIALIZER = RECIPE_SERIALIZERS.register("gas_enricher", GasEnricherRecipe.Serializer::new);
 
+    public static final RecipeType<OxidizerRecipe> OXIDIZER_RECIPE_TYPE = new MachineRecipeType<>("oxidizer");
+    public static final RegistryObject<OxidizerRecipe.Serializer> OXIDIZER_SERIALIZER = RECIPE_SERIALIZERS.register("oxidizer", OxidizerRecipe.Serializer::new);
+
     public static void init(IEventBus eventBus) {
         RECIPE_SERIALIZERS.register(eventBus);
         eventBus.addListener(Recipes::commonSetup);
@@ -56,6 +62,8 @@ public class Recipes {
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MAGNETIZER_RECIPE_TYPE.toString()), MAGNETIZER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MAGNETIC_SEPARATOR_RECIPE_TYPE.toString()), MAGNETIC_SEPARATOR_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(GAS_SEPARATOR_RECIPE_TYPE.toString()), GAS_SEPARATOR_RECIPE_TYPE);
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(GAS_ENRICHER_RECIPE_TYPE.toString()), GAS_ENRICHER_RECIPE_TYPE);
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(OXIDIZER_RECIPE_TYPE.toString()), OXIDIZER_RECIPE_TYPE);
     }
 
     @Nullable
@@ -74,5 +82,9 @@ public class Recipes {
     @SuppressWarnings("unchecked")
     public static<T extends Recipe<?>> Set<T> getAllRecipes(Level world, RecipeType<?> recipeType) {
         return ((Set<T>) world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == recipeType).collect(Collectors.toSet()));
+    }
+
+    public static FluidStack readFluidStack(JsonObject jsonObject) {
+        return new FluidStack(Objects.requireNonNull(ForgeRegistries.FLUIDS.getValue(new ResourceLocation(jsonObject.get("fluid").getAsString()))), jsonObject.get("amount").getAsInt());
     }
 }

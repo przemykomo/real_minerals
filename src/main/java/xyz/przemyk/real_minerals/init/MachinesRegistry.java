@@ -64,11 +64,17 @@ public class MachinesRegistry {
     public static final BlockRegistryObject GAS_ENRICHER_BLOCK = Registering.BLOCKS_ITEMS.register("gas_enricher", () -> new MachineBlock(GasEnricherBlockEntity::new), ITEM_GROUP);
     public static final RegistryObject<BlockEntityType<GasEnricherBlockEntity>> GAS_ENRICHER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("gas_enricher", () -> BlockEntityType.Builder.of(GasEnricherBlockEntity::new, GAS_ENRICHER_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<GasEnricherContainer>> GAS_ENRICHER_CONTAINER = Registering.CONTAINERS.register("gas_enricher", () -> IForgeContainerType.create(GasEnricherContainer::getClientContainer));
+
+    public static final BlockRegistryObject OXIDIZER_BLOCK = Registering.BLOCKS_ITEMS.register("oxidizer", () -> new MachineBlock(OxidizerBlockEntity::new), ITEM_GROUP);
+    public static final RegistryObject<BlockEntityType<OxidizerBlockEntity>> OXIDIZER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("oxidizer", () -> BlockEntityType.Builder.of(OxidizerBlockEntity::new, OXIDIZER_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<OxidizerContainer>> OXIDIZER_CONTAINER = Registering.CONTAINERS.register("oxidizer", () -> IForgeContainerType.create(OxidizerContainer::getClientContainer));
+
     //</editor-fold>
 
     //<editor-fold desc="Electric cables">
     public static final BlockRegistryObject CABLE_BLOCK = Registering.BLOCKS_ITEMS.register("cable", () -> new CableBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL).isRedstoneConductor((p1, p2, p3) -> false)), ITEM_GROUP);
     public static final RegistryObject<BlockEntityType<CableBlockEntity>> CABLE_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("cable", () -> BlockEntityType.Builder.of(CableBlockEntity::new, CABLE_BLOCK.BLOCK.get()).build(null));
+    //</editor-fold>
 
     static void init() {}
 }

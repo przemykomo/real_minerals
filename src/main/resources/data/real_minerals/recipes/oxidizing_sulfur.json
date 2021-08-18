@@ -1,0 +1,10 @@
+{
+    "type": "real_minerals:oxidizer",
+    "input_item": {
+        "tag": "forge:dusts/sulfur"
+    },
+    "output": {
+        "fluid": "real_minerals:sulfur_dioxide_gas",
+        "amount": 100
+    }
+}

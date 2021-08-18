@@ -161,13 +161,6 @@ public class GasSeparatorBlockEntity extends ElectricMachineBlockEntity<GasSepar
         }
     }
 
-    public static final TranslatableComponent TITLE = new TranslatableComponent(RealMinerals.MODID + ".name.gas_separator");
-
-    @Override
-    public Component getDisplayName() {
-        return TITLE;
-    }
-
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
         return new GasSeparatorContainer(id, playerInventory, getBlockPos(), itemHandler, new ElectricRecipeProcessingMachineSyncData(this), serverPlayer);

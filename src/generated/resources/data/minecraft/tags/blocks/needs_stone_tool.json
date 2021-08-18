@@ -10,6 +10,7 @@
     "real_minerals:zinc_block",
     "real_minerals:zinc_ore",
     "real_minerals:magnetite_block",
-    "real_minerals:magnetite_ore"
+    "real_minerals:magnetite_ore",
+    "real_minerals:sulfur_ore"
   ]
 }

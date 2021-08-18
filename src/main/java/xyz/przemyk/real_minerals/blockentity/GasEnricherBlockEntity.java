@@ -105,7 +105,7 @@ public class GasEnricherBlockEntity extends ElectricMachineBlockEntity<GasEnrich
         if (recipe != null && doubleFluidTank.input.getFluid().isFluidEqual(recipe.input()) && doubleFluidTank.input.getFluidAmount() >= recipe.input().getAmount()) {
             return doubleFluidTank.output.isEmpty() ||
                     (doubleFluidTank.output.getFluid().isFluidEqual(recipe.output())
-                            && doubleFluidTank.output.getSpace() > recipe.output().getAmount());
+                            && doubleFluidTank.output.getSpace() >= recipe.output().getAmount());
         }
         return false;
     }

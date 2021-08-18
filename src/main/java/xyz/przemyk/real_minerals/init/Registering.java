@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -19,6 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.fluid.EnrichedShaleGasFluid;
 import xyz.przemyk.real_minerals.fluid.GasBucketItem;
 import xyz.przemyk.real_minerals.fluid.ShaleGasFluid;
+import xyz.przemyk.real_minerals.fluid.SulfurDioxideGasFluid;
 
 import static xyz.przemyk.real_minerals.RealMinerals.ITEM_GROUP;
 import static xyz.przemyk.real_minerals.RealMinerals.MODID;
@@ -65,6 +65,9 @@ public class Registering {
 
     public static final RegistryObject<EnrichedShaleGasFluid> ENRICHED_SHALE_GAS_FLUID = FLUIDS.register("enriched_shale_gas", EnrichedShaleGasFluid::new);
     public static final RegistryObject<GasBucketItem> ENRICHED_SHALE_GAS_BUCKET = ITEMS.register("enriched_shale_gas_bucket", () -> new GasBucketItem(ENRICHED_SHALE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
+
+    public static final RegistryObject<SulfurDioxideGasFluid> SULFUR_DIOXIDE_GAS_FLUID = FLUIDS.register("sulfur_dioxide_gas", SulfurDioxideGasFluid::new);
+    public static final RegistryObject<GasBucketItem> SULFUR_DIOXIDE_GAS_BUCKET = ITEMS.register("sulfur_dioxide_gas_bucket", () -> new GasBucketItem(SULFUR_DIOXIDE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
     //</editor-fold>
 
     static RegistryObject<Item> simpleItem(String name) {
