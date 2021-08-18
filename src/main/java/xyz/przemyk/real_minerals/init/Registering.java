@@ -15,10 +15,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import xyz.przemyk.real_minerals.fluid.EnrichedShaleGasFluid;
-import xyz.przemyk.real_minerals.fluid.GasBucketItem;
-import xyz.przemyk.real_minerals.fluid.ShaleGasFluid;
-import xyz.przemyk.real_minerals.fluid.SulfurDioxideGasFluid;
+import xyz.przemyk.real_minerals.fluid.*;
 
 import static xyz.przemyk.real_minerals.RealMinerals.ITEM_GROUP;
 import static xyz.przemyk.real_minerals.RealMinerals.MODID;
@@ -68,6 +65,9 @@ public class Registering {
 
     public static final RegistryObject<SulfurDioxideGasFluid> SULFUR_DIOXIDE_GAS_FLUID = FLUIDS.register("sulfur_dioxide_gas", SulfurDioxideGasFluid::new);
     public static final RegistryObject<GasBucketItem> SULFUR_DIOXIDE_GAS_BUCKET = ITEMS.register("sulfur_dioxide_gas_bucket", () -> new GasBucketItem(SULFUR_DIOXIDE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
+
+    public static final RegistryObject<SulfurTrioxideGasFluid> SULFUR_TRIOXIDE_GAS_FLUID = FLUIDS.register("sulfur_trioxide_gas", SulfurTrioxideGasFluid::new);
+    public static final RegistryObject<GasBucketItem> SULFUR_TRIOXIDE_GAS_BUCKET = ITEMS.register("sulfur_trioxide_gas_bucket", () -> new GasBucketItem(SULFUR_TRIOXIDE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
     //</editor-fold>
 
     static RegistryObject<Item> simpleItem(String name) {

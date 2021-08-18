@@ -1,0 +1,11 @@
+{
+    "type": "real_minerals:oxidizer",
+    "input_fluid": {
+        "fluid": "real_minerals:sulfur_dioxide_gas",
+        "amount": 100
+    },
+    "output": {
+        "fluid": "real_minerals:sulfur_trioxide_gas",
+        "amount": 100
+    }
+}
