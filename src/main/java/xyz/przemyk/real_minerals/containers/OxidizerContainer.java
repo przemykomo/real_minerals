@@ -23,13 +23,10 @@ public class OxidizerContainer extends BaseMachineContainer {
     }
 
     public OxidizerContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(MachinesRegistry.OXIDIZER_CONTAINER.get(), windowId, MachinesRegistry.OXIDIZER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
-
+        super(MachinesRegistry.OXIDIZER_CONTAINER.get(), windowId, MachinesRegistry.OXIDIZER_BLOCK.BLOCK.get(), pos, machineData, playerEntity, playerInventory);
         blockEntity = (OxidizerBlockEntity) playerEntity.level.getBlockEntity(pos);
 
         addSlot(new SlotItemHandler(itemHandler, 0, 56, 35));
-
-        addPlayerSlots(playerInventory);
     }
 
     @Override //TODO:

@@ -27,8 +27,7 @@ public class AlloyFurnaceContainer extends BaseMachineContainer {
     }
 
     public AlloyFurnaceContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(MachinesRegistry.ALLOY_FURNACE_CONTAINER.get(), windowId, MachinesRegistry.ALLOY_FURNACE_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
-
+        super(MachinesRegistry.ALLOY_FURNACE_CONTAINER.get(), windowId, MachinesRegistry.ALLOY_FURNACE_BLOCK.BLOCK.get(), pos, machineData, playerEntity, playerInventory);
         addSlot(new SlotItemHandler(itemHandler, 0, 19, 16));
         addSlot(new SlotItemHandler(itemHandler, 1, 38, 16));
         addSlot(new SlotItemHandler(itemHandler, 2, 57, 16));
@@ -37,8 +36,6 @@ public class AlloyFurnaceContainer extends BaseMachineContainer {
 
         addSlot(new MachineFuelSlot(itemHandler, 5, 38, 53));
         addSlot(new MachineOutputSlot(itemHandler, 6, 116, 35, playerEntity));
-
-        addPlayerSlots(playerInventory);
     }
 
     //TODO

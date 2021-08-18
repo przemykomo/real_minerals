@@ -25,13 +25,10 @@ public class MagneticSeparatorContainer extends BaseMachineContainer {
     }
 
     public MagneticSeparatorContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(MachinesRegistry.MAGNETIC_SEPARATOR_CONTAINER.get(), windowId, MachinesRegistry.MAGNETIC_SEPARATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
-
+        super(MachinesRegistry.MAGNETIC_SEPARATOR_CONTAINER.get(), windowId, MachinesRegistry.MAGNETIC_SEPARATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity, playerInventory);
         addSlot(new SlotItemHandler(itemHandler, 0, 45, 27));
         addSlot(new MachineOutputSlot(itemHandler, 1, 111, 21, playerEntity));
         addSlot(new MachineOutputSlot(itemHandler, 2, 111, 49, playerEntity));
-
-        addPlayerSlots(playerInventory);
     }
 
     @Override //TODO

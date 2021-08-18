@@ -24,11 +24,8 @@ public class GasGeneratorContainer extends BaseMachineContainer {
     }
 
     public GasGeneratorContainer(int windowId, Inventory playerInventory, BlockPos pos, ContainerData machineData, Player playerEntity) {
-        super(MachinesRegistry.GAS_GENERATOR_CONTAINER.get(), windowId, MachinesRegistry.GAS_GENERATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
-
+        super(MachinesRegistry.GAS_GENERATOR_CONTAINER.get(), windowId, MachinesRegistry.GAS_GENERATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity, playerInventory);
         blockEntity = (GasGeneratorBlockEntity) playerEntity.level.getBlockEntity(pos);
-
-        addPlayerSlots(playerInventory);
     }
 
 

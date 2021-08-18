@@ -24,10 +24,8 @@ public class GasEnricherContainer extends BaseMachineContainer {
     }
 
     public GasEnricherContainer(int windowId, Inventory playerInventory, BlockPos pos, ContainerData machineData, Player playerEntity) {
-        super(MachinesRegistry.GAS_ENRICHER_CONTAINER.get(), windowId, MachinesRegistry.GAS_ENRICHER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
+        super(MachinesRegistry.GAS_ENRICHER_CONTAINER.get(), windowId, MachinesRegistry.GAS_ENRICHER_BLOCK.BLOCK.get(), pos, machineData, playerEntity, playerInventory);
         blockEntity = (GasEnricherBlockEntity) playerEntity.level.getBlockEntity(pos);
-
-        addPlayerSlots(playerInventory);
     }
 
     @Override

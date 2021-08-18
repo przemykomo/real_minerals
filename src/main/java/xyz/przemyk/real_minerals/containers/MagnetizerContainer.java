@@ -25,19 +25,16 @@ public class MagnetizerContainer extends BaseMachineContainer {
     }
 
     public MagnetizerContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(MachinesRegistry.MAGNETIZER_CONTAINER.get(), windowId, MachinesRegistry.MAGNETIZER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
-
+        super(MachinesRegistry.MAGNETIZER_CONTAINER.get(), windowId, MachinesRegistry.MAGNETIZER_BLOCK.BLOCK.get(), pos, machineData, playerEntity, playerInventory);
         addSlot(new SlotItemHandler(itemHandler, 0, 56, 35));
         addSlot(new MachineOutputSlot(itemHandler, 1, 116, 35, playerEntity));
-
-        addPlayerSlots(playerInventory);
     }
 
     @Override //TODO: does it work the way it should?
     public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack stack = slot.getItem();
             itemstack = stack.copy();
             if (index == 0) {

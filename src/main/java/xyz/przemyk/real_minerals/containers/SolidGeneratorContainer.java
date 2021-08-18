@@ -23,11 +23,8 @@ public class SolidGeneratorContainer extends BaseMachineContainer {
     }
 
     public SolidGeneratorContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(MachinesRegistry.BURNING_GENERATOR_CONTAINER.get(), windowId, MachinesRegistry.BURNING_GENERATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
-
+        super(MachinesRegistry.BURNING_GENERATOR_CONTAINER.get(), windowId, MachinesRegistry.BURNING_GENERATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity, playerInventory);
         addSlot(new MachineFuelSlot(itemHandler, 0, 80, 62));
-
-        addPlayerSlots(playerInventory);
     }
 
     @Override //TODO

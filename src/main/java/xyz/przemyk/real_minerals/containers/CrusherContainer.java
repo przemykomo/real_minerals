@@ -27,13 +27,10 @@ public class CrusherContainer extends BaseMachineContainer {
     }
 
     public CrusherContainer(int windowId, Inventory playerInventory, BlockPos pos, IItemHandler itemHandler, ContainerData machineData, Player playerEntity) {
-        super(MachinesRegistry.CRUSHER_CONTAINER.get(), windowId, MachinesRegistry.CRUSHER_BLOCK.BLOCK.get(), pos, machineData, playerEntity);
-
+        super(MachinesRegistry.CRUSHER_CONTAINER.get(), windowId, MachinesRegistry.CRUSHER_BLOCK.BLOCK.get(), pos, machineData, playerEntity, playerInventory);
         addSlot(new SlotItemHandler(itemHandler, 0, 56, 17));
         addSlot(new MachineFuelSlot(itemHandler, 1, 56, 53));
         addSlot(new MachineOutputSlot(itemHandler, 2, 116, 35, playerEntity));
-
-        addPlayerSlots(playerInventory);
     }
 
     //TODO
@@ -41,7 +38,7 @@ public class CrusherContainer extends BaseMachineContainer {
     public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
             if (index == 2) {

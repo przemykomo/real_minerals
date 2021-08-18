@@ -19,12 +19,13 @@ public abstract class BaseMachineContainer extends AbstractContainerMenu {
     private final ContainerLevelAccess usabilityTest;
     public final ContainerData machineData;
 
-    protected BaseMachineContainer(@Nullable MenuType<?> type, int id, Block block, BlockPos pos, ContainerData machineData, Player playerEntity) {
+    protected BaseMachineContainer(@Nullable MenuType<?> type, int id, Block block, BlockPos pos, ContainerData machineData, Player playerEntity, Inventory playerInventory) {
         super(type, id);
         this.block = block;
         this.usabilityTest = ContainerLevelAccess.create(playerEntity.level, pos);
         this.machineData = machineData;
         addDataSlots(machineData);
+        addPlayerSlots(playerInventory);
     }
 
     protected void addPlayerSlots(Inventory playerInventory) {

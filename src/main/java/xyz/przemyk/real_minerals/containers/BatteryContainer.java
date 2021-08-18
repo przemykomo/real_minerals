@@ -20,9 +20,7 @@ public class BatteryContainer extends BaseMachineContainer {
     }
 
     public BatteryContainer(int id, Inventory playerInventory, BlockPos pos, ContainerData batterySyncData, Player serverPlayer) {
-        super(MachinesRegistry.BATTERY_CONTAINER.get(), id, MachinesRegistry.BATTERY_BLOCK.BLOCK.get(), pos, batterySyncData, serverPlayer);
-
-        addPlayerSlots(playerInventory);
+        super(MachinesRegistry.BATTERY_CONTAINER.get(), id, MachinesRegistry.BATTERY_BLOCK.BLOCK.get(), pos, batterySyncData, serverPlayer, playerInventory);
     }
 
     @Override
