@@ -47,6 +47,9 @@ public class Recipes {
     public static final RecipeType<OxidizerRecipe> OXIDIZER_RECIPE_TYPE = new MachineRecipeType<>("oxidizer");
     public static final RegistryObject<OxidizerRecipe.Serializer> OXIDIZER_SERIALIZER = RECIPE_SERIALIZERS.register("oxidizer", OxidizerRecipe.Serializer::new);
 
+    public static final RecipeType<MixerRecipe> MIXER_RECIPE_TYPE = new MachineRecipeType<>("mixer");
+    public static final RegistryObject<MixerRecipe.Serializer> MIXER_SERIALIZER = RECIPE_SERIALIZERS.register("mixer", MixerRecipe.Serializer::new);
+
     public static void init(IEventBus eventBus) {
         RECIPE_SERIALIZERS.register(eventBus);
         eventBus.addListener(Recipes::commonSetup);
@@ -64,6 +67,7 @@ public class Recipes {
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(GAS_SEPARATOR_RECIPE_TYPE.toString()), GAS_SEPARATOR_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(GAS_ENRICHER_RECIPE_TYPE.toString()), GAS_ENRICHER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(OXIDIZER_RECIPE_TYPE.toString()), OXIDIZER_RECIPE_TYPE);
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MIXER_RECIPE_TYPE.toString()), MIXER_RECIPE_TYPE);
     }
 
     @Nullable

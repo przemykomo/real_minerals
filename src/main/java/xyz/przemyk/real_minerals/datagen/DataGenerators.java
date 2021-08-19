@@ -15,7 +15,6 @@ public class DataGenerators {
     public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        generator.addProvider(new BlockModels(generator, RealMinerals.MODID, existingFileHelper));
         generator.addProvider(new ItemModels(generator, RealMinerals.MODID, existingFileHelper));
         generator.addProvider(new BlockStates(generator, RealMinerals.MODID, existingFileHelper));
         generator.addProvider(new LootTables(generator));

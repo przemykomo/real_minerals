@@ -25,5 +25,6 @@ public class ClientSetup {
         MenuScreens.register(MachinesRegistry.GAS_SEPARATOR_CONTAINER.get(), GasSeparatorScreen::new);
         MenuScreens.register(MachinesRegistry.GAS_ENRICHER_CONTAINER.get(), GasEnricherScreen::new);
         MenuScreens.register(MachinesRegistry.OXIDIZER_CONTAINER.get(), OxidizerScreen::new);
+        MenuScreens.register(MachinesRegistry.MIXER_CONTAINER.get(), MixerScreen::new);
     }
 }

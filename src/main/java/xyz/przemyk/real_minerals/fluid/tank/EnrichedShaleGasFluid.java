@@ -1,6 +1,7 @@
-package xyz.przemyk.real_minerals.fluid;
+package xyz.przemyk.real_minerals.fluid.tank;
 
 import net.minecraft.world.item.Item;
+import xyz.przemyk.real_minerals.fluid.GasFluid;
 import xyz.przemyk.real_minerals.init.Registering;
 
 public class EnrichedShaleGasFluid extends GasFluid {

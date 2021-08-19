@@ -1,0 +1,15 @@
+{
+    "type": "real_minerals:mixer",
+    "first_input": {
+        "fluid": "real_minerals:sulfur_trioxide_gas",
+        "amount": 100
+    },
+    "second_input": {
+        "fluid": "minecraft:water",
+        "amount": 100
+    },
+    "output": {
+        "fluid": "real_minerals:acid",
+        "amount": 100
+    }
+}

@@ -20,7 +20,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.przemyk.real_minerals.containers.GasGeneratorContainer;
 import xyz.przemyk.real_minerals.datapack.GasBurningEntry;
 import xyz.przemyk.real_minerals.datapack.GasBurningReloadListener;
-import xyz.przemyk.real_minerals.fluid.FillOnlyFluidTank;
+import xyz.przemyk.real_minerals.fluid.tank.FillOnlyFluidTank;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 

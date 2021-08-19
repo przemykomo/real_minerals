@@ -1,10 +1,13 @@
 package xyz.przemyk.real_minerals.init;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -12,10 +15,13 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.fluid.*;
+import xyz.przemyk.real_minerals.fluid.tank.EnrichedShaleGasFluid;
 
 import static xyz.przemyk.real_minerals.RealMinerals.ITEM_GROUP;
 import static xyz.przemyk.real_minerals.RealMinerals.MODID;
@@ -30,6 +36,7 @@ public class Registering {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
 
     public static void init(IEventBus eventBus) {
         BLOCKS_ITEMS.register(eventBus);
@@ -37,6 +44,7 @@ public class Registering {
         BLOCK_ENTITIES.register(eventBus);
         CONTAINERS.register(eventBus);
         FLUIDS.register(eventBus);
+        BLOCKS.register(eventBus);
         MachinesRegistry.init();
         StoneMinerals.init();
         GravelMinerals.init();
@@ -68,6 +76,12 @@ public class Registering {
 
     public static final RegistryObject<SulfurTrioxideGasFluid> SULFUR_TRIOXIDE_GAS_FLUID = FLUIDS.register("sulfur_trioxide_gas", SulfurTrioxideGasFluid::new);
     public static final RegistryObject<GasBucketItem> SULFUR_TRIOXIDE_GAS_BUCKET = ITEMS.register("sulfur_trioxide_gas_bucket", () -> new GasBucketItem(SULFUR_TRIOXIDE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
+
+    public static final RegistryObject<ForgeFlowingFluid.Flowing> FLOWING_ACID_FLUID = FLUIDS.register("acid_flowing", () -> new ForgeFlowingFluid.Flowing(Registering.ACID_PROPERTIES));
+    public static final RegistryObject<ForgeFlowingFluid.Source> ACID_FLUID = FLUIDS.register("acid", () -> new ForgeFlowingFluid.Source(Registering.ACID_PROPERTIES));
+    public static final RegistryObject<LiquidBlock> ACID_BLOCK = BLOCKS.register("acid", () -> new FixedLiquidBlock(ACID_FLUID, BlockBehaviour.Properties.of(Material.WATER, MaterialColor.TERRACOTTA_WHITE)));
+    public static final RegistryObject<BucketItem> ACID_BUCKET = ITEMS.register("acid_bucket", () -> new BucketItem(ACID_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
+    public static final ForgeFlowingFluid.Properties ACID_PROPERTIES = new ForgeFlowingFluid.Properties(ACID_FLUID, FLOWING_ACID_FLUID, FluidAttributes.builder(new ResourceLocation("block/water_still"), new ResourceLocation("block/water_flow"))).block(ACID_BLOCK).bucket(ACID_BUCKET);
     //</editor-fold>
 
     static RegistryObject<Item> simpleItem(String name) {

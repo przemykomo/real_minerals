@@ -1,9 +1,0 @@
-{
-    "parent": "minecraft:block/orientable_with_bottom",
-    "textures": {
-        "top": "real_minerals:block/magnetic_separator_top",
-        "front": "real_minerals:block/gas_separator_front",
-        "side": "real_minerals:block/magnetic_separator_side",
-        "bottom": "real_minerals:block/bronze_machine_bottom"
-    }
-}

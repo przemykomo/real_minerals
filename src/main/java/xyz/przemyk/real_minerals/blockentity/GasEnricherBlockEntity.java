@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.containers.GasEnricherContainer;
 import xyz.przemyk.real_minerals.datapack.recipes.GasEnricherRecipe;
-import xyz.przemyk.real_minerals.fluid.DoubleFluidTank;
+import xyz.przemyk.real_minerals.fluid.tank.DoubleFluidTank;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;

@@ -1,4 +1,4 @@
-package xyz.przemyk.real_minerals.fluid;
+package xyz.przemyk.real_minerals.fluid.tank;
 
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;

@@ -69,6 +69,9 @@ public class MachinesRegistry {
     public static final RegistryObject<BlockEntityType<OxidizerBlockEntity>> OXIDIZER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("oxidizer", () -> BlockEntityType.Builder.of(OxidizerBlockEntity::new, OXIDIZER_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<OxidizerContainer>> OXIDIZER_CONTAINER = Registering.CONTAINERS.register("oxidizer", () -> IForgeContainerType.create(OxidizerContainer::getClientContainer));
 
+    public static final BlockRegistryObject MIXER_BLOCK = Registering.BLOCKS_ITEMS.register("mixer", () -> new MachineBlock(MixerBlockEntity::new), ITEM_GROUP);
+    public static final RegistryObject<BlockEntityType<MixerBlockEntity>> MIXER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("mixer", () -> BlockEntityType.Builder.of(MixerBlockEntity::new, MIXER_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<MixerContainer>> MIXER_CONTAINER = Registering.CONTAINERS.register("mixer", () -> IForgeContainerType.create(MixerContainer::getClientContainer));
     //</editor-fold>
 
     //<editor-fold desc="Electric cables">

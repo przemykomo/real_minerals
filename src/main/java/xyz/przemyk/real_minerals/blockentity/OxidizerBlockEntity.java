@@ -18,7 +18,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import xyz.przemyk.real_minerals.containers.OxidizerContainer;
 import xyz.przemyk.real_minerals.datapack.recipes.OxidizerRecipe;
-import xyz.przemyk.real_minerals.fluid.DoubleFluidTank;
+import xyz.przemyk.real_minerals.fluid.tank.DoubleFluidTank;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
