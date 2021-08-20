@@ -113,8 +113,8 @@ public abstract class ElectricMachineBlockEntity<T extends Recipe<?>> extends Bl
     protected static class ElectricRecipeProcessingMachineSyncData implements ContainerData {
         private final ElectricMachineBlockEntity<?> machine;
 
-        public ElectricRecipeProcessingMachineSyncData(ElectricMachineBlockEntity<?> electricFurnaceTileEntity) {
-            machine = electricFurnaceTileEntity;
+        public ElectricRecipeProcessingMachineSyncData(ElectricMachineBlockEntity<?> machineBlockEntity) {
+            machine = machineBlockEntity;
         }
 
         @Override

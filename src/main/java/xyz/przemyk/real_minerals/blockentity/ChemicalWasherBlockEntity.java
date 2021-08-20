@@ -16,8 +16,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import xyz.przemyk.real_minerals.containers.OxidizerContainer;
-import xyz.przemyk.real_minerals.datapack.recipes.OxidizerRecipe;
+import xyz.przemyk.real_minerals.containers.ChemicalWasherContainer;
+import xyz.przemyk.real_minerals.datapack.recipes.ChemicalWasherRecipe;
 import xyz.przemyk.real_minerals.fluid.tank.DoubleFluidTank;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
@@ -26,7 +26,7 @@ import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class OxidizerBlockEntity extends ElectricMachineBlockEntity<OxidizerRecipe> {
+public class ChemicalWasherBlockEntity extends ElectricMachineBlockEntity<ChemicalWasherRecipe> {
 
     public static final int FE_PER_TICK = 20;
     public static final int WORKING_TIME_TOTAL = 120;
@@ -36,7 +36,7 @@ public class OxidizerBlockEntity extends ElectricMachineBlockEntity<OxidizerReci
         if (fluidStack.isEmpty()) {
             return false;
         } else {
-            return level.getRecipeManager().getAllRecipesFor(Recipes.OXIDIZER_RECIPE_TYPE).stream().anyMatch(gasEnricherRecipe -> gasEnricherRecipe.inputFluidStack().isFluidEqual(fluidStack));
+            return level.getRecipeManager().getAllRecipesFor(Recipes.CHEMICAL_WASHER_RECIPE_TYPE).stream().anyMatch(chemicalWasherRecipe -> chemicalWasherRecipe.inputFluidStack().isFluidEqual(fluidStack));
         }
     }, this::markUpdated);
     public final LazyOptional<DoubleFluidTank> fluidTankLazyOptional = LazyOptional.of(() -> doubleFluidTank);
@@ -49,8 +49,8 @@ public class OxidizerBlockEntity extends ElectricMachineBlockEntity<OxidizerReci
     };
     public final LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
 
-    public OxidizerBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(MachinesRegistry.OXIDIZER_BLOCK_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
+    public ChemicalWasherBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(MachinesRegistry.CHEMICAL_WASHER_BLOCK_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
                 FE_PER_TICK, WORKING_TIME_TOTAL, blockPos, blockState);
     }
 
@@ -88,43 +88,40 @@ public class OxidizerBlockEntity extends ElectricMachineBlockEntity<OxidizerReci
     }
 
     @Override
-    protected void process(OxidizerRecipe recipe) {
+    protected void process(ChemicalWasherRecipe recipe) {
         doubleFluidTank.input.drain(recipe.inputFluidStack(), IFluidHandler.FluidAction.EXECUTE);
-        if (!recipe.ingredient().isEmpty()) {
-            itemHandler.extractItem(0, 1, false);
-        }
+        itemHandler.extractItem(0, 1, false);
         doubleFluidTank.output.fill(recipe.outputFluidStack(), IFluidHandler.FluidAction.EXECUTE);
     }
 
     @Override
-    protected boolean canProcess(OxidizerRecipe recipe) {
-        if (recipe != null && (recipe.inputFluidStack().isEmpty() || (recipe.inputFluidStack().isFluidEqual(doubleFluidTank.input.getFluid()) && doubleFluidTank.input.getFluidAmount() >= recipe.inputFluidStack().getAmount())) && (recipe.ingredient().isEmpty() || recipe.ingredient().test(itemHandler.getStackInSlot(0)))) {
+    protected boolean canProcess(ChemicalWasherRecipe recipe) {
+        if (recipe != null && recipe.inputFluidStack().isFluidEqual(doubleFluidTank.input.getFluid()) && doubleFluidTank.input.getFluidAmount() >= recipe.inputFluidStack().getAmount()
+        && recipe.ingredient().test(itemHandler.getStackInSlot(0))) {
             return doubleFluidTank.output.isEmpty() || (doubleFluidTank.output.getFluid().isFluidEqual(recipe.outputFluidStack()) && doubleFluidTank.output.getSpace() >= recipe.outputFluidStack().getAmount());
         }
         return false;
     }
 
-    private OxidizerRecipe cachedRecipe = null;
+    private ChemicalWasherRecipe cachedRecipe = null;
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    protected OxidizerRecipe getCachedRecipe() {
+    protected ChemicalWasherRecipe getCachedRecipe() {
         if (cachedRecipe != null && testRecipe(cachedRecipe)) {
             return cachedRecipe;
         }
 
-        return cachedRecipe = level.getRecipeManager().getAllRecipesFor(Recipes.OXIDIZER_RECIPE_TYPE).stream().filter(this::testRecipe).findFirst().orElse(null);
+        return cachedRecipe = level.getRecipeManager().getAllRecipesFor(Recipes.CHEMICAL_WASHER_RECIPE_TYPE).stream().filter(this::testRecipe).findFirst().orElse(null);
     }
 
-    private boolean testRecipe(OxidizerRecipe recipe) {
-        return (recipe.inputFluidStack().isEmpty() || recipe.inputFluidStack().isFluidEqual(doubleFluidTank.input.getFluid()))
-                && (recipe.ingredient().isEmpty() || recipe.ingredient().test(itemHandler.getStackInSlot(0)));
+    private boolean testRecipe(ChemicalWasherRecipe recipe) {
+        return recipe.inputFluidStack().isFluidEqual(doubleFluidTank.input.getFluid()) && recipe.ingredient().test(itemHandler.getStackInSlot(0));
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
-        return new OxidizerContainer(id, playerInventory, getBlockPos(), itemHandler, new ElectricRecipeProcessingMachineSyncData(this), serverPlayer);
+        return new ChemicalWasherContainer(id, playerInventory, getBlockPos(), itemHandler, new ElectricRecipeProcessingMachineSyncData(this), serverPlayer);
     }
 
     @Override

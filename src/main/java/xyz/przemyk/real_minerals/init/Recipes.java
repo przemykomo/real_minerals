@@ -1,14 +1,19 @@
 package xyz.przemyk.real_minerals.init;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -50,6 +55,9 @@ public class Recipes {
     public static final RecipeType<MixerRecipe> MIXER_RECIPE_TYPE = new MachineRecipeType<>("mixer");
     public static final RegistryObject<MixerRecipe.Serializer> MIXER_SERIALIZER = RECIPE_SERIALIZERS.register("mixer", MixerRecipe.Serializer::new);
 
+    public static final RecipeType<ChemicalWasherRecipe> CHEMICAL_WASHER_RECIPE_TYPE = new MachineRecipeType<>("chemical_washer");
+    public static final RegistryObject<ChemicalWasherRecipe.Serializer> CHEMICAL_WASHER_SERIALIZER = RECIPE_SERIALIZERS.register("chemical_washer", ChemicalWasherRecipe.Serializer::new);
+
     public static void init(IEventBus eventBus) {
         RECIPE_SERIALIZERS.register(eventBus);
         eventBus.addListener(Recipes::commonSetup);
@@ -68,6 +76,7 @@ public class Recipes {
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(GAS_ENRICHER_RECIPE_TYPE.toString()), GAS_ENRICHER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(OXIDIZER_RECIPE_TYPE.toString()), OXIDIZER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MIXER_RECIPE_TYPE.toString()), MIXER_RECIPE_TYPE);
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(CHEMICAL_WASHER_RECIPE_TYPE.toString()), CHEMICAL_WASHER_RECIPE_TYPE);
     }
 
     @Nullable
@@ -88,7 +97,26 @@ public class Recipes {
         return ((Set<T>) world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == recipeType).collect(Collectors.toSet()));
     }
 
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+
     public static FluidStack readFluidStack(JsonObject jsonObject) {
-        return new FluidStack(Objects.requireNonNull(ForgeRegistries.FLUIDS.getValue(new ResourceLocation(jsonObject.get("fluid").getAsString()))), jsonObject.get("amount").getAsInt());
+        Fluid fluid = Objects.requireNonNull(ForgeRegistries.FLUIDS.getValue(new ResourceLocation(jsonObject.get("fluid").getAsString())));
+        int amount = jsonObject.get("amount").getAsInt();
+        if (!jsonObject.has("nbt")) {
+            return new FluidStack(fluid, amount);
+        } else {
+            try {
+                JsonElement element = jsonObject.get("nbt");
+                CompoundTag nbt;
+                if (element.isJsonObject()) {
+                    nbt = TagParser.parseTag(GSON.toJson(element));
+                } else {
+                    nbt = TagParser.parseTag(GsonHelper.convertToString(element, "nbt"));
+                }
+                return new FluidStack(fluid, amount, nbt);
+            } catch (CommandSyntaxException e) {
+                throw new JsonSyntaxException("Invalid NBT Entry: " + e);
+            }
+        }
     }
 }

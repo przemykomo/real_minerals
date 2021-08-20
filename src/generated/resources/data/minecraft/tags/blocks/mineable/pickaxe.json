@@ -17,6 +17,7 @@
     "real_minerals:gas_enricher",
     "real_minerals:oxidizer",
     "real_minerals:mixer",
+    "real_minerals:chemical_washer",
     "real_minerals:cable",
     "real_minerals:copper_block",
     "real_minerals:copper_ore",

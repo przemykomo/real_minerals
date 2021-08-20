@@ -1,17 +1,29 @@
 package xyz.przemyk.real_minerals.screen.modules;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fmlclient.gui.GuiUtils;
+import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.screen.MachineScreen;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TankModule extends ScreenModule {
 
@@ -31,7 +43,22 @@ public class TankModule extends ScreenModule {
     public boolean renderHovering(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         if (screen.isHovering(x, y, width, height, mouseX, mouseY)) {
             FluidStack fluidStack = fluidTank.getFluid();
-            screen.renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", fluidStack.getFluid().getAttributes().getDisplayName(fluidStack), fluidStack.getAmount()), mouseX, mouseY);
+            Component displayName = fluidStack.getDisplayName();
+            if (fluidStack.hasTag()) {
+                CompoundTag tag = fluidStack.getTag();
+                if (tag.contains("item", Constants.NBT.TAG_STRING)) {
+                    Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
+                    if (item != null) {
+//                        screen.renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount())
+//                                .append(new TranslatableComponent(RealMinerals.MODID + ".gui.fluid.dissolved", item.getDescription())), mouseX, mouseY);
+                        //                        screen.renderComponentToolTip(matrixStack, list, mouseX, mouseY, screen.getMinecraft().font);
+                        GuiUtils.drawHoveringText(matrixStack, Lists.newArrayList(new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()),
+                                new TranslatableComponent(RealMinerals.MODID + ".gui.fluid.dissolved", item.getDescription())), mouseX, mouseY, screen.width, screen.height, -1, screen.getMinecraft().font);
+                    }
+                }
+            } else {
+                screen.renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()), mouseX, mouseY);
+            }
             return true;
         }
         return false;

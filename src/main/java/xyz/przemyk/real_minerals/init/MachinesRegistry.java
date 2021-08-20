@@ -72,6 +72,10 @@ public class MachinesRegistry {
     public static final BlockRegistryObject MIXER_BLOCK = Registering.BLOCKS_ITEMS.register("mixer", () -> new MachineBlock(MixerBlockEntity::new), ITEM_GROUP);
     public static final RegistryObject<BlockEntityType<MixerBlockEntity>> MIXER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("mixer", () -> BlockEntityType.Builder.of(MixerBlockEntity::new, MIXER_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<MixerContainer>> MIXER_CONTAINER = Registering.CONTAINERS.register("mixer", () -> IForgeContainerType.create(MixerContainer::getClientContainer));
+
+    public static final BlockRegistryObject CHEMICAL_WASHER_BLOCK = Registering.BLOCKS_ITEMS.register("chemical_washer", () -> new MachineBlock(ChemicalWasherBlockEntity::new), ITEM_GROUP);
+    public static final RegistryObject<BlockEntityType<ChemicalWasherBlockEntity>> CHEMICAL_WASHER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("chemical_washer", () -> BlockEntityType.Builder.of(ChemicalWasherBlockEntity::new, CHEMICAL_WASHER_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<ChemicalWasherContainer>> CHEMICAL_WASHER_CONTAINER = Registering.CONTAINERS.register("chemical_washer", () -> IForgeContainerType.create(ChemicalWasherContainer::getClientContainer));
     //</editor-fold>
 
     //<editor-fold desc="Electric cables">

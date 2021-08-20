@@ -1,0 +1,83 @@
+package xyz.przemyk.real_minerals.datapack.recipes;
+
+import com.google.gson.JsonObject;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistryEntry;
+import xyz.przemyk.real_minerals.init.Recipes;
+
+import javax.annotation.Nullable;
+
+public record ChemicalWasherRecipe(ResourceLocation id, FluidStack inputFluidStack, Ingredient ingredient, FluidStack outputFluidStack) implements Recipe<Container> {
+    @Override
+    public boolean matches(Container pContainer, Level pLevel) {
+        return false;
+    }
+
+    @Override
+    public ItemStack assemble(Container pContainer) {
+        return null;
+    }
+
+    @Override
+    public boolean canCraftInDimensions(int pWidth, int pHeight) {
+        return false;
+    }
+
+    @Override
+    public ItemStack getResultItem() {
+        return null;
+    }
+
+    @Override
+    public ResourceLocation getId() {
+        return id;
+    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return Recipes.CHEMICAL_WASHER_SERIALIZER.get();
+    }
+
+    @Override
+    public RecipeType<?> getType() {
+        return Recipes.CHEMICAL_WASHER_RECIPE_TYPE;
+    }
+
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ChemicalWasherRecipe> {
+
+        @Override
+        public ChemicalWasherRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            FluidStack inputFluidStack = Recipes.readFluidStack(GsonHelper.getAsJsonObject(json, "input_fluid"));
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input_item"));
+            FluidStack outputFluidStack = Recipes.readFluidStack(GsonHelper.getAsJsonObject(json, "output"));
+
+            return new ChemicalWasherRecipe(recipeId, inputFluidStack, ingredient, outputFluidStack);
+        }
+
+        @Nullable
+        @Override
+        public ChemicalWasherRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+            FluidStack inputFluidStack = buffer.readFluidStack();
+            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+            FluidStack outputFluidStack = buffer.readFluidStack();
+            return new ChemicalWasherRecipe(recipeId, inputFluidStack, ingredient, outputFluidStack);
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buffer, ChemicalWasherRecipe recipe) {
+            buffer.writeFluidStack(recipe.inputFluidStack);
+            recipe.ingredient.toNetwork(buffer);
+            buffer.writeFluidStack(recipe.outputFluidStack);
+        }
+    }
+}

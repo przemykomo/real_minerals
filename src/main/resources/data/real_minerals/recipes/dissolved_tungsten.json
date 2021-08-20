@@ -1,0 +1,17 @@
+{
+    "type": "real_minerals:chemical_washer",
+    "input_fluid": {
+        "fluid": "real_minerals:acid",
+        "amount": 100
+    },
+    "input_item": {
+        "tag": "forge:obsidian_ores/tungsten"
+    },
+    "output": {
+        "fluid": "real_minerals:acid",
+        "amount": 100,
+        "nbt": {
+            "item": "real_minerals:tungsten_dust"
+        }
+    }
+}
