@@ -3,14 +3,12 @@ package xyz.przemyk.real_minerals.blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -24,13 +22,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 import xyz.przemyk.real_minerals.blockentity.TickableBlockEntity;
+import xyz.przemyk.real_minerals.util.FluidUtils;
 
 import javax.annotation.Nullable;
 import java.util.function.BiFunction;
@@ -72,68 +67,24 @@ public class MachineBlock extends Block implements EntityBlock {
     }
 
     @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
-            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            if (tileEntity != null) {
-                ItemStack itemStack = player.getItemInHand(handIn);
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity != null) {
+                ItemStack itemStack = player.getItemInHand(hand);
                 Direction face = hit.getDirection();
-                if (tryExtractFluid(worldIn, pos, player, handIn, tileEntity, itemStack, face)) {
+                if (FluidUtils.tryExtractFluid(level, pos, player, hand, blockEntity, itemStack, face)) {
                     return InteractionResult.CONSUME;
                 }
 
-                if (tileEntity instanceof MenuProvider) {
-                    NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, pos);
+                if (blockEntity instanceof MenuProvider) {
+                    NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, pos);
                 }
             }
             return InteractionResult.CONSUME;
         }
         return InteractionResult.SUCCESS;
     }
-
-    private static boolean tryExtractFluid(Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockEntity tileEntity, ItemStack itemStack, Direction face) {
-        if (!itemStack.isEmpty()) {
-            ItemStack copy = ItemHandlerHelper.copyStackWithSize(itemStack, 1);
-            copy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(itemFluidHandler ->
-                    tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, face).ifPresent(tileFluidHandler -> {
-                FluidStack transferred = tryTransfer(itemFluidHandler, tileFluidHandler, Integer.MAX_VALUE);
-                if (!transferred.isEmpty()) {
-                    worldIn.playSound(null, pos, transferred.getFluid().getAttributes().getEmptySound(transferred), SoundSource.BLOCKS, 1.0f, 1.0f);
-                } else {
-                    transferred = tryTransfer(tileFluidHandler, itemFluidHandler, Integer.MAX_VALUE);
-                    if (!transferred.isEmpty()) {
-                        worldIn.playSound(null, pos, transferred.getFluid().getAttributes().getFillSound(transferred), SoundSource.BLOCKS, 1.0f, 1.0f);
-                    }
-                }
-
-                if (!transferred.isEmpty()) {
-                    player.setItemInHand(handIn, ItemUtils.createFilledResult(itemStack, player, itemFluidHandler.getContainer()));
-                }
-            }));
-            return copy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent();
-        }
-        return false;
-    }
-
-    public static FluidStack tryTransfer(IFluidHandler input, IFluidHandler output, int maxFill) {
-        // first, figure out how much we can drain
-        FluidStack simulated = input.drain(maxFill, IFluidHandler.FluidAction.SIMULATE);
-        if (!simulated.isEmpty()) {
-            // next, find out how much we can fill
-            int simulatedFill = output.fill(simulated, IFluidHandler.FluidAction.SIMULATE);
-            if (simulatedFill > 0) {
-                // actually drain
-                FluidStack drainedFluid = input.drain(simulatedFill, IFluidHandler.FluidAction.EXECUTE);
-                if (!drainedFluid.isEmpty()) {
-                    // actually fill
-                    output.fill(drainedFluid.copy(), IFluidHandler.FluidAction.EXECUTE);
-                }
-                return drainedFluid;
-            }
-        }
-        return FluidStack.EMPTY;
-    }
-
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

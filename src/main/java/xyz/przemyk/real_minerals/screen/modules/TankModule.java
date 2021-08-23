@@ -49,9 +49,6 @@ public class TankModule extends ScreenModule {
                 if (tag.contains("item", Constants.NBT.TAG_STRING)) {
                     Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
                     if (item != null) {
-//                        screen.renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount())
-//                                .append(new TranslatableComponent(RealMinerals.MODID + ".gui.fluid.dissolved", item.getDescription())), mouseX, mouseY);
-                        //                        screen.renderComponentToolTip(matrixStack, list, mouseX, mouseY, screen.getMinecraft().font);
                         GuiUtils.drawHoveringText(matrixStack, Lists.newArrayList(new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()),
                                 new TranslatableComponent(RealMinerals.MODID + ".gui.fluid.dissolved", item.getDescription())), mouseX, mouseY, screen.width, screen.height, -1, screen.getMinecraft().font);
                     }

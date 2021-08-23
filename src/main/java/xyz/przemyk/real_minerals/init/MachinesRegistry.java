@@ -8,10 +8,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fmllegacy.RegistryObject;
-import xyz.przemyk.real_minerals.blocks.AlloyFurnaceBlock;
-import xyz.przemyk.real_minerals.blocks.BatteryBlock;
-import xyz.przemyk.real_minerals.blocks.CrusherBlock;
-import xyz.przemyk.real_minerals.blocks.MachineBlock;
+import xyz.przemyk.real_minerals.blocks.*;
 import xyz.przemyk.real_minerals.cables.CableBlock;
 import xyz.przemyk.real_minerals.cables.CableBlockEntity;
 import xyz.przemyk.real_minerals.containers.*;
@@ -78,9 +75,12 @@ public class MachinesRegistry {
     public static final RegistryObject<MenuType<ChemicalWasherContainer>> CHEMICAL_WASHER_CONTAINER = Registering.CONTAINERS.register("chemical_washer", () -> IForgeContainerType.create(ChemicalWasherContainer::getClientContainer));
     //</editor-fold>
 
-    //<editor-fold desc="Electric cables">
+    //<editor-fold desc="Other">
     public static final BlockRegistryObject CABLE_BLOCK = Registering.BLOCKS_ITEMS.register("cable", () -> new CableBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL).isRedstoneConductor((p1, p2, p3) -> false)), ITEM_GROUP);
     public static final RegistryObject<BlockEntityType<CableBlockEntity>> CABLE_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("cable", () -> BlockEntityType.Builder.of(CableBlockEntity::new, CABLE_BLOCK.BLOCK.get()).build(null));
+
+    public static final BlockRegistryObject TANK_BLOCK = Registering.BLOCKS_ITEMS.register("tank", TankBlock::new, ITEM_GROUP);
+    public static final RegistryObject<BlockEntityType<TankBlockEntity>> TANK_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("tank", () -> BlockEntityType.Builder.of(TankBlockEntity::new, TANK_BLOCK.BLOCK.get()).build(null));
     //</editor-fold>
 
     static void init() {}
