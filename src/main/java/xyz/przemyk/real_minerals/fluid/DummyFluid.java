@@ -1,27 +1,35 @@
 package xyz.przemyk.real_minerals.fluid;
 
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.fluids.FluidAttributes;
 import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.Registering;
 
-import java.util.function.Supplier;
+public class DummyFluid extends Fluid {
+    
+    private final boolean isGas;
 
-public abstract class GasFluid extends Fluid {
+    public DummyFluid(boolean isGas) {
+        this.isGas = isGas;
+    }
+
+    @Override
+    public Item getBucket() {
+        return Items.AIR;
+    }
 
     @Override
     protected boolean canBeReplacedWith(FluidState fluidState, BlockGetter blockReader, BlockPos pos, Fluid fluid, Direction direction) {
@@ -76,12 +84,12 @@ public abstract class GasFluid extends Fluid {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected FluidAttributes createAttributes() {
-        return FluidAttributes.builder(new ResourceLocation(RealMinerals.MODID, "block/" + getRegistryName().getPath()), null)
+        FluidAttributes.Builder builder = FluidAttributes.builder(new ResourceLocation(RealMinerals.MODID, "block/" + getRegistryName().getPath()), new ResourceLocation(RealMinerals.MODID, "block/" + getRegistryName().getPath()))
                 .translationKey(RealMinerals.MODID + "." + getRegistryName().getPath())
-                .viscosity(100)
-                .gaseous()
-                .rarity(Rarity.UNCOMMON)
-                .sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
-                .build(this);
+                .sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY);
+        if (isGas) {
+            builder.gaseous();
+        }
+        return builder.build(this);
     }
 }

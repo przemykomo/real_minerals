@@ -1,14 +1,10 @@
 package xyz.przemyk.real_minerals.init;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -16,8 +12,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -65,6 +59,7 @@ public class Registering {
     public static final BlockRegistryObject METEORITE = BLOCKS_ITEMS.register("meteorite", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)), ITEM_GROUP);
     public static final RegistryMetalSet METEORITE_IRON_ITEMS = new RegistryMetalSet("meteorite_iron");
 
+    //TODO: maybe remove all buckets and just use tank?
     public static final BlockRegistryObject SHALE_GAS_STONE = BLOCKS_ITEMS.register("shale_gas_stone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)), ITEM_GROUP);
     public static final RegistryObject<Fluid> SHALE_GAS_FLUID = FLUIDS.register("shale_gas", ShaleGasFluid::new);
     public static final RegistryObject<GasBucketItem> SHALE_GAS_BUCKET = ITEMS.register("shale_gas_bucket", () -> new GasBucketItem(SHALE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
@@ -78,11 +73,7 @@ public class Registering {
     public static final RegistryObject<SulfurTrioxideGasFluid> SULFUR_TRIOXIDE_GAS_FLUID = FLUIDS.register("sulfur_trioxide_gas", SulfurTrioxideGasFluid::new);
     public static final RegistryObject<GasBucketItem> SULFUR_TRIOXIDE_GAS_BUCKET = ITEMS.register("sulfur_trioxide_gas_bucket", () -> new GasBucketItem(SULFUR_TRIOXIDE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
 
-    public static final RegistryObject<ForgeFlowingFluid.Flowing> FLOWING_ACID_FLUID = FLUIDS.register("acid_flowing", () -> new ForgeFlowingFluid.Flowing(Registering.ACID_PROPERTIES));
-    public static final RegistryObject<ForgeFlowingFluid.Source> ACID_FLUID = FLUIDS.register("acid", () -> new ForgeFlowingFluid.Source(Registering.ACID_PROPERTIES));
-    public static final RegistryObject<LiquidBlock> ACID_BLOCK = BLOCKS.register("acid", () -> new FixedLiquidBlock(ACID_FLUID, BlockBehaviour.Properties.of(Material.WATER, MaterialColor.TERRACOTTA_WHITE)));
-    public static final RegistryObject<BucketItem> ACID_BUCKET = ITEMS.register("acid_bucket", () -> new BucketItem(ACID_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
-    public static final ForgeFlowingFluid.Properties ACID_PROPERTIES = new ForgeFlowingFluid.Properties(ACID_FLUID, FLOWING_ACID_FLUID, FluidAttributes.builder(new ResourceLocation("block/water_still"), new ResourceLocation("block/water_flow")).sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)).block(ACID_BLOCK).bucket(ACID_BUCKET);
+    public static final RegistryObject<DummyFluid> ACID_FLUID = FLUIDS.register("acid", () -> new DummyFluid(false));
     //</editor-fold>
 
     static RegistryObject<Item> simpleItem(String name) {
