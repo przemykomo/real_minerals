@@ -1,6 +1,7 @@
 package xyz.przemyk.real_minerals.init;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -81,7 +82,7 @@ public class Registering {
     public static final RegistryObject<ForgeFlowingFluid.Source> ACID_FLUID = FLUIDS.register("acid", () -> new ForgeFlowingFluid.Source(Registering.ACID_PROPERTIES));
     public static final RegistryObject<LiquidBlock> ACID_BLOCK = BLOCKS.register("acid", () -> new FixedLiquidBlock(ACID_FLUID, BlockBehaviour.Properties.of(Material.WATER, MaterialColor.TERRACOTTA_WHITE)));
     public static final RegistryObject<BucketItem> ACID_BUCKET = ITEMS.register("acid_bucket", () -> new BucketItem(ACID_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_GROUP)));
-    public static final ForgeFlowingFluid.Properties ACID_PROPERTIES = new ForgeFlowingFluid.Properties(ACID_FLUID, FLOWING_ACID_FLUID, FluidAttributes.builder(new ResourceLocation("block/water_still"), new ResourceLocation("block/water_flow"))).block(ACID_BLOCK).bucket(ACID_BUCKET);
+    public static final ForgeFlowingFluid.Properties ACID_PROPERTIES = new ForgeFlowingFluid.Properties(ACID_FLUID, FLOWING_ACID_FLUID, FluidAttributes.builder(new ResourceLocation("block/water_still"), new ResourceLocation("block/water_flow")).sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)).block(ACID_BLOCK).bucket(ACID_BUCKET);
     //</editor-fold>
 
     static RegistryObject<Item> simpleItem(String name) {
