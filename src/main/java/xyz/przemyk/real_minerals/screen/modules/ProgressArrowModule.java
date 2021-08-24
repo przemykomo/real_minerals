@@ -30,6 +30,7 @@ public class ProgressArrowModule extends ScreenModule {
     public void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         int workTime = workTimeSupplier.getAsInt();
         if (workTime > 0) {
+            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             RenderSystem.setShaderTexture(0, GUI);
             int pixels = workTime * 24 / workTimeTotal;
             screen.blit(matrixStack, screen.getGuiLeft() + x, screen.getGuiTop() + y, 0, 0, pixels + 1, 16);
