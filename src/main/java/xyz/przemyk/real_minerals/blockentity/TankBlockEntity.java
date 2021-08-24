@@ -18,7 +18,9 @@ import javax.annotation.Nullable;
 
 public class TankBlockEntity extends BlockEntity {
 
-    public final FluidTank fluidTank = new FluidTank(10_000) {
+    public static final int CAPACITY = 10_000;
+
+    public final FluidTank fluidTank = new FluidTank(CAPACITY) {
         @Override
         protected void onContentsChanged() {
             markUpdated();
@@ -36,6 +38,12 @@ public class TankBlockEntity extends BlockEntity {
         super(MachinesRegistry.TANK_BLOCK_ENTITY_TYPE.get(), blockPos, blockState);
     }
 
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        fluidTankLazyOptional.invalidate();
+    }
+
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
@@ -48,12 +56,12 @@ public class TankBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        fluidTank.readFromNBT(tag);
+        fluidTank.readFromNBT(tag.getCompound("fluid_tank"));
     }
 
     @Override
     public CompoundTag save(CompoundTag tag) {
-        fluidTank.writeToNBT(tag);
+        tag.put("fluid_tank", fluidTank.writeToNBT(new CompoundTag()));
         return super.save(tag);
     }
 

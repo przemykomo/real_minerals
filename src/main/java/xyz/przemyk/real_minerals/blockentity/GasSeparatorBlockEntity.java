@@ -78,13 +78,13 @@ public class GasSeparatorBlockEntity extends ElectricMachineBlockEntity<GasSepar
     public void load(CompoundTag nbt) {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
-        fluidTank.readFromNBT(nbt);
+        fluidTank.readFromNBT(nbt.getCompound("fluid_tank"));
     }
 
     @Override
     public CompoundTag save(CompoundTag compound) {
         compound.put("inv", itemHandler.serializeNBT());
-        fluidTank.writeToNBT(compound);
+        compound.put("fluid_tank", fluidTank.writeToNBT(new CompoundTag()));
         return super.save(compound);
     }
 

@@ -10,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.util.Constants;
@@ -20,10 +19,7 @@ import net.minecraftforge.fmlclient.gui.GuiUtils;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.screen.MachineScreen;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import xyz.przemyk.real_minerals.util.Utils;
 
 public class TankModule extends ScreenModule {
 
@@ -132,27 +128,12 @@ public class TankModule extends ScreenModule {
     }
 
     public static void setColorRGBA(int color) {
-        float a = alpha(color) / 255.0F;
-        float r = red(color) / 255.0F;
-        float g = green(color) / 255.0F;
-        float b = blue(color) / 255.0F;
+        float a = Utils.alpha(color) / 255.0F;
+        float r = Utils.red(color) / 255.0F;
+        float g = Utils.green(color) / 255.0F;
+        float b = Utils.blue(color) / 255.0F;
 
         RenderSystem.setShaderColor(r, g, b, a);
     }
 
-    public static int alpha(int c) {
-        return (c >> 24) & 0xFF;
-    }
-
-    public static int red(int c) {
-        return (c >> 16) & 0xFF;
-    }
-
-    public static int green(int c) {
-        return (c >> 8) & 0xFF;
-    }
-
-    public static int blue(int c) {
-        return (c) & 0xFF;
-    }
 }

@@ -26,6 +26,11 @@
                   "source": "energy",
                   "target": "BlockEntityTag.energy",
                   "op": "replace"
+                },
+                {
+                  "source": "fluid_tank",
+                  "target": "BlockEntityTag.fluid_tank",
+                  "op": "replace"
                 }
               ]
             },

@@ -35,7 +35,7 @@ public class BlockStates extends BlockStateProvider {
         machineBlock(MachinesRegistry.GAS_GENERATOR_BLOCK.BLOCK.get());
         machineBlock(MachinesRegistry.GAS_ENRICHER_BLOCK.BLOCK.get());
         machineBlock(MachinesRegistry.CHEMICAL_WASHER_BLOCK.BLOCK.get());
-        simpleBlock(MachinesRegistry.TANK_BLOCK.BLOCK.get());
+        simpleBlock(MachinesRegistry.TANK_BLOCK.get());
     }
 
     private void horizontalBlock(Block block) {

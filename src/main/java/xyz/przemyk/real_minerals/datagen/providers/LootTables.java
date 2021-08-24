@@ -77,7 +77,6 @@ public class LootTables extends LootTableProvider {
                         .otherwise((LootPoolSingletonContainer.Builder<?>) functionUserBuilder.apply(ApplyExplosionDecay.explosionDecay()))));
     }
 
-    // Subclasses can call this if they want a standard loot table. Modify this for your own needs
     protected LootTable.Builder createStandardTable(String name, Block block) {
         LootPool.Builder builder = LootPool.lootPool()
                 .name(name)
@@ -86,7 +85,8 @@ public class LootTables extends LootTableProvider {
                         .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
                         .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
                                 .copy("inv", "BlockEntityTag.inv", CopyNbtFunction.MergeStrategy.REPLACE)
-                                .copy("energy", "BlockEntityTag.energy", CopyNbtFunction.MergeStrategy.REPLACE))
+                                .copy("energy", "BlockEntityTag.energy", CopyNbtFunction.MergeStrategy.REPLACE)
+                                .copy("fluid_tank", "BlockEntityTag.fluid_tank", CopyNbtFunction.MergeStrategy.REPLACE))
                         .apply(SetContainerContents.setContents()
                                 .withEntry(DynamicLoot.dynamicEntry(new ResourceLocation("minecraft", "contents")))));
         return LootTable.lootTable().withPool(builder);

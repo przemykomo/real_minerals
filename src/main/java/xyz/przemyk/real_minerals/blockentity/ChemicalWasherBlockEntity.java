@@ -64,13 +64,13 @@ public class ChemicalWasherBlockEntity extends ElectricMachineBlockEntity<Chemic
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        doubleFluidTank.readFromNBT(nbt);
+        doubleFluidTank.readFromNBT(nbt.getCompound("fluid_tank"));
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
     }
 
     @Override
     public CompoundTag save(CompoundTag compound) {
-        doubleFluidTank.writeToNBT(compound);
+        compound.put("fluid_tank", doubleFluidTank.writeToNBT(new CompoundTag()));
         compound.put("inv", itemHandler.serializeNBT());
         return super.save(compound);
     }

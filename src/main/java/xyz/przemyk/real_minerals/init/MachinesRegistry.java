@@ -1,6 +1,8 @@
 package xyz.przemyk.real_minerals.init;
 
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -13,6 +15,7 @@ import xyz.przemyk.real_minerals.cables.CableBlock;
 import xyz.przemyk.real_minerals.cables.CableBlockEntity;
 import xyz.przemyk.real_minerals.containers.*;
 import xyz.przemyk.real_minerals.blockentity.*;
+import xyz.przemyk.real_minerals.items.TankItem;
 
 import static xyz.przemyk.real_minerals.RealMinerals.ITEM_GROUP;
 
@@ -79,8 +82,9 @@ public class MachinesRegistry {
     public static final BlockRegistryObject CABLE_BLOCK = Registering.BLOCKS_ITEMS.register("cable", () -> new CableBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL).isRedstoneConductor((p1, p2, p3) -> false)), ITEM_GROUP);
     public static final RegistryObject<BlockEntityType<CableBlockEntity>> CABLE_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("cable", () -> BlockEntityType.Builder.of(CableBlockEntity::new, CABLE_BLOCK.BLOCK.get()).build(null));
 
-    public static final BlockRegistryObject TANK_BLOCK = Registering.BLOCKS_ITEMS.register("tank", TankBlock::new, ITEM_GROUP);
-    public static final RegistryObject<BlockEntityType<TankBlockEntity>> TANK_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("tank", () -> BlockEntityType.Builder.of(TankBlockEntity::new, TANK_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<Block> TANK_BLOCK = Registering.BLOCKS.register("tank", TankBlock::new);
+    public static final RegistryObject<Item> TANK_ITEM = Registering.ITEMS.register("tank", () -> new TankItem(TANK_BLOCK.get(), new Item.Properties().tab(ITEM_GROUP).stacksTo(1)));
+    public static final RegistryObject<BlockEntityType<TankBlockEntity>> TANK_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("tank", () -> BlockEntityType.Builder.of(TankBlockEntity::new, TANK_BLOCK.get()).build(null));
     //</editor-fold>
 
     static void init() {}

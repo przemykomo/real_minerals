@@ -93,7 +93,7 @@ public class GasGeneratorBlockEntity extends EnergyOutputBlockEntity {
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        fluidTank.readFromNBT(nbt);
+        fluidTank.readFromNBT(nbt.getCompound("fluid_tank"));
         burnTime = nbt.getInt("BurnTime");
         burnTimeTotal = nbt.getInt("BurnTimeTotal");
     }
@@ -101,7 +101,7 @@ public class GasGeneratorBlockEntity extends EnergyOutputBlockEntity {
     @Override
     public CompoundTag save(CompoundTag compound) {
         compound = super.save(compound);
-        fluidTank.writeToNBT(compound);
+        compound.put("fluid_tank", fluidTank.writeToNBT(new CompoundTag()));
         compound.putInt("BurnTime", burnTime);
         compound.putInt("BurnTimeTotal", burnTimeTotal);
         return compound;

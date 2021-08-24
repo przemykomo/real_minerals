@@ -1,6 +1,7 @@
 package xyz.przemyk.real_minerals.fluid.tank;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -87,10 +88,11 @@ public class TwoInputOneOutputFluidTank implements IFluidHandler {
         return output.drain(maxDrain, action);
     }
 
-    public void writeToNBT(CompoundTag nbt) {
+    public Tag writeToNBT(CompoundTag nbt) {
         nbt.put("first_input", firstInput.writeToNBT(new CompoundTag()));
         nbt.put("second_input", secondInput.writeToNBT(new CompoundTag()));
         nbt.put("output", output.writeToNBT(new CompoundTag()));
+        return nbt;
     }
 
     public void readFromNBT(CompoundTag nbt) {

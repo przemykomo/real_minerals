@@ -74,9 +74,10 @@ public class DoubleFluidTank implements IFluidHandler {
         return output.drain(maxDrain, action);
     }
 
-    public void writeToNBT(CompoundTag nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.put("input", input.writeToNBT(new CompoundTag()));
         nbt.put("output", output.writeToNBT(new CompoundTag()));
+        return nbt;
     }
 
     public void readFromNBT(CompoundTag nbt) {

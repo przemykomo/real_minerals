@@ -76,12 +76,12 @@ public class GasEnricherBlockEntity extends ElectricMachineBlockEntity<GasEnrich
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        doubleFluidTank.readFromNBT(nbt);
+        doubleFluidTank.readFromNBT(nbt.getCompound("fluid_tank"));
     }
 
     @Override
     public CompoundTag save(CompoundTag compound) {
-        doubleFluidTank.writeToNBT(compound);
+        compound.put("fluid_tank", doubleFluidTank.writeToNBT(new CompoundTag()));
         return super.save(compound);
     }
 

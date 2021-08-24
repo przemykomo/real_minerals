@@ -28,6 +28,9 @@ public class ItemModels extends ItemModelProvider {
         }
 
         for (RegistryObject<Item> itemRegistryObject : Registering.ITEMS.getEntries()) {
+            if (itemRegistryObject == MachinesRegistry.TANK_ITEM) {
+                continue;
+            }
             String path = itemRegistryObject.get().getRegistryName().getPath();
             getBuilder(path).parent(new ModelFile.UncheckedModelFile("item/generated"))
                     .texture("layer0", modLoc("item/" + path));
