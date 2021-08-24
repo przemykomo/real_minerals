@@ -35,6 +35,7 @@ public class EnergyModule extends ScreenModule {
     public void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         int energy = energySupplier.getAsInt();
         if (energy > 0) {
+            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             RenderSystem.setShaderTexture(0, GUI);
             int energyScaled = energy * 72 / capacity;
             screen.blit(matrixStack, screen.getGuiLeft() + x, screen.getGuiTop() + y + 72 - energyScaled, 0, 72 - energyScaled, 16, energyScaled + 1);
