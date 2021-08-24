@@ -39,29 +39,34 @@ public class TankModule extends ScreenModule {
     public boolean renderHovering(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         if (screen.isHovering(x, y, width, height, mouseX, mouseY)) {
             FluidStack fluidStack = fluidTank.getFluid();
-            Component displayName = fluidStack.getDisplayName();
-            if (fluidStack.hasTag()) {
-                CompoundTag tag = fluidStack.getTag();
-                if (tag.contains("item", Constants.NBT.TAG_STRING)) {
-                    Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
-                    if (item != null) {
-                        GuiUtils.drawHoveringText(matrixStack, Lists.newArrayList(new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()),
-                                new TranslatableComponent(RealMinerals.MODID + ".gui.fluid.dissolved", item.getDescription())), mouseX, mouseY, screen.width, screen.height, -1, screen.getMinecraft().font);
-                    }
-                }
-            } else {
-                screen.renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()), mouseX, mouseY);
-            }
+            renderHoveringFluidStackInfo(screen, matrixStack, mouseX, mouseY, fluidStack);
             return true;
         }
         return false;
     }
 
+    public static void renderHoveringFluidStackInfo(MachineScreen<?> screen, PoseStack matrixStack, int mouseX, int mouseY, FluidStack fluidStack) {
+        Component displayName = fluidStack.getDisplayName();
+        if (fluidStack.hasTag()) {
+            CompoundTag tag = fluidStack.getTag();
+            if (tag.contains("item", Constants.NBT.TAG_STRING)) {
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
+                if (item != null) {
+                    GuiUtils.drawHoveringText(matrixStack, Lists.newArrayList(new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()),
+                            new TranslatableComponent(RealMinerals.MODID + ".gui.fluid.dissolved", item.getDescription())), mouseX, mouseY, screen.width, screen.height, -1, screen.getMinecraft().font);
+                }
+            }
+        } else {
+            screen.renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()), mouseX, mouseY);
+        }
+    }
+
     @Override
     public void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         int amount = fluidTank.getFluidAmount();
-        if (amount > 0) {
-            int fluidHeight = amount * (height - 4) / fluidTank.getCapacity();
+        int capacity = fluidTank.getCapacity();
+        if (amount > 0 && capacity > 0) {
+            int fluidHeight = amount * (height - 4) / capacity;
 
             FluidStack fluidStack = fluidTank.getFluid();
             if (!fluidStack.isEmpty()) {

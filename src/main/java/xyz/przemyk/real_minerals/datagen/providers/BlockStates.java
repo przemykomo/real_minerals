@@ -1,6 +1,7 @@
 package xyz.przemyk.real_minerals.datagen.providers;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -36,6 +37,7 @@ public class BlockStates extends BlockStateProvider {
         machineBlock(MachinesRegistry.GAS_ENRICHER_BLOCK.BLOCK.get());
         machineBlock(MachinesRegistry.CHEMICAL_WASHER_BLOCK.BLOCK.get());
         simpleBlock(MachinesRegistry.TANK_BLOCK.get());
+        machineBlock(MachinesRegistry.EVAPORATION_PLANT_CONTROLLER_BLOCK.BLOCK.get(), new ResourceLocation("block/obsidian"), new ResourceLocation("block/obsidian"), new ResourceLocation("block/obsidian"));
     }
 
     private void horizontalBlock(Block block) {
@@ -43,12 +45,16 @@ public class BlockStates extends BlockStateProvider {
     }
 
     private void machineBlock(Block block) {
+        machineBlock(block, modLoc("block/magnetic_separator_top"), modLoc("block/magnetic_separator_side"), modLoc("block/bronze_machine_bottom"));
+    }
+
+    private void machineBlock(Block block, ResourceLocation top, ResourceLocation side, ResourceLocation bottom) {
         String path = block.getRegistryName().getPath();
         horizontalBlock(block, models().getBuilder(path)
                 .parent(new ModelFile.UncheckedModelFile("block/orientable_with_bottom"))
-                .texture("top", modLoc("block/magnetic_separator_top"))
+                .texture("top", top)
                 .texture("front", modLoc("block/" + path +"_front"))
-                .texture("side", modLoc("block/magnetic_separator_side"))
-                .texture("bottom", modLoc("block/bronze_machine_bottom")));
+                .texture("side", side)
+                .texture("bottom", bottom));
     }
 }

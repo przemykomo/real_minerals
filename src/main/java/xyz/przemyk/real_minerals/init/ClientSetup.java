@@ -9,6 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.renderers.EvaporationPlantRenderer;
 import xyz.przemyk.real_minerals.renderers.TankRenderer;
 import xyz.przemyk.real_minerals.screen.*;
 
@@ -31,6 +32,7 @@ public class ClientSetup {
         MenuScreens.register(MachinesRegistry.OXIDIZER_CONTAINER.get(), OxidizerScreen::new);
         MenuScreens.register(MachinesRegistry.MIXER_CONTAINER.get(), MixerScreen::new);
         MenuScreens.register(MachinesRegistry.CHEMICAL_WASHER_CONTAINER.get(), ChemicalWasherScreen::new);
+        MenuScreens.register(MachinesRegistry.EVAPORATION_PLANT_CONTAINER.get(), EvaporationPlantScreen::new);
 
         ItemBlockRenderTypes.setRenderLayer(MachinesRegistry.TANK_BLOCK.get(), RenderType.cutout());
     }
@@ -38,5 +40,6 @@ public class ClientSetup {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(MachinesRegistry.TANK_BLOCK_ENTITY_TYPE.get(), TankRenderer::new);
+        event.registerBlockEntityRenderer(MachinesRegistry.EVAPORATION_PLANT_CONTROLLER_BLOCK_ENTITY_TYPE.get(), EvaporationPlantRenderer::new);
     }
 }

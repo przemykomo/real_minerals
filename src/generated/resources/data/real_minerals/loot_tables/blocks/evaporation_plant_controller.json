@@ -2,7 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "tank",
+      "name": "evaporation_plant_controller",
       "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
@@ -44,7 +44,7 @@
               ]
             }
           ],
-          "name": "real_minerals:tank"
+          "name": "real_minerals:evaporation_plant_controller"
         }
       ]
     }

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "minecraft:block/obsidian",
+    "front": "real_minerals:block/evaporation_plant_controller_front",
+    "side": "minecraft:block/obsidian",
+    "bottom": "minecraft:block/obsidian"
+  }
+}

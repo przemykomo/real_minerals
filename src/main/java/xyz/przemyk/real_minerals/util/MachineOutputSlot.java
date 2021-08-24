@@ -46,6 +46,5 @@ public class MachineOutputSlot extends SlotItemHandler {
     protected void checkTakeAchievements(ItemStack stack) {
         stack.onCraftedBy(this.player.level, this.player, this.removeCount);
         this.removeCount = 0;
-        // TODO: playerCrushedEvent similar to playerSmeltedEvent?
     }
 }

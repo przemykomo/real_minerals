@@ -78,6 +78,12 @@ public class MachinesRegistry {
     public static final RegistryObject<MenuType<ChemicalWasherContainer>> CHEMICAL_WASHER_CONTAINER = Registering.CONTAINERS.register("chemical_washer", () -> IForgeContainerType.create(ChemicalWasherContainer::getClientContainer));
     //</editor-fold>
 
+    //<editor-fold desc="Multiblocks">
+    public static final BlockRegistryObject EVAPORATION_PLANT_CONTROLLER_BLOCK = Registering.BLOCKS_ITEMS.register("evaporation_plant_controller", () -> new MachineBlock(EvaporationPlantControllerBlockEntity::new), ITEM_GROUP);
+    public static final RegistryObject<BlockEntityType<EvaporationPlantControllerBlockEntity>> EVAPORATION_PLANT_CONTROLLER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("evaporation_plant_controller", () -> BlockEntityType.Builder.of(EvaporationPlantControllerBlockEntity::new, EVAPORATION_PLANT_CONTROLLER_BLOCK.BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<EvaporationPlantContainer>> EVAPORATION_PLANT_CONTAINER = Registering.CONTAINERS.register("evaporation_plant", () -> IForgeContainerType.create(EvaporationPlantContainer::getClientContainer));
+    //</editor-fold>
+
     //<editor-fold desc="Other">
     public static final BlockRegistryObject CABLE_BLOCK = Registering.BLOCKS_ITEMS.register("cable", () -> new CableBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL).isRedstoneConductor((p1, p2, p3) -> false)), ITEM_GROUP);
     public static final RegistryObject<BlockEntityType<CableBlockEntity>> CABLE_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("cable", () -> BlockEntityType.Builder.of(CableBlockEntity::new, CABLE_BLOCK.BLOCK.get()).build(null));
