@@ -70,10 +70,10 @@ public class TwoInputOneOutputFluidTank implements IFluidHandler {
     @Override
     public int fill(FluidStack resource, FluidAction action) {
         int filled = firstInput.fill(resource, action);
-        FluidStack modified = resource.copy();
-        modified.shrink(filled);
-        filled += secondInput.fill(modified, action);
-        return filled;
+        if (filled > 0) {
+            return filled;
+        }
+        return secondInput.fill(resource, action);
     }
 
     @Nonnull

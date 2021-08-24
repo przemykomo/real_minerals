@@ -26,23 +26,16 @@ import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Optional;
 
 public class MixerBlockEntity extends ElectricMachineBlockEntity<MixerRecipe> {
 
     public static final int FE_PER_TICK = 20;
     public static final int WORKING_TIME_TOTAL = 120;
 
-    public final TwoInputOneOutputFluidTank fluidTank = new TwoInputOneOutputFluidTank(10_000, fluidStack -> getRecipe(fluidStack).isPresent(), this::markUpdated);
+    public final TwoInputOneOutputFluidTank fluidTank = new TwoInputOneOutputFluidTank(10_000, fluidStack -> level.getRecipeManager().getAllRecipesFor(Recipes.MIXER_RECIPE_TYPE).stream().anyMatch(
+                    recipe -> (recipe.firstInput().isFluidEqual(fluidStack) || recipe.secondInput().isFluidEqual(fluidStack))
+                            && !(MixerBlockEntity.this.fluidTank.firstInput.getFluid().isFluidEqual(fluidStack) && MixerBlockEntity.this.fluidTank.firstInput.getSpace() == 0)), this::markUpdated);
     public final LazyOptional<IFluidHandler> fluidTankLazyOptional = LazyOptional.of(() -> fluidTank);
-
-    @SuppressWarnings("ConstantConditions")
-    private Optional<MixerRecipe> getRecipe(FluidStack fluidStack) {
-        if (fluidStack.isEmpty()) {
-            return Optional.empty();
-        }
-        return level.getRecipeManager().getAllRecipesFor(Recipes.MIXER_RECIPE_TYPE).stream().filter(recipe -> recipe.firstInput().isFluidEqual(fluidStack) || recipe.secondInput().isFluidEqual(fluidStack)).findFirst();
-    }
 
     public MixerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MachinesRegistry.MIXER_BLOCK_ENTITY_TYPE.get(), new ElectricMachineEnergyStorage(10_000, 80, 0),
