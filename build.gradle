@@ -24,7 +24,6 @@ archivesBaseName = 'real_minerals'
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 minecraft {
-//    mappings channel: 'official', version: mc_version
     mappings channel: 'parchment', version: '2021.08.15-1.17.1'
 
 //    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
