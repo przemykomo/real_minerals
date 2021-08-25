@@ -16,7 +16,7 @@ public class EvaporationPlantScreen extends MachineScreen<EvaporationPlantContai
 
     public EvaporationPlantScreen(EvaporationPlantContainer screenContainer, Inventory inventory, Component title) {
         super(screenContainer, inventory, title, GUI);
-        screenModules.add(new TankModule(55, 7, 18, 72, this, menu.blockEntity.fluidTank));
+        screenModules.add(new TankModule(55, 18, 18, 51, this, menu.blockEntity.fluidTank));
         screenModules.add(new ProgressArrowModule(79, 34, this, () -> menu.blockEntity.fluidStackInProgress.getAmount(), EvaporationPlantControllerBlockEntity.FLUID_AMOUNT_TO_RESULT) {
             @Override
             public boolean renderHovering(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {

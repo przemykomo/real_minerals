@@ -10,6 +10,8 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -28,8 +30,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import xyz.przemyk.real_minerals.containers.EvaporationPlantContainer;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
-import xyz.przemyk.real_minerals.init.ObsidianMinerals;
 import xyz.przemyk.real_minerals.multiblock.Cuboid;
+import xyz.przemyk.real_minerals.util.FluidUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -108,7 +110,7 @@ public class EvaporationPlantControllerBlockEntity extends BlockEntity implement
             ticks++;
 
             if (innerCuboid != null && ticks % 10 == 0) {
-                if (fluidStackInProgress.isEmpty() && !fluidTank.isEmpty()) {
+                if (fluidStackInProgress.isEmpty() && !fluidTank.isEmpty() && FluidUtils.getDissolvedItem(fluidTank.getFluid()) != null) {
                     fluidStackInProgress = fluidTank.getFluid().copy();
                     fluidStackInProgress.setAmount(1); //I'd set it to 0, but then it'd become empty
                 }
@@ -118,8 +120,12 @@ public class EvaporationPlantControllerBlockEntity extends BlockEntity implement
                 }
 
                 if (fluidStackInProgress.getAmount() >= FLUID_AMOUNT_TO_RESULT) {
-                    fluidStackInProgress.shrink(FLUID_AMOUNT_TO_RESULT);
-                    itemStackHandler.insertItem(0, ObsidianMinerals.TUNGSTEN_ITEMS.DUST.get().getDefaultInstance(), false);
+                    ItemStack output = itemStackHandler.getStackInSlot(0);
+                    Item item = FluidUtils.getDissolvedItem(fluidStackInProgress);
+                    if (item != null && (output.isEmpty() || output.is(item))) {
+                        fluidStackInProgress.shrink(FLUID_AMOUNT_TO_RESULT);
+                        itemStackHandler.insertItem(0, item.getDefaultInstance(), false);
+                    }
                 }
             }
         }

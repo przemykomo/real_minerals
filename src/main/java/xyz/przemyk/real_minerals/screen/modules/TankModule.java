@@ -6,19 +6,17 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fmlclient.gui.GuiUtils;
-import net.minecraftforge.registries.ForgeRegistries;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.screen.MachineScreen;
+import xyz.przemyk.real_minerals.util.FluidUtils;
 import xyz.przemyk.real_minerals.util.Utils;
 
 public class TankModule extends ScreenModule {
@@ -47,15 +45,11 @@ public class TankModule extends ScreenModule {
 
     public static void renderHoveringFluidStackInfo(MachineScreen<?> screen, PoseStack matrixStack, int mouseX, int mouseY, FluidStack fluidStack) {
         Component displayName = fluidStack.getDisplayName();
-        if (fluidStack.hasTag()) {
-            CompoundTag tag = fluidStack.getTag();
-            if (tag.contains("item", Constants.NBT.TAG_STRING)) {
-                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
-                if (item != null) {
-                    GuiUtils.drawHoveringText(matrixStack, Lists.newArrayList(new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()),
-                            new TranslatableComponent(RealMinerals.MODID + ".gui.fluid.dissolved", item.getDescription())), mouseX, mouseY, screen.width, screen.height, -1, screen.getMinecraft().font);
-                }
-            }
+        Item item = FluidUtils.getDissolvedItem(fluidStack);
+        if (item != null) {
+            GuiUtils.drawHoveringText(matrixStack, Lists.newArrayList(new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()),
+                    new TranslatableComponent(RealMinerals.MODID + ".gui.fluid.dissolved", item.getDescription())), mouseX, mouseY, screen.width, screen.height, -1, screen.getMinecraft().font);
+
         } else {
             screen.renderTooltip(matrixStack, new TranslatableComponent(RealMinerals.MODID + ".gui.fluid", displayName, fluidStack.getAmount()), mouseX, mouseY);
         }

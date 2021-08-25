@@ -6,5 +6,6 @@
     "real_minerals.shale_gas": "Shale Gas",
     "real_minerals.enriched_shale_gas": "Enriched Shale Gas",
     "real_minerals.acid": "Acid",
-    "item.real_minerals.tungsten_dust": "Tungsten Dust"
+    "item.real_minerals.tungsten_dust": "Tungsten Dust",
+    "real_minerals.name.evaporation_plant": "Evaporation Plant"
 }

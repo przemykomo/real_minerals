@@ -38,11 +38,8 @@ public class EvaporationPlantRenderer implements BlockEntityRenderer<Evaporation
 
         poseStack.pushPose();
         poseStack.translate(minPos.getX() - pos.getX(), 0, minPos.getZ() - pos.getZ());
-//        poseStack.translate(0, 2.0, 0);
 
         combinedLight = LevelRenderer.getLightColor(blockEntity.getLevel(), minPos);
-
-//        TankRenderer.renderTankFluid(poseStack, bufferSource, combinedLight, fluidStack, capacity);
 
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.translucent());
         TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(fluidStack.getFluid().getAttributes().getStillTexture(fluidStack));
