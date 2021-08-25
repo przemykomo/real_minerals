@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.ContainerData;
@@ -18,8 +19,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.datapack.recipes.ItemMachineRecipe;
+import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.MachineItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -172,4 +173,9 @@ public abstract class BasicMachineBlockEntity<T extends ItemMachineRecipe> exten
     }
 
     public abstract int getWorkingTimeTotal();
+
+    @Override
+    public Component getDisplayName() {
+        return getBlockState().getBlock().getName();
+    }
 }

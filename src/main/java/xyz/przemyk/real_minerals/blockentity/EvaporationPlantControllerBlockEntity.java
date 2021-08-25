@@ -52,7 +52,7 @@ public class EvaporationPlantControllerBlockEntity extends BlockEntity implement
     };
     public final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
-    public static final int FLUID_AMOUNT_TO_RESULT = 200;
+    public static final int FLUID_AMOUNT_TO_RESULT = 201;
     public FluidStack fluidStackInProgress = FluidStack.EMPTY;
     public Cuboid innerCuboid = null;
     private int ticks = 0;
@@ -332,7 +332,7 @@ public class EvaporationPlantControllerBlockEntity extends BlockEntity implement
 
     @Override
     public Component getDisplayName() {
-        return EvaporationPlantContainer.TITLE;
+        return getBlockState().getBlock().getName();
     }
 
     @Nullable

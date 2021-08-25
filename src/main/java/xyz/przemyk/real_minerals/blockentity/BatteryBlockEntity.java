@@ -90,7 +90,7 @@ public class BatteryBlockEntity extends BlockEntity implements TickableBlockEnti
 
     @Override
     public Component getDisplayName() {
-        return BatteryContainer.TITLE;
+        return getBlockState().getBlock().getName();
     }
 
     @Nullable

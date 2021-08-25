@@ -2,24 +2,23 @@ package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.NonNullList;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import xyz.przemyk.real_minerals.containers.MagnetizerContainer;
+import xyz.przemyk.real_minerals.datapack.recipes.MagnetizerRecipe;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
-import xyz.przemyk.real_minerals.containers.MagnetizerContainer;
-import xyz.przemyk.real_minerals.datapack.recipes.MagnetizerRecipe;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -81,11 +80,6 @@ public class MagnetizerBlockEntity extends ElectricMachineBlockEntity<Magnetizer
         } else {
             outputStack.grow(recipeOutput.getCount());
         }
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return MagnetizerContainer.TITLE;
     }
 
     @Override

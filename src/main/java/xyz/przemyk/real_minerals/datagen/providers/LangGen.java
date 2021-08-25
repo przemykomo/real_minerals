@@ -48,6 +48,7 @@ public class LangGen extends LanguageProvider {
         add("real_minerals.gui.energy", "Energy: %s FE");
         add("real_minerals.gui.fluid", "%s: %s mb");
         add("real_minerals.gui.fluid.dissolved", "Dissolved: %s");
+        add("real_minerals.empty", "Empty");
     }
 
     public String fixCapitalization(String text) {

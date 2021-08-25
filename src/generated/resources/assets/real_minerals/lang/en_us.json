@@ -114,6 +114,7 @@
   "item.real_minerals.zirconium_nugget": "Zirconium Nugget",
   "itemGroup.real_minerals": "Real Minerals",
   "real_minerals.acid": "Acid",
+  "real_minerals.empty": "Empty",
   "real_minerals.enriched_shale_gas": "Enriched Shale Gas",
   "real_minerals.gui.energy": "Energy: %s FE",
   "real_minerals.gui.fluid": "%s: %s mb",

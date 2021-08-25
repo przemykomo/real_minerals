@@ -3,23 +3,22 @@ package xyz.przemyk.real_minerals.blockentity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import xyz.przemyk.real_minerals.containers.ElectricFurnaceContainer;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.ElectricMachineEnergyStorage;
-import xyz.przemyk.real_minerals.containers.ElectricFurnaceContainer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -82,11 +81,6 @@ public class ElectricFurnaceBlockEntity extends ElectricMachineBlockEntity<Smelt
         } else {
             outputStack.grow(recipeOutput.getCount());
         }
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return ElectricFurnaceContainer.TITLE;
     }
 
     @Override

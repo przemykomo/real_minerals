@@ -28,6 +28,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
+import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Registering;
 import xyz.przemyk.real_minerals.init.StoneMinerals;
 
@@ -63,6 +64,7 @@ public class LootTables extends LootTableProvider {
             lootTables.put(block, createStandardTable(block.getRegistryName().getPath(), block));
         }
 
+        lootTables.put(MachinesRegistry.TANK_BLOCK.get(), createStandardTable(MachinesRegistry.TANK_BLOCK.get().getRegistryName().getPath(), MachinesRegistry.TANK_BLOCK.get()));
         lootTables.put(StoneMinerals.SULFUR_ORE.BLOCK.get(), createSulfurDrops());
     }
 

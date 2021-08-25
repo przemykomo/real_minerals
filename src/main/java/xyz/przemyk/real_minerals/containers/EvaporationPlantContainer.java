@@ -3,21 +3,17 @@ package xyz.przemyk.real_minerals.containers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.blockentity.EvaporationPlantControllerBlockEntity;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.util.MachineOutputSlot;
 
 public class EvaporationPlantContainer extends BaseMachineContainer {
-
-    public static final TranslatableComponent TITLE = new TranslatableComponent(RealMinerals.MODID + ".name.evaporation_plant");
 
     public final EvaporationPlantControllerBlockEntity blockEntity;
 

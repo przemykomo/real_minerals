@@ -3,6 +3,7 @@ package xyz.przemyk.real_minerals.blockentity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -59,5 +60,10 @@ public abstract class EnergyOutputBlockEntity extends BlockEntity implements Tic
             return energyStorageLazyOptional.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return getBlockState().getBlock().getName();
     }
 }

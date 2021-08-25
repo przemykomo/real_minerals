@@ -1,16 +1,15 @@
 package xyz.przemyk.real_minerals.blockentity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -108,48 +107,22 @@ public class SolidGeneratorBlockEntity extends EnergyOutputBlockEntity {
     }
 
     @Override
-    public Component getDisplayName() {
-        return SolidGeneratorContainer.TITLE;
-    }
-
-    @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player serverPlayer) {
         return new SolidGeneratorContainer(id, playerInventory, getBlockPos(), itemHandler, new GeneratorSyncData(this), serverPlayer);
     }
 
-    private static class GeneratorSyncData implements ContainerData {
-        private final SolidGeneratorBlockEntity machine;
-
-        public GeneratorSyncData(SolidGeneratorBlockEntity machine) {
-            this.machine = machine;
-        }
+    private record GeneratorSyncData(SolidGeneratorBlockEntity machine) implements ContainerData {
 
         public int get(int index) {
-            switch(index) {
-                case 0:
-                    return machine.burnTime;
-                case 1:
-                    return machine.burnTimeTotal;
-                case 2:
-                    return machine.energyStorage.getEnergyStored();
-                default:
-                    return 0;
-            }
+            return switch (index) {
+                case 0 -> machine.burnTime;
+                case 1 -> machine.burnTimeTotal;
+                case 2 -> machine.energyStorage.getEnergyStored();
+                default -> 0;
+            };
         }
 
-        public void set(int index, int value) {
-            switch(index) {
-                case 0:
-                    machine.burnTime = value;
-                    break;
-                case 1:
-                    machine.burnTimeTotal = value;
-                    break;
-                case 2:
-                    machine.energyStorage.setEnergy(value);
-            }
-
-        }
+        public void set(int index, int value) {}
 
         public int getCount() {
             return 3;

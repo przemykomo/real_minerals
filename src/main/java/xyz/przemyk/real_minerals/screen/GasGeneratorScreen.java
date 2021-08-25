@@ -1,7 +1,7 @@
 package xyz.przemyk.real_minerals.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,7 +16,7 @@ public class GasGeneratorScreen extends MachineScreen<GasGeneratorContainer> {
 
     public GasGeneratorScreen(GasGeneratorContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn, GUI);
-        screenModules.add(new TankModule(7, 7, 18, 72, this, menu.blockEntity.fluidTank));
+        screenModules.add(new TankModule(7, 18, 18, 51, this, menu.blockEntity.fluidTank));
         screenModules.add(new EnergyModule(() -> menu.machineData.get(2), 10_000, 153, 7, this));
     }
 
@@ -38,11 +38,5 @@ public class GasGeneratorScreen extends MachineScreen<GasGeneratorContainer> {
         }
 
         return menu.machineData.get(0) * 13 / burnTimeTotal;
-    }
-
-    @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) {
-        this.font.draw(matrixStack, this.title, (float)this.titleLabelX, (float)this.titleLabelY, 4210752);
-        // don't render "Inventory" text
     }
 }

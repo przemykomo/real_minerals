@@ -70,6 +70,7 @@ public class TankModule extends ScreenModule {
             }
         }
 
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, GUI);
         screen.blit(matrixStack, screen.getGuiLeft() + x, screen.getGuiTop() + y, 0, 0, 6, 6);
         screen.blit(matrixStack, screen.getGuiLeft() + x + width - 8, screen.getGuiTop() + y + height - 8, 0, 7, 6, 6);

@@ -67,7 +67,7 @@ public class FluidUtils {
 
     @Nullable
     public static Item getDissolvedItem(FluidStack fluidStack) {
-        if (fluidStack.hasTag()) {
+        if (!fluidStack.isEmpty() && fluidStack.hasTag()) {
             CompoundTag tag = fluidStack.getTag();
             if (tag.contains("item", Constants.NBT.TAG_STRING)) {
                 return ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));

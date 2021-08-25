@@ -4,8 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +17,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.containers.GasEnricherContainer;
 import xyz.przemyk.real_minerals.datapack.recipes.GasEnricherRecipe;
 import xyz.przemyk.real_minerals.fluid.tank.DoubleFluidTank;
@@ -120,13 +117,6 @@ public class GasEnricherBlockEntity extends ElectricMachineBlockEntity<GasEnrich
         }
 
         return cachedRecipe = getRecipe(input).orElse(null);
-    }
-
-    public static final TranslatableComponent TITLE = new TranslatableComponent(RealMinerals.MODID + ".name.gas_enricher");
-
-    @Override
-    public Component getDisplayName() {
-        return TITLE;
     }
 
     @Nullable

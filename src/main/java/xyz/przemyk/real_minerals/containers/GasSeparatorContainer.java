@@ -27,8 +27,8 @@ public class GasSeparatorContainer extends BaseMachineContainer {
         super(MachinesRegistry.GAS_SEPARATOR_CONTAINER.get(), windowId, MachinesRegistry.GAS_SEPARATOR_BLOCK.BLOCK.get(), pos, machineData, playerEntity, playerInventory);
         blockEntity = (GasSeparatorBlockEntity) playerEntity.level.getBlockEntity(pos);
 
-        addSlot(new SlotItemHandler(itemHandler, 0, 45, 27));
-        addSlot(new MachineOutputSlot(itemHandler, 1, 111, 49, playerEntity));
+        addSlot(new SlotItemHandler(itemHandler, 0, 51, 35));
+        addSlot(new MachineOutputSlot(itemHandler, 1, 111, 35, playerEntity));
     }
 
     @Override //TODO:

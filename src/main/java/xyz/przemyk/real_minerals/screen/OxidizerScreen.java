@@ -16,8 +16,8 @@ public class OxidizerScreen extends MachineScreen<OxidizerContainer> {
 
     public OxidizerScreen(OxidizerContainer screenContainer, Inventory inventory, Component title) {
         super(screenContainer, inventory, title, GUI);
-        screenModules.add(new TankModule(19, 7, 18, 72, this, menu.blockEntity.doubleFluidTank.input));
-        screenModules.add(new TankModule(109, 7, 18, 72, this, menu.blockEntity.doubleFluidTank.output));
+        screenModules.add(new TankModule(35, 18, 18, 51, this, menu.blockEntity.doubleFluidTank.input));
+        screenModules.add(new TankModule(109, 18, 18, 51, this, menu.blockEntity.doubleFluidTank.output));
         screenModules.add(new EnergyModule(() -> menu.machineData.get(1), 10_000, 153, 7, this));
         screenModules.add(new ProgressArrowModule(79, 35, this, () -> menu.machineData.get(0), OxidizerBlockEntity.WORKING_TIME_TOTAL));
     }
