@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "real_minerals:gold_gravel_ore",
-    "real_minerals:platinum_gravel_ore",
     "real_minerals:ruthenium_gravel_ore",
     "real_minerals:zirconium_gravel_ore",
     "real_minerals:iridium_gravel_ore"

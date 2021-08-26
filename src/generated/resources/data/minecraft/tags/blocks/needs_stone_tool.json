@@ -1,8 +1,6 @@
 {
   "replace": false,
   "values": [
-    "real_minerals:copper_block",
-    "real_minerals:copper_ore",
     "real_minerals:tin_block",
     "real_minerals:tin_ore",
     "real_minerals:aluminum_block",

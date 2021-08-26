@@ -1,11 +1,9 @@
 {
   "replace": false,
   "values": [
-    "real_minerals:copper_block",
     "real_minerals:lead_block",
     "real_minerals:magnesium_block",
     "real_minerals:nickel_block",
-    "real_minerals:platinum_block",
     "real_minerals:silver_block",
     "real_minerals:tin_block",
     "real_minerals:aluminum_block",

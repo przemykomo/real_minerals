@@ -1,9 +1,0 @@
-{
-  "type": "real_minerals:crusher",
-  "input": {
-    "tag": "forge:ingots/platinum"
-  },
-  "output": {
-    "item": "real_minerals:platinum_dust"
-  }
-}
