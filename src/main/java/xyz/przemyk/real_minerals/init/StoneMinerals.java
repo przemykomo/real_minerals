@@ -10,11 +10,6 @@ import net.minecraftforge.fmllegacy.RegistryObject;
 import static xyz.przemyk.real_minerals.RealMinerals.ITEM_TAB;
 
 public class StoneMinerals {
-    //TODO: remove copper
-    public static final BlockRegistryObject COPPER_BLOCK = Registering.storageBlock("copper_block", MaterialColor.COLOR_ORANGE);
-    public static final RegistryMetalSet COPPER_ITEMS = new RegistryMetalSet("copper");
-    public static final BlockRegistryObject COPPER_ORE = stoneOre("copper_ore");
-
     public static final BlockRegistryObject LEAD_BLOCK = Registering.storageBlock("lead_block", MaterialColor.TERRACOTTA_BLUE);
     public static final RegistryMetalSet LEAD_ITEMS = new RegistryMetalSet("lead");
     public static final BlockRegistryObject LEAD_ORE = stoneOre("lead_ore");
@@ -26,10 +21,6 @@ public class StoneMinerals {
     public static final BlockRegistryObject NICKEL_BLOCK = Registering.storageBlock("nickel_block", MaterialColor.GOLD);
     public static final RegistryMetalSet NICKEL_ITEMS = new RegistryMetalSet("nickel");
     public static final BlockRegistryObject NICKEL_ORE = stoneOre("nickel_ore");
-
-    public static final BlockRegistryObject PLATINUM_BLOCK = Registering.storageBlock("platinum_block", MaterialColor.COLOR_LIGHT_BLUE);
-    public static final RegistryMetalSet PLATINUM_ITEMS = new RegistryMetalSet("platinum");
-    public static final BlockRegistryObject PLATINUM_ORE = stoneOre("platinum_ore");
 
     public static final BlockRegistryObject SILVER_BLOCK = Registering.storageBlock("silver_block", MaterialColor.METAL);
     public static final RegistryMetalSet SILVER_ITEMS = new RegistryMetalSet("silver");

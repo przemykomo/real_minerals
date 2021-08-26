@@ -1,10 +1,11 @@
 package xyz.przemyk.real_minerals.datagen.providers;
 
-import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.GravelMinerals;
@@ -24,8 +25,8 @@ public class ItemTags extends ItemTagsProvider {
     public static final Tags.IOptionalNamedTag<Item> STORAGE_COPPER = tag("storage_blocks/copper");
     public static final Tags.IOptionalNamedTag<Item> ORES_COPPER = tag("ores/copper");
     public static final Tags.IOptionalNamedTag<Item> INGOTS_COPPER = tag("ingots/copper");
-    public static final Tags.IOptionalNamedTag<Item> NUGGETS_COPPER = tag("nuggets/copper");
-    public static final Tags.IOptionalNamedTag<Item> DUSTS_COPPER = tag("dusts/copper");
+//    public static final Tags.IOptionalNamedTag<Item> NUGGETS_COPPER = tag("nuggets/copper");
+//    public static final Tags.IOptionalNamedTag<Item> DUSTS_COPPER = tag("dusts/copper");
 
     public static final Tags.IOptionalNamedTag<Item> STORAGE_LEAD = tag("storage_blocks/lead");
     public static final Tags.IOptionalNamedTag<Item> ORES_LEAD = tag("ores/lead");
@@ -44,12 +45,6 @@ public class ItemTags extends ItemTagsProvider {
     public static final Tags.IOptionalNamedTag<Item> INGOTS_NICKEL = tag("ingots/nickel");
     public static final Tags.IOptionalNamedTag<Item> NUGGETS_NICKEL = tag("nuggets/nickel");
     public static final Tags.IOptionalNamedTag<Item> DUSTS_NICKEL = tag("dusts/nickel");
-
-    public static final Tags.IOptionalNamedTag<Item> STORAGE_PLATINUM = tag("storage_blocks/platinum");
-    public static final Tags.IOptionalNamedTag<Item> ORES_PLATINUM = tag("ores/platinum");
-    public static final Tags.IOptionalNamedTag<Item> INGOTS_PLATINUM = tag("ingots/platinum");
-    public static final Tags.IOptionalNamedTag<Item> NUGGETS_PLATINUM = tag("nuggets/platinum");
-    public static final Tags.IOptionalNamedTag<Item> DUSTS_PLATINUM = tag("dusts/platinum");
 
     public static final Tags.IOptionalNamedTag<Item> STORAGE_SILVER = tag("storage_blocks/silver");
     public static final Tags.IOptionalNamedTag<Item> ORES_SILVER = tag("ores/silver");
@@ -141,9 +136,7 @@ public class ItemTags extends ItemTagsProvider {
         //<editor-fold desc="Metals with stone ores">
         copy(BlockTags.STORAGE_COPPER, STORAGE_COPPER);
         copy(BlockTags.ORES_COPPER, ORES_COPPER);
-        tag(INGOTS_COPPER).add(StoneMinerals.COPPER_ITEMS.INGOT.get());
-        tag(NUGGETS_COPPER).add(StoneMinerals.COPPER_ITEMS.NUGGET.get());
-        tag(DUSTS_COPPER).add(StoneMinerals.COPPER_ITEMS.INGOT.get());
+        tag(INGOTS_COPPER).add(Items.COPPER_INGOT);
 
         copy(BlockTags.STORAGE_LEAD, STORAGE_LEAD);
         copy(BlockTags.ORES_LEAD, ORES_LEAD);
@@ -162,12 +155,6 @@ public class ItemTags extends ItemTagsProvider {
         tag(INGOTS_NICKEL).add(StoneMinerals.NICKEL_ITEMS.INGOT.get());
         tag(NUGGETS_NICKEL).add(StoneMinerals.NICKEL_ITEMS.NUGGET.get());
         tag(DUSTS_NICKEL).add(StoneMinerals.NICKEL_ITEMS.DUST.get());
-
-        copy(BlockTags.STORAGE_PLATINUM, STORAGE_PLATINUM);
-        copy(BlockTags.ORES_PLATINUM, ORES_PLATINUM);
-        tag(INGOTS_PLATINUM).add(StoneMinerals.PLATINUM_ITEMS.INGOT.get());
-        tag(NUGGETS_PLATINUM).add(StoneMinerals.PLATINUM_ITEMS.NUGGET.get());
-        tag(DUSTS_PLATINUM).add(StoneMinerals.PLATINUM_ITEMS.DUST.get());
 
         copy(BlockTags.STORAGE_SILVER, STORAGE_SILVER);
         copy(BlockTags.ORES_SILVER, ORES_SILVER);

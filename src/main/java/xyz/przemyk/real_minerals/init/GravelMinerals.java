@@ -10,7 +10,6 @@ import static xyz.przemyk.real_minerals.RealMinerals.ITEM_TAB;
 
 public class GravelMinerals {
     public static final BlockRegistryObject GOLD_GRAVEL_ORE = gravelOre("gold_gravel_ore");
-    public static final BlockRegistryObject PLATINUM_GRAVEL_ORE = gravelOre("platinum_gravel_ore");
 
     public static final BlockRegistryObject RUTHENIUM_BLOCK = Registering.storageBlock("ruthenium_block", MaterialColor.COLOR_YELLOW);
     public static final RegistryMetalSet RUTHENIUM_ITEMS = new RegistryMetalSet("ruthenium");

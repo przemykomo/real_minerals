@@ -1,9 +1,10 @@
 package xyz.przemyk.real_minerals.datagen.providers;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import xyz.przemyk.real_minerals.init.*;
@@ -27,9 +28,6 @@ public class BlockTags extends BlockTagsProvider {
 
     public static final Tags.IOptionalNamedTag<Block> STORAGE_NICKEL = tag("storage_blocks/nickel");
     public static final Tags.IOptionalNamedTag<Block> ORES_NICKEL = tag("ores/nickel");
-
-    public static final Tags.IOptionalNamedTag<Block> STORAGE_PLATINUM = tag("storage_blocks/platinum");
-    public static final Tags.IOptionalNamedTag<Block> ORES_PLATINUM = tag("ores/platinum");
 
     public static final Tags.IOptionalNamedTag<Block> STORAGE_SILVER = tag("storage_blocks/silver");
     public static final Tags.IOptionalNamedTag<Block> ORES_SILVER = tag("ores/silver");
@@ -80,8 +78,8 @@ public class BlockTags extends BlockTagsProvider {
     protected void addTags() {
 
         //<editor-fold desc="Metals with stone ores">
-        tag(STORAGE_COPPER).add(StoneMinerals.COPPER_BLOCK.BLOCK.get());
-        tag(ORES_COPPER).add(StoneMinerals.COPPER_ORE.BLOCK.get());
+        tag(STORAGE_COPPER).add(Blocks.COPPER_BLOCK);
+        tag(ORES_COPPER).add(Blocks.COPPER_ORE);
 
         tag(STORAGE_LEAD).add(StoneMinerals.LEAD_BLOCK.BLOCK.get());
         tag(ORES_LEAD).add(StoneMinerals.LEAD_ORE.BLOCK.get());
@@ -91,9 +89,6 @@ public class BlockTags extends BlockTagsProvider {
 
         tag(STORAGE_NICKEL).add(StoneMinerals.NICKEL_BLOCK.BLOCK.get());
         tag(ORES_NICKEL).add(StoneMinerals.NICKEL_ORE.BLOCK.get());
-
-        tag(STORAGE_PLATINUM).add(StoneMinerals.PLATINUM_BLOCK.BLOCK.get());
-        tag(ORES_PLATINUM).add(StoneMinerals.PLATINUM_ORE.BLOCK.get());
 
         tag(STORAGE_SILVER).add(StoneMinerals.SILVER_BLOCK.BLOCK.get());
         tag(ORES_SILVER).add(StoneMinerals.SILVER_ORE.BLOCK.get());
@@ -115,7 +110,6 @@ public class BlockTags extends BlockTagsProvider {
 
         //<editor-fold desc="Metals with gravel ores">
         tag(GRAVEL_ORES_GOLD).add(GravelMinerals.GOLD_GRAVEL_ORE.BLOCK.get());
-        tag(GRAVEL_ORES_PLATINUM).add(GravelMinerals.PLATINUM_GRAVEL_ORE.BLOCK.get());
 
         tag(STORAGE_RUTHENIUM).add(GravelMinerals.RUTHENIUM_BLOCK.BLOCK.get());
         tag(GRAVEL_ORES_RUTHENIUM).add(GravelMinerals.RUTHENIUM_GRAVEL_ORE.BLOCK.get());
@@ -140,9 +134,9 @@ public class BlockTags extends BlockTagsProvider {
         tag(STORAGE_BRONZE).add(Registering.BRONZE_BLOCK.BLOCK.get());
         //</editor-fold>
 
-        tag(net.minecraft.tags.BlockTags.BEACON_BASE_BLOCKS).add(StoneMinerals.COPPER_BLOCK.BLOCK.get(),
+        tag(net.minecraft.tags.BlockTags.BEACON_BASE_BLOCKS).add(
                 StoneMinerals.LEAD_BLOCK.BLOCK.get(), StoneMinerals.MAGNESIUM_BLOCK.BLOCK.get(),
-                StoneMinerals.NICKEL_BLOCK.BLOCK.get(), StoneMinerals.PLATINUM_BLOCK.BLOCK.get(),
+                StoneMinerals.NICKEL_BLOCK.BLOCK.get(),
                 StoneMinerals.SILVER_BLOCK.BLOCK.get(), StoneMinerals.TIN_BLOCK.BLOCK.get(),
                 StoneMinerals.ALUMINUM_BLOCK.BLOCK.get(), StoneMinerals.ZINC_BLOCK.BLOCK.get(),
                 Registering.BRASS_BLOCK.BLOCK.get(), Registering.BRONZE_BLOCK.BLOCK.get(),
@@ -159,7 +153,6 @@ public class BlockTags extends BlockTagsProvider {
         }
 
         tag(net.minecraft.tags.BlockTags.NEEDS_STONE_TOOL).add(
-                StoneMinerals.COPPER_BLOCK.BLOCK.get(), StoneMinerals.COPPER_ORE.BLOCK.get(),
                 StoneMinerals.TIN_BLOCK.BLOCK.get(), StoneMinerals.TIN_ORE.BLOCK.get(),
                 StoneMinerals.ALUMINUM_BLOCK.BLOCK.get(), StoneMinerals.ALUMINUM_ORE.BLOCK.get(),
                 StoneMinerals.ZINC_BLOCK.BLOCK.get(), StoneMinerals.ZINC_ORE.BLOCK.get(),
@@ -170,7 +163,6 @@ public class BlockTags extends BlockTagsProvider {
                 StoneMinerals.LEAD_BLOCK.BLOCK.get(), StoneMinerals.LEAD_ORE.BLOCK.get(),
                 StoneMinerals.NICKEL_BLOCK.BLOCK.get(), StoneMinerals.NICKEL_ORE.BLOCK.get(),
                 StoneMinerals.MAGNESIUM_BLOCK.BLOCK.get(), StoneMinerals.MAGNESIUM_ORE.BLOCK.get(),
-                StoneMinerals.PLATINUM_BLOCK.BLOCK.get(), StoneMinerals.PLATINUM_ORE.BLOCK.get(),
                 StoneMinerals.SILVER_BLOCK.BLOCK.get(), StoneMinerals.SILVER_ORE.BLOCK.get()
         );
 

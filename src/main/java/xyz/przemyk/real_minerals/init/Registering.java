@@ -54,6 +54,9 @@ public class Registering {
     public static final BlockRegistryObject BRASS_BLOCK = storageBlock("brass_block", MaterialColor.GOLD);
     public static final RegistryMetalSet BRASS_ITEMS = new RegistryMetalSet("brass");
 
+    public static final BlockRegistryObject BRONZE_BLOCK = storageBlock("bronze_block", MaterialColor.COLOR_ORANGE);
+    public static final RegistryMetalSet BRONZE_ITEMS = new RegistryMetalSet("bronze");
+
     public static final BlockRegistryObject ALNICO_BLOCK = storageBlock("alnico_block", MaterialColor.GOLD);
     public static final RegistryMetalSet ALNICO_ITEMS = new RegistryMetalSet("alnico");
 
@@ -61,9 +64,6 @@ public class Registering {
     public static final RegistryObject<BlockEntityType<MagnetBlockEntity>> MAGNET_BLOCK_ENTITY_TYPE = BLOCK_ENTITIES.register("magnet", () -> BlockEntityType.Builder.of(MagnetBlockEntity::new, MAGNETIZED_ALNICO_BLOCK.BLOCK.get()).build(null));
     public static final RegistryMetalSet MAGNETIZED_ALNICO_ITEMS = new RegistryMetalSet("magnetized_alnico");
     public static final RegistryObject<Item> MAGNETIZED_ALNICO_GEAR = Registering.simpleItem("magnetized_alnico_gear");
-
-    public static final BlockRegistryObject BRONZE_BLOCK = storageBlock("bronze_block", MaterialColor.COLOR_ORANGE);
-    public static final RegistryMetalSet BRONZE_ITEMS = new RegistryMetalSet("bronze");
     //</editor-fold>
 
     //<editor-fold desc="Misc">

@@ -45,7 +45,6 @@ public class WorldGenRegistry {
     public static final RegistryObject<UnderLavaDecorator> UNDER_LAVA_DECORATOR = DECORATORS.register("under_lava", () -> new UnderLavaDecorator(NoneDecoratorConfiguration.CODEC));
 
     //TODO: change rarity and height of ore generation
-    public static ConfiguredFeature<?, ?> COPPER_ORE;
     public static ConfiguredFeature<?, ?> LEAD_ORE;
     public static ConfiguredFeature<?, ?> MAGNESIUM_ORE;
     public static ConfiguredFeature<?, ?> NICKEL_ORE;
@@ -58,7 +57,6 @@ public class WorldGenRegistry {
     public static ConfiguredFeature<?, ?> SHALE_GAS_ORE;
 
     public static ConfiguredFeature<?, ?> GOLD_GRAVEL_ORE;
-    public static ConfiguredFeature<?, ?> PLATINUM_GRAVEL_ORE;
     public static ConfiguredFeature<?, ?> RUTHENIUM_GRAVEL_ORE;
     public static ConfiguredFeature<?, ?> IRIDIUM_GRAVEL_ORE;
     public static ConfiguredFeature<?, ?> ZIRCONIUM_GRAVEL_ORE;
@@ -78,11 +76,9 @@ public class WorldGenRegistry {
 
     private static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_copper"), COPPER_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.COPPER_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_lead"), LEAD_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.LEAD_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_magnesium"), MAGNESIUM_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.MAGNESIUM_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_nickel"), NICKEL_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.NICKEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
-            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_platinum"), PLATINUM_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.PLATINUM_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_silver"), SILVER_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.SILVER_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_tin"), TIN_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.TIN_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_aluminum"), ALUMINUM_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, StoneMinerals.ALUMINUM_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
@@ -91,7 +87,6 @@ public class WorldGenRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_shale_gas"), SHALE_GAS_ORE = Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, Registering.SHALE_GAS_STONE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_gold"), GOLD_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.GOLD_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
-            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_platinum"), PLATINUM_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.PLATINUM_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_ruthenium"), RUTHENIUM_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.RUTHENIUM_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_iridium"), IRIDIUM_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.IRIDIUM_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealMinerals.MODID, "ore_gravel_zirconium"), ZIRCONIUM_GRAVEL_ORE = Feature.ORE.configured(new OreConfiguration(GRAVEL, GravelMinerals.ZIRCONIUM_GRAVEL_ORE.BLOCK.get().defaultBlockState(), 9)).rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(63)).squared().count(20));
@@ -109,7 +104,6 @@ public class WorldGenRegistry {
         if (category != Biome.BiomeCategory.NETHER && category != Biome.BiomeCategory.THEEND) {
             List<Supplier<ConfiguredFeature<?, ?>>> oreFeatures = event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES);
 
-            oreFeatures.add(() -> COPPER_ORE);
             oreFeatures.add(() -> LEAD_ORE);
             oreFeatures.add(() -> MAGNESIUM_ORE);
             oreFeatures.add(() -> NICKEL_ORE);
@@ -122,7 +116,6 @@ public class WorldGenRegistry {
             oreFeatures.add(() -> SHALE_GAS_ORE);
 
             oreFeatures.add(() -> GOLD_GRAVEL_ORE);
-            oreFeatures.add(() -> PLATINUM_GRAVEL_ORE);
             oreFeatures.add(() -> RUTHENIUM_GRAVEL_ORE);
             oreFeatures.add(() -> IRIDIUM_GRAVEL_ORE);
             oreFeatures.add(() -> ZIRCONIUM_GRAVEL_ORE);

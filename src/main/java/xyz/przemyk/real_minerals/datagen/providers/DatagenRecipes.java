@@ -1,26 +1,21 @@
 package xyz.przemyk.real_minerals.datagen.providers;
 
-import net.minecraft.data.*;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import xyz.przemyk.real_minerals.datagen.recipe_builders.AlloyRecipeBuilder;
 import xyz.przemyk.real_minerals.datagen.recipe_builders.MagneticSeparatorRecipeBuilder;
 import xyz.przemyk.real_minerals.datagen.recipe_builders.SingleInputOutputRecipeBuilder;
 import xyz.przemyk.real_minerals.init.GravelMinerals;
 import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.init.StoneMinerals;
 
 import java.util.function.Consumer;
 
 import static xyz.przemyk.real_minerals.RealMinerals.MODID;
-
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
-import xyz.przemyk.real_minerals.init.StoneMinerals;
 
 public class DatagenRecipes extends RecipeProvider {
 
@@ -38,17 +33,6 @@ public class DatagenRecipes extends RecipeProvider {
 
     private void registerBaseRecipes(Consumer<FinishedRecipe> consumer) {
         ////////////////////////////////////////////////////////////////// METALS WITH STONE ORES
-        SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(ItemTags.ORES_COPPER), StoneMinerals.COPPER_ITEMS.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, "copper_dust_from_ore"));
-        SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(ItemTags.INGOTS_COPPER), StoneMinerals.COPPER_ITEMS.DUST.get()).build(consumer, new ResourceLocation(MODID, "copper_dust_from_ingot"));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemTags.ORES_COPPER), StoneMinerals.COPPER_ITEMS.INGOT.get(), 0.7F, 100).unlockedBy("has_copper_ore", has(ItemTags.ORES_COPPER)).save(consumer,   new ResourceLocation(MODID, "copper_ingot_from_blasting_ore"));
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemTags.ORES_COPPER), StoneMinerals.COPPER_ITEMS.INGOT.get(), 0.7F, 200).unlockedBy("has_copper_ore", has(ItemTags.ORES_COPPER)).save(consumer,   new ResourceLocation(MODID, "copper_ingot_from_smelting_ore"));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemTags.DUSTS_COPPER), StoneMinerals.COPPER_ITEMS.INGOT.get(), 0.7F, 100).unlockedBy("has_copper_dust", has(ItemTags.DUSTS_COPPER)).save(consumer, new ResourceLocation(MODID, "copper_ingot_from_blasting_dust"));
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemTags.DUSTS_COPPER), StoneMinerals.COPPER_ITEMS.INGOT.get(), 0.7F, 200).unlockedBy("has_copper_dust", has(ItemTags.DUSTS_COPPER)).save(consumer, new ResourceLocation(MODID, "copper_ingot_from_smelting_dust"));
-        ShapedRecipeBuilder.shaped(StoneMinerals.COPPER_ITEMS.INGOT.get()).define('#', ItemTags.NUGGETS_COPPER).pattern("###").pattern("###").pattern("###").unlockedBy("has_copper_nugget", has(ItemTags.NUGGETS_COPPER)).save(consumer, new ResourceLocation(MODID, "copper_ingot_from_nuggets"));
-        ShapedRecipeBuilder.shaped(StoneMinerals.COPPER_BLOCK.ITEM.get()).define('#', ItemTags.INGOTS_COPPER).pattern("###").pattern("###").pattern("###").unlockedBy("has_copper_ingot", has(ItemTags.INGOTS_COPPER)).save(consumer, new ResourceLocation(MODID, "copper_block_from_ingots"));
-        ShapelessRecipeBuilder.shapeless(StoneMinerals.COPPER_ITEMS.INGOT.get(), 9).requires(ItemTags.STORAGE_COPPER).unlockedBy("has_copper_block", has(ItemTags.STORAGE_COPPER)).save(consumer, new ResourceLocation(MODID, "copper_ingot_from_block"));
-        ShapelessRecipeBuilder.shapeless(StoneMinerals.COPPER_ITEMS.NUGGET.get(), 9).requires(ItemTags.INGOTS_COPPER).unlockedBy("has_copper_ingot", has(ItemTags.INGOTS_COPPER)).save(consumer, new ResourceLocation(MODID, "copper_nugget_from_ingot"));
-
         SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(ItemTags.ORES_LEAD), StoneMinerals.LEAD_ITEMS.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, "lead_dust_from_ore"));
         SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(ItemTags.INGOTS_LEAD), StoneMinerals.LEAD_ITEMS.DUST.get()).build(consumer, new ResourceLocation(MODID, "lead_dust_from_ingot"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemTags.ORES_LEAD), StoneMinerals.LEAD_ITEMS.INGOT.get(), 0.7F, 100).unlockedBy("has_lead_ore", has(ItemTags.ORES_LEAD)).save(consumer,   new ResourceLocation(MODID, "lead_ingot_from_blasting_ore"));
@@ -81,17 +65,6 @@ public class DatagenRecipes extends RecipeProvider {
         ShapedRecipeBuilder.shaped(StoneMinerals.NICKEL_BLOCK.ITEM.get()).define('#', ItemTags.INGOTS_NICKEL).pattern("###").pattern("###").pattern("###").unlockedBy("has_nickel_ingot", has(ItemTags.INGOTS_NICKEL)).save(consumer, new ResourceLocation(MODID, "nickel_block_from_ingots"));
         ShapelessRecipeBuilder.shapeless(StoneMinerals.NICKEL_ITEMS.INGOT.get(), 9).requires(ItemTags.STORAGE_NICKEL).unlockedBy("has_nickel_block", has(ItemTags.STORAGE_NICKEL)).save(consumer, new ResourceLocation(MODID, "nickel_ingot_from_block"));
         ShapelessRecipeBuilder.shapeless(StoneMinerals.NICKEL_ITEMS.NUGGET.get(), 9).requires(ItemTags.INGOTS_NICKEL).unlockedBy("has_nickel_ingot", has(ItemTags.INGOTS_NICKEL)).save(consumer, new ResourceLocation(MODID, "nickel_nugget_from_ingot"));
-
-        SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(ItemTags.ORES_PLATINUM), StoneMinerals.PLATINUM_ITEMS.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, "platinum_dust_from_ore"));
-        SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(ItemTags.INGOTS_PLATINUM), StoneMinerals.PLATINUM_ITEMS.DUST.get()).build(consumer, new ResourceLocation(MODID, "platinum_dust_from_ingot"));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemTags.ORES_PLATINUM), StoneMinerals.PLATINUM_ITEMS.INGOT.get(), 0.7F, 100).unlockedBy("has_platinum_ore", has(ItemTags.ORES_PLATINUM)).save(consumer,   new ResourceLocation(MODID, "platinum_ingot_from_blasting_ore"));
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemTags.ORES_PLATINUM), StoneMinerals.PLATINUM_ITEMS.INGOT.get(), 0.7F, 200).unlockedBy("has_platinum_ore", has(ItemTags.ORES_PLATINUM)).save(consumer,   new ResourceLocation(MODID, "platinum_ingot_from_smelting_ore"));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemTags.DUSTS_PLATINUM), StoneMinerals.PLATINUM_ITEMS.INGOT.get(), 0.7F, 100).unlockedBy("has_platinum_dust", has(ItemTags.DUSTS_PLATINUM)).save(consumer, new ResourceLocation(MODID, "platinum_ingot_from_blasting_dust"));
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemTags.DUSTS_PLATINUM), StoneMinerals.PLATINUM_ITEMS.INGOT.get(), 0.7F, 200).unlockedBy("has_platinum_dust", has(ItemTags.DUSTS_PLATINUM)).save(consumer, new ResourceLocation(MODID, "platinum_ingot_from_smelting_dust"));
-        ShapedRecipeBuilder.shaped(StoneMinerals.PLATINUM_ITEMS.INGOT.get()).define('#', ItemTags.NUGGETS_PLATINUM).pattern("###").pattern("###").pattern("###").unlockedBy("has_platinum_nugget", has(ItemTags.NUGGETS_PLATINUM)).save(consumer, new ResourceLocation(MODID, "platinum_ingot_from_nuggets"));
-        ShapedRecipeBuilder.shaped(StoneMinerals.PLATINUM_BLOCK.ITEM.get()).define('#', ItemTags.INGOTS_PLATINUM).pattern("###").pattern("###").pattern("###").unlockedBy("has_platinum_ingot", has(ItemTags.INGOTS_PLATINUM)).save(consumer, new ResourceLocation(MODID, "platinum_block_from_ingots"));
-        ShapelessRecipeBuilder.shapeless(StoneMinerals.PLATINUM_ITEMS.INGOT.get(), 9).requires(ItemTags.STORAGE_PLATINUM).unlockedBy("has_platinum_block", has(ItemTags.STORAGE_PLATINUM)).save(consumer, new ResourceLocation(MODID, "platinum_ingot_from_block"));
-        ShapelessRecipeBuilder.shapeless(StoneMinerals.PLATINUM_ITEMS.NUGGET.get(), 9).requires(ItemTags.INGOTS_PLATINUM).unlockedBy("has_platinum_ingot", has(ItemTags.INGOTS_PLATINUM)).save(consumer, new ResourceLocation(MODID, "platinum_nugget_from_ingot"));
 
         SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(ItemTags.ORES_SILVER), StoneMinerals.SILVER_ITEMS.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, "silver_dust_from_ore"));
         SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(ItemTags.INGOTS_SILVER), StoneMinerals.SILVER_ITEMS.DUST.get()).build(consumer, new ResourceLocation(MODID, "silver_dust_from_ingot"));
@@ -206,7 +179,6 @@ public class DatagenRecipes extends RecipeProvider {
     }
 
     private void registerMagneticSeparatorRecipes(Consumer<FinishedRecipe> consumer) {
-        MagneticSeparatorRecipeBuilder.magneticSeparatorRecipe(Ingredient.of(ItemTags.GRAVEL_ORES_PLATINUM), Items.GRAVEL).secondOutput(StoneMinerals.PLATINUM_ITEMS.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, "platinum_dust_from_gravel_ore"));
         MagneticSeparatorRecipeBuilder.magneticSeparatorRecipe(Ingredient.of(ItemTags.GRAVEL_ORES_IRIDIUM), Items.GRAVEL).secondOutput(GravelMinerals.IRIDIUM_ITEMS.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, "iridium_dust_from_gravel_ore"));
         MagneticSeparatorRecipeBuilder.magneticSeparatorRecipe(Ingredient.of(ItemTags.GRAVEL_ORES_RUTHENIUM), Items.GRAVEL).secondOutput(GravelMinerals.RUTHENIUM_ITEMS.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, "ruthenium_dust_from_gravel_ore"));
         MagneticSeparatorRecipeBuilder.magneticSeparatorRecipe(Ingredient.of(ItemTags.GRAVEL_ORES_ZIRCONIUM), Items.GRAVEL).secondOutput(GravelMinerals.ZIRCONIUM_ITEMS.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, "zirconium_dust_from_gravel_ore"));
