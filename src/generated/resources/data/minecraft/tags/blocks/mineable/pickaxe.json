@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "real_minerals:brass_block",
+    "real_minerals:alnico_block",
+    "real_minerals:magnetized_alnico_block",
     "real_minerals:bronze_block",
     "real_minerals:meteorite",
     "real_minerals:shale_gas_stone",

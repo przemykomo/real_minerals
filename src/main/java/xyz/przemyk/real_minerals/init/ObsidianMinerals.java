@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MaterialColor;
 
-import static xyz.przemyk.real_minerals.RealMinerals.ITEM_GROUP;
+import static xyz.przemyk.real_minerals.RealMinerals.ITEM_TAB;
 
 public class ObsidianMinerals {
 
@@ -20,6 +20,6 @@ public class ObsidianMinerals {
     static void init() {}
 
     static BlockRegistryObject obsidianOre(String name) {
-        return Registering.BLOCKS_ITEMS.register(name, () -> new Block(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)), ITEM_GROUP);
+        return Registering.BLOCKS_ITEMS.register(name, () -> new Block(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)), ITEM_TAB);
     }
 }

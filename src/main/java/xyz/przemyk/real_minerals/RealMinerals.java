@@ -22,7 +22,7 @@ public class RealMinerals {
         DatapackEvents.init();
     }
 
-    public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(MODID) {
+    public static final CreativeModeTab ITEM_TAB = new CreativeModeTab(MODID) {
         @Override
         public ItemStack makeIcon() {
             return new ItemStack(MachinesRegistry.CRUSHER_BLOCK.ITEM.get());

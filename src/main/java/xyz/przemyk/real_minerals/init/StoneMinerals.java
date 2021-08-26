@@ -7,7 +7,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.fmllegacy.RegistryObject;
 
-import static xyz.przemyk.real_minerals.RealMinerals.ITEM_GROUP;
+import static xyz.przemyk.real_minerals.RealMinerals.ITEM_TAB;
 
 public class StoneMinerals {
     //TODO: remove copper
@@ -58,6 +58,6 @@ public class StoneMinerals {
     static void init() {}
 
     static BlockRegistryObject stoneOre(String name) {
-        return Registering.BLOCKS_ITEMS.register(name, () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F)), ITEM_GROUP);
+        return Registering.BLOCKS_ITEMS.register(name, () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F)), ITEM_TAB);
     }
 }
