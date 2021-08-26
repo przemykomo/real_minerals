@@ -48,7 +48,6 @@ public class WorldGenRegistry {
     public static ConfiguredFeature<?, ?> LEAD_ORE;
     public static ConfiguredFeature<?, ?> MAGNESIUM_ORE;
     public static ConfiguredFeature<?, ?> NICKEL_ORE;
-    public static ConfiguredFeature<?, ?> PLATINUM_ORE;
     public static ConfiguredFeature<?, ?> SILVER_ORE;
     public static ConfiguredFeature<?, ?> TIN_ORE;
     public static ConfiguredFeature<?, ?> ALUMINUM_ORE;
@@ -107,7 +106,6 @@ public class WorldGenRegistry {
             oreFeatures.add(() -> LEAD_ORE);
             oreFeatures.add(() -> MAGNESIUM_ORE);
             oreFeatures.add(() -> NICKEL_ORE);
-            oreFeatures.add(() -> PLATINUM_ORE);
             oreFeatures.add(() -> SILVER_ORE);
             oreFeatures.add(() -> TIN_ORE);
             oreFeatures.add(() -> ALUMINUM_ORE);
