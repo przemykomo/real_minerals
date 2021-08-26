@@ -38,6 +38,7 @@ public class BlockStates extends BlockStateProvider {
         machineBlock(MachinesRegistry.CHEMICAL_WASHER_BLOCK.BLOCK.get());
         simpleBlock(MachinesRegistry.TANK_BLOCK.get());
         machineBlock(MachinesRegistry.EVAPORATION_PLANT_CONTROLLER_BLOCK.BLOCK.get(), new ResourceLocation("block/obsidian"), new ResourceLocation("block/obsidian"), new ResourceLocation("block/obsidian"));
+        simpleBlock(Registering.MAGNETIZED_ALNICO_BLOCK.BLOCK.get());
     }
 
     private void horizontalBlock(Block block) {
