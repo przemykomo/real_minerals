@@ -2,28 +2,28 @@ package xyz.przemyk.real_minerals.datapack.recipes;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import xyz.przemyk.real_minerals.RealMinerals;
-import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
 
-public class CrusherRecipe extends ItemMachineRecipe {
+public record CrusherRecipe(ResourceLocation id, Ingredient input, ItemStack output) implements Recipe<Container> {
 
-    public static final Serializer SERIALIZER = new Serializer();
+    @Override
+    public boolean matches(Container pContainer, Level pLevel) {
+        return false;
+    }
 
-    public CrusherRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
-        super(NonNullList.withSize(1, output), id, NonNullList.withSize(1, input));
+    @Override
+    public ItemStack assemble(Container pContainer) {
+        return null;
     }
 
     @Override
@@ -32,8 +32,13 @@ public class CrusherRecipe extends ItemMachineRecipe {
     }
 
     @Override
+    public ItemStack getResultItem() {
+        return null;
+    }
+
+    @Override
     public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
+        return Recipes.CRUSHER_SERIALIZER.get();
     }
 
     @Override
@@ -42,13 +47,8 @@ public class CrusherRecipe extends ItemMachineRecipe {
     }
 
     @Override
-    public ItemStack getToastSymbol() {
-        return new ItemStack(MachinesRegistry.CRUSHER_BLOCK.ITEM.get());
-    }
-
-    public boolean isValidInput(NonNullList<ItemStack> inputList) {
-        ItemStack input = inputList.get(0);
-        return ingredients.get(0).test(input);
+    public ResourceLocation getId() {
+        return id;
     }
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CrusherRecipe> {
@@ -71,8 +71,8 @@ public class CrusherRecipe extends ItemMachineRecipe {
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, CrusherRecipe recipe) {
-            recipe.ingredients.get(0).toNetwork(buffer);
-            buffer.writeItem(recipe.outputs.get(0));
+            recipe.input.toNetwork(buffer);
+            buffer.writeItem(recipe.output);
         }
     }
 }
