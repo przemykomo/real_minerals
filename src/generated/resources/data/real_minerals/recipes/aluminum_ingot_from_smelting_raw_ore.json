@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "tag": "forge:raw_ores/aluminum"
+  },
+  "result": "real_minerals:aluminum_ingot",
+  "experience": 0.7,
+  "cookingtime": 200
+}

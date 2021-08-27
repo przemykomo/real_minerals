@@ -2,13 +2,11 @@ package xyz.przemyk.real_minerals.datagen.recipe_builders;
 
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.resources.ResourceLocation;
-import xyz.przemyk.real_minerals.datapack.recipes.MagnetizerRecipe;
-import xyz.przemyk.real_minerals.datapack.recipes.CrusherRecipe;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.ItemLike;
 import xyz.przemyk.real_minerals.init.Recipes;
 
 import javax.annotation.Nullable;
@@ -34,6 +32,7 @@ public class SingleInputOutputRecipeBuilder {
     public static SingleInputOutputRecipeBuilder crushingRecipe(Ingredient ingredient, ItemLike result, int count) {
         return new SingleInputOutputRecipeBuilder(Recipes.CRUSHER_SERIALIZER.get(), ingredient, result, count);
     }
+
     public static SingleInputOutputRecipeBuilder magnetizerRecipe(Ingredient ingredient, ItemLike result) {
         return new SingleInputOutputRecipeBuilder(Recipes.MAGNETIZER_SERIALIZER.get(), ingredient, result, 1);
     }

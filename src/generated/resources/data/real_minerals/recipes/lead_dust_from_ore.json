@@ -1,7 +1,7 @@
 {
   "type": "real_minerals:crusher",
   "input": {
-    "tag": "forge:ores/lead"
+    "tag": "forge:raw_ores/lead"
   },
   "output": {
     "item": "real_minerals:lead_dust",

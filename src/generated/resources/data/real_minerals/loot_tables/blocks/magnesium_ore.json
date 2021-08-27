@@ -2,49 +2,43 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "magnesium_ore",
       "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "functions": [
+          "type": "minecraft:alternatives",
+          "children": [
             {
-              "function": "minecraft:copy_name",
-              "source": "block_entity"
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "name": "real_minerals:magnesium_ore"
             },
             {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
+              "type": "minecraft:item",
+              "functions": [
                 {
-                  "source": "inv",
-                  "target": "BlockEntityTag.inv",
-                  "op": "replace"
-                },
-                {
-                  "source": "energy",
-                  "target": "BlockEntityTag.energy",
-                  "op": "replace"
-                },
-                {
-                  "source": "fluid_tank",
-                  "target": "BlockEntityTag.fluid_tank",
-                  "op": "replace"
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:ore_drops"
                 }
-              ]
-            },
-            {
-              "function": "minecraft:set_contents",
-              "entries": [
-                {
-                  "type": "minecraft:dynamic",
-                  "name": "minecraft:contents"
-                }
-              ]
+              ],
+              "name": "real_minerals:raw_magnesium"
             }
-          ],
-          "name": "real_minerals:magnesium_ore"
+          ]
         }
       ]
     }

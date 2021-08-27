@@ -81,29 +81,29 @@ public class BlockTags extends BlockTagsProvider {
         tag(STORAGE_COPPER).add(Blocks.COPPER_BLOCK);
         tag(ORES_COPPER).add(Blocks.COPPER_ORE);
 
-        tag(STORAGE_LEAD).add(StoneMinerals.LEAD_BLOCK.BLOCK.get());
-        tag(ORES_LEAD).add(StoneMinerals.LEAD_ORE.BLOCK.get());
+        tag(STORAGE_LEAD).add(StoneMinerals.LEAD.BLOCK.BLOCK.get());
+        tag(ORES_LEAD).add(StoneMinerals.LEAD.ORE.BLOCK.get());
 
-        tag(STORAGE_MAGNESIUM).add(StoneMinerals.MAGNESIUM_BLOCK.BLOCK.get());
-        tag(ORES_MAGNESIUM).add(StoneMinerals.MAGNESIUM_ORE.BLOCK.get());
+        tag(STORAGE_MAGNESIUM).add(StoneMinerals.MAGNESIUM.BLOCK.BLOCK.get());
+        tag(ORES_MAGNESIUM).add(StoneMinerals.MAGNESIUM.ORE.BLOCK.get());
 
-        tag(STORAGE_NICKEL).add(StoneMinerals.NICKEL_BLOCK.BLOCK.get());
-        tag(ORES_NICKEL).add(StoneMinerals.NICKEL_ORE.BLOCK.get());
+        tag(STORAGE_NICKEL).add(StoneMinerals.NICKEL.BLOCK.BLOCK.get());
+        tag(ORES_NICKEL).add(StoneMinerals.NICKEL.ORE.BLOCK.get());
 
-        tag(STORAGE_SILVER).add(StoneMinerals.SILVER_BLOCK.BLOCK.get());
-        tag(ORES_SILVER).add(StoneMinerals.SILVER_ORE.BLOCK.get());
+        tag(STORAGE_SILVER).add(StoneMinerals.SILVER.BLOCK.BLOCK.get());
+        tag(ORES_SILVER).add(StoneMinerals.SILVER.ORE.BLOCK.get());
 
-        tag(STORAGE_TIN).add(StoneMinerals.TIN_BLOCK.BLOCK.get());
-        tag(ORES_TIN).add(StoneMinerals.TIN_ORE.BLOCK.get());
+        tag(STORAGE_TIN).add(StoneMinerals.TIN.BLOCK.BLOCK.get());
+        tag(ORES_TIN).add(StoneMinerals.TIN.ORE.BLOCK.get());
 
-        tag(STORAGE_ALUMINUM).add(StoneMinerals.ALUMINUM_BLOCK.BLOCK.get());
-        tag(ORES_ALUMINUM).add(StoneMinerals.ALUMINUM_ORE.BLOCK.get());
+        tag(STORAGE_ALUMINUM).add(StoneMinerals.ALUMINUM.BLOCK.BLOCK.get());
+        tag(ORES_ALUMINUM).add(StoneMinerals.ALUMINUM.ORE.BLOCK.get());
 
-        tag(STORAGE_ZINC).add(StoneMinerals.ZINC_BLOCK.BLOCK.get());
-        tag(ORES_ZINC).add(StoneMinerals.ZINC_ORE.BLOCK.get());
+        tag(STORAGE_ZINC).add(StoneMinerals.ZINC.BLOCK.BLOCK.get());
+        tag(ORES_ZINC).add(StoneMinerals.ZINC.ORE.BLOCK.get());
 
-        tag(STORAGE_MAGNETITE).add(StoneMinerals.MAGNETITE_BLOCK.BLOCK.get());
-        tag(ORES_MAGNETITE).add(StoneMinerals.MAGNETITE_ORE.BLOCK.get());
+        tag(STORAGE_MAGNETITE).add(StoneMinerals.MAGNETITE.BLOCK.BLOCK.get());
+        tag(ORES_MAGNETITE).add(StoneMinerals.MAGNETITE.ORE.BLOCK.get());
 
         tag(ORES_SULFUR).add(StoneMinerals.SULFUR_ORE.BLOCK.get());
         //</editor-fold>
@@ -135,10 +135,10 @@ public class BlockTags extends BlockTagsProvider {
         //</editor-fold>
 
         tag(net.minecraft.tags.BlockTags.BEACON_BASE_BLOCKS).add(
-                StoneMinerals.LEAD_BLOCK.BLOCK.get(), StoneMinerals.MAGNESIUM_BLOCK.BLOCK.get(),
-                StoneMinerals.NICKEL_BLOCK.BLOCK.get(),
-                StoneMinerals.SILVER_BLOCK.BLOCK.get(), StoneMinerals.TIN_BLOCK.BLOCK.get(),
-                StoneMinerals.ALUMINUM_BLOCK.BLOCK.get(), StoneMinerals.ZINC_BLOCK.BLOCK.get(),
+                StoneMinerals.LEAD.BLOCK.BLOCK.get(), StoneMinerals.MAGNESIUM.BLOCK.BLOCK.get(),
+                StoneMinerals.NICKEL.BLOCK.BLOCK.get(),
+                StoneMinerals.SILVER.BLOCK.BLOCK.get(), StoneMinerals.TIN.BLOCK.BLOCK.get(),
+                StoneMinerals.ALUMINUM.BLOCK.BLOCK.get(), StoneMinerals.ZINC.BLOCK.BLOCK.get(),
                 Registering.BRASS_BLOCK.BLOCK.get(), Registering.BRONZE_BLOCK.BLOCK.get(),
                 GravelMinerals.RUTHENIUM_BLOCK.BLOCK.get(), GravelMinerals.ZIRCONIUM_BLOCK.BLOCK.get(),
                 GravelMinerals.IRIDIUM_BLOCK.BLOCK.get()
@@ -153,17 +153,17 @@ public class BlockTags extends BlockTagsProvider {
         }
 
         tag(net.minecraft.tags.BlockTags.NEEDS_STONE_TOOL).add(
-                StoneMinerals.TIN_BLOCK.BLOCK.get(), StoneMinerals.TIN_ORE.BLOCK.get(),
-                StoneMinerals.ALUMINUM_BLOCK.BLOCK.get(), StoneMinerals.ALUMINUM_ORE.BLOCK.get(),
-                StoneMinerals.ZINC_BLOCK.BLOCK.get(), StoneMinerals.ZINC_ORE.BLOCK.get(),
-                StoneMinerals.MAGNETITE_BLOCK.BLOCK.get(), StoneMinerals.MAGNETITE_ORE.BLOCK.get(),
+                StoneMinerals.TIN.BLOCK.BLOCK.get(), StoneMinerals.TIN.ORE.BLOCK.get(),
+                StoneMinerals.ALUMINUM.BLOCK.BLOCK.get(), StoneMinerals.ALUMINUM.ORE.BLOCK.get(),
+                StoneMinerals.ZINC.BLOCK.BLOCK.get(), StoneMinerals.ZINC.ORE.BLOCK.get(),
+                StoneMinerals.MAGNETITE.BLOCK.BLOCK.get(), StoneMinerals.MAGNETITE.ORE.BLOCK.get(),
                 StoneMinerals.SULFUR_ORE.BLOCK.get());
 
         tag(net.minecraft.tags.BlockTags.NEEDS_IRON_TOOL).add(
-                StoneMinerals.LEAD_BLOCK.BLOCK.get(), StoneMinerals.LEAD_ORE.BLOCK.get(),
-                StoneMinerals.NICKEL_BLOCK.BLOCK.get(), StoneMinerals.NICKEL_ORE.BLOCK.get(),
-                StoneMinerals.MAGNESIUM_BLOCK.BLOCK.get(), StoneMinerals.MAGNESIUM_ORE.BLOCK.get(),
-                StoneMinerals.SILVER_BLOCK.BLOCK.get(), StoneMinerals.SILVER_ORE.BLOCK.get()
+                StoneMinerals.LEAD.BLOCK.BLOCK.get(), StoneMinerals.LEAD.ORE.BLOCK.get(),
+                StoneMinerals.NICKEL.BLOCK.BLOCK.get(), StoneMinerals.NICKEL.ORE.BLOCK.get(),
+                StoneMinerals.MAGNESIUM.BLOCK.BLOCK.get(), StoneMinerals.MAGNESIUM.ORE.BLOCK.get(),
+                StoneMinerals.SILVER.BLOCK.BLOCK.get(), StoneMinerals.SILVER.ORE.BLOCK.get()
         );
 
         tag(net.minecraft.tags.BlockTags.NEEDS_DIAMOND_TOOL).add(

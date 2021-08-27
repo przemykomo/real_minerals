@@ -1,7 +1,7 @@
 {
   "type": "real_minerals:crusher",
   "input": {
-    "tag": "forge:ores/magnesium"
+    "tag": "forge:raw_ores/magnesium"
   },
   "output": {
     "item": "real_minerals:magnesium_dust",

@@ -1,7 +1,7 @@
 {
   "type": "real_minerals:crusher",
   "input": {
-    "tag": "forge:ores/silver"
+    "tag": "forge:raw_ores/silver"
   },
   "output": {
     "item": "real_minerals:silver_dust",

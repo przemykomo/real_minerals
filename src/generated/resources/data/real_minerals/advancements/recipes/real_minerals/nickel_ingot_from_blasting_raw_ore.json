@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "real_minerals:nickel_ingot_from_blasting_raw_ore"
+    ]
+  },
+  "criteria": {
+    "has_raw_nickel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:raw_ores/nickel"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "real_minerals:nickel_ingot_from_blasting_raw_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_nickel",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "tag": "forge:raw_ores/silver"
+  },
+  "result": "real_minerals:silver_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}
