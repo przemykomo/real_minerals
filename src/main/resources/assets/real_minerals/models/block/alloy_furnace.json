@@ -3,7 +3,7 @@
     "textures": {
         "top": "real_minerals:block/alloy_furnace_top",
         "front": "real_minerals:block/alloy_furnace_front",
-        "side": "real_minerals:block/alloy_furnace_side",
+        "side": "real_minerals:block/bronze_machine_side",
         "bottom": "real_minerals:block/basic_machine_bottom"
     }
 }

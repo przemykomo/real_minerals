@@ -11,7 +11,10 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import xyz.przemyk.real_minerals.blockentity.*;
-import xyz.przemyk.real_minerals.blocks.*;
+import xyz.przemyk.real_minerals.blocks.BatteryBlock;
+import xyz.przemyk.real_minerals.blocks.CrusherBlock;
+import xyz.przemyk.real_minerals.blocks.MachineBlock;
+import xyz.przemyk.real_minerals.blocks.TankBlock;
 import xyz.przemyk.real_minerals.cables.CableBlock;
 import xyz.przemyk.real_minerals.cables.CableBlockEntity;
 import xyz.przemyk.real_minerals.containers.*;
@@ -25,7 +28,7 @@ public class MachinesRegistry {
     public static final RegistryObject<BlockEntityType<CrusherBlockEntity>> CRUSHER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("crusher", () -> BlockEntityType.Builder.of(CrusherBlockEntity::new, CRUSHER_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<CrusherContainer>> CRUSHER_CONTAINER = Registering.CONTAINERS.register("crusher", () -> new MenuType<>(CrusherContainer::getClientContainer));
 
-    public static final BlockRegistryObject ALLOY_FURNACE_BLOCK = Registering.BLOCKS_ITEMS.register("alloy_furnace", AlloyFurnaceBlock::new, ITEM_TAB);
+    public static final BlockRegistryObject ALLOY_FURNACE_BLOCK = Registering.BLOCKS_ITEMS.register("alloy_furnace", () -> new MachineBlock(AlloyFurnaceBlockEntity::new), ITEM_TAB);
     public static final RegistryObject<BlockEntityType<AlloyFurnaceBlockEntity>> ALLOY_FURNACE_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("alloy_furnace", () -> BlockEntityType.Builder.of(AlloyFurnaceBlockEntity::new, ALLOY_FURNACE_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<AlloyFurnaceContainer>> ALLOY_FURNACE_CONTAINER = Registering.CONTAINERS.register("alloy_furnace", () -> new MenuType<>(AlloyFurnaceContainer::getClientContainer));
     //</editor-fold>
