@@ -1,0 +1,15 @@
+{
+  "type": "real_minerals:chemical_washer",
+  "input_fluid": {
+    "fluid": "real_minerals:acid",
+    "amount": 600
+  },
+  "input_item": {
+    "tag": "forge:raw_ores/lead"
+  },
+  "output": {
+    "fluid": "real_minerals:acid",
+    "amount": 600,
+    "nbt": "{item:\"real_minerals:lead_dust\"}"
+  }
+}

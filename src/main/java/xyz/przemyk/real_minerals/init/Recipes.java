@@ -119,4 +119,15 @@ public class Recipes {
             }
         }
     }
+
+    public static JsonObject writeFluidStack(FluidStack fluidStack) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("fluid", fluidStack.getFluid().getRegistryName().toString());
+        jsonObject.addProperty("amount", fluidStack.getAmount());
+        if (fluidStack.hasTag()) {
+            jsonObject.addProperty("nbt", fluidStack.getTag().toString()); //TODO: test if this works
+        }
+
+        return jsonObject;
+    }
 }

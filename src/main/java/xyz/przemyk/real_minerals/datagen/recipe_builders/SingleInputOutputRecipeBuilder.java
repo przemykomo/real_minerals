@@ -45,20 +45,10 @@ public class SingleInputOutputRecipeBuilder {
         consumer.accept(new ResultRecipe(id, serializer, input, output, count));
     }
 
-    public static class ResultRecipe implements FinishedRecipe {
-        private final ResourceLocation id;
-        private final Ingredient input;
-        private final Item output;
-        private final int count;
-        private final RecipeSerializer<?> serializer;
-
-        public ResultRecipe(ResourceLocation id, RecipeSerializer<?> serializer, Ingredient input, Item output, int count) {
-            this.id = id;
-            this.input = input;
-            this.output = output;
-            this.count = count;
-            this.serializer = serializer;
-        }
+    public record ResultRecipe(ResourceLocation id,
+                               RecipeSerializer<?> serializer,
+                               Ingredient input, Item output,
+                               int count) implements FinishedRecipe {
 
         @SuppressWarnings("ConstantConditions")
         @Override

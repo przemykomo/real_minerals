@@ -8,6 +8,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import xyz.przemyk.real_minerals.datagen.recipe_builders.AlloyRecipeBuilder;
+import xyz.przemyk.real_minerals.datagen.recipe_builders.ChemicalWasherRecipeBuilder;
 import xyz.przemyk.real_minerals.datagen.recipe_builders.MagneticSeparatorRecipeBuilder;
 import xyz.przemyk.real_minerals.datagen.recipe_builders.SingleInputOutputRecipeBuilder;
 import xyz.przemyk.real_minerals.init.*;
@@ -52,6 +53,7 @@ public class DatagenRecipes extends RecipeProvider {
 
     private void registerMineralRecipes(Consumer<FinishedRecipe> consumer, StoneMinerals.RegistryStoneMetalSet registryMetalSet, String name, ItemTags.StoneMetalTagSet stoneMetalTagSet) {
         SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(stoneMetalTagSet.RAW_ORES), registryMetalSet.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, name + "_dust_from_ore"));
+        ChemicalWasherRecipeBuilder.dissolvingRecipe(Ingredient.of(stoneMetalTagSet.RAW_ORES), registryMetalSet.DUST.get(), 600).build(consumer, new ResourceLocation(MODID, "dissolving_raw_" + name));
 
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(stoneMetalTagSet.ORES), registryMetalSet.INGOT.get(), 0.7F, 100).unlockedBy("has_" + name + "_ore", has(stoneMetalTagSet.ORES)).save(consumer, new ResourceLocation(MODID, name + "_ingot_from_blasting_ore"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(stoneMetalTagSet.ORES), registryMetalSet.INGOT.get(), 0.7F, 200).unlockedBy("has_" + name + "_ore", has(stoneMetalTagSet.ORES)).save(consumer, new ResourceLocation(MODID, name + "_ingot_from_smelting_ore"));
