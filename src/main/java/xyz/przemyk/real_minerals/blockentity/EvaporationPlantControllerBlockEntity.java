@@ -52,7 +52,7 @@ public class EvaporationPlantControllerBlockEntity extends BlockEntity implement
     };
     public final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
-    public static final int FLUID_AMOUNT_TO_RESULT = 201;
+    public static final int FLUID_AMOUNT_TO_RESULT = 200;
     public FluidStack fluidStackInProgress = FluidStack.EMPTY;
     public Cuboid innerCuboid = null;
     private int ticks = 0;
@@ -99,7 +99,7 @@ public class EvaporationPlantControllerBlockEntity extends BlockEntity implement
     @Override
     public void tick() {
         if (!level.isClientSide) {
-            if (ticks % 40 == 0) {
+            if (ticks % 20 == 0) {
                 boolean wasNull = innerCuboid == null;
                 innerCuboid = detectMultiblock(level, getBlockPos(), getBlockState().getValue(HorizontalDirectionalBlock.FACING));
                 fluidTank.setCapacity(innerCuboid == null ? 0 : (innerCuboid.end().getX() - innerCuboid.begin().getX()) * (innerCuboid.end().getZ() - innerCuboid.begin().getZ()) * FluidAttributes.BUCKET_VOLUME);
@@ -109,14 +109,13 @@ public class EvaporationPlantControllerBlockEntity extends BlockEntity implement
             }
             ticks++;
 
-            if (innerCuboid != null && ticks % 10 == 0) {
-                if (fluidStackInProgress.isEmpty() && !fluidTank.isEmpty() && FluidUtils.getDissolvedItem(fluidTank.getFluid()) != null) {
-                    fluidStackInProgress = fluidTank.getFluid().copy();
-                    fluidStackInProgress.setAmount(1); //I'd set it to 0, but then it'd become empty
-                }
-
-                if (!fluidTank.isEmpty() && fluidTank.getFluid().isFluidEqual(fluidStackInProgress)) {
-                    fluidStackInProgress.grow(fluidTank.drain(fluidTank.getCapacity() / FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE).getAmount());
+            if (innerCuboid != null && ticks % 40 == 0) {
+                if (!fluidTank.isEmpty() && ((fluidStackInProgress.isEmpty() && FluidUtils.getDissolvedItem(fluidTank.getFluid()) != null) || fluidTank.getFluid().isFluidEqual(fluidStackInProgress))) {
+                    if (fluidStackInProgress.isEmpty()) {
+                        fluidStackInProgress = fluidTank.drain(fluidTank.getCapacity() / FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE);
+                    } else {
+                        fluidStackInProgress.grow(fluidTank.drain(fluidTank.getCapacity() / FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE).getAmount());
+                    }
                 }
 
                 if (fluidStackInProgress.getAmount() >= FLUID_AMOUNT_TO_RESULT) {
