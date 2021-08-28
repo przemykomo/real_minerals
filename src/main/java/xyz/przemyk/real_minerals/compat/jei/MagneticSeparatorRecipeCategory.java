@@ -21,9 +21,10 @@ import static xyz.przemyk.real_minerals.compat.jei.RealMineralsJEIPlugin.RECIPE_
 
 public class MagneticSeparatorRecipeCategory implements IRecipeCategory<MagneticSeparatorRecipe> {
 
+    public static final TranslatableComponent TITLE = new TranslatableComponent("gui." + RealMinerals.MODID + ".category.magnetic_separator");
+
     private final IDrawable background;
     private final IDrawable icon;
-    private static final TranslatableComponent name = new TranslatableComponent("gui." + RealMinerals.MODID + ".category.magnetic_separator");
     private final IDrawableAnimated arrow;
 
     public MagneticSeparatorRecipeCategory(IGuiHelper guiHelper) {
@@ -44,7 +45,7 @@ public class MagneticSeparatorRecipeCategory implements IRecipeCategory<Magnetic
 
     @Override
     public Component getTitle() {
-        return name;
+        return TITLE;
     }
 
     @Override

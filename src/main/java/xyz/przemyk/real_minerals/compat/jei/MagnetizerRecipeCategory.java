@@ -21,9 +21,10 @@ import static xyz.przemyk.real_minerals.compat.jei.RealMineralsJEIPlugin.RECIPE_
 
 public class MagnetizerRecipeCategory implements IRecipeCategory<MagnetizerRecipe> {
 
+    public static final TranslatableComponent TITLE = new TranslatableComponent("gui." + RealMinerals.MODID + ".category.magnetizer");
+
     private final IDrawable background;
     private final IDrawable icon;
-    private static final TranslatableComponent name = new TranslatableComponent("gui." + RealMinerals.MODID + ".category.magnetizer");
     private final IDrawableAnimated arrow;
 
     public MagnetizerRecipeCategory(IGuiHelper guiHelper) {
@@ -44,7 +45,7 @@ public class MagnetizerRecipeCategory implements IRecipeCategory<MagnetizerRecip
 
     @Override
     public Component getTitle() {
-        return name;
+        return TITLE;
     }
 
     @Override

@@ -16,9 +16,9 @@ public class MixerScreen extends MachineScreen<MixerContainer> {
 
     public MixerScreen(MixerContainer screenContainer, Inventory inventory, Component title) {
         super(screenContainer, inventory, title, GUI);
-        screenModules.add(new TankModule(35, 18, 18, 51, this, menu.blockEntity.fluidTank.firstInput));
-        screenModules.add(new TankModule(55, 18, 18, 51, this, menu.blockEntity.fluidTank.secondInput));
-        screenModules.add(new TankModule(111, 18, 18, 51, this, menu.blockEntity.fluidTank.output));
+        screenModules.add(new TankModule(35, 18, 18, 50, this, menu.blockEntity.fluidTank.firstInput));
+        screenModules.add(new TankModule(55, 18, 18, 50, this, menu.blockEntity.fluidTank.secondInput));
+        screenModules.add(new TankModule(111, 18, 18, 50, this, menu.blockEntity.fluidTank.output));
         screenModules.add(new EnergyModule(() -> menu.machineData.get(1), 10_000, 153, 7, this));
         screenModules.add(new ProgressArrowModule(79, 34, this, () -> menu.machineData.get(0), MixerBlockEntity.WORKING_TIME_TOTAL));
     }

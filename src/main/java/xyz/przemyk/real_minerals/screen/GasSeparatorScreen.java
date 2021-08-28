@@ -18,7 +18,7 @@ public class GasSeparatorScreen extends MachineScreen<GasSeparatorContainer> {
 
     public GasSeparatorScreen(GasSeparatorContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn, GUI);
-        screenModules.add(new TankModule(134, 18, 18, 51, this, menu.blockEntity.fluidTank));
+        screenModules.add(new TankModule(134, 18, 18, 50, this, menu.blockEntity.fluidTank));
         screenModules.add(new EnergyModule(() -> menu.machineData.get(1), 10_000, 153, 7, this));
         screenModules.add(new ProgressArrowModule(67, 26, this, () -> menu.machineData.get(0), GasSeparatorBlockEntity.WORKING_TIME_TOTAL));
     }

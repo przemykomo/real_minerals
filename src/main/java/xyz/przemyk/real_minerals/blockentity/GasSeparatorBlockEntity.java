@@ -36,6 +36,7 @@ public class GasSeparatorBlockEntity extends ElectricMachineBlockEntity<GasSepar
 
     public static final int FE_PER_TICK = 60;
     public static final int WORKING_TIME_TOTAL = 120;
+    public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
 
     public final ItemStackHandler itemHandler = new ItemStackHandler(2) {
         @Override
@@ -45,7 +46,7 @@ public class GasSeparatorBlockEntity extends ElectricMachineBlockEntity<GasSepar
     };
     public final LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.of(() -> itemHandler);
 
-    public final DrainOnlyFluidTank fluidTank = new DrainOnlyFluidTank(FluidAttributes.BUCKET_VOLUME);
+    public final DrainOnlyFluidTank fluidTank = new DrainOnlyFluidTank(CAPACITY);
     private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> fluidTank);
 
     public GasSeparatorBlockEntity(BlockPos blockPos, BlockState blockState) {

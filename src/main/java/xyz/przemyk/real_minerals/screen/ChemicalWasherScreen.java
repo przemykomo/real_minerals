@@ -16,8 +16,8 @@ public class ChemicalWasherScreen extends MachineScreen<ChemicalWasherContainer>
 
     public ChemicalWasherScreen(ChemicalWasherContainer screenContainer, Inventory inventory, Component title) {
         super(screenContainer, inventory, title, GUI);
-        screenModules.add(new TankModule(35, 18, 18, 51, this, menu.blockEntity.doubleFluidTank.input));
-        screenModules.add(new TankModule(109, 18, 18, 51, this, menu.blockEntity.doubleFluidTank.output));
+        screenModules.add(new TankModule(35, 18, 18, 50, this, menu.blockEntity.doubleFluidTank.input));
+        screenModules.add(new TankModule(109, 18, 18, 50, this, menu.blockEntity.doubleFluidTank.output));
         screenModules.add(new EnergyModule(() -> menu.machineData.get(1), 10_000, 153, 7, this));
         screenModules.add(new ProgressArrowModule(79, 35, this, () -> menu.machineData.get(0), ChemicalWasherBlockEntity.WORKING_TIME_TOTAL));
     }

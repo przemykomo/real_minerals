@@ -8,6 +8,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import xyz.przemyk.real_minerals.RealMinerals;
+import xyz.przemyk.real_minerals.compat.jei.*;
 import xyz.przemyk.real_minerals.init.BlockRegistryObject;
 import xyz.przemyk.real_minerals.init.Registering;
 
@@ -50,6 +51,16 @@ public class LangGen extends LanguageProvider {
         add("real_minerals.gui.fluid.dissolved", "Dissolved: %s");
         add("real_minerals.empty", "Empty");
         add("real_minerals.active", "Active");
+
+        add(AlloyRecipeCategory.TITLE.getKey(), "Alloying");
+        add(ChemicalWasherCategory.TITLE.getKey(), "Chemical Washing");
+        add(CrusherRecipeCategory.TITLE.getKey(), "Crushing");
+        add(GasEnricherCategory.TITLE.getKey(), "Gas Enriching");
+        add(GasSeparatorCategory.TITLE.getKey(), "Gas Separating");
+        add(MagneticSeparatorRecipeCategory.TITLE.getKey(), "Magnetic Separating");
+        add(MagnetizerRecipeCategory.TITLE.getKey(), "Magnetizing");
+        add(MixerCategory.TITLE.getKey(), "Mixing");
+        add(OxidizerCategory.TITLE.getKey(), "Oxidizing");
     }
 
     public String fixCapitalization(String text) {
