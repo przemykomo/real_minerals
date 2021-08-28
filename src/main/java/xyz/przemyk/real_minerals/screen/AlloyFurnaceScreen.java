@@ -21,7 +21,6 @@ public class AlloyFurnaceScreen extends MachineScreen<AlloyFurnaceContainer> {
         screenModules.add(new ProgressArrowModule(79, 34, this, () -> menu.machineData.get(0), AlloyFurnaceBlockEntity.WORKING_TIME_TOTAL));
     }
 
-
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         super.renderBg(matrixStack, partialTicks, mouseX, mouseY);
