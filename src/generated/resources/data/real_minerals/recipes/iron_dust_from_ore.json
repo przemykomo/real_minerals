@@ -1,0 +1,10 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:raw_ores/iron"
+  },
+  "output": {
+    "item": "real_minerals:iron_dust",
+    "count": 2
+  }
+}

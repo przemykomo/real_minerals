@@ -38,6 +38,10 @@ public class DatagenRecipes extends RecipeProvider {
         registerMineralRecipes(consumer, StoneMinerals.MAGNETITE, "magnetite", ItemTags.MAGNETITE);
         ShapedRecipeBuilder.shaped(StoneMinerals.MAGNETITE_GEAR.get()).define('#', ItemTags.MAGNETITE.INGOTS).pattern(" # ").pattern("# #").pattern(" # ").unlockedBy("has_magnetite_ingot", has(ItemTags.MAGNETITE.INGOTS)).save(consumer, new ResourceLocation(MODID, "magnetite_gear_from_ingots"));
 
+        vanillaOre(consumer, StoneMinerals.IRON_DUST.get(), "iron", ItemTags.RAW_ORES_IRON, Tags.Items.INGOTS_IRON);
+        vanillaOre(consumer, StoneMinerals.COPPER_DUST.get(), "copper", ItemTags.RAW_ORES_COPPER, ItemTags.INGOTS_COPPER);
+        vanillaOre(consumer, StoneMinerals.GOLD_DUST.get(), "gold", ItemTags.RAW_ORES_GOLD, Tags.Items.INGOTS_GOLD);
+
         ////////////////////////////////////////////////////////////////// METALS WITH GRAVEL ORES
         registerGravelMineralRecipes(consumer, GravelMinerals.RUTHENIUM_ITEMS, ItemTags.RUTHENIUM.NUGGETS, ItemTags.RUTHENIUM.INGOTS, GravelMinerals.RUTHENIUM_BLOCK, ItemTags.RUTHENIUM.STORAGE, ItemTags.RUTHENIUM.DUSTS, ItemTags.GRAVEL_ORES_RUTHENIUM, "ruthenium");
         registerGravelMineralRecipes(consumer, GravelMinerals.ZIRCONIUM_ITEMS, ItemTags.ZIRCONIUM.NUGGETS, ItemTags.ZIRCONIUM.INGOTS, GravelMinerals.ZIRCONIUM_BLOCK, ItemTags.ZIRCONIUM.STORAGE, ItemTags.ZIRCONIUM.DUSTS, ItemTags.GRAVEL_ORES_ZIRCONIUM, "zirconium");
@@ -74,6 +78,12 @@ public class DatagenRecipes extends RecipeProvider {
     private void registerGravelMineralRecipes(Consumer<FinishedRecipe> consumer, RegistryMetalSet registryMetalSet, Tags.IOptionalNamedTag<Item> nuggetsItemTag, Tags.IOptionalNamedTag<Item> ingotsTag, BlockRegistryObject storageBlock, Tags.IOptionalNamedTag<Item> storageTag, Tags.IOptionalNamedTag<Item> dustsItemTag, Tags.IOptionalNamedTag<Item> tagGravelOres, String name) {
         MagneticSeparatorRecipeBuilder.magneticSeparatorRecipe(Ingredient.of(tagGravelOres), Items.GRAVEL).secondOutput(registryMetalSet.DUST.get(), 2).build(consumer, new ResourceLocation(MODID, name + "_dust_from_gravel_ore"));
         registerCommonMineralsRecipes(consumer, registryMetalSet, nuggetsItemTag, ingotsTag, storageBlock, storageTag, dustsItemTag, name);
+    }
+
+    private void vanillaOre(Consumer<FinishedRecipe> consumer, Item dust, String name, Tags.IOptionalNamedTag<Item> rawOres, Tags.IOptionalNamedTag<Item> ingotsTag) {
+        SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(rawOres), dust, 2).build(consumer, new ResourceLocation(MODID, name + "_dust_from_ore"));
+        ChemicalWasherRecipeBuilder.dissolvingRecipe(Ingredient.of(rawOres), dust, 600).build(consumer, new ResourceLocation(MODID, "dissolving_raw_" + name));
+        SingleInputOutputRecipeBuilder.crushingRecipe(Ingredient.of(ingotsTag), dust).build(consumer, new ResourceLocation(MODID, name + "_dust_from_ingot"));
     }
 
     private void registerCommonMineralsRecipes(Consumer<FinishedRecipe> consumer, RegistryMetalSet registryMetalSet, Tags.IOptionalNamedTag<Item> nuggetsItemTag, Tags.IOptionalNamedTag<Item> ingotsTag, BlockRegistryObject storageBlock, Tags.IOptionalNamedTag<Item> storageTag, Tags.IOptionalNamedTag<Item> dustsItemTag, String name) {

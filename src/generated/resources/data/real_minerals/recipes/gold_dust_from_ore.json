@@ -1,0 +1,10 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:raw_ores/gold"
+  },
+  "output": {
+    "item": "real_minerals:gold_dust",
+    "count": 2
+  }
+}

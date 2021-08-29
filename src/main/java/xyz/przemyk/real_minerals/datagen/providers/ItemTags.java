@@ -49,6 +49,15 @@ public class ItemTags extends ItemTagsProvider {
     public static final Tags.IOptionalNamedTag<Item> ORES_COPPER = tag("ores/copper");
     public static final Tags.IOptionalNamedTag<Item> INGOTS_COPPER = tag("ingots/copper");
 
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_COPPER = tag("dusts/copper");
+    public static final Tags.IOptionalNamedTag<Item> RAW_ORES_COPPER = tag("raw_ores/copper");
+
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_IRON = tag("dusts/iron");
+    public static final Tags.IOptionalNamedTag<Item> RAW_ORES_IRON = tag("raw_ores/iron");
+
+    public static final Tags.IOptionalNamedTag<Item> DUSTS_GOLD = tag("dusts/gold");
+    public static final Tags.IOptionalNamedTag<Item> RAW_ORES_GOLD = tag("raw_ores/gold");
+
     public static final StoneMetalTagSet LEAD = new StoneMetalTagSet("lead");
     public static final StoneMetalTagSet MAGNESIUM = new StoneMetalTagSet("magnesium");
     public static final StoneMetalTagSet NICKEL = new StoneMetalTagSet("nickel");
@@ -116,6 +125,14 @@ public class ItemTags extends ItemTagsProvider {
         copy(BlockTags.STORAGE_COPPER, STORAGE_COPPER);
         copy(BlockTags.ORES_COPPER, ORES_COPPER);
         tag(INGOTS_COPPER).add(Items.COPPER_INGOT);
+        tag(DUSTS_COPPER).add(StoneMinerals.COPPER_DUST.get());
+        tag(RAW_ORES_COPPER).add(Items.RAW_COPPER);
+
+        tag(DUSTS_IRON).add(StoneMinerals.IRON_DUST.get());
+        tag(RAW_ORES_IRON).add(Items.RAW_IRON);
+
+        tag(DUSTS_GOLD).add(StoneMinerals.GOLD_DUST.get());
+        tag(RAW_ORES_GOLD).add(Items.RAW_GOLD);
 
         copy(BlockTags.STORAGE_LEAD, LEAD.STORAGE);
         copy(BlockTags.ORES_LEAD, LEAD.ORES);

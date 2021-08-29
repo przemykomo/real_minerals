@@ -23,6 +23,10 @@ public class StoneMinerals {
     public static final BlockRegistryObject SULFUR_ORE = stoneOre("sulfur_ore");
     public static final RegistryObject<Item> SULFUR = Registering.simpleItem("sulfur");
 
+    public static final RegistryObject<Item> IRON_DUST = Registering.simpleItem("iron_dust");
+    public static final RegistryObject<Item> GOLD_DUST = Registering.simpleItem("gold_dust");
+    public static final RegistryObject<Item> COPPER_DUST = Registering.simpleItem("copper_dust");
+
     static void init() {}
 
     static BlockRegistryObject stoneOre(String name) {

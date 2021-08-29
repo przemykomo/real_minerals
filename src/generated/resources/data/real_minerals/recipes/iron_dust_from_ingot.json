@@ -1,0 +1,9 @@
+{
+  "type": "real_minerals:crusher",
+  "input": {
+    "tag": "forge:ingots/iron"
+  },
+  "output": {
+    "item": "real_minerals:iron_dust"
+  }
+}
