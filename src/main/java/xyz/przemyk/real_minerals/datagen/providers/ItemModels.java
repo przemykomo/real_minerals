@@ -2,6 +2,7 @@ package xyz.przemyk.real_minerals.datagen.providers;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.TieredItem;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -31,9 +32,15 @@ public class ItemModels extends ItemModelProvider {
             if (itemRegistryObject == MachinesRegistry.TANK_ITEM) {
                 continue;
             }
-            String path = itemRegistryObject.get().getRegistryName().getPath();
-            getBuilder(path).parent(new ModelFile.UncheckedModelFile("item/generated"))
-                    .texture("layer0", modLoc("item/" + path));
+            Item item = itemRegistryObject.get();
+            String path = item.getRegistryName().getPath();
+            if (item instanceof TieredItem) {
+                getBuilder(path).parent(new ModelFile.UncheckedModelFile("item/handheld"))
+                        .texture("layer0", modLoc("item/" + path));
+            } else {
+                getBuilder(path).parent(new ModelFile.UncheckedModelFile("item/generated"))
+                        .texture("layer0", modLoc("item/" + path));
+            }
         }
     }
 }

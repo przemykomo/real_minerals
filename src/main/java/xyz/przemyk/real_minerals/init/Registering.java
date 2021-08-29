@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -35,6 +36,7 @@ public class Registering {
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLOBAL_LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, MODID);
 
     public static void init(IEventBus eventBus) {
         BLOCKS_ITEMS.register(eventBus);
@@ -43,11 +45,13 @@ public class Registering {
         CONTAINERS.register(eventBus);
         FLUIDS.register(eventBus);
         BLOCKS.register(eventBus);
+        GLOBAL_LOOT_MODIFIERS.register(eventBus);
         MachinesRegistry.init();
         StoneMinerals.init();
         GravelMinerals.init();
         ObsidianMinerals.init();
         WorldGenRegistry.init(eventBus);
+        ToolsRegistry.init();
     }
 
     //<editor-fold desc="Alloys">

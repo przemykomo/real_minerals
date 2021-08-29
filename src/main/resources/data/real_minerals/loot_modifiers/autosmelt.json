@@ -1,0 +1,17 @@
+{
+    "type": "real_minerals:autosmelt",
+    "conditions": [
+        {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+                "items": [
+                    "real_minerals:magnesium_pickaxe",
+                    "real_minerals:magnesium_shovel",
+                    "real_minerals:magnesium_axe",
+                    "real_minerals:magnesium_sword",
+                    "real_minerals:magnesium_hoe"
+                ]
+            }
+        }
+    ]
+}

@@ -49,6 +49,13 @@ public class DatagenRecipes extends RecipeProvider {
 
         AlloyRecipeBuilder.alloyRecipe(Registering.BRONZE_ITEMS.INGOT.get(), 5).addIngredient(Ingredient.of(ItemTags.INGOTS_COPPER), 4).addIngredient(Ingredient.of(ItemTags.TIN.INGOTS)).build(consumer);
         registerCommonMineralsRecipes(consumer, Registering.BRONZE_ITEMS, ItemTags.BRONZE.NUGGETS, ItemTags.BRONZE.INGOTS, Registering.BRONZE_BLOCK, ItemTags.BRONZE.STORAGE, ItemTags.BRONZE.DUSTS, "bronze");
+
+        ////////////////////////////////////////////////////////////////// MISC
+        magnesiumSmithing(consumer, Items.DIAMOND_SWORD, ToolsRegistry.MAGNESIUM_SWORD.get());
+        magnesiumSmithing(consumer, Items.DIAMOND_AXE, ToolsRegistry.MAGNESIUM_AXE.get());
+        magnesiumSmithing(consumer, Items.DIAMOND_PICKAXE, ToolsRegistry.MAGNESIUM_PICKAXE.get());
+        magnesiumSmithing(consumer, Items.DIAMOND_HOE, ToolsRegistry.MAGNESIUM_HOE.get());
+        magnesiumSmithing(consumer, Items.DIAMOND_SHOVEL, ToolsRegistry.MAGNESIUM_SHOVEL.get());
     }
 
     private void registerMineralRecipes(Consumer<FinishedRecipe> consumer, StoneMinerals.RegistryStoneMetalSet registryMetalSet, String name, ItemTags.StoneMetalTagSet stoneMetalTagSet) {
@@ -77,5 +84,9 @@ public class DatagenRecipes extends RecipeProvider {
         ShapedRecipeBuilder.shaped(storageBlock.ITEM.get()).define('#', ingotsTag).pattern("###").pattern("###").pattern("###").unlockedBy("has_" + name + "_ingot", has(ingotsTag)).save(consumer, new ResourceLocation(MODID, name + "_block_from_ingots"));
         ShapelessRecipeBuilder.shapeless(registryMetalSet.INGOT.get(), 9).requires(storageTag).unlockedBy("has_" + name + "_block", has(storageTag)).save(consumer, new ResourceLocation(MODID, name + "_ingot_from_block"));
         ShapelessRecipeBuilder.shapeless(registryMetalSet.NUGGET.get(), 9).requires(ingotsTag).unlockedBy("has_" + name + "_ingot", has(ingotsTag)).save(consumer, new ResourceLocation(MODID, name + "_nugget_from_ingot"));
+    }
+
+    private static void magnesiumSmithing(Consumer<FinishedRecipe> consumer, Item pIngredientItem, Item pResultItem) {
+        UpgradeRecipeBuilder.smithing(Ingredient.of(pIngredientItem), Ingredient.of(StoneMinerals.MAGNESIUM.INGOT.get()), pResultItem).unlocks("has_magnesium_ingot", has(StoneMinerals.MAGNESIUM.INGOT.get())).save(consumer, pResultItem.getRegistryName().getPath() + "_smithing");
     }
 }

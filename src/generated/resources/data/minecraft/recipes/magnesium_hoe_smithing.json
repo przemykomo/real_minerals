@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:diamond_hoe"
+  },
+  "addition": {
+    "item": "real_minerals:magnesium_ingot"
+  },
+  "result": {
+    "item": "real_minerals:magnesium_hoe"
+  }
+}
