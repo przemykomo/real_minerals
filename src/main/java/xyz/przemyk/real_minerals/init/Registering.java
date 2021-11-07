@@ -91,6 +91,8 @@ public class Registering {
     public static final RegistryObject<GasBucketItem> SULFUR_TRIOXIDE_GAS_BUCKET = ITEMS.register("sulfur_trioxide_gas_bucket", () -> new GasBucketItem(SULFUR_TRIOXIDE_GAS_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ITEM_TAB)));
 
     public static final RegistryObject<DummyFluid> ACID_FLUID = FLUIDS.register("acid", () -> new DummyFluid(false));
+
+    public static final RegistryObject<DummyFluid> MANA_FLUID = FLUIDS.register("mana", () -> new DummyFluid(false));
     //</editor-fold>
 
     static RegistryObject<Item> simpleItem(String name) {

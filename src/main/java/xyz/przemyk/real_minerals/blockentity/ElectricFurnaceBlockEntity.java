@@ -49,8 +49,7 @@ public class ElectricFurnaceBlockEntity extends ElectricMachineBlockEntity<Smelt
             return cachedRecipe;
         }
 
-        cachedRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(itemHandler.getStackInSlot(0)), level).orElse(null);
-        return cachedRecipe;
+        return cachedRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(itemHandler.getStackInSlot(0)), level).orElse(null);
     }
 
     protected boolean canProcess(@Nullable SmeltingRecipe recipe) {

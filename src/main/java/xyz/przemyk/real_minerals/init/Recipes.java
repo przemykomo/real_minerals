@@ -58,6 +58,9 @@ public class Recipes {
     public static final RecipeType<ChemicalWasherRecipe> CHEMICAL_WASHER_RECIPE_TYPE = new MachineRecipeType<>("chemical_washer");
     public static final RegistryObject<ChemicalWasherRecipe.Serializer> CHEMICAL_WASHER_SERIALIZER = RECIPE_SERIALIZERS.register("chemical_washer", ChemicalWasherRecipe.Serializer::new);
 
+    public static final RecipeType<ManaExtractorRecipe> MANA_EXTRACTOR_RECIPE_TYPE = new MachineRecipeType<>("mana_extractor");
+    public static final RegistryObject<ManaExtractorRecipe.Serializer> MANA_EXTRACTOR_SERIALIZER = RECIPE_SERIALIZERS.register("mana_extractor", ManaExtractorRecipe.Serializer::new);
+
     public static void init(IEventBus eventBus) {
         RECIPE_SERIALIZERS.register(eventBus);
         eventBus.addListener(Recipes::commonSetup);
@@ -77,13 +80,14 @@ public class Recipes {
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(OXIDIZER_RECIPE_TYPE.toString()), OXIDIZER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MIXER_RECIPE_TYPE.toString()), MIXER_RECIPE_TYPE);
         Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(CHEMICAL_WASHER_RECIPE_TYPE.toString()), CHEMICAL_WASHER_RECIPE_TYPE);
+        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MANA_EXTRACTOR_RECIPE_TYPE.toString()), MANA_EXTRACTOR_RECIPE_TYPE);
     }
 
     @Nullable
     public static<T extends ItemMachineRecipe> T getRecipe(NonNullList<ItemStack> input, Level world, RecipeType<T> recipeType) {
         if (input.size() > 0) {
             Set<T> recipes = getAllRecipes(world, recipeType);
-            for (T recipe : recipes){
+            for (T recipe : recipes) {
                 if (recipe.isValidInput(input)) {
                     return recipe;
                 }

@@ -33,6 +33,7 @@ public class ClientSetup {
         MenuScreens.register(MachinesRegistry.MIXER_CONTAINER.get(), MixerScreen::new);
         MenuScreens.register(MachinesRegistry.CHEMICAL_WASHER_CONTAINER.get(), ChemicalWasherScreen::new);
         MenuScreens.register(MachinesRegistry.EVAPORATION_PLANT_CONTAINER.get(), EvaporationPlantScreen::new);
+        MenuScreens.register(MachinesRegistry.MANA_EXTRACTOR_CONTAINER.get(), ManaExtractorScreen::new);
 
         ItemBlockRenderTypes.setRenderLayer(MachinesRegistry.TANK_BLOCK.get(), RenderType.cutout());
     }

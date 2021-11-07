@@ -1,0 +1,10 @@
+{
+    "type": "real_minerals:mana_extractor",
+    "input": {
+        "item": "minecraft:oak_leaves"
+    },
+    "result": {
+        "fluid": "real_minerals:mana",
+        "amount": 100
+    }
+}

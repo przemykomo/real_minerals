@@ -20,6 +20,7 @@
     "real_minerals:oxidizer",
     "real_minerals:mixer",
     "real_minerals:chemical_washer",
+    "real_minerals:mana_extractor",
     "real_minerals:evaporation_plant_controller",
     "real_minerals:cable",
     "real_minerals:lead_block",
