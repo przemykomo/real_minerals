@@ -6,7 +6,7 @@
 		"2": "minecraft:block/glass",
 		"3": "real_minerals:block/mana_ekstraktor_top",
 		"4": "real_minerals:block/mana_ekstraktor_bottom",
-		"particle": "real_minerals:block/iron_block"
+		"particle": "minecraft:block/iron_block"
 	},
 	"elements": [
 		{
