@@ -80,7 +80,7 @@ public class MachinesRegistry {
     public static final RegistryObject<BlockEntityType<ChemicalWasherBlockEntity>> CHEMICAL_WASHER_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("chemical_washer", () -> BlockEntityType.Builder.of(ChemicalWasherBlockEntity::new, CHEMICAL_WASHER_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<ChemicalWasherContainer>> CHEMICAL_WASHER_CONTAINER = Registering.CONTAINERS.register("chemical_washer", () -> IForgeContainerType.create(ChemicalWasherContainer::getClientContainer));
 
-    public static final BlockRegistryObject MANA_EXTRACTOR_BLOCK = Registering.BLOCKS_ITEMS.register("mana_extractor", () -> new MachineBlock(ManaExtractorBlockEntity::new), ITEM_TAB);
+    public static final BlockRegistryObject MANA_EXTRACTOR_BLOCK = Registering.BLOCKS_ITEMS.register("mana_extractor", () -> new MachineBlock(ManaExtractorBlockEntity::new, BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL).noOcclusion()), ITEM_TAB);
     public static final RegistryObject<BlockEntityType<ManaExtractorBlockEntity>> MANA_EXTRACTOR_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("mana_extractor", () -> BlockEntityType.Builder.of(ManaExtractorBlockEntity::new, MANA_EXTRACTOR_BLOCK.BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<ManaExtractorContainer>> MANA_EXTRACTOR_CONTAINER = Registering.CONTAINERS.register("mana_extractor", () -> IForgeContainerType.create(ManaExtractorContainer::getClientContainer));
     //</editor-fold>

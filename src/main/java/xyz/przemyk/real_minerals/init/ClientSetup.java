@@ -36,6 +36,7 @@ public class ClientSetup {
         MenuScreens.register(MachinesRegistry.MANA_EXTRACTOR_CONTAINER.get(), ManaExtractorScreen::new);
 
         ItemBlockRenderTypes.setRenderLayer(MachinesRegistry.TANK_BLOCK.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(MachinesRegistry.MANA_EXTRACTOR_BLOCK.BLOCK.get(), RenderType.cutout());
     }
 
     @SubscribeEvent

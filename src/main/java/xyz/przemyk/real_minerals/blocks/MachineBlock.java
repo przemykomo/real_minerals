@@ -35,7 +35,11 @@ public class MachineBlock extends Block implements EntityBlock {
     private final BiFunction<BlockPos, BlockState, BlockEntity> blockEntitySupplier;
 
     public MachineBlock(BiFunction<BlockPos, BlockState, BlockEntity> blockEntitySupplier) {
-        super(Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL));
+        this(blockEntitySupplier, Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL));
+    }
+
+    public MachineBlock(BiFunction<BlockPos, BlockState, BlockEntity> blockEntitySupplier, Properties properties) {
+        super(properties);
         this.blockEntitySupplier = blockEntitySupplier;
         registerDefaultState(this.stateDefinition.any().setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH).setValue(BlockStateProperties.LIT, Boolean.FALSE));
     }
