@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "real_minerals:block/mana_extractor"
+    }
+  }
+}
