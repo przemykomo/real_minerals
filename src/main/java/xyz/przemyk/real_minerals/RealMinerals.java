@@ -9,6 +9,7 @@ import xyz.przemyk.real_minerals.datapack.DatapackEvents;
 import xyz.przemyk.real_minerals.init.MachinesRegistry;
 import xyz.przemyk.real_minerals.init.Recipes;
 import xyz.przemyk.real_minerals.init.Registering;
+import xyz.przemyk.real_minerals.network.RealMineralsNetworking;
 
 @SuppressWarnings("unused")
 @Mod(RealMinerals.MODID)
@@ -20,6 +21,7 @@ public class RealMinerals {
         Registering.init(eventBus);
         Recipes.init(eventBus);
         DatapackEvents.init();
+        RealMineralsNetworking.init();
     }
 
     public static final CreativeModeTab ITEM_TAB = new CreativeModeTab(MODID) {
