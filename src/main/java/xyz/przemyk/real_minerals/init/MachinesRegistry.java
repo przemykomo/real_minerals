@@ -11,10 +11,7 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import xyz.przemyk.real_minerals.blockentity.*;
-import xyz.przemyk.real_minerals.blocks.BatteryBlock;
-import xyz.przemyk.real_minerals.blocks.CrusherBlock;
-import xyz.przemyk.real_minerals.blocks.MachineBlock;
-import xyz.przemyk.real_minerals.blocks.TankBlock;
+import xyz.przemyk.real_minerals.blocks.*;
 import xyz.przemyk.real_minerals.cables.CableBlock;
 import xyz.przemyk.real_minerals.cables.CableBlockEntity;
 import xyz.przemyk.real_minerals.containers.*;
@@ -99,6 +96,7 @@ public class MachinesRegistry {
     public static final RegistryObject<Item> TANK_ITEM = Registering.ITEMS.register("tank", () -> new TankItem(TANK_BLOCK.get(), new Item.Properties().tab(ITEM_TAB).stacksTo(1)));
     public static final RegistryObject<BlockEntityType<TankBlockEntity>> TANK_BLOCK_ENTITY_TYPE = Registering.BLOCK_ENTITIES.register("tank", () -> BlockEntityType.Builder.of(TankBlockEntity::new, TANK_BLOCK.get()).build(null));
     //</editor-fold>
+    public static final BlockRegistryObject RICKROLL = Registering.BLOCKS_ITEMS.register("rickroll_block", () -> new RickrollBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(1.5F).sound(SoundType.METAL)), ITEM_TAB);
 
     static void init() {}
 }

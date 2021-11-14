@@ -15,7 +15,7 @@ public class RickrollPacket {
     public void handle(Supplier<NetworkEvent.Context> ctxSup) {
         NetworkEvent.Context context = ctxSup.get();
         context.enqueueWork(() -> {
-            Util.getPlatform().openUri("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+            Util.getPlatform().openUri("https://shattereddisk.github.io/rickroll/rickroll.mp4");
         });
         context.setPacketHandled(true);
     }
