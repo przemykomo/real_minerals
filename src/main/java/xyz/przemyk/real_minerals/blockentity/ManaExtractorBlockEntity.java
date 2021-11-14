@@ -1,5 +1,6 @@
 package xyz.przemyk.real_minerals.blockentity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -88,6 +90,41 @@ public class ManaExtractorBlockEntity extends ElectricMachineBlockEntity<ManaExt
     }
 
     @Override
+    public void tick() {
+        if (!level.isClientSide()) {
+            boolean wasWorking = workingTime > 0;
+            if (energyStorage.getEnergyStored() >= FE_PER_TICK) {
+                ManaExtractorRecipe recipe = getCachedRecipe();
+                if (canProcess(recipe)) {
+                    if (!wasWorking) {
+                        level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, true), 3);
+                    }
+                    ++workingTime;
+                    markUpdated();
+                    energyStorage.removeEnergy(FE_PER_TICK);
+                    if (workingTime >= WORKING_TIME_TOTAL) {
+                        workingTime = 0;
+                        level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, false), 3);
+                        process(recipe);
+                    }
+                } else {
+                    if (wasWorking) {
+                        level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, false), 3);
+                    }
+                    workingTime = 0;
+                    markUpdated();
+                }
+            } else {
+                workingTime = 0;
+                markUpdated();
+                if (wasWorking) {
+                    level.setBlock(worldPosition, getBlockState().setValue(BlockStateProperties.LIT, false), 3);
+                }
+            }
+        }
+    }
+
+    @Override
     protected void process(ManaExtractorRecipe recipe) {
         itemStackHandler.getStackInSlot(0).shrink(1);
         fluidTank.fillInternal(recipe.result());
@@ -128,14 +165,18 @@ public class ManaExtractorBlockEntity extends ElectricMachineBlockEntity<ManaExt
 
     @Override
     public CompoundTag getUpdateTag() {
-        return fluidTank.writeToNBT(super.getUpdateTag());
+        CompoundTag tag = fluidTank.writeToNBT(super.getUpdateTag());
+        tag.putInt("workingTime", workingTime);
+        return tag;
     }
 
     @Override
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
         fluidTank.readFromNBT(tag);
+        workingTime = tag.getInt("workingTime");
     }
+
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {

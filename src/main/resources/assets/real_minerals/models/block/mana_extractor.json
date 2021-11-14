@@ -4,9 +4,9 @@
 		"0": "minecraft:block/iron_block",
 		"1": "real_minerals:block/machine_bronze",
 		"2": "minecraft:block/glass",
-		"3": "real_minerals:block/mana_ekstraktor_top",
-		"4": "real_minerals:block/mana_ekstraktor_bottom",
-		"particle": "real_minerals:block/iron_block"
+		"3": "real_minerals:block/mana_extraktor_top",
+		"4": "real_minerals:block/mana_extraktor_bottom",
+		"particle": "minecraft:block/iron_block"
 	},
 	"elements": [
 		{

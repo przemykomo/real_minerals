@@ -1,15 +1,20 @@
 package xyz.przemyk.real_minerals.init;
 
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import xyz.przemyk.real_minerals.RealMinerals;
 import xyz.przemyk.real_minerals.renderers.EvaporationPlantRenderer;
+import xyz.przemyk.real_minerals.renderers.ManaExtractorRenderer;
 import xyz.przemyk.real_minerals.renderers.TankRenderer;
 import xyz.przemyk.real_minerals.screen.*;
 
@@ -37,11 +42,17 @@ public class ClientSetup {
 
         ItemBlockRenderTypes.setRenderLayer(MachinesRegistry.TANK_BLOCK.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(MachinesRegistry.MANA_EXTRACTOR_BLOCK.BLOCK.get(), RenderType.cutout());
+
     }
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(MachinesRegistry.TANK_BLOCK_ENTITY_TYPE.get(), TankRenderer::new);
         event.registerBlockEntityRenderer(MachinesRegistry.EVAPORATION_PLANT_CONTROLLER_BLOCK_ENTITY_TYPE.get(), EvaporationPlantRenderer::new);
+        event.registerBlockEntityRenderer(MachinesRegistry.MANA_EXTRACTOR_BLOCK_ENTITY_TYPE.get(), ManaExtractorRenderer::new);
+    }
+    @SubscribeEvent
+    public static void modelBaker(ModelRegistryEvent event){
+        ModelLoader.addSpecialModel(new ResourceLocation(RealMinerals.MODID,"block/mana_extractor_piston"));
     }
 }
